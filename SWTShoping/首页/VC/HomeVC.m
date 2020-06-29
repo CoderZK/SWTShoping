@@ -1,0 +1,237 @@
+//
+//  HomeVC.m
+//  SWTShoping
+//
+//  Created by kunzhang on 2018/7/2.
+//  Copyright © 2018年 kunzhang. All rights reserved.
+//
+
+#import "HomeVC.h"
+#import "SWTHomeHeadView.h"
+#import "XMGWaterflowLayout.h"
+#import "SWTHomeCollectionHeadView.h"
+#import "XPCollectionViewWaterfallFlowLayout.h"
+@interface HomeVC ()<UIScrollViewDelegate,UITextFieldDelegate,XMGWaterflowLayoutDelegate,UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource,SWTHomeHeadViewDelegate>
+@property(nonatomic , strong)SWTHomeHeadView *headView;
+@property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
+@property(nonatomic , strong)UICollectionView *collectionView;
+@end
+
+@implementation HomeVC
+
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    //设置导航栏背景图片为一个空的image，这样就透明了
+    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
+       
+       //去掉透明后导航栏下边的黑边
+    [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
+       
+    [self scrollViewDidScroll:self.collectionView];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_1"] forBarMetrics:UIBarMetricsDefault];
+       [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
+}
+
+
+
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.layout =[[XPCollectionViewWaterfallFlowLayout alloc] init];
+    self.layout.dataSource = self;
+    
+    self.collectionView  = [[UICollectionView alloc] initWithFrame:CGRectMake(0, -sstatusHeight - 44, ScreenW, ScreenH + sstatusHeight) collectionViewLayout:self.layout];;
+    
+    self.collectionView.dataSource = self;
+    self.collectionView.delegate = self;
+    
+//               self.collectionView.scrollEnabled = NO;
+    self.collectionView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.collectionView];
+    
+    
+    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+    
+    [self.collectionView registerClass:[SWTHomeCollectionHeadView class]  forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeaderView"];
+    
+    [self.view addSubview:self.collectionView];
+   
+    [self setNavigateView];
+    [self setheadViewVV];
+    
+    
+    
+}
+
+- (void)setNavigateView {
+
+    ALCSearchView * searchTitleView = [[ALCSearchView alloc] initWithFrame:CGRectMake(0, 0, ScreenW - 120, 44)];
+    searchTitleView.searchTF.delegate = self;
+    searchTitleView.isPush = NO;
+    
+    self.navigationItem.titleView = searchTitleView;
+    @weakify(self);
+    [[[searchTitleView.searchTF rac_textSignal] filter:^BOOL(NSString * _Nullable value) {
+        @strongify(self);
+        if (value.length > 0) {
+            return YES;
+        }else {
+            return NO;
+        }
+    }] subscribeNext:^(NSString * _Nullable x) {
+        NSLog(@"======\n%@",x);
+    }];
+    self.navigationItem.titleView = searchTitleView;
+    
+    UIButton * submitBtn = [[UIButton alloc] initWithFrame:CGRectMake(15, 200, 60, 44)];
+    //    submitBtn.layer.cornerRadius = 22;
+    //    submitBtn.layer.masksToBounds = YES;
+    // [submitBtn setTitle:@"搜索" forState:UIControlStateNormal];
+    
+    [submitBtn setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
+    submitBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+//    [submitBtn setImage:[UIImage imageNamed:@"jkgl1"] forState:UIControlStateNormal];
+    submitBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    [submitBtn setTitleColor:WhiteColor forState:UIControlStateNormal];
+    [submitBtn setTitle:@"滴雨轩" forState:UIControlStateNormal];
+ 
+//    [submitBtn addTarget:self action:@selector(submitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:submitBtn];
+    
+    self.navigationItem.rightBarButtonItem  = [[UIBarButtonItem alloc] initWithCustomView:nil];
+    
+    
+}
+
+- (void)setheadViewVV{
+
+    self.collectionView.contentInset = UIEdgeInsetsMake(sstatusHeight + 44 + 10 + (ScreenW - 30) / 345 * 150 +110 ,0, 0, 0);
+    self.headView = [[SWTHomeHeadView alloc] initWithFrame:CGRectMake(0, -( sstatusHeight + 44 + 10 + (ScreenW - 30) / 345 * 150 +110), ScreenW, sstatusHeight + 44 + 10 + (ScreenW - 30) / 345 * 150 +110)];
+    self.headView.delegate = self;
+    [self.collectionView addSubview:self.headView];;
+ 
+}
+
+
+#pragma mark ----- 点击轮播图或者下面的按钮 ----
+
+- (void)didClickHomeHeadViewWithIndex:(NSInteger)index andIsLunBoTu:(BOOL)isLunBo {
+    
+    NSLog(@"%d ---- %d",index,isLunBo);
+    
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 2;
+}
+
+
+
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    if (section == 0) {
+        return 1;
+    }
+    return 9;
+    //    return self.dataArray.count;
+}
+
+
+- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+
+
+
+    UICollectionViewCell * cell =[collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+
+    cell.backgroundColor = [UIColor yellowColor];
+
+    return cell;
+}
+
+
+
+
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+   
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+
+    // 复用SectionHeaderView,SectionHeaderView是xib创建的
+    SWTHomeCollectionHeadView *headerView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeaderView" forIndexPath:indexPath];
+    headerView.clipsToBounds = YES;
+    return headerView;
+
+}
+    
+- (NSInteger)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout numberOfColumnInSection:(NSInteger)section {
+    if (section == 0) {
+        return 1;
+    }else {
+        return 2;
+    }
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout itemWidth:(CGFloat)width heightForItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        return 150;
+    }else {
+        return 80;
+    }
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout insetForSectionAtIndex:(NSInteger)section {
+    return UIEdgeInsetsMake(10.0, 10.0, 10.0, 10.0);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout*)layout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    return 10.0;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout*)layout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    return 10.0;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout referenceHeightForHeaderInSection:(NSInteger)section {
+    return 40.0;
+}
+
+
+
+
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    CGPoint point = scrollView.contentOffset;
+    CGFloat HH = 130 ;
+    
+    CGFloat offsetY = point.y;
+    
+    CGFloat alpha = (offsetY + 64) / HH > 1.0f ? 1 : ((offsetY + 64)/ HH);
+    
+    if (point.y <= -64) {
+        
+        [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
+        //去掉透明后导航栏下边的黑边
+        [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
+    }else {
+        
+        UIImage * img = [PublicFuntionTool  imageWithColor:[[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_1"]] colorWithAlphaComponent:alpha]];
+        
+        [self.navigationController.navigationBar setBackgroundImage:img forBarMetrics:UIBarMetricsDefault];
+        [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
+        
+    }
+    
+}
+
+
+@end
