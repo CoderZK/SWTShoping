@@ -12,7 +12,16 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+   
+    self.headImgV.layer.cornerRadius = 15;
+    self.headImgV.clipsToBounds = YES;
+    self.headImgV.layer.borderColor = CharacterColor183.CGColor;
+    self.headImgV.layer.borderWidth = 0.5;
+    
+    self.layer.cornerRadius = 5;
+    self.clipsToBounds = YES;
+    
+    
 }
 
 @end

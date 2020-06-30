@@ -8,10 +8,12 @@
 
 #import "HomeVC.h"
 #import "SWTHomeHeadView.h"
-#import "XMGWaterflowLayout.h"
 #import "SWTHomeCollectionHeadView.h"
 #import "XPCollectionViewWaterfallFlowLayout.h"
-@interface HomeVC ()<UIScrollViewDelegate,UITextFieldDelegate,XMGWaterflowLayoutDelegate,UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource,SWTHomeHeadViewDelegate>
+#import "SWTHomeCollectionOneCell.h"
+#import "SWTHomeCollectionTwoCell.h"
+#import "SWTHomeCollectionThreeCell.h"
+@interface HomeVC ()<UIScrollViewDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource,SWTHomeHeadViewDelegate>
 @property(nonatomic , strong)SWTHomeHeadView *headView;
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 @property(nonatomic , strong)UICollectionView *collectionView;
@@ -52,11 +54,14 @@
     self.collectionView.delegate = self;
     
 //               self.collectionView.scrollEnabled = NO;
-    self.collectionView.backgroundColor = [UIColor whiteColor];
+    self.collectionView.backgroundColor = BackgroundColor;
     [self.view addSubview:self.collectionView];
     
     
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+    [self.collectionView registerClass:[SWTHomeCollectionOneCell class] forCellWithReuseIdentifier:@"cell"];
+    
+    [self.collectionView registerNib:[UINib nibWithNibName:@"SWTHomeCollectionTwoCell" bundle:nil] forCellWithReuseIdentifier:@"SWTHomeCollectionTwoCell"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"SWTHomeCollectionThreeCell" bundle:nil] forCellWithReuseIdentifier:@"SWTHomeCollectionThreeCell"];
     
     [self.collectionView registerClass:[SWTHomeCollectionHeadView class]  forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeaderView"];
     
@@ -145,13 +150,20 @@
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
 
-
-
-    UICollectionViewCell * cell =[collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-
-    cell.backgroundColor = [UIColor yellowColor];
-
-    return cell;
+    if (indexPath.section == 0) {
+        SWTHomeCollectionOneCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+        return cell;
+    }else {
+        if (indexPath.row == 0) {
+            SWTHomeCollectionTwoCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionTwoCell" forIndexPath:indexPath];
+            return cell;
+        }else {
+            SWTHomeCollectionThreeCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionThreeCell" forIndexPath:indexPath];
+            return cell;
+        }
+        
+        
+    }
 }
 
 
@@ -182,9 +194,9 @@
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout itemWidth:(CGFloat)width heightForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return 150;
+        return 160;
     }else {
-        return 80;
+        return 150 + arc4random() % 100;
     }
 }
 

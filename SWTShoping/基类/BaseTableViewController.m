@@ -33,7 +33,7 @@
     _noneLabel = [[UILabel alloc] init];
        _noneLabel.text = @"没有数据!";
        _noneLabel.hidden = YES;
-       _noneLabel.textColor = CharacterDarkColor;
+       _noneLabel.textColor = CharacterColor70;
        _noneLabel.font = [UIFont systemFontOfSize:15];
        [self.tableView addSubview:_noneLabel];
        [_noneLabel mas_makeConstraints:^(MASConstraintMaker *make) {

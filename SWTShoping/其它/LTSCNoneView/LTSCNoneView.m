@@ -80,7 +80,7 @@
     if (!_label) {
         _label = [UILabel new];
         _label.font = [UIFont systemFontOfSize:14];
-        _label.textColor = CharacterGrayColor;
+        _label.textColor = CharacterColor70;
     }
     return _label;
 }

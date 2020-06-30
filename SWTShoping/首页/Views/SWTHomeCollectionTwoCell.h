@@ -11,6 +11,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTHomeCollectionTwoCell : UICollectionViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *headImgV;
+@property (weak, nonatomic) IBOutlet UILabel *nameLB;
+@property (weak, nonatomic) IBOutlet UILabel *numberLB;
+@property (weak, nonatomic) IBOutlet UILabel *desLB;
 
 @end
 

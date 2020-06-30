@@ -50,13 +50,14 @@
 		666658DD24AA20E9006C17B4 /* SWTHomeHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 666658DC24AA20E9006C17B4 /* SWTHomeHeadView.m */; };
 		666658E024AA22FE006C17B4 /* PublicFuntionTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 666658DF24AA22FE006C17B4 /* PublicFuntionTool.m */; };
 		666658E424AA23B7006C17B4 /* ALCSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 666658E324AA23B7006C17B4 /* ALCSearchView.m */; };
-		666658E724AA2D87006C17B4 /* XMGWaterflowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 666658E624AA2D87006C17B4 /* XMGWaterflowLayout.m */; };
 		666658EA24AA36A1006C17B4 /* SWTHomeCollectionHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 666658E924AA36A1006C17B4 /* SWTHomeCollectionHeadView.m */; };
 		666658ED24AA3FA4006C17B4 /* XPCollectionViewWaterfallFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 666658EC24AA3FA4006C17B4 /* XPCollectionViewWaterfallFlowLayout.m */; };
 		666658F024AA43FC006C17B4 /* SWTHomeCollectionOneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666658EF24AA43FC006C17B4 /* SWTHomeCollectionOneCell.m */; };
 		666658F424AA4439006C17B4 /* SWTHomeCollectionTwoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666658F224AA4439006C17B4 /* SWTHomeCollectionTwoCell.m */; };
 		666658F524AA4439006C17B4 /* SWTHomeCollectionTwoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 666658F324AA4439006C17B4 /* SWTHomeCollectionTwoCell.xib */; };
 		666658F824AA4583006C17B4 /* SWTHomeReMenView.m in Sources */ = {isa = PBXBuildFile; fileRef = 666658F724AA4583006C17B4 /* SWTHomeReMenView.m */; };
+		6669F5C024AB68850013675E /* SWTHomeCollectionThreeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6669F5BE24AB68850013675E /* SWTHomeCollectionThreeCell.m */; };
+		6669F5C124AB68850013675E /* SWTHomeCollectionThreeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6669F5BF24AB68850013675E /* SWTHomeCollectionThreeCell.xib */; };
 		66C8F7A024AB1E0B008C7A3A /* noneNet@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66C8F79A24AB1E0B008C7A3A /* noneNet@3x.png */; };
 		66C8F7A124AB1E0B008C7A3A /* LTSCNoneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66C8F79B24AB1E0B008C7A3A /* LTSCNoneView.m */; };
 		66C8F7A224AB1E0B008C7A3A /* noneNet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66C8F79C24AB1E0B008C7A3A /* noneNet@2x.png */; };
@@ -161,8 +162,6 @@
 		666658DF24AA22FE006C17B4 /* PublicFuntionTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicFuntionTool.m; sourceTree = "<group>"; };
 		666658E224AA23B7006C17B4 /* ALCSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALCSearchView.h; sourceTree = "<group>"; };
 		666658E324AA23B7006C17B4 /* ALCSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALCSearchView.m; sourceTree = "<group>"; };
-		666658E524AA2D87006C17B4 /* XMGWaterflowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMGWaterflowLayout.h; sourceTree = "<group>"; };
-		666658E624AA2D87006C17B4 /* XMGWaterflowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMGWaterflowLayout.m; sourceTree = "<group>"; };
 		666658E824AA36A1006C17B4 /* SWTHomeCollectionHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTHomeCollectionHeadView.h; sourceTree = "<group>"; };
 		666658E924AA36A1006C17B4 /* SWTHomeCollectionHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTHomeCollectionHeadView.m; sourceTree = "<group>"; };
 		666658EB24AA3FA4006C17B4 /* XPCollectionViewWaterfallFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPCollectionViewWaterfallFlowLayout.h; sourceTree = "<group>"; };
@@ -174,6 +173,9 @@
 		666658F324AA4439006C17B4 /* SWTHomeCollectionTwoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTHomeCollectionTwoCell.xib; sourceTree = "<group>"; };
 		666658F624AA4583006C17B4 /* SWTHomeReMenView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTHomeReMenView.h; sourceTree = "<group>"; };
 		666658F724AA4583006C17B4 /* SWTHomeReMenView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTHomeReMenView.m; sourceTree = "<group>"; };
+		6669F5BD24AB68850013675E /* SWTHomeCollectionThreeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTHomeCollectionThreeCell.h; sourceTree = "<group>"; };
+		6669F5BE24AB68850013675E /* SWTHomeCollectionThreeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTHomeCollectionThreeCell.m; sourceTree = "<group>"; };
+		6669F5BF24AB68850013675E /* SWTHomeCollectionThreeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTHomeCollectionThreeCell.xib; sourceTree = "<group>"; };
 		66C8F79A24AB1E0B008C7A3A /* noneNet@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "noneNet@3x.png"; sourceTree = "<group>"; };
 		66C8F79B24AB1E0B008C7A3A /* LTSCNoneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSCNoneView.m; sourceTree = "<group>"; };
 		66C8F79C24AB1E0B008C7A3A /* noneNet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "noneNet@2x.png"; sourceTree = "<group>"; };
@@ -452,6 +454,9 @@
 				666658F124AA4439006C17B4 /* SWTHomeCollectionTwoCell.h */,
 				666658F224AA4439006C17B4 /* SWTHomeCollectionTwoCell.m */,
 				666658F324AA4439006C17B4 /* SWTHomeCollectionTwoCell.xib */,
+				6669F5BD24AB68850013675E /* SWTHomeCollectionThreeCell.h */,
+				6669F5BE24AB68850013675E /* SWTHomeCollectionThreeCell.m */,
+				6669F5BF24AB68850013675E /* SWTHomeCollectionThreeCell.xib */,
 				666658F624AA4583006C17B4 /* SWTHomeReMenView.h */,
 				666658F724AA4583006C17B4 /* SWTHomeReMenView.m */,
 			);
@@ -463,8 +468,6 @@
 			children = (
 				33DC825420EA245E00D1C283 /* HomeVC.h */,
 				33DC825320EA245E00D1C283 /* HomeVC.m */,
-				666658E524AA2D87006C17B4 /* XMGWaterflowLayout.h */,
-				666658E624AA2D87006C17B4 /* XMGWaterflowLayout.m */,
 				666658EB24AA3FA4006C17B4 /* XPCollectionViewWaterfallFlowLayout.h */,
 				666658EC24AA3FA4006C17B4 /* XPCollectionViewWaterfallFlowLayout.m */,
 			);
@@ -648,6 +651,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6669F5C124AB68850013675E /* SWTHomeCollectionThreeCell.xib in Resources */,
 				66C8F7A024AB1E0B008C7A3A /* noneNet@3x.png in Resources */,
 				337F3EB920EA050000C5526A /* Podfile in Resources */,
 				66C8F7A224AB1E0B008C7A3A /* noneNet@2x.png in Resources */,
@@ -720,6 +724,7 @@
 			files = (
 				666658F824AA4583006C17B4 /* SWTHomeReMenView.m in Sources */,
 				335010DA20EDF8E400F8486B /* UIViewController+AlertShow.m in Sources */,
+				6669F5C024AB68850013675E /* SWTHomeCollectionThreeCell.m in Sources */,
 				337F3E5E20E9FE3C00C5526A /* ViewController.m in Sources */,
 				666658F424AA4439006C17B4 /* SWTHomeCollectionTwoCell.m in Sources */,
 				337F3EAA20EA014600C5526A /* BaseViewController.m in Sources */,
@@ -744,7 +749,6 @@
 				666658EA24AA36A1006C17B4 /* SWTHomeCollectionHeadView.m in Sources */,
 				335010EE20EE05C100F8486B /* NSString+Size.m in Sources */,
 				337F3EAE20EA014600C5526A /* BaseCollectionReusableView.m in Sources */,
-				666658E724AA2D87006C17B4 /* XMGWaterflowLayout.m in Sources */,
 				335010DD20EDF9AE00F8486B /* zkRequestTool.m in Sources */,
 				33DC825520EA245E00D1C283 /* HomeVC.m in Sources */,
 				33DC823320EA20D700D1C283 /* TabBarController.m in Sources */,
