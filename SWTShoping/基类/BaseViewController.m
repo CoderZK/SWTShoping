@@ -11,11 +11,24 @@
 typedef void (^Nav)(UIButton *);
 typedef void (^Nav2)();
 
+
+
 @interface BaseViewController ()
+
+
+
 @property (nonatomic, copy)Nav2 leftBlock2;
 @property (nonatomic, copy)Nav2 rightBlock2;
 @end
 @implementation BaseViewController
+
+
+- (LTSCNoneView *)noneView {
+    if (!_noneView) {
+        _noneView= [[LTSCNoneView alloc] init];
+    }
+    return _noneView;
+}
 
 - (BOOL)shouldAutorotate
 {

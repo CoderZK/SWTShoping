@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "LTSCNoneView.h"
 
 @interface BaseViewController : UIViewController
+@property (nonatomic, strong)LTSCNoneView *noneView;
 @property(strong,nonatomic)UIButton * rightBtn2;
 - (void)gotoLoginVC;
 

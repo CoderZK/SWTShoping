@@ -11,6 +11,7 @@
 @interface BaseTableViewController ()
 {
     UITableViewStyle _tableViewStyle;
+    UILabel *_noneLabel;
 }
 @end
 @implementation BaseTableViewController
@@ -27,6 +28,18 @@
 {
     [super viewDidLoad];
     [self initBaseTableView];
+    
+    
+    _noneLabel = [[UILabel alloc] init];
+       _noneLabel.text = @"没有数据!";
+       _noneLabel.hidden = YES;
+       _noneLabel.textColor = CharacterDarkColor;
+       _noneLabel.font = [UIFont systemFontOfSize:15];
+       [self.tableView addSubview:_noneLabel];
+       [_noneLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+           make.center.equalTo(self.tableView);
+       }];
+    
 }
 -(void)initBaseTableView
 {
@@ -76,6 +89,22 @@
     }
     return cell;
 }
+
+- (void)showNoneDataLabel {
+    _noneLabel.hidden = NO;
+}
+
+- (void)hideNoneDataLabel {
+    _noneLabel.hidden = YES;
+}
+
+- (void)endRefrish {
+    [SVProgressHUD dismiss];
+//     [LTSCLoadingView dismiss];
+    [self.tableView.mj_header endRefreshing];
+    [self.tableView.mj_footer endRefreshing];
+}
+
 
 
 @end

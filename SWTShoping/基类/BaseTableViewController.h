@@ -14,4 +14,14 @@
 
 @property(nonatomic,strong,readonly)UITableView * tableView;
 
+
+- (void)showNoneDataLabel;
+
+- (void)hideNoneDataLabel;
+
+//- (void)gotoLogin;
+
+- (void)endRefrish;
+
+
 @end
