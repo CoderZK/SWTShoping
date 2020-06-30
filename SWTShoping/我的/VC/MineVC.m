@@ -7,31 +7,183 @@
 //
 
 #import "MineVC.h"
-
-@interface MineVC ()
-
+#import "XPCollectionViewWaterfallFlowLayout.h"
+#import "SWTHomeCollectionTwoCell.h"
+#import "SWTHomeCollectionThreeCell.h"
+#import "SWTMineTwoCell.h"
+#import "SWTMineOneCell.h"
+#import "SWTMineThreeCell.h"
+#import "SWTMineSectionHeadView.h"
+@interface MineVC ()<XPCollectionViewWaterfallFlowLayoutDataSource,UICollectionViewDelegate,UICollectionViewDataSource>
+@property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
+@property(nonatomic , strong)UICollectionView *collectionView;
 @end
 
 @implementation MineVC
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    
+    [self setNav];
+    
+    self.layout =[[XPCollectionViewWaterfallFlowLayout alloc] init];
+    self.layout.dataSource = self;
+    
+    self.collectionView  = [[UICollectionView alloc] initWithFrame:CGRectMake(0, sstatusHeight + 44, ScreenW, ScreenH - sstatusHeight-44) collectionViewLayout:self.layout];;
+    
+    self.collectionView.dataSource = self;
+    self.collectionView.delegate = self;
+    self.collectionView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:self.collectionView];
+    
+    [self.collectionView registerClass:[SWTMineTwoCell class] forCellWithReuseIdentifier:@"SWTMineTwoCell"];
+    [self.collectionView registerClass:[SWTMineThreeCell class] forCellWithReuseIdentifier:@"SWTMineThreeCell"];
+    
+    [self.collectionView registerNib:[UINib nibWithNibName:@"SWTHomeCollectionTwoCell" bundle:nil] forCellWithReuseIdentifier:@"SWTHomeCollectionTwoCell"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"SWTMineOneCell" bundle:nil] forCellWithReuseIdentifier:@"SWTMineOneCell"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"SWTHomeCollectionThreeCell" bundle:nil] forCellWithReuseIdentifier:@"SWTHomeCollectionThreeCell"];
+    
+            [self.collectionView registerClass:[SWTMineSectionHeadView class]  forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeaderView"];
+    
+    [self.view addSubview:self.collectionView];
+    
+    
+    
+    
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)setNav {
+    
+    UIImageView * vv = [[UIImageView alloc]  initWithFrame:CGRectMake(0, -sstatusHeight, ScreenW, 120 + sstatusHeight + 44)];
+    vv.image = [UIImage  imageNamed:@"minebg"];
+    [self.view addSubview:vv];
+    self.view.backgroundColor =  BackgroundColor;
+    
+    
+    UILabel * titelLB  = [[UILabel alloc]  initWithFrame:CGRectMake(20, sstatusHeight, ScreenW - 40, 44)];
+    titelLB.font = kFont(18);
+    titelLB.textAlignment = NSTextAlignmentCenter;
+    titelLB.text = @"我的";
+    titelLB.textColor = WhiteColor;
+    [self.view addSubview:titelLB];
+    
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 2;
 }
-*/
+
+
+
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    if (section == 0) {
+        return 3;
+    }
+    return 9;
+    //    return self.dataArray.count;
+}
+
+
+- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            SWTMineOneCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTMineOneCell" forIndexPath:indexPath];
+            return cell;
+        }else if (indexPath.row == 1) {
+           SWTMineTwoCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTMineTwoCell" forIndexPath:indexPath];
+            return cell;
+        }else {
+           SWTMineThreeCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTMineThreeCell" forIndexPath:indexPath];
+           return cell;
+        }
+    }else {
+        if (indexPath.row == 0) {
+            SWTHomeCollectionTwoCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionTwoCell" forIndexPath:indexPath];
+            return cell;
+        }else {
+            SWTHomeCollectionThreeCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionThreeCell" forIndexPath:indexPath];
+            return cell;
+        }
+    }
+ 
+}
+
+
+
+
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+
+    if (indexPath.section == 0) {
+        return nil;
+    }else {
+        SWTMineSectionHeadView *headerView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeaderView" forIndexPath:indexPath];
+        headerView.titleLB.text = @"您可能喜欢";
+        headerView.clipsToBounds = YES;
+        return headerView;
+    }
+
+
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout numberOfColumnInSection:(NSInteger)section {
+    if (section == 0) {
+        return 1;
+    }else {
+        return 2;
+    }
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout itemWidth:(CGFloat)width heightForItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            return 200;
+        }else if (indexPath.row == 1) {
+            return 95;
+        }
+        return 180;
+    }else {
+        return 150 + arc4random() % 100;
+    }
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout insetForSectionAtIndex:(NSInteger)section {
+    return UIEdgeInsetsMake(10.0, 10.0, 10.0, 10.0);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout*)layout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    return 10.0;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout*)layout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    return 10.0;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout referenceHeightForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return 0;
+    }
+    return 30.0;
+}
+
 
 @end

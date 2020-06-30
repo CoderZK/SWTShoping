@@ -8,6 +8,6 @@
 
 #import "BaseViewController.h"
 
-@interface MineVC : BaseTableViewController
+@interface MineVC : BaseViewController
 
 @end

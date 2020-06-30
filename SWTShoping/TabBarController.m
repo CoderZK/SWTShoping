@@ -47,7 +47,7 @@
         
         //此处创建控制器要根据自己的情况确定是否带tableView 
         
-        if (i== 0)
+        if (i== 0 || i== 1 ||  i ==3)
         {
            vc=[[NSClassFromString(str) alloc] init];
         }

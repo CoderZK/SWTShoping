@@ -8,6 +8,6 @@
 
 #import "BaseViewController.h"
 
-@interface GuanZhuVC : BaseTableViewController
+@interface GuanZhuVC : BaseViewController
 
 @end

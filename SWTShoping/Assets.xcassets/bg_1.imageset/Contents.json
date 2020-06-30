@@ -7,6 +7,20 @@
     {
       "filename" : "bg_1@2x.jpg",
       "idiom" : "universal",
+      "resizing" : {
+        "cap-insets" : {
+          "bottom" : 44,
+          "left" : 374,
+          "right" : 375,
+          "top" : 43
+        },
+        "center" : {
+          "height" : 1,
+          "mode" : "tile",
+          "width" : 1
+        },
+        "mode" : "9-part"
+      },
       "scale" : "2x"
     },
     {

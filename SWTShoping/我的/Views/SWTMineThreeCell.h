@@ -1,0 +1,18 @@
+//
+//  SWTMineThreeCell.h
+//  SWTShoping
+//
+//  Created by kunzhang on 2020/6/30.
+//  Copyright © 2020 kunzhang. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface SWTMineThreeCell : UICollectionViewCell
+@property(nonatomic , strong)UILabel *titleLB;
+@property(nonatomic , copy)void(^mineThreeCellBlock)(NSInteger index);
+@end
+
+NS_ASSUME_NONNULL_END

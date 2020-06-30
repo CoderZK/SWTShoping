@@ -61,11 +61,11 @@
 #define kFont(x) [UIFont systemFontOfSize:x]
 
 #define Weak(weakSelf) __weak typeof(self) weakSelf = self;
-
+#define RedColor [UIColor colorWithRed:163.0/255.0 green:41.0/255.0 blue:59.0/255.0 alpha:1]
 //黄底字体纯黑
 #define WhiteColor [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1]
 //白底黑字
-#define CharacterColor30 [UIColor colorWithRed:30/255.0 green:30/255.0 blue:30/255.0 alpha:1]
+#define CharacterColor50 [UIColor colorWithRed:50/255.0 green:50/255.0 blue:50/255.0 alpha:1]
 //白底淡黑
 #define CharacterColor102 [UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1]
 //白底灰字
