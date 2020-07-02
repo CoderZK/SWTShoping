@@ -52,6 +52,8 @@
 		666325D724AE2626009D77AF /* SWTMessageOneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666325D524AE2626009D77AF /* SWTMessageOneCell.m */; };
 		666325D824AE2626009D77AF /* SWTMessageOneCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 666325D624AE2626009D77AF /* SWTMessageOneCell.xib */; };
 		666325DB24AE2986009D77AF /* SWTFenLeiFirstVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 666325DA24AE2986009D77AF /* SWTFenLeiFirstVC.m */; };
+		666325DF24AE333F009D77AF /* SWTFenLeiFirstLeftCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666325DD24AE333F009D77AF /* SWTFenLeiFirstLeftCell.m */; };
+		666325E024AE333F009D77AF /* SWTFenLeiFirstLeftCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 666325DE24AE333F009D77AF /* SWTFenLeiFirstLeftCell.xib */; };
 		666658DA24AA1E12006C17B4 /* UIViewController+ChangeUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 666658D924AA1E12006C17B4 /* UIViewController+ChangeUI.m */; };
 		666658DD24AA20E9006C17B4 /* SWTHomeHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 666658DC24AA20E9006C17B4 /* SWTHomeHeadView.m */; };
 		666658E024AA22FE006C17B4 /* PublicFuntionTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 666658DF24AA22FE006C17B4 /* PublicFuntionTool.m */; };
@@ -178,6 +180,9 @@
 		666325D624AE2626009D77AF /* SWTMessageOneCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTMessageOneCell.xib; sourceTree = "<group>"; };
 		666325D924AE2986009D77AF /* SWTFenLeiFirstVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTFenLeiFirstVC.h; sourceTree = "<group>"; };
 		666325DA24AE2986009D77AF /* SWTFenLeiFirstVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTFenLeiFirstVC.m; sourceTree = "<group>"; };
+		666325DC24AE333F009D77AF /* SWTFenLeiFirstLeftCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTFenLeiFirstLeftCell.h; sourceTree = "<group>"; };
+		666325DD24AE333F009D77AF /* SWTFenLeiFirstLeftCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTFenLeiFirstLeftCell.m; sourceTree = "<group>"; };
+		666325DE24AE333F009D77AF /* SWTFenLeiFirstLeftCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTFenLeiFirstLeftCell.xib; sourceTree = "<group>"; };
 		666658D824AA1E12006C17B4 /* UIViewController+ChangeUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ChangeUI.h"; sourceTree = "<group>"; };
 		666658D924AA1E12006C17B4 /* UIViewController+ChangeUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ChangeUI.m"; sourceTree = "<group>"; };
 		666658DB24AA20E9006C17B4 /* SWTHomeHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTHomeHeadView.h; sourceTree = "<group>"; };
@@ -512,6 +517,9 @@
 				6669F5BF24AB68850013675E /* SWTHomeCollectionThreeCell.xib */,
 				666658F624AA4583006C17B4 /* SWTHomeReMenView.h */,
 				666658F724AA4583006C17B4 /* SWTHomeReMenView.m */,
+				666325DC24AE333F009D77AF /* SWTFenLeiFirstLeftCell.h */,
+				666325DD24AE333F009D77AF /* SWTFenLeiFirstLeftCell.m */,
+				666325DE24AE333F009D77AF /* SWTFenLeiFirstLeftCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -726,6 +734,7 @@
 				337F3E6320E9FE5300C5526A /* Assets.xcassets in Resources */,
 				666658F524AA4439006C17B4 /* SWTHomeCollectionTwoCell.xib in Resources */,
 				337F3E6120E9FE3C00C5526A /* Main.storyboard in Resources */,
+				666325E024AE333F009D77AF /* SWTFenLeiFirstLeftCell.xib in Resources */,
 				666325CE24AE1A6A009D77AF /* SWTGuanZhuCollectionCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -810,6 +819,7 @@
 				6669F5CA24AB7BCF0013675E /* SWTMineTwoCell.m in Sources */,
 				66C8F7A124AB1E0B008C7A3A /* LTSCNoneView.m in Sources */,
 				6669F5DF24AB997A0013675E /* SWTMineAttentionShopTVC.m in Sources */,
+				666325DF24AE333F009D77AF /* SWTFenLeiFirstLeftCell.m in Sources */,
 				337F3EAC20EA014600C5526A /* BaseTableViewController.m in Sources */,
 				666658DA24AA1E12006C17B4 /* UIViewController+ChangeUI.m in Sources */,
 				666658DD24AA20E9006C17B4 /* SWTHomeHeadView.m in Sources */,

@@ -7,8 +7,8 @@
 //
 
 #import "SWTFenLeiFirstVC.h"
-
-@interface SWTFenLeiFirstVC ()
+#import "SWTFenLeiFirstLeftCell.h"
+@interface SWTFenLeiFirstVC ()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic , strong)UITableView *leftV,*rightTV;
 @end
 
@@ -20,22 +20,36 @@
     
     [self setNavigateView];
     
-    UIView * backV =[[UIView alloc] initWithFrame:CGRectMake(0, 40, ScreenW, 0.5)];
-    backV.backgroundColor = lineBackColor;
-    [self.view addSubview:backV];
+   
     
-
-    UIView * backVTwo =[[UIView alloc] initWithFrame:CGRectMake(99.5, 40, 0.5, ScreenH - sstatusHeight - 44 - 40)];
-    backVTwo.backgroundColor = lineBackColor;
-    [self.view addSubview:backVTwo];
     
+    [self addTV];
 }
 
 - (void)addTV {
     
     
+    UIView * backV =[[UIView alloc] initWithFrame:CGRectMake(0, 39.5, ScreenW, 0.5)];
+       backV.backgroundColor = lineBackColor;
+       [self.view addSubview:backV];
+       
+
+       UIView * backVTwo =[[UIView alloc] initWithFrame:CGRectMake(99.5, 40, 0.5, ScreenH - sstatusHeight - 44 - 40)];
+       backVTwo.backgroundColor = lineBackColor;
+       [self.view addSubview:backVTwo];
+    
+    self.leftV  =[[UITableView alloc] initWithFrame:CGRectMake(0, 40, 99, ScreenH - sstatusHeight - 44 - 40)];
+    [self.leftV registerNib:[UINib nibWithNibName:@"SWTFenLeiFirstLeftCell" bundle:nil] forCellReuseIdentifier:@"SWTFenLeiFirstLeftCell"];
+    self.leftV.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    self.leftV.delegate = self;
+    self.leftV.dataSource = self;
+    [self.view addSubview:self.leftV];
+    
+    
     
 }
+
 
 
 
@@ -63,5 +77,28 @@
     [self.view addSubview:searchTitleView];
     
 }
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 10;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 40;
+}
+- (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    SWTFenLeiFirstLeftCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTFenLeiFirstLeftCell" forIndexPath:indexPath];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.titleLB.text = @"玉翠珠宝";
+    return cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
+    
+}
+
 
 @end
