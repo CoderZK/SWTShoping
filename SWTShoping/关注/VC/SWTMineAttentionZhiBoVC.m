@@ -11,6 +11,7 @@
 #import "XPCollectionViewWaterfallFlowLayout.h"
 @interface SWTMineAttentionZhiBoVC ()<UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource>
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
+
 @property(nonatomic , strong)UICollectionView *collectionView;
 @end
 

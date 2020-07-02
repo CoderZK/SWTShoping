@@ -46,6 +46,12 @@
 		33DC824F20EA224F00D1C283 /* HangQingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DC824E20EA224F00D1C283 /* HangQingVC.m */; };
 		33DC825220EA228E00D1C283 /* GuanZhuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DC825120EA228E00D1C283 /* GuanZhuVC.m */; };
 		33DC825520EA245E00D1C283 /* HomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DC825320EA245E00D1C283 /* HomeVC.m */; };
+		666325C924AE139A009D77AF /* SWTMineGuanZHuDinaPuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666325C824AE139A009D77AF /* SWTMineGuanZHuDinaPuCell.m */; };
+		666325CD24AE1A6A009D77AF /* SWTGuanZhuCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666325CB24AE1A6A009D77AF /* SWTGuanZhuCollectionCell.m */; };
+		666325CE24AE1A6A009D77AF /* SWTGuanZhuCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 666325CC24AE1A6A009D77AF /* SWTGuanZhuCollectionCell.xib */; };
+		666325D724AE2626009D77AF /* SWTMessageOneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666325D524AE2626009D77AF /* SWTMessageOneCell.m */; };
+		666325D824AE2626009D77AF /* SWTMessageOneCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 666325D624AE2626009D77AF /* SWTMessageOneCell.xib */; };
+		666325DB24AE2986009D77AF /* SWTFenLeiFirstVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 666325DA24AE2986009D77AF /* SWTFenLeiFirstVC.m */; };
 		666658DA24AA1E12006C17B4 /* UIViewController+ChangeUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 666658D924AA1E12006C17B4 /* UIViewController+ChangeUI.m */; };
 		666658DD24AA20E9006C17B4 /* SWTHomeHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 666658DC24AA20E9006C17B4 /* SWTHomeHeadView.m */; };
 		666658E024AA22FE006C17B4 /* PublicFuntionTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 666658DF24AA22FE006C17B4 /* PublicFuntionTool.m */; };
@@ -162,6 +168,16 @@
 		33DC825120EA228E00D1C283 /* GuanZhuVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GuanZhuVC.m; path = "SWTShoping/关注/GuanZhuVC.m"; sourceTree = SOURCE_ROOT; };
 		33DC825320EA245E00D1C283 /* HomeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeVC.m; sourceTree = "<group>"; };
 		33DC825420EA245E00D1C283 /* HomeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeVC.h; sourceTree = "<group>"; };
+		666325C724AE139A009D77AF /* SWTMineGuanZHuDinaPuCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTMineGuanZHuDinaPuCell.h; sourceTree = "<group>"; };
+		666325C824AE139A009D77AF /* SWTMineGuanZHuDinaPuCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTMineGuanZHuDinaPuCell.m; sourceTree = "<group>"; };
+		666325CA24AE1A6A009D77AF /* SWTGuanZhuCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTGuanZhuCollectionCell.h; sourceTree = "<group>"; };
+		666325CB24AE1A6A009D77AF /* SWTGuanZhuCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTGuanZhuCollectionCell.m; sourceTree = "<group>"; };
+		666325CC24AE1A6A009D77AF /* SWTGuanZhuCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTGuanZhuCollectionCell.xib; sourceTree = "<group>"; };
+		666325D424AE2626009D77AF /* SWTMessageOneCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTMessageOneCell.h; sourceTree = "<group>"; };
+		666325D524AE2626009D77AF /* SWTMessageOneCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTMessageOneCell.m; sourceTree = "<group>"; };
+		666325D624AE2626009D77AF /* SWTMessageOneCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTMessageOneCell.xib; sourceTree = "<group>"; };
+		666325D924AE2986009D77AF /* SWTFenLeiFirstVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTFenLeiFirstVC.h; sourceTree = "<group>"; };
+		666325DA24AE2986009D77AF /* SWTFenLeiFirstVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTFenLeiFirstVC.m; sourceTree = "<group>"; };
 		666658D824AA1E12006C17B4 /* UIViewController+ChangeUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ChangeUI.h"; sourceTree = "<group>"; };
 		666658D924AA1E12006C17B4 /* UIViewController+ChangeUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ChangeUI.m"; sourceTree = "<group>"; };
 		666658DB24AA20E9006C17B4 /* SWTHomeHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTHomeHeadView.h; sourceTree = "<group>"; };
@@ -449,6 +465,9 @@
 		33DC823B20EA21C600D1C283 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				666325D424AE2626009D77AF /* SWTMessageOneCell.h */,
+				666325D524AE2626009D77AF /* SWTMessageOneCell.m */,
+				666325D624AE2626009D77AF /* SWTMessageOneCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -504,6 +523,8 @@
 				33DC825320EA245E00D1C283 /* HomeVC.m */,
 				666658EB24AA3FA4006C17B4 /* XPCollectionViewWaterfallFlowLayout.h */,
 				666658EC24AA3FA4006C17B4 /* XPCollectionViewWaterfallFlowLayout.m */,
+				666325D924AE2986009D77AF /* SWTFenLeiFirstVC.h */,
+				666325DA24AE2986009D77AF /* SWTFenLeiFirstVC.m */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -531,6 +552,11 @@
 		33DC824620EA21D700D1C283 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				666325C724AE139A009D77AF /* SWTMineGuanZHuDinaPuCell.h */,
+				666325C824AE139A009D77AF /* SWTMineGuanZHuDinaPuCell.m */,
+				666325CA24AE1A6A009D77AF /* SWTGuanZhuCollectionCell.h */,
+				666325CB24AE1A6A009D77AF /* SWTGuanZhuCollectionCell.m */,
+				666325CC24AE1A6A009D77AF /* SWTGuanZhuCollectionCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -696,9 +722,11 @@
 				66C8F7A224AB1E0B008C7A3A /* noneNet@2x.png in Resources */,
 				337F3EB020EA014600C5526A /* noneDataBg.png in Resources */,
 				337F3E6620E9FE5300C5526A /* LaunchScreen.storyboard in Resources */,
+				666325D824AE2626009D77AF /* SWTMessageOneCell.xib in Resources */,
 				337F3E6320E9FE5300C5526A /* Assets.xcassets in Resources */,
 				666658F524AA4439006C17B4 /* SWTHomeCollectionTwoCell.xib in Resources */,
 				337F3E6120E9FE3C00C5526A /* Main.storyboard in Resources */,
+				666325CE24AE1A6A009D77AF /* SWTGuanZhuCollectionCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -764,6 +792,7 @@
 				6669F5DC24AB99290013675E /* SWTMineAttentionZhiBoVC.m in Sources */,
 				6669F5CF24AB7C3C0013675E /* SWTMineThreeCell.m in Sources */,
 				6669F5C524AB7BBE0013675E /* SWTMineOneCell.m in Sources */,
+				666325D724AE2626009D77AF /* SWTMessageOneCell.m in Sources */,
 				666658F824AA4583006C17B4 /* SWTHomeReMenView.m in Sources */,
 				335010DA20EDF8E400F8486B /* UIViewController+AlertShow.m in Sources */,
 				6669F5C024AB68850013675E /* SWTHomeCollectionThreeCell.m in Sources */,
@@ -774,6 +803,7 @@
 				33DC823420EA20D700D1C283 /* LYGuideViewController.m in Sources */,
 				33DC824920EA220400D1C283 /* MineVC.m in Sources */,
 				33DC825220EA228E00D1C283 /* GuanZhuVC.m in Sources */,
+				666325CD24AE1A6A009D77AF /* SWTGuanZhuCollectionCell.m in Sources */,
 				337F3EAB20EA014600C5526A /* BaseNavigationController.m in Sources */,
 				335010E320EDFC9300F8486B /* zkSignleTool.m in Sources */,
 				337F3EAD20EA014600C5526A /* BaseTableViewHeaderFooterView.m in Sources */,
@@ -791,12 +821,14 @@
 				337F3E5B20E9FE3B00C5526A /* AppDelegate.m in Sources */,
 				66C8F7A324AB1E0B008C7A3A /* LTSCEventBus.m in Sources */,
 				666658E024AA22FE006C17B4 /* PublicFuntionTool.m in Sources */,
+				666325C924AE139A009D77AF /* SWTMineGuanZHuDinaPuCell.m in Sources */,
 				6669F5D324AB7FEC0013675E /* SWTMineHomeButton.m in Sources */,
 				666658EA24AA36A1006C17B4 /* SWTHomeCollectionHeadView.m in Sources */,
 				335010EE20EE05C100F8486B /* NSString+Size.m in Sources */,
 				337F3EAE20EA014600C5526A /* BaseCollectionReusableView.m in Sources */,
 				335010DD20EDF9AE00F8486B /* zkRequestTool.m in Sources */,
 				33DC825520EA245E00D1C283 /* HomeVC.m in Sources */,
+				666325DB24AE2986009D77AF /* SWTFenLeiFirstVC.m in Sources */,
 				33DC823320EA20D700D1C283 /* TabBarController.m in Sources */,
 				666658ED24AA3FA4006C17B4 /* XPCollectionViewWaterfallFlowLayout.m in Sources */,
 				335010D920EDF8E400F8486B /* Clear.m in Sources */,

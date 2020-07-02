@@ -13,6 +13,7 @@
 #import "SWTHomeCollectionOneCell.h"
 #import "SWTHomeCollectionTwoCell.h"
 #import "SWTHomeCollectionThreeCell.h"
+#import "SWTFenLeiFirstVC.h"
 @interface HomeVC ()<UIScrollViewDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource,SWTHomeHeadViewDelegate>
 @property(nonatomic , strong)SWTHomeHeadView *headView;
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
@@ -38,7 +39,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_1"] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"wbg"] forBarMetrics:UIBarMetricsDefault];
        [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }
@@ -134,7 +135,25 @@
     
     NSLog(@"%d ---- %d",index,isLunBo);
     
+    if (isLunBo) {
+        
+    }else {
+        if (index == 0) {
+            
+        }else if (index == 1) {
+            
+        }else if (index == 2) {
+            
+        }else if (index == 3) {
+            SWTFenLeiFirstVC * vc =[[SWTFenLeiFirstVC alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
+    
+    
 }
+
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 2;
