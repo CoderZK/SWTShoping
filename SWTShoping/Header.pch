@@ -43,6 +43,7 @@
 #import <ReactiveObjC.h>
 #import <SDCycleScrollView.h>
 #import <Masonry.h>
+#import "XPCollectionViewWaterfallFlowLayout.h"
 
 #import "LTSCEventBus.h"
 #import "LTSCNoneView.h"

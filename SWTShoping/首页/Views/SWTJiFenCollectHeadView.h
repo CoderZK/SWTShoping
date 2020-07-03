@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTJiFenCollectHeadView : UICollectionReusableView
-
+@property(nonatomic , strong)UILabel *titleLB;
 @end
 
 NS_ASSUME_NONNULL_END

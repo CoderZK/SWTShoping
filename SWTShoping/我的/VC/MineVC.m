@@ -14,9 +14,11 @@
 #import "SWTMineOneCell.h"
 #import "SWTMineThreeCell.h"
 #import "SWTMineSectionHeadView.h"
+#import "SWTShopHomeVC.h"
 @interface MineVC ()<XPCollectionViewWaterfallFlowLayoutDataSource,UICollectionViewDelegate,UICollectionViewDataSource>
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 @property(nonatomic , strong)UICollectionView *collectionView;
+@property(nonatomic , strong)UIImageView *imagV;
 @end
 
 @implementation MineVC
@@ -24,11 +26,13 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }
 
 - (void)viewDidLoad {
@@ -65,8 +69,9 @@
 
 - (void)setNav {
     
-    UIImageView * vv = [[UIImageView alloc]  initWithFrame:CGRectMake(0, -sstatusHeight, ScreenW, 120 + sstatusHeight + 44)];
+    UIImageView * vv = [[UIImageView alloc]  initWithFrame:CGRectMake(0, 0, ScreenW, 110 + sstatusHeight + 44)];
     vv.image = [UIImage  imageNamed:@"minebg"];
+    self.imagV = vv;
     [self.view addSubview:vv];
     self.view.backgroundColor =  BackgroundColor;
     
@@ -77,6 +82,22 @@
     titelLB.text = @"我的";
     titelLB.textColor = WhiteColor;
     [self.view addSubview:titelLB];
+    
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    NSLog(@"---\n%f",scrollView.contentOffset.y);
+    
+    if (scrollView.contentOffset.y<= 0) {
+        self.imagV.mj_h = sstatusHeight + 44 +110 - scrollView.contentOffset.y;
+    }else if (scrollView.contentOffset.y<= 110) {
+        self.imagV.mj_h = sstatusHeight +  44 +110 - scrollView.contentOffset.y;
+    }else {
+        self.imagV.mj_h = sstatusHeight + 44;
+    }
+    
+    
     
 }
 
@@ -128,7 +149,9 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    
+    SWTShopHomeVC * vc =[[SWTShopHomeVC alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {

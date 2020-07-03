@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTFenLeiCollectTwoCell : UICollectionViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *imgV;
+@property (weak, nonatomic) IBOutlet UILabel *titleLB;
 
 @end
 

@@ -12,7 +12,8 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    self.imgV.layer.cornerRadius = 17.5;
+    self.imgV.clipsToBounds = YES;
 }
 
 @end
