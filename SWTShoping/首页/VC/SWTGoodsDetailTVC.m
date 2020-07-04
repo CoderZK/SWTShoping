@@ -9,6 +9,9 @@
 #import "SWTGoodsDetailTVC.h"
 #import "SWTGoodsDetailHeadV.h"
 #import "SWTGoodsDetailTableViewContentCollCell.h"
+#import "SWTGoodsDetailTwoCell.h"
+#import "SWTGoodsDetailThreeCell.h"
+#import "SWTGoodsDetailFourCell.h"
 @interface SWTGoodsDetailTVC ()
 @property(nonatomic , strong)SWTNavitageView *naView;
 @property(nonatomic , strong)SWTGoodsDetailHeadV *headV;
@@ -35,6 +38,11 @@
     [self addHeadV];
     
     [self.tableView registerClass:[SWTGoodsDetailTableViewContentCollCell class] forCellReuseIdentifier:@"cell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"SWTGoodsDetailTwoCell" bundle:nil] forCellReuseIdentifier:@"SWTGoodsDetailTwoCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"SWTGoodsDetailThreeCell" bundle:nil] forCellReuseIdentifier:@"SWTGoodsDetailThreeCell"];
+    
+    [self.tableView registerClass:[SWTGoodsDetailFourCell class] forCellReuseIdentifier:@"SWTGoodsDetailFourCell"];
+    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.estimatedRowHeight = 40;
 }
@@ -67,13 +75,48 @@
     [self.view bringSubviewToFront:self.tableView];
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 3;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 2) {
+        return 20 + 40*3;
+    }
     return UITableViewAutomaticDimension;
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    if (section == 4) {
+        return 0.01;
+    }
+    return 10;
+}
+
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.section == 0) {
+        
+        SWTGoodsDetailTwoCell  * cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTGoodsDetailTwoCell" forIndexPath:indexPath];
+        return cell;
+        
+    }else if (indexPath.section == 1) {
+        SWTGoodsDetailThreeCell  * cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTGoodsDetailThreeCell" forIndexPath:indexPath];
+               return cell;
+    }else if (indexPath.section == 2) {
+        SWTGoodsDetailFourCell  * cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTGoodsDetailFourCell" forIndexPath:indexPath];
+        return cell;
+    }else if (indexPath.section == 3) {
+        
+    }else {
+        SWTGoodsDetailTableViewContentCollCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+        cell.dataArray = @[@"",@"",@"",@"",@"",@"",@"",@""].mutableCopy;
+        return cell;
+    }
+    
     SWTGoodsDetailTableViewContentCollCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     cell.dataArray = @[@"",@"",@"",@"",@"",@"",@"",@""].mutableCopy;
     return cell;
