@@ -11,7 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTNavitageView : UIView
-
+@property(nonatomic , strong)UIImageView *imgV;
+@property(nonatomic , strong)UILabel *titleLB;
+@property(nonatomic , strong)UIButton *leftBt,*rightBt;
 @end
 
 NS_ASSUME_NONNULL_END

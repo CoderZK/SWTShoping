@@ -13,8 +13,8 @@
 #import "SWTShopHomeHeadView.h"
 @interface SWTShopHomeVC ()<XPCollectionViewWaterfallFlowLayoutDataSource,UICollectionViewDelegate,UICollectionViewDataSource>@property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 @property(nonatomic , strong)UICollectionView *collectionView;
-@property(nonatomic , strong)UIImageView *imagV;
-@property(nonatomic , strong)UIView *headV;
+//@property(nonatomic , strong)UIImageView *imagV;
+@property(nonatomic , strong)SWTNavitageView *naView;
 @property(nonatomic , strong)UILabel *titleLB;
 @property(nonatomic , strong)SWTShopHomeHeadView *headView;
 @end
@@ -75,46 +75,30 @@
     
     self.collectionView.contentInset = UIEdgeInsetsMake(yy  ,0, 0, 0);
     self.headView = [[SWTShopHomeHeadView alloc] initWithFrame:CGRectMake(0, -yy, ScreenW, yy)];
+    self.headView.delegateSignal = [[RACSubject alloc] init];
+    @weakify(self);
+    [self.headView.delegateSignal subscribeNext:^(id  _Nullable x) {
+        @strongify(self);
+        
+    }];
     [self.collectionView addSubview:self.headView];;
     
 }
 
 - (void)setNav {
     
-    UIImageView * vv = [[UIImageView alloc]  initWithFrame:CGRectMake(0, 0, ScreenW, 115 + sstatusHeight + 44)];
-    vv.image = [UIImage  imageNamed:@"minebg"];
-    self.imagV = vv;
-    [self.view addSubview:vv];
-    self.view.backgroundColor =  BackgroundColor;
+    self.naView = [[SWTNavitageView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 115 + sstatusHeight + 44)];
     
-    
-    UILabel * titelLB  = [[UILabel alloc]  initWithFrame:CGRectMake(20, sstatusHeight, ScreenW - 80, 44)];
-    titelLB.font = kFont(18);
-    titelLB.textAlignment = NSTextAlignmentCenter;
-    titelLB.text = @"上海达文拍卖场";
-    titelLB.textColor = WhiteColor;
-    [self.view addSubview:titelLB];
-    
-    UIButton * leftBt  =[[UIButton alloc] initWithFrame:CGRectMake(0, sstatusHeight, 44, 44)];
-    [leftBt setImage:[UIImage imageNamed:@"wback"] forState:UIControlStateNormal];
-    [self.view addSubview:leftBt];
     @weakify(self);
-    [[leftBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+    [[self.naView.leftBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         @strongify(self);
         [self.navigationController popViewControllerAnimated:YES];
     }];
     
-    UIButton * rightBt  =[[UIButton alloc] initWithFrame:CGRectMake(ScreenW - 50, sstatusHeight, 50, 44)];
-    rightBt.titleLabel.font = kFont(14);
-    [rightBt setTitle:@"私信" forState:UIControlStateNormal];
-    [self.view addSubview:rightBt];
-    
-    [[rightBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        @strongify(self);
-        
-    }];
-    
-    
+    [[self.naView.rightBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+           
+       }];
+    [self.view addSubview:self.naView];
 }
 
 
@@ -191,14 +175,12 @@
     
     if (scrollView.contentOffset.y<= -yy) {
         
-        self.imagV.mj_h = sstatusHeight + 44 +115 - (scrollView.contentOffset.y + yy );
+        self.naView.imgV.mj_h = sstatusHeight + 44 +115 - (scrollView.contentOffset.y + yy );
     }else if (scrollView.contentOffset.y<= 115-yy) {
-        self.imagV.mj_h = sstatusHeight +  44 +115 - (scrollView.contentOffset.y + yy);
+        self.naView.imgV.mj_h = sstatusHeight +  44 +115 - (scrollView.contentOffset.y + yy);
     }else {
-        self.imagV.mj_h = sstatusHeight + 44;
+        self.naView.imgV.mj_h = sstatusHeight + 44;
     }
-    
-    
-    
+
 }
 @end

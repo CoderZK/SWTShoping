@@ -7,11 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+@class SWTMineGuanZHuDinaPuCell;
 
-NS_ASSUME_NONNULL_BEGIN
+
+@protocol SWTMineGuanZHuDinaPuCellDelegate <NSObject>
+
+- (void)didClickGuanZhuDianPuView:(SWTMineGuanZHuDinaPuCell *)cell withIndex:(NSInteger)index isClickHead:(BOOL)isClickHead;
+
+@end
 
 @interface SWTMineGuanZHuDinaPuCell : UITableViewCell
 @property(nonatomic , strong)NSMutableArray *dataArray;
+@property(nonatomic,assign)id<SWTMineGuanZHuDinaPuCellDelegate>delegate;
 @end
 
-NS_ASSUME_NONNULL_END
+

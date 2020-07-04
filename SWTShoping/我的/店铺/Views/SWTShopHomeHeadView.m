@@ -332,13 +332,17 @@
         [self.rightBt setTitleColor:RedColor forState:UIControlStateNormal];
     }
     
-    
+    if (self.delegateSignal) {
+        [self.delegateSignal sendNext:@(button.tag)];
+       }
 }
 
 /** 点击图片回调 */
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
     
-    
+    if (self.delegateSignal) {
+        [self.delegateSignal sendNext:@(index)];
+    }
     
     
 }

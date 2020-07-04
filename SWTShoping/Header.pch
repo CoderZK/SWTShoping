@@ -43,10 +43,17 @@
 #import <ReactiveObjC.h>
 #import <SDCycleScrollView.h>
 #import <Masonry.h>
-#import "XPCollectionViewWaterfallFlowLayout.h"
 
+
+#import "XPCollectionViewWaterfallFlowLayout.h"
 #import "LTSCEventBus.h"
 #import "LTSCNoneView.h"
+
+
+#import "SWTNavitageView.h"
+#import "SWTShopHomeVC.h"
+#import "SWTGoodsDetailTVC.h"
+
 
 #define iOS11Later ([UIDevice currentDevice].systemVersion.floatValue >= 11.0f)
 

@@ -15,6 +15,8 @@
     // Initialization code
     self.leftV.backgroundColor = RedColor;
     self.leftV.hidden = NO;
+    
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -35,5 +37,7 @@
     
 
 }
+
+
 
 @end

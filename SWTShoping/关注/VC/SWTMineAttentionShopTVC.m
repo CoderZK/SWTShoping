@@ -9,7 +9,7 @@
 #import "SWTMineAttentionShopTVC.h"
 #import "SWTMineGuanZHuDinaPuCell.h"
 
-@interface SWTMineAttentionShopTVC ()
+@interface SWTMineAttentionShopTVC ()<SWTMineGuanZHuDinaPuCellDelegate>
 
 @end
 
@@ -37,6 +37,7 @@
     // cell.nameLB.text = @"fgkodkgfeoprkgkp";
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.dataArray = @[@"",@"",@"",@"",@"",@"",@"",@"",@"",@""].mutableCopy;
+    cell.delegate = self;
     return cell;
 }
 
@@ -48,6 +49,23 @@
     
 }
 
+#pragma mark --- 点击 cell  ----
 
+- (void)didClickGuanZhuDianPuView:(SWTMineGuanZHuDinaPuCell *)cell withIndex:(NSInteger)index isClickHead:(BOOL)isClickHead {
+    if (isClickHead) {
+        //点击的是头像或者进店
+        SWTShopHomeVC * vc =[[SWTShopHomeVC alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+        
+        
+    }else {
+        //点击的是内部的其他信息
+        
+        
+    }
+    
+    
+}
 
 @end

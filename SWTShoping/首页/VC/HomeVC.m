@@ -14,6 +14,7 @@
 #import "SWTHomeCollectionTwoCell.h"
 #import "SWTHomeCollectionThreeCell.h"
 #import "SWTFenLeiFirstVC.h"
+
 @interface HomeVC ()<UIScrollViewDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource,SWTHomeHeadViewDelegate>
 @property(nonatomic , strong)SWTHomeHeadView *headView;
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
@@ -195,6 +196,9 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
+    SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
    
 }
 
@@ -267,6 +271,7 @@
     }
     
 }
+
 
 
 @end

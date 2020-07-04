@@ -81,6 +81,9 @@
     self.headBt.layer.cornerRadius = 10;
     self.headBt.clipsToBounds = YES;
     [self.headBt setBackgroundImage:[UIImage imageNamed:@"369"] forState:UIControlStateNormal];
+    
+    self.headBt.tag = 0;
+    [self.headBt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
 
     self.nameLb =[[UILabel alloc] init];
     self.nameLb.font = kFont(13);
@@ -95,11 +98,18 @@
     
     self.jinDianBt =[[UIButton alloc] init];
     [self.jinDianBt setBackgroundImage:[UIImage imageNamed:@"jindian"] forState:UIControlStateNormal];
+    self.jinDianBt.tag = 1;
+       [self.jinDianBt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
     
     
     
     
-    
+}
+
+- (void)clickAction:(UIButton *)button {
+   if (self.delegate != nil && [self.delegate respondsToSelector:@selector(didClickGuanZhuDianPuView:withIndex:isClickHead:)]) {
+       [self.delegate didClickGuanZhuDianPuView:self withIndex:button.tag isClickHead:YES];
+    }
 }
 
 - (void)setDataArray:(NSMutableArray *)dataArray {
@@ -122,7 +132,9 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(didClickGuanZhuDianPuView:withIndex:isClickHead:)]) {
+        [self.delegate didClickGuanZhuDianPuView:self withIndex:indexPath.row isClickHead:NO];
+    }
     
 }
 

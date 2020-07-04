@@ -79,6 +79,10 @@
 		666BB1B824AF6F3C00341CE8 /* SWTJiFenCollectHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 666BB1B724AF6F3C00341CE8 /* SWTJiFenCollectHeadView.m */; };
 		666BB1C224AF803200341CE8 /* SWTShopHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 666BB1C124AF803200341CE8 /* SWTShopHomeVC.m */; };
 		666BB1C524AF86B200341CE8 /* SWTShopHomeHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 666BB1C424AF86B200341CE8 /* SWTShopHomeHeadView.m */; };
+		666BB1C824B0005F00341CE8 /* SWTNavitageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 666BB1C724B0005F00341CE8 /* SWTNavitageView.m */; };
+		666BB1CB24B005EB00341CE8 /* SWTGoodsDetailTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 666BB1CA24B005EB00341CE8 /* SWTGoodsDetailTVC.m */; };
+		666BB1CE24B059BA00341CE8 /* SWTGoodsDetailHeadV.m in Sources */ = {isa = PBXBuildFile; fileRef = 666BB1CD24B059BA00341CE8 /* SWTGoodsDetailHeadV.m */; };
+		666BB1D124B0671200341CE8 /* SWTGoodsDetailTableViewContentCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666BB1D024B0671200341CE8 /* SWTGoodsDetailTableViewContentCollCell.m */; };
 		66C8F7A024AB1E0B008C7A3A /* noneNet@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66C8F79A24AB1E0B008C7A3A /* noneNet@3x.png */; };
 		66C8F7A124AB1E0B008C7A3A /* LTSCNoneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66C8F79B24AB1E0B008C7A3A /* LTSCNoneView.m */; };
 		66C8F7A224AB1E0B008C7A3A /* noneNet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66C8F79C24AB1E0B008C7A3A /* noneNet@2x.png */; };
@@ -116,7 +120,7 @@
 		335010EB20EE05C000F8486B /* UIButton+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Badge.m"; sourceTree = "<group>"; };
 		335010EC20EE05C100F8486B /* UIButton+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Badge.h"; sourceTree = "<group>"; };
 		335010ED20EE05C100F8486B /* NSString+Size.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Size.h"; sourceTree = "<group>"; };
-		337F3E5620E9FE3B00C5526A /* SWTShoping.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SWTShoping.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		337F3E5620E9FE3B00C5526A /* 商城测试.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "商城测试.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		337F3E5920E9FE3B00C5526A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		337F3E5A20E9FE3B00C5526A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		337F3E5C20E9FE3C00C5526A /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
@@ -234,6 +238,14 @@
 		666BB1C124AF803200341CE8 /* SWTShopHomeVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTShopHomeVC.m; sourceTree = "<group>"; };
 		666BB1C324AF86B200341CE8 /* SWTShopHomeHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTShopHomeHeadView.h; sourceTree = "<group>"; };
 		666BB1C424AF86B200341CE8 /* SWTShopHomeHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTShopHomeHeadView.m; sourceTree = "<group>"; };
+		666BB1C624B0005F00341CE8 /* SWTNavitageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTNavitageView.h; sourceTree = "<group>"; };
+		666BB1C724B0005F00341CE8 /* SWTNavitageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTNavitageView.m; sourceTree = "<group>"; };
+		666BB1C924B005EB00341CE8 /* SWTGoodsDetailTVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTGoodsDetailTVC.h; sourceTree = "<group>"; };
+		666BB1CA24B005EB00341CE8 /* SWTGoodsDetailTVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTGoodsDetailTVC.m; sourceTree = "<group>"; };
+		666BB1CC24B059BA00341CE8 /* SWTGoodsDetailHeadV.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTGoodsDetailHeadV.h; sourceTree = "<group>"; };
+		666BB1CD24B059BA00341CE8 /* SWTGoodsDetailHeadV.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTGoodsDetailHeadV.m; sourceTree = "<group>"; };
+		666BB1CF24B0671200341CE8 /* SWTGoodsDetailTableViewContentCollCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTGoodsDetailTableViewContentCollCell.h; sourceTree = "<group>"; };
+		666BB1D024B0671200341CE8 /* SWTGoodsDetailTableViewContentCollCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTGoodsDetailTableViewContentCollCell.m; sourceTree = "<group>"; };
 		66C8F79A24AB1E0B008C7A3A /* noneNet@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "noneNet@3x.png"; sourceTree = "<group>"; };
 		66C8F79B24AB1E0B008C7A3A /* LTSCNoneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSCNoneView.m; sourceTree = "<group>"; };
 		66C8F79C24AB1E0B008C7A3A /* noneNet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "noneNet@2x.png"; sourceTree = "<group>"; };
@@ -296,7 +308,7 @@
 		337F3E5720E9FE3B00C5526A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				337F3E5620E9FE3B00C5526A /* SWTShoping.app */,
+				337F3E5620E9FE3B00C5526A /* 商城测试.app */,
 				337F3E6E20E9FE5400C5526A /* SWTShopingTests.xctest */,
 				337F3E7920E9FE5400C5526A /* SWTShopingUITests.xctest */,
 			);
@@ -540,6 +552,10 @@
 				666BB1B324AF6EF400341CE8 /* SWTFenLeiCollectTwoCell.xib */,
 				666BB1B624AF6F3C00341CE8 /* SWTJiFenCollectHeadView.h */,
 				666BB1B724AF6F3C00341CE8 /* SWTJiFenCollectHeadView.m */,
+				666BB1CC24B059BA00341CE8 /* SWTGoodsDetailHeadV.h */,
+				666BB1CD24B059BA00341CE8 /* SWTGoodsDetailHeadV.m */,
+				666BB1CF24B0671200341CE8 /* SWTGoodsDetailTableViewContentCollCell.h */,
+				666BB1D024B0671200341CE8 /* SWTGoodsDetailTableViewContentCollCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -553,6 +569,8 @@
 				666658EC24AA3FA4006C17B4 /* XPCollectionViewWaterfallFlowLayout.m */,
 				666325D924AE2986009D77AF /* SWTFenLeiFirstVC.h */,
 				666325DA24AE2986009D77AF /* SWTFenLeiFirstVC.m */,
+				666BB1C924B005EB00341CE8 /* SWTGoodsDetailTVC.h */,
+				666BB1CA24B005EB00341CE8 /* SWTGoodsDetailTVC.m */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -614,6 +632,8 @@
 			children = (
 				666658E224AA23B7006C17B4 /* ALCSearchView.h */,
 				666658E324AA23B7006C17B4 /* ALCSearchView.m */,
+				666BB1C624B0005F00341CE8 /* SWTNavitageView.h */,
+				666BB1C724B0005F00341CE8 /* SWTNavitageView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -692,7 +712,7 @@
 			);
 			name = SWTShoping;
 			productName = SWTShoping;
-			productReference = 337F3E5620E9FE3B00C5526A /* SWTShoping.app */;
+			productReference = 337F3E5620E9FE3B00C5526A /* 商城测试.app */;
 			productType = "com.apple.product-type.application";
 		};
 		337F3E6D20E9FE5400C5526A /* SWTShopingTests */ = {
@@ -882,6 +902,7 @@
 				666658E424AA23B7006C17B4 /* ALCSearchView.m in Sources */,
 				6669F5D924AB962F0013675E /* SWTMineSectionHeadView.m in Sources */,
 				337F3E6920E9FE5300C5526A /* main.m in Sources */,
+				666BB1C824B0005F00341CE8 /* SWTNavitageView.m in Sources */,
 				337F3EB420EA040400C5526A /* UIView+BSExtension.m in Sources */,
 				33DC824F20EA224F00D1C283 /* HangQingVC.m in Sources */,
 				337F3E5B20E9FE3B00C5526A /* AppDelegate.m in Sources */,
@@ -896,11 +917,14 @@
 				337F3EAE20EA014600C5526A /* BaseCollectionReusableView.m in Sources */,
 				335010DD20EDF9AE00F8486B /* zkRequestTool.m in Sources */,
 				33DC825520EA245E00D1C283 /* HomeVC.m in Sources */,
+				666BB1D124B0671200341CE8 /* SWTGoodsDetailTableViewContentCollCell.m in Sources */,
 				666325DB24AE2986009D77AF /* SWTFenLeiFirstVC.m in Sources */,
 				33DC823320EA20D700D1C283 /* TabBarController.m in Sources */,
 				666658ED24AA3FA4006C17B4 /* XPCollectionViewWaterfallFlowLayout.m in Sources */,
+				666BB1CB24B005EB00341CE8 /* SWTGoodsDetailTVC.m in Sources */,
 				335010D920EDF8E400F8486B /* Clear.m in Sources */,
 				666BB1C224AF803200341CE8 /* SWTShopHomeVC.m in Sources */,
+				666BB1CE24B059BA00341CE8 /* SWTGoodsDetailHeadV.m in Sources */,
 				666BB1B824AF6F3C00341CE8 /* SWTJiFenCollectHeadView.m in Sources */,
 				337F3EA920EA014600C5526A /* BaseCollectionViewController.m in Sources */,
 				335010EF20EE05C100F8486B /* UIButton+Badge.m in Sources */,
@@ -1094,7 +1118,7 @@
 					"$(PROJECT_DIR)/SWTShoping/3rd/UMessage_Sdk_1.3.0",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zk.SWTShoping;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "商城测试";
 				PROVISIONING_PROFILE = "3bdcf4b3-e396-4d7a-ab2b-739f2269ddaa";
 				PROVISIONING_PROFILE_SPECIFIER = comDevPro;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1126,7 +1150,7 @@
 					"$(PROJECT_DIR)/SWTShoping/3rd/UMessage_Sdk_1.3.0",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zk.SWTShoping;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "商城测试";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
