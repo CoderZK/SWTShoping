@@ -3,16 +3,58 @@
     {
       "filename" : "price3.png",
       "idiom" : "universal",
+      "resizing" : {
+        "cap-insets" : {
+          "bottom" : 3,
+          "left" : 3,
+          "right" : 50,
+          "top" : 33
+        },
+        "center" : {
+          "height" : 1,
+          "mode" : "tile",
+          "width" : 1
+        },
+        "mode" : "9-part"
+      },
       "scale" : "1x"
     },
     {
       "filename" : "price3@2x.png",
       "idiom" : "universal",
+      "resizing" : {
+        "cap-insets" : {
+          "bottom" : 7,
+          "left" : 7,
+          "right" : 44,
+          "top" : 35
+        },
+        "center" : {
+          "height" : 1,
+          "mode" : "tile",
+          "width" : 1
+        },
+        "mode" : "9-part"
+      },
       "scale" : "2x"
     },
     {
       "filename" : "price3@3x.png",
       "idiom" : "universal",
+      "resizing" : {
+        "cap-insets" : {
+          "bottom" : 8,
+          "left" : 8,
+          "right" : 65,
+          "top" : 50
+        },
+        "center" : {
+          "height" : 1,
+          "mode" : "tile",
+          "width" : 1
+        },
+        "mode" : "9-part"
+      },
       "scale" : "3x"
     }
   ],
