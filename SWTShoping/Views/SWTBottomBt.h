@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTBottomBt : UIButton
 
+@property (nonatomic, strong) UIImageView *iconImgView;
+@property (nonatomic, strong) UILabel *textLabel;
+
 @end
 
 NS_ASSUME_NONNULL_END

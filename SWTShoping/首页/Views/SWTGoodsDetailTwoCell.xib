@@ -17,13 +17,16 @@
                 <rect key="frame" x="0.0" y="0.0" width="441" height="189"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8I7-2x-6mF">
+                    <button opaque="NO" tag="102" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8I7-2x-6mF">
                         <rect key="frame" x="10" y="139" width="421" height="40"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="wD5-mG-R7z"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <state key="normal" title="出价" backgroundImage="live_cgj_bg"/>
+                        <state key="normal" title="出价" backgroundImage="rbg"/>
+                        <connections>
+                            <action selector="clickAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="eCW-lT-RyP"/>
+                        </connections>
                     </button>
                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Zz-LB-lZe">
                         <rect key="frame" x="10" y="0.0" width="421" height="129"/>
@@ -78,21 +81,27 @@
                                 <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9dz-cr-Muc">
+                            <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9dz-cr-Muc">
                                 <rect key="frame" x="381" y="25" width="35" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="F7b-7m-i1V"/>
                                     <constraint firstAttribute="width" constant="35" id="Fsn-Tl-WaB"/>
                                 </constraints>
                                 <state key="normal" image="collection"/>
+                                <connections>
+                                    <action selector="clickAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="EwR-i5-eT1"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A1B-cb-Igc">
+                            <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A1B-cb-Igc">
                                 <rect key="frame" x="384" y="84.5" width="32" height="13"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="32" id="lci-bB-UCR"/>
                                     <constraint firstAttribute="height" constant="13" id="tdw-ZE-DwZ"/>
                                 </constraints>
                                 <state key="normal" backgroundImage="refresh"/>
+                                <connections>
+                                    <action selector="clickAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="U1a-e3-ytO"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="距离结束还有1个小时" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pRD-eA-i6U">
                                 <rect key="frame" x="290" y="10" width="126" height="16"/>
@@ -132,18 +141,28 @@
                     <constraint firstAttribute="trailing" secondItem="8I7-2x-6mF" secondAttribute="trailing" constant="10" id="KqH-aJ-4Ka"/>
                     <constraint firstItem="8I7-2x-6mF" firstAttribute="top" secondItem="0Zz-LB-lZe" secondAttribute="bottom" constant="10" id="N9u-T8-1Kk"/>
                     <constraint firstAttribute="trailing" secondItem="0Zz-LB-lZe" secondAttribute="trailing" constant="10" id="NAV-fk-pKJ"/>
-                    <constraint firstAttribute="bottom" secondItem="8I7-2x-6mF" secondAttribute="bottom" constant="10" id="SvR-1W-pYE"/>
+                    <constraint firstAttribute="bottom" secondItem="8I7-2x-6mF" secondAttribute="bottom" id="SvR-1W-pYE"/>
                     <constraint firstItem="0Zz-LB-lZe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="iMF-Yt-P4T"/>
                     <constraint firstItem="0Zz-LB-lZe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="v30-Oa-cq3"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="chujiaBt" destination="8I7-2x-6mF" id="gPw-H0-znB"/>
+                <outlet property="collectionBt" destination="9dz-cr-Muc" id="wWP-nm-LUP"/>
+                <outlet property="desLB" destination="HNu-AF-Gun" id="tHh-1X-fYJ"/>
+                <outlet property="moneyLB" destination="foY-Xt-Agm" id="IPh-2d-OFB"/>
+                <outlet property="refreshBt" destination="A1B-cb-Igc" id="i32-0e-AYo"/>
+                <outlet property="timeLB" destination="pRD-eA-i6U" id="K8C-OL-hGp"/>
+                <outlet property="titleLB" destination="GZn-at-hcm" id="AgG-yW-rHy"/>
+                <outlet property="typeLB" destination="d8L-ur-4DG" id="8p8-pT-JkQ"/>
+            </connections>
             <point key="canvasLocation" x="32.608695652173914" y="33.816964285714285"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="collection" width="15" height="14"/>
-        <image name="live_cgj_bg" width="63" height="20.5"/>
+        <image name="rbg" width="63" height="20.5"/>
         <image name="refresh" width="32" height="12.5"/>
     </resources>
 </document>

@@ -7,8 +7,10 @@
 //
 
 #import "SWTMineCollectVC.h"
-
-@interface SWTMineCollectVC ()
+#import "SWTGuanZhuCollectionCell.h"
+@interface SWTMineCollectVC ()<UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource>
+@property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
+@property(nonatomic , strong)UICollectionView *collectionView;
 
 @end
 
@@ -16,17 +18,81 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.navigationItem.title = @"我的收藏";
+    
+     self.layout =[[XPCollectionViewWaterfallFlowLayout alloc] init];
+        self.layout.dataSource = self;
+        
+        self.collectionView  = [[UICollectionView alloc] initWithFrame:CGRectMake(0,0, ScreenW, ScreenH) collectionViewLayout:self.layout];;
+        
+        self.collectionView.dataSource = self;
+        self.collectionView.delegate = self;
+        
+    //               self.collectionView.scrollEnabled = NO;
+        self.collectionView.backgroundColor = BackgroundColor;
+        [self.view addSubview:self.collectionView];
+    
+    [self.collectionView registerNib:[UINib nibWithNibName:@"SWTGuanZhuCollectionCell" bundle:nil] forCellWithReuseIdentifier:@"SWTGuanZhuCollectionCell"];
+    
+    
+}
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+   
+    return 9;
+   
 }
-*/
+
+
+- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+
+
+        SWTGuanZhuCollectionCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTGuanZhuCollectionCell" forIndexPath:indexPath];
+        return cell;
+    
+}
+
+
+
+
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+   
+}
+
+    
+- (NSInteger)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout numberOfColumnInSection:(NSInteger)section {
+
+    return 2;
+    
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout itemWidth:(CGFloat)width heightForItemAtIndexPath:(NSIndexPath *)indexPath {
+  
+        return 150 + arc4random() % 100;
+    
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout insetForSectionAtIndex:(NSInteger)section {
+    return UIEdgeInsetsMake(10.0, 10.0, 10.0, 10.0);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout*)layout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    return 10.0;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout*)layout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    return 10.0;
+}
 
 @end

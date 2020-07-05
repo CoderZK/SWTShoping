@@ -15,6 +15,13 @@
     self.backgroundColor = [UIColor clearColor];
     self.contentView.backgroundColor = [UIColor clearColor];
 }
+- (IBAction)clickAction:(UIButton *)sender {
+    
+    if (self.delegateSignal) {
+        [self.delegateSignal sendNext: @""];
+    }
+    
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

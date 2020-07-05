@@ -7,26 +7,25 @@
 //
 
 #import "SWTLaoYouHomeTVC.h"
-
+#import "SWTLaoYouHomeHeadView.h"
 @interface SWTLaoYouHomeTVC ()
-
+@property(nonatomic , strong)SWTLaoYouHomeHeadView *headV;
 @end
 
 @implementation SWTLaoYouHomeTVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.navigationItem.title = @"我要开店";
+    [self initAddHeadV];
+    
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)initAddHeadV{
+    self.headV =[[SWTLaoYouHomeHeadView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+    
+    self.tableView.tableHeaderView = self.headV;
 }
-*/
+
 
 @end

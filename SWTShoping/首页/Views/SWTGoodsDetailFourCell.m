@@ -42,7 +42,7 @@
         
         [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.bottom.equalTo(self.backV);
-            make.top.equalTo(self).offset(10);
+            make.top.equalTo(self.backV).offset(10);
         }];
         
         

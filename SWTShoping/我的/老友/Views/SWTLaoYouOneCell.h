@@ -11,7 +11,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTLaoYouOneCell : UITableViewCell
-
+@property(nonatomic , strong)UIImageView *leftimgV;
+@property(nonatomic , strong)UILabel *leftOneLB,*leftTwoLb,*leftThreeLB;
+@property(nonatomic , strong)UIImageView *rightImgV;
+@property(nonatomic , strong)UIButton *shopNameBt;
 @end
 
 NS_ASSUME_NONNULL_END

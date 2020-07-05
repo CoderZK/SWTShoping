@@ -15,6 +15,8 @@
 #import "SWTMineThreeCell.h"
 #import "SWTMineSectionHeadView.h"
 #import "SWTShopHomeVC.h"
+#import "SWTMineCollectVC.h"
+#import "SWTLaoYouHomeTVC.h"
 @interface MineVC ()<XPCollectionViewWaterfallFlowLayoutDataSource,UICollectionViewDelegate,UICollectionViewDataSource>
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 @property(nonatomic , strong)UICollectionView *collectionView;
@@ -123,12 +125,60 @@
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             SWTMineOneCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTMineOneCell" forIndexPath:indexPath];
+            Weak(weakSelf);
+            cell.mineOneCellBlock = ^(NSInteger index) {
+                if (index == 0) {
+                    
+                }else if (index == 1) {
+                    
+                }else if (index == 2) {
+                    
+                }else if (index == 3) {
+                    
+                }else if (index == 4) {
+                    
+                }else if (index == 5) {
+                    
+                }else if (index == 6) {
+                    
+                }else if (index == 7) {
+                    
+                }
+            };
             return cell;
         }else if (indexPath.row == 1) {
            SWTMineTwoCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTMineTwoCell" forIndexPath:indexPath];
+            Weak(weakSelf);
+            cell.mineTwoCellBlock = ^(NSInteger index) {
+                
+            };
             return cell;
         }else {
            SWTMineThreeCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTMineThreeCell" forIndexPath:indexPath];
+            Weak(weakSelf);
+            cell.mineThreeCellBlock = ^(NSInteger index) {
+                if (index == 0) {
+                   SWTMineCollectVC * vc =[[SWTMineCollectVC alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [weakSelf.navigationController pushViewController:vc animated:YES];
+                }else if (index == 1) {
+                    
+                }else if (index == 2) {
+                    
+                }else if (index == 3) {
+                    
+                }else if (index == 4) {
+                    
+                }else if (index == 5) {
+                    
+                }else if (index == 6) {
+                    
+                }else if (index == 7) {
+                    SWTLaoYouHomeTVC * vc =[[SWTLaoYouHomeTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+            };
            return cell;
         }
     }else {
@@ -150,7 +200,9 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
    
-    
+    SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+       vc.hidesBottomBarWhenPushed = YES;
+       [self.navigationController pushViewController:vc animated:YES];
     
 }
 

@@ -21,7 +21,7 @@
         [self addSubview:self.titleLB];
         CGFloat ww = 70;
         CGFloat space = (frame.size.width - 4* ww) / 8;
-        NSArray * arr =  @[@"待我的收藏",@"参拍记录",@"我的钱包",@"优惠券",@"我的客服",@"帮助与反馈",@"联系我们",@"我要开店"];
+        NSArray * arr =  @[@"我的收藏",@"参拍记录",@"我的钱包",@"优惠券",@"我的客服",@"帮助与反馈",@"联系我们",@"我要开店"];
         for (int i = 0 ; i < arr.count; i++) {
             
             SWTMineHomeButton * bt  = [[SWTMineHomeButton alloc] initWithFrame:CGRectMake(space + (2*space + ww) * (i%4), 32 + i/4 * ww , ww, ww ) withImageWidth:22];

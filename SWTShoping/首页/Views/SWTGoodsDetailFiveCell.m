@@ -12,7 +12,17 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    self.backV.backgroundColor = WhiteColor;
+    self.backV.layer.cornerRadius = 5;
+    self.backV.clipsToBounds = YES;
+    self.headBt.layer.cornerRadius = 20;
+    self.headBt.clipsToBounds = YES;
+    
+    self.backgroundColor = [UIColor clearColor];
+    self.contentView.backgroundColor = [UIColor clearColor];
+    
+    
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

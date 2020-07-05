@@ -24,7 +24,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="801" height="512"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="宜兴泡茶户长流西施紫砂壶" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nsz-eJ-EQV">
-                                <rect key="frame" x="10" y="522" width="781" height="17"/>
+                                <rect key="frame" x="0.0" y="522" width="791" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="17" id="5Qp-SV-Mo9"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="17" id="LlS-dM-1YF"/>
@@ -34,7 +34,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="720" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FzC-fn-wKL">
-                                <rect key="frame" x="10" y="549" width="25" height="17"/>
+                                <rect key="frame" x="0.0" y="549" width="25" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="17" id="SQX-nN-TqV"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="10" id="aIm-Ro-bdB"/>
@@ -44,7 +44,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="起" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fCI-xS-B6K">
-                                <rect key="frame" x="40" y="550" width="31" height="15"/>
+                                <rect key="frame" x="30" y="550" width="31" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="31" id="Oif-Pg-cv0"/>
                                     <constraint firstAttribute="height" constant="15" id="ztf-Qx-T7f"/>
@@ -76,11 +76,11 @@
                             <constraint firstItem="2Ai-Wa-NKh" firstAttribute="top" secondItem="hP3-pr-8BS" secondAttribute="top" id="0g6-vP-nkx"/>
                             <constraint firstAttribute="trailing" secondItem="nsz-eJ-EQV" secondAttribute="trailing" constant="10" id="1JH-CI-WWF"/>
                             <constraint firstItem="fCI-xS-B6K" firstAttribute="leading" secondItem="FzC-fn-wKL" secondAttribute="trailing" constant="5" id="1uu-Ez-e3J"/>
-                            <constraint firstItem="nsz-eJ-EQV" firstAttribute="leading" secondItem="hP3-pr-8BS" secondAttribute="leading" constant="10" id="9Ru-kr-YLY"/>
+                            <constraint firstItem="nsz-eJ-EQV" firstAttribute="leading" secondItem="hP3-pr-8BS" secondAttribute="leading" id="9Ru-kr-YLY"/>
                             <constraint firstItem="GUN-9z-obn" firstAttribute="leading" secondItem="hP3-pr-8BS" secondAttribute="leading" id="E37-jR-g7c"/>
                             <constraint firstAttribute="trailing" secondItem="nsz-eJ-EQV" secondAttribute="trailing" constant="10" id="EbM-7G-HEg"/>
                             <constraint firstItem="GUN-9z-obn" firstAttribute="top" secondItem="hP3-pr-8BS" secondAttribute="top" id="HZc-Gw-NQw"/>
-                            <constraint firstItem="FzC-fn-wKL" firstAttribute="leading" secondItem="hP3-pr-8BS" secondAttribute="leading" constant="10" id="LF9-eU-piO"/>
+                            <constraint firstItem="FzC-fn-wKL" firstAttribute="leading" secondItem="hP3-pr-8BS" secondAttribute="leading" id="LF9-eU-piO"/>
                             <constraint firstItem="FzC-fn-wKL" firstAttribute="top" secondItem="nsz-eJ-EQV" secondAttribute="bottom" constant="10" id="OUk-6T-Ilx"/>
                             <constraint firstItem="nsz-eJ-EQV" firstAttribute="top" secondItem="GUN-9z-obn" secondAttribute="bottom" constant="10" id="SlZ-V9-kys"/>
                             <constraint firstItem="CCS-BZ-uEo" firstAttribute="leading" secondItem="hP3-pr-8BS" secondAttribute="leading" id="YvG-Bj-jlX"/>
