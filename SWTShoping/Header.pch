@@ -54,7 +54,8 @@
 #import "SWTShopHomeVC.h"
 #import "SWTGoodsDetailTVC.h"
 #import "SWTBottomBt.h"
-
+#import "TYPagerController.h"
+#import "TYTabPagerBar.h"
 
 #define iOS11Later ([UIDevice currentDevice].systemVersion.floatValue >= 11.0f)
 

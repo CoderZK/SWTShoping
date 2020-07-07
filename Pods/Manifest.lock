@@ -28,6 +28,7 @@ PODS:
   - SDWebImage/Core (4.3.2)
   - SVProgressHUD (2.2.5)
   - SwipeBack (1.1.1)
+  - TYPagerController (2.1.2)
   - UMCCommon (2.1.4)
   - UMCCommonLog (1.0.0)
   - UMCPush (3.2.4):
@@ -55,6 +56,7 @@ DEPENDENCIES:
   - SDWebImage
   - SVProgressHUD
   - SwipeBack
+  - TYPagerController
   - UMCCommon
   - UMCCommonLog
   - UMCPush
@@ -76,6 +78,7 @@ SPEC REPOS:
     - SDWebImage
     - SVProgressHUD
     - SwipeBack
+    - TYPagerController
     - UMCCommon
     - UMCCommonLog
     - UMCPush
@@ -95,12 +98,13 @@ SPEC CHECKSUMS:
   SDWebImage: 29bd3c0bc1f01e5eb59720847c64ad4c4ca1af5d
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwipeBack: d6759601b40da1f4161033feb30ab475d7d04322
+  TYPagerController: 262556ecef99986d26ed77fb1288a198ed42f4af
   UMCCommon: b0703b0053323f598e01670ea702b8eb1e66e611
   UMCCommonLog: 05a2d5de21858e3d870551562cff405c1366d244
   UMCPush: 1edd856027dcf905333effb4040ace5d236a7316
   UMCShare: a250203b34a56cde25cc4c28335449b542f0255d
   WechatOpenSDK: 6a4d1436c15b3b5fe2a0bd383f3046010186da44
 
-PODFILE CHECKSUM: 77b60d666204f7bb437f48e30454aa804156707d
+PODFILE CHECKSUM: d26fc757e9bb2b0c87d3bbbfb4242711b178292c
 
 COCOAPODS: 1.7.2

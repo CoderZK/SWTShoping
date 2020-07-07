@@ -34,19 +34,22 @@
         self.leftimgV.clipsToBounds = YES;
         
         self.leftOneLB = [[UILabel alloc] init];
-        self.leftOneLB.font = kFont(13);
+        self.leftOneLB.font = kFont(14);
         self.leftOneLB.textColor = CharacterColor70;
+        self.leftOneLB.text = @"式搜救请我而佛";
         [self addSubview:self.leftOneLB];
         
         self.leftTwoLb = [[UILabel alloc] init];
-        self.leftTwoLb.font = kFont(13);
+        self.leftTwoLb.font = kFont(12);
         self.leftTwoLb.textColor = CharacterColor70;
+        self.leftTwoLb.text = @"剩余时间: 1小时47分58秒";
         [self addSubview:self.leftTwoLb];
         
         
         self.leftThreeLB = [[UILabel alloc] init];
         self.leftThreeLB.font = kFont(13);
-        self.leftThreeLB.textColor = CharacterColor70;
+        self.leftThreeLB.textColor = RedColor;
+        self.leftThreeLB.text = @"￥145";
         [self addSubview:self.leftThreeLB];
         
         self.rightImgV = [[UIImageView alloc] init];

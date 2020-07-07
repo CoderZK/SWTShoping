@@ -16,6 +16,7 @@
 #import "SWTGoodSDetailBottomView.h"
 #import "SWTGoodsDetailChuJiaView.h"
 #import "SWTGouMaiShowView.h"
+#import "SWTTiJiaoOrderTVC.h"
 @interface SWTGoodsDetailTVC ()
 @property(nonatomic , strong)SWTNavitageView *naView;
 @property(nonatomic , strong)SWTGoodsDetailHeadV *headV;
@@ -95,7 +96,9 @@
         
         if (x.intValue == 100) {
             //点击店铺
-            
+            SWTTiJiaoOrderTVC * vc =[[SWTTiJiaoOrderTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
         }else if (x.intValue == 101) {
             SWTGouMaiShowView * gouMaiV  = [[SWTGouMaiShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
             [gouMaiV show];

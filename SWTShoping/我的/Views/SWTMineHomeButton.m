@@ -19,14 +19,13 @@
         
         self.imgV = [[UIImageView alloc] init];
         [self addSubview:self.imgV];
+        self.imgV.image = [UIImage imageNamed:@"369"];
         [self.imgV mas_makeConstraints:^(MASConstraintMaker *make) {
            
             make.centerX.equalTo(self);
             make.width.height.equalTo(@(width));
-            make.centerY.equalTo(self.mas_centerY).offset(-(offY));
-            
-            
-            
+            make.centerY.equalTo(self.mas_centerY).offset(-(12));
+
         }];
         
         self.titleLB = [[UILabel alloc] init];

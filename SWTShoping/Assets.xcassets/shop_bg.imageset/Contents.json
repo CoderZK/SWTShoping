@@ -3,16 +3,58 @@
     {
       "filename" : "shop_bg.png",
       "idiom" : "universal",
+      "resizing" : {
+        "cap-insets" : {
+          "bottom" : 90,
+          "left" : 179,
+          "right" : 180,
+          "top" : 89
+        },
+        "center" : {
+          "height" : 1,
+          "mode" : "tile",
+          "width" : 1
+        },
+        "mode" : "9-part"
+      },
       "scale" : "1x"
     },
     {
       "filename" : "shop_bg@2x.png",
       "idiom" : "universal",
+      "resizing" : {
+        "cap-insets" : {
+          "bottom" : 180,
+          "left" : 359,
+          "right" : 360,
+          "top" : 180
+        },
+        "center" : {
+          "height" : 1,
+          "mode" : "tile",
+          "width" : 1
+        },
+        "mode" : "9-part"
+      },
       "scale" : "2x"
     },
     {
       "filename" : "shop_bg@3x.png",
       "idiom" : "universal",
+      "resizing" : {
+        "cap-insets" : {
+          "bottom" : 270,
+          "left" : 539,
+          "right" : 540,
+          "top" : 270
+        },
+        "center" : {
+          "height" : 1,
+          "mode" : "tile",
+          "width" : 1
+        },
+        "mode" : "9-part"
+      },
       "scale" : "3x"
     }
   ],

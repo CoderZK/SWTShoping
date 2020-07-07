@@ -32,7 +32,7 @@
             make.left.equalTo(self).offset(15);
             make.right.equalTo(self).offset(-15);
             make.bottom.equalTo(self).offset(-20);
-            make.top.equalTo(self).offset(30);
+            make.top.equalTo(self).offset(40);
             
         }];
         
@@ -45,7 +45,8 @@
         [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self.whiteV);
             make.top.equalTo(self.whiteV).offset(30);
-            make.bottom.equalTo(self.whiteV).offset(-20);
+            make.bottom.equalTo(self.whiteV).offset(-10);
+            make.height.equalTo(@1);
         }];
         
         [self.tableView registerNib:[UINib nibWithNibName:@"SWTLaoYouDesNeiOneCell" bundle:nil] forCellReuseIdentifier:@"SWTLaoYouDesNeiOneCell"];
@@ -70,8 +71,8 @@
     _dataArray = dataArray;
     [self.tableView reloadData];
     [self.tableView layoutIfNeeded];
-    [self.whiteV mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@(self.tableView.contentSize.height + 50));
+    [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@(self.tableView.contentSize.height+10));
     }];
 }
 

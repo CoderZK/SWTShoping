@@ -17,6 +17,10 @@
 #import "SWTShopHomeVC.h"
 #import "SWTMineCollectVC.h"
 #import "SWTLaoYouHomeTVC.h"
+#import "SWTCanPaiFarterVC.h"
+#import "SWTMineWalletTVC.h"
+#import "SWTMineYouHuiQuanTVC.h"
+#import "SWTHelpOneTVC.h"
 @interface MineVC ()<XPCollectionViewWaterfallFlowLayoutDataSource,UICollectionViewDelegate,UICollectionViewDataSource>
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 @property(nonatomic , strong)UICollectionView *collectionView;
@@ -162,17 +166,28 @@
                     vc.hidesBottomBarWhenPushed = YES;
                     [weakSelf.navigationController pushViewController:vc animated:YES];
                 }else if (index == 1) {
-                    
+                    SWTCanPaiFarterVC * vc =[[SWTCanPaiFarterVC alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [weakSelf.navigationController pushViewController:vc animated:YES];
                 }else if (index == 2) {
-                    
+                    SWTMineWalletTVC * vc =[[SWTMineWalletTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
                 }else if (index == 3) {
-                    
+                    SWTMineYouHuiQuanTVC * vc =[[SWTMineYouHuiQuanTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
                 }else if (index == 4) {
                     
                 }else if (index == 5) {
-                    
+                    SWTHelpOneTVC * vc =[[SWTHelpOneTVC alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
                 }else if (index == 6) {
-                    
+                    SWTHelpOneTVC * vc =[[SWTHelpOneTVC alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    vc.isLianXiUs = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
                 }else if (index == 7) {
                     SWTLaoYouHomeTVC * vc =[[SWTLaoYouHomeTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
                     vc.hidesBottomBarWhenPushed = YES;

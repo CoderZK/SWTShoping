@@ -36,6 +36,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.rootViewController = [self instantiateRootVC];
     [self.window makeKeyAndVisible];
+    self.window.backgroundColor = BackgroundColor;
     
     [WXApi registerApp:WXAppID universalLink:@"https://www.zftgame.com/huishou/"];
       [self initPush];

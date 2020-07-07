@@ -3,16 +3,58 @@
     {
       "filename" : "coupons_bj.png",
       "idiom" : "universal",
+      "resizing" : {
+        "cap-insets" : {
+          "bottom" : 33,
+          "left" : 11,
+          "right" : 84,
+          "top" : 32
+        },
+        "center" : {
+          "height" : 1,
+          "mode" : "tile",
+          "width" : 1
+        },
+        "mode" : "9-part"
+      },
       "scale" : "1x"
     },
     {
       "filename" : "coupons_bj@2x.png",
       "idiom" : "universal",
+      "resizing" : {
+        "cap-insets" : {
+          "bottom" : 65,
+          "left" : 22,
+          "right" : 166,
+          "top" : 65
+        },
+        "center" : {
+          "height" : 1,
+          "mode" : "tile",
+          "width" : 1
+        },
+        "mode" : "9-part"
+      },
       "scale" : "2x"
     },
     {
       "filename" : "coupons_bj@3x.png",
       "idiom" : "universal",
+      "resizing" : {
+        "cap-insets" : {
+          "bottom" : 98,
+          "left" : 33,
+          "right" : 250,
+          "top" : 98
+        },
+        "center" : {
+          "height" : 1,
+          "mode" : "tile",
+          "width" : 1
+        },
+        "mode" : "9-part"
+      },
       "scale" : "3x"
     }
   ],
