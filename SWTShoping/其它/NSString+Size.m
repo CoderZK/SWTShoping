@@ -110,6 +110,18 @@
 }
 
 
++ (BOOL)checkStingContainLetterAndNumberWithString:(NSString *)string {
+    
+    NSCharacterSet *cs = [[NSCharacterSet characterSetWithCharactersInString:@"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"] invertedSet];
+    NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+    
+    NSCharacterSet *cs2 = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet];
+    NSString *filtered2 = [[string componentsSeparatedByCharactersInSet:cs2] componentsJoinedByString:@""];
+    
+    return filtered.length > 0 && filtered2.length > 0;
+    
+}
+
 /**
  获得字符串的大小
  */
@@ -138,6 +150,12 @@
     return height;
 }
 
+-(CGFloat)getWidhtWithFontSize:(int)fontSize
+{
+    CGSize size=[self boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading  attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:fontSize]} context:nil].size;
+    return size.width;
+}
+
 - (CGFloat)getHeigtWithIsBlodFontSize:(int)fontSize lineSpace:(int )lineSpace width:(CGFloat )widht {
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self];
     
@@ -152,6 +170,27 @@
     CGFloat height = [attributedString boundingRectWithSize:CGSizeMake(widht, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading  context:nil].size.height;
     
     return height;
+}
+
+-(CGFloat)getWidhtWithFontSize:(int)fontSize withBlood:(BOOL )isBlood{
+    
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self];
+    
+    if (isBlood) {
+          [attributedString addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:fontSize] range:NSMakeRange(0, self.length)];
+       }else {
+         [attributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:fontSize] range:NSMakeRange(0, self.length)];
+       }
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    
+//    [paragraphStyle setLineSpacing:lineSpace];//调整行间距
+    
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, self.length)];
+    
+    CGFloat width = [attributedString boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading  context:nil].size.width;
+    
+    return width;
+    
 }
 
 - (NSMutableAttributedString *)getMutableAttributeStringWithFont:(int)fontSize lineSpace:(int)lineSpace textColor:(UIColor *)color{
@@ -199,6 +238,44 @@
     
     
 }
+
+- (NSMutableAttributedString *)getMutableAttributeStringWithFont:(int)fontSize lineSpace:(int)lineSpace textColor:(UIColor *)color textColorTwo:(UIColor *)colorTwo nsrange:(NSRange )range {
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self];
+    [attributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:fontSize] range:NSMakeRange(0, self.length)];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, self.length)];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:colorTwo range:range];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle setLineSpacing:lineSpace];//调整行间距
+    paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, self.length)];
+    return attributedString;
+}
+
+- (NSMutableAttributedString *)getMutableAttributeStringWithFont:(int)fontSize lineSpace:(int)lineSpace textColor:(UIColor *)color fontTwo:(int)fontTwo nsrange:(NSRange )range {
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self];
+    [attributedString addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:fontSize] range:NSMakeRange(0, self.length - range.length)];
+    [attributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:fontTwo] range:range];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, self.length)];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle setLineSpacing:lineSpace];//调整行间距
+    paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, self.length)];
+    return attributedString;
+}
+
+- (NSMutableAttributedString *)getMutableAttributeStringWithFont:(int)fontSize lineSpace:(int)lineSpace textColor:(UIColor *)color textColorOne:(UIColor *)colorOne textColorTwo:(UIColor *)colorTwo nsrangeOne:(NSRange )rangeOne nsRangeTwo:(NSRange)rangeTwo {
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self];
+      [attributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:fontSize] range:NSMakeRange(0, self.length)];
+      [attributedString addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, self.length)];
+      [attributedString addAttribute:NSForegroundColorAttributeName value:colorOne range:rangeOne];
+      [attributedString addAttribute:NSForegroundColorAttributeName value:colorTwo range:rangeTwo];
+      NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+      [paragraphStyle setLineSpacing:lineSpace];//调整行间距
+      paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
+      [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, self.length)];
+      return attributedString;
+}
+
 
 +(NSString *)stringWithDateStrwithyymmddHHmm:(NSNumber *)str
 {
@@ -420,6 +497,26 @@
     return distanceStr;
 }
 
+//返回月日
++(NSString *)stringWithDatemmdd:(NSString *)str withIsDian:(BOOL)isDian {
+    
+    NSString * yue = @"";
+    NSString * ri = @"";
+    
+    if (str.length >=7) {
+        yue = [str substringWithRange:NSMakeRange(5, 2)];
+    }
+    if (str.length >= 10) {
+        ri = [str substringWithRange:NSMakeRange(8, 2)];
+    }
+    
+    if (isDian) {
+        return [NSString stringWithFormat:@"%@.%@",yue,ri];
+    }else {
+         return [NSString stringWithFormat:@"%@-%@",yue,ri];
+    }
+    
+}
 
 
 //根据时间判断
@@ -513,6 +610,63 @@
 }
 
 
+#pragma mark - 32位 大写
++(NSString *)MD5ForUpper32Bate:(NSString *)str{
+    
+    //要进行UTF8的转码
+    const char* input = [str UTF8String];
+    unsigned char result[CC_MD5_DIGEST_LENGTH];
+    CC_MD5(input, (CC_LONG)strlen(input), result);
+    
+    NSMutableString *digest = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
+    for (NSInteger i = 0; i < CC_MD5_DIGEST_LENGTH; i++) {
+        [digest appendFormat:@"%02X", result[i]];
+    }
+    
+    return digest;
+}
+
+#pragma mark - 16位 大写
++(NSString *)MD5ForUpper16Bate:(NSString *)str{
+    
+    NSString *md5Str = [self MD5ForUpper32Bate:str];
+    
+    NSString  *string;
+    for (int i=0; i<24; i++) {
+        string=[md5Str substringWithRange:NSMakeRange(8, 16)];
+    }
+    return string;
+}
+
++(NSString *)MD5ForLower32Bate:(NSString *)str{
+    
+    //要进行UTF8的转码
+    const char* input = [str UTF8String];
+    unsigned char result[CC_MD5_DIGEST_LENGTH];
+    CC_MD5(input, (CC_LONG)strlen(input), result);
+    
+    NSMutableString *digest = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
+    for (NSInteger i = 0; i < CC_MD5_DIGEST_LENGTH; i++) {
+        [digest appendFormat:@"%02x", result[i]];
+    }
+    
+    return digest;
+}
+
+#pragma mark - 16位 小写
++(NSString *)MD5ForLower16Bate:(NSString *)str{
+    
+    NSString *md5Str = [self MD5ForLower32Bate:str];
+    
+    NSString  *string;
+    for (int i=0; i<24; i++) {
+        string=[md5Str substringWithRange:NSMakeRange(8, 16)];
+    }
+    return string;
+}
+
+
+
 //汉字的拼音
 - (NSString *)pinyin{
     NSMutableString *str = [self mutableCopy];
@@ -590,6 +744,62 @@
 - (NSString *)getQuanUrl {
 //    return  [NSString stringWithFormat:@"%@/%@%@",KKBaseUrl,@"downloadFile.do?id=",self];
     return @"";
+}
+
+
++ (NSDate *)getLaterDateFromDate:(NSDate *)date withYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day {
+    
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *comps = nil;
+    comps = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:date];
+    NSDateComponents *adcomps = [[NSDateComponents alloc] init];
+    [adcomps setYear:year];
+    [adcomps setMonth:month];
+    [adcomps setDay:day];
+    NSDate *newdate = [calendar dateByAddingComponents:adcomps toDate:date options:0];
+    return newdate;
+}
+
+
+
+- (NSString *)getFirstPicStr {
+    NSArray * arr = [self componentsSeparatedByString:@","];
+    if (arr.count > 0) {
+        return [arr[0] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet  URLQueryAllowedCharacterSet]];
+    }else {
+        return @"";
+    }
+}
+
+- (NSURL *)getPicURL {
+    
+    return [NSURL URLWithString:[self stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet  URLQueryAllowedCharacterSet]]];
+    
+}
+
+
++ (NSTimeInterval)pleaseInsertStarTime:(NSString *)starTime andInsertEndTime:(NSString *)endTime{
+    
+    NSDateFormatter* formater = [[NSDateFormatter alloc] init];
+    [formater setDateFormat:@"yyyy-MM-dd HH:mm:ss"];//根据自己的需求定义格式
+    NSDate* startDate = [formater dateFromString:starTime];
+    NSDate* endDate = [formater dateFromString:endTime];
+    NSTimeInterval time = [endDate timeIntervalSinceDate:startDate];
+    return time;
+}
+
+//json 字符串转对象
++ (NSDictionary *)convertjsonStringToDict:(NSString *)jsonString{
+
+    NSDictionary *retDict = nil;
+    if ([jsonString isKindOfClass:[NSString class]]) {
+        NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+        retDict = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:NULL];
+        return  retDict;
+    }else{
+        return retDict;
+    }
+
 }
 
 

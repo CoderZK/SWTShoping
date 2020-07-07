@@ -105,6 +105,12 @@
 		6673BA9A24B36E7200037A14 /* SWTTiJiaoOrderTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6673BA9924B36E7200037A14 /* SWTTiJiaoOrderTVC.m */; };
 		6673BA9E24B36FA000037A14 /* SWTTongYongOneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6673BA9C24B36FA000037A14 /* SWTTongYongOneCell.m */; };
 		6673BA9F24B36FA000037A14 /* SWTTongYongOneCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6673BA9D24B36FA000037A14 /* SWTTongYongOneCell.xib */; };
+		6674243524B4B7DF007A6A56 /* SWTVideoSubVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6674243424B4B7DF007A6A56 /* SWTVideoSubVC.m */; };
+		6674243924B4C647007A6A56 /* SWTVideoDetailTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6674243824B4C647007A6A56 /* SWTVideoDetailTVC.m */; };
+		6674243C24B4C6EC007A6A56 /* SWTVideoDetailHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6674243B24B4C6EC007A6A56 /* SWTVideoDetailHeadView.m */; };
+		6674243F24B4C95B007A6A56 /* SWTVideoFartherVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6674243E24B4C95B007A6A56 /* SWTVideoFartherVC.m */; };
+		6674244324B4CBCF007A6A56 /* SWTVideoDetailOneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6674244124B4CBCF007A6A56 /* SWTVideoDetailOneCell.m */; };
+		6674244424B4CBCF007A6A56 /* SWTVideoDetailOneCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6674244224B4CBCF007A6A56 /* SWTVideoDetailOneCell.xib */; };
 		6678B7E124B0AE2B00EA3A56 /* SWTGoodsDetailTwoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6678B7DF24B0AE2B00EA3A56 /* SWTGoodsDetailTwoCell.m */; };
 		6678B7E224B0AE2B00EA3A56 /* SWTGoodsDetailTwoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6678B7E024B0AE2B00EA3A56 /* SWTGoodsDetailTwoCell.xib */; };
 		6678B7E624B0B49500EA3A56 /* SWTGoodsDetailThreeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6678B7E424B0B49500EA3A56 /* SWTGoodsDetailThreeCell.m */; };
@@ -329,6 +335,17 @@
 		6673BA9B24B36FA000037A14 /* SWTTongYongOneCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTTongYongOneCell.h; sourceTree = "<group>"; };
 		6673BA9C24B36FA000037A14 /* SWTTongYongOneCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTTongYongOneCell.m; sourceTree = "<group>"; };
 		6673BA9D24B36FA000037A14 /* SWTTongYongOneCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTTongYongOneCell.xib; sourceTree = "<group>"; };
+		6674243324B4B7DF007A6A56 /* SWTVideoSubVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTVideoSubVC.h; sourceTree = "<group>"; };
+		6674243424B4B7DF007A6A56 /* SWTVideoSubVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTVideoSubVC.m; sourceTree = "<group>"; };
+		6674243724B4C647007A6A56 /* SWTVideoDetailTVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTVideoDetailTVC.h; sourceTree = "<group>"; };
+		6674243824B4C647007A6A56 /* SWTVideoDetailTVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTVideoDetailTVC.m; sourceTree = "<group>"; };
+		6674243A24B4C6EC007A6A56 /* SWTVideoDetailHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTVideoDetailHeadView.h; sourceTree = "<group>"; };
+		6674243B24B4C6EC007A6A56 /* SWTVideoDetailHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTVideoDetailHeadView.m; sourceTree = "<group>"; };
+		6674243D24B4C95B007A6A56 /* SWTVideoFartherVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTVideoFartherVC.h; sourceTree = "<group>"; };
+		6674243E24B4C95B007A6A56 /* SWTVideoFartherVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTVideoFartherVC.m; sourceTree = "<group>"; };
+		6674244024B4CBCF007A6A56 /* SWTVideoDetailOneCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTVideoDetailOneCell.h; sourceTree = "<group>"; };
+		6674244124B4CBCF007A6A56 /* SWTVideoDetailOneCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTVideoDetailOneCell.m; sourceTree = "<group>"; };
+		6674244224B4CBCF007A6A56 /* SWTVideoDetailOneCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTVideoDetailOneCell.xib; sourceTree = "<group>"; };
 		6678B7DE24B0AE2B00EA3A56 /* SWTGoodsDetailTwoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTGoodsDetailTwoCell.h; sourceTree = "<group>"; };
 		6678B7DF24B0AE2B00EA3A56 /* SWTGoodsDetailTwoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTGoodsDetailTwoCell.m; sourceTree = "<group>"; };
 		6678B7E024B0AE2B00EA3A56 /* SWTGoodsDetailTwoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTGoodsDetailTwoCell.xib; sourceTree = "<group>"; };
@@ -707,6 +724,11 @@
 				667A44BE24B1EDF7006C9072 /* SWTGoodsDetailChuJiaView.m */,
 				667A44C024B217AF006C9072 /* SWTGouMaiShowView.h */,
 				667A44C124B217AF006C9072 /* SWTGouMaiShowView.m */,
+				6674243A24B4C6EC007A6A56 /* SWTVideoDetailHeadView.h */,
+				6674243B24B4C6EC007A6A56 /* SWTVideoDetailHeadView.m */,
+				6674244024B4CBCF007A6A56 /* SWTVideoDetailOneCell.h */,
+				6674244124B4CBCF007A6A56 /* SWTVideoDetailOneCell.m */,
+				6674244224B4CBCF007A6A56 /* SWTVideoDetailOneCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -722,6 +744,12 @@
 				666325DA24AE2986009D77AF /* SWTFenLeiFirstVC.m */,
 				666BB1C924B005EB00341CE8 /* SWTGoodsDetailTVC.h */,
 				666BB1CA24B005EB00341CE8 /* SWTGoodsDetailTVC.m */,
+				6674243D24B4C95B007A6A56 /* SWTVideoFartherVC.h */,
+				6674243E24B4C95B007A6A56 /* SWTVideoFartherVC.m */,
+				6674243324B4B7DF007A6A56 /* SWTVideoSubVC.h */,
+				6674243424B4B7DF007A6A56 /* SWTVideoSubVC.m */,
+				6674243724B4C647007A6A56 /* SWTVideoDetailTVC.h */,
+				6674243824B4C647007A6A56 /* SWTVideoDetailTVC.m */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -1162,6 +1190,7 @@
 				337F3E6620E9FE5300C5526A /* LaunchScreen.storyboard in Resources */,
 				666325D824AE2626009D77AF /* SWTMessageOneCell.xib in Resources */,
 				337F3E6320E9FE5300C5526A /* Assets.xcassets in Resources */,
+				6674244424B4CBCF007A6A56 /* SWTVideoDetailOneCell.xib in Resources */,
 				667A44B624B16271006C9072 /* SWTGoodsDetailFiveCell.xib in Resources */,
 				666BB1B524AF6EF400341CE8 /* SWTFenLeiCollectTwoCell.xib in Resources */,
 				666658F524AA4439006C17B4 /* SWTHomeCollectionTwoCell.xib in Resources */,
@@ -1253,6 +1282,7 @@
 				33DC823420EA20D700D1C283 /* LYGuideViewController.m in Sources */,
 				33DC824920EA220400D1C283 /* MineVC.m in Sources */,
 				6673BA8924B356B900037A14 /* SWTLaoYouPinLeiCell.m in Sources */,
+				6674243F24B4C95B007A6A56 /* SWTVideoFartherVC.m in Sources */,
 				33DC825220EA228E00D1C283 /* GuanZhuVC.m in Sources */,
 				666325CD24AE1A6A009D77AF /* SWTGuanZhuCollectionCell.m in Sources */,
 				337F3EAB20EA014600C5526A /* BaseNavigationController.m in Sources */,
@@ -1273,6 +1303,7 @@
 				66689F3F24B4258300C49A2E /* SWTHelpFarVC.m in Sources */,
 				666658DA24AA1E12006C17B4 /* UIViewController+ChangeUI.m in Sources */,
 				666658DD24AA20E9006C17B4 /* SWTHomeHeadView.m in Sources */,
+				6674243524B4B7DF007A6A56 /* SWTVideoSubVC.m in Sources */,
 				666658E424AA23B7006C17B4 /* ALCSearchView.m in Sources */,
 				66689F2824B4178500C49A2E /* SWTMineYouHuiQuanTVC.m in Sources */,
 				6669F5D924AB962F0013675E /* SWTMineSectionHeadView.m in Sources */,
@@ -1283,7 +1314,9 @@
 				33DC824F20EA224F00D1C283 /* HangQingVC.m in Sources */,
 				337F3E5B20E9FE3B00C5526A /* AppDelegate.m in Sources */,
 				66689F2524B4176A00C49A2E /* SWTMineYouHuiQuanCell.m in Sources */,
+				6674243924B4C647007A6A56 /* SWTVideoDetailTVC.m in Sources */,
 				66689F1424B4016F00C49A2E /* SWTCanPaiSubTVC.m in Sources */,
+				6674244324B4CBCF007A6A56 /* SWTVideoDetailOneCell.m in Sources */,
 				66C8F7A324AB1E0B008C7A3A /* LTSCEventBus.m in Sources */,
 				66689F3B24B4250200C49A2E /* SWTTongYongTwoCell.m in Sources */,
 				6678B7E124B0AE2B00EA3A56 /* SWTGoodsDetailTwoCell.m in Sources */,
@@ -1296,6 +1329,7 @@
 				667A44D724B23A53006C9072 /* SWTLaoYouThreeCell.m in Sources */,
 				335010EE20EE05C100F8486B /* NSString+Size.m in Sources */,
 				666BB1C524AF86B200341CE8 /* SWTShopHomeHeadView.m in Sources */,
+				6674243C24B4C6EC007A6A56 /* SWTVideoDetailHeadView.m in Sources */,
 				666BB1B424AF6EF400341CE8 /* SWTFenLeiCollectTwoCell.m in Sources */,
 				337F3EAE20EA014600C5526A /* BaseCollectionReusableView.m in Sources */,
 				335010DD20EDF9AE00F8486B /* zkRequestTool.m in Sources */,
@@ -1489,7 +1523,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = FH4A5PV769;
+				DEVELOPMENT_TEAM = JC4A2LS9A4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/SWTShoping/3rd",
@@ -1510,7 +1544,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.zk.SWTShoping;
 				PRODUCT_NAME = "商城测试";
 				PROVISIONING_PROFILE = "3bdcf4b3-e396-4d7a-ab2b-739f2269ddaa";
-				PROVISIONING_PROFILE_SPECIFIER = comDevPro;
+				PROVISIONING_PROFILE_SPECIFIER = comxxxxx;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1520,8 +1554,9 @@
 			baseConfigurationReference = 93517C6A5478579AE5177242 /* Pods-SWTShoping.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = JC4A2LS9A4;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/SWTShoping/3rd",
@@ -1541,7 +1576,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zk.SWTShoping;
 				PRODUCT_NAME = "商城测试";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = comxxxxx;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

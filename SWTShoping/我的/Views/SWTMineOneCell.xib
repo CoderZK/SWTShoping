@@ -28,7 +28,7 @@
                                     <constraint firstAttribute="height" constant="15" id="gEf-Om-0bv"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <state key="normal" title="6" image="v"/>
+                                <state key="normal" title="6" image="vip"/>
                             </button>
                             <button opaque="NO" tag="105" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dg4-EY-wNv">
                                 <rect key="frame" x="347" y="22" width="50" height="16"/>
@@ -121,12 +121,12 @@
                 <outlet property="qusestBt" destination="f3v-wI-AZb" id="mpM-WN-3Qs"/>
                 <outlet property="vipBt" destination="cPn-9e-hBw" id="RdO-nI-JLv"/>
             </connections>
-            <point key="canvasLocation" x="770" y="29"/>
+            <point key="canvasLocation" x="151" y="19"/>
         </collectionViewCell>
     </objects>
     <resources>
         <image name="369" width="324" height="322"/>
         <image name="mine19" width="10" height="10"/>
-        <image name="v" width="10" height="10"/>
+        <image name="vip" width="10" height="10"/>
     </resources>
 </document>

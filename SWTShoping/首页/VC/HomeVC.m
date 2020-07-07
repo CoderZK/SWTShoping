@@ -14,6 +14,7 @@
 #import "SWTHomeCollectionTwoCell.h"
 #import "SWTHomeCollectionThreeCell.h"
 #import "SWTFenLeiFirstVC.h"
+#import "SWTVideoFartherVC.h"
 
 @interface HomeVC ()<UIScrollViewDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource,SWTHomeHeadViewDelegate>
 @property(nonatomic , strong)SWTHomeHeadView *headView;
@@ -144,7 +145,9 @@
         }else if (index == 1) {
             
         }else if (index == 2) {
-            
+            SWTVideoFartherVC * vc =[[SWTVideoFartherVC alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
         }else if (index == 3) {
             SWTFenLeiFirstVC * vc =[[SWTFenLeiFirstVC alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
