@@ -114,8 +114,8 @@
 
 - (void)setDataArray:(NSMutableArray *)dataArray {
     _dataArray = dataArray;
-    self.collectionView.size = CGSizeMake(100 * (self.dataArray.count) - 10, 134);
-    self.scrollview.contentSize = CGSizeMake(100 * (self.dataArray.count) - 10, 134);
+    self.collectionView.size = CGSizeMake(100 * (self.dataArray.count), 134);
+    self.scrollview.contentSize = CGSizeMake(100 * (self.dataArray.count), 134);
     [self.collectionView reloadData];
     
 }

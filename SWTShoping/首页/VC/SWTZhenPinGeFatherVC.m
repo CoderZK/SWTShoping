@@ -1,56 +1,87 @@
 //
-//  SWTCanPaiFarterVC.m
+//  SWTZhenPinGeFatherVC.m
 //  SWTShoping
 //
-//  Created by kunzhang on 2020/7/7.
+//  Created by kunzhang on 2020/7/8.
 //  Copyright © 2020 kunzhang. All rights reserved.
 //
 
-#import "SWTCanPaiFarterVC.h"
-#import "SWTCanPaiSubTVC.h"
-@interface SWTCanPaiFarterVC ()<TYTabPagerBarDataSource,TYTabPagerBarDelegate,TYPagerControllerDataSource,TYPagerControllerDelegate>
-@property (nonatomic, strong) TYTabPagerBar *tabBar;//顶部菜单栏
-
+#import "SWTZhenPinGeFatherVC.h"
+#import "SWTZhenPinGeSubTVC.h"
+@interface SWTZhenPinGeFatherVC ()<TYTabPagerBarDataSource,TYTabPagerBarDelegate,TYPagerControllerDataSource,TYPagerControllerDelegate>
+@property (nonatomic, strong) TYTabPagerBar *tabBar;
+@property(nonatomic , strong)SWTNavitageView *naView;
+@property(nonatomic , strong)UIView *headV;
 @property (nonatomic, weak) TYPagerController *pagerController;
 @property(nonatomic , strong)NSArray *titleArr;
 @property(nonatomic , assign)NSInteger selectIndex;
 @end
 
-@implementation SWTCanPaiFarterVC
+@implementation SWTZhenPinGeFatherVC
+
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"参拍记录";
-    self.titleArr = @[@"已拍中",@"被超越",@"已领先"];
+    self.titleArr = @[@"推荐",@"玉翠珠宝",@"书画篆刻",@"文玩首饰",@"紫砂陶瓷"];
+    
+    [self setNav];
+    
     [self addTabPageView];
     [self addPagerController];
-    
+       
     [self.tabBar mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.top.trailing.equalTo(self.view);
-        make.height.equalTo(@40);
+           make.leading.trailing.equalTo(self.view);
+           make.top.equalTo(self.view).offset(sstatusHeight + 44);
+           make.height.equalTo(@40);
     }];
-    
+       
     [self.pagerController.view mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.tabBar.mas_bottom);
-        make.leading.bottom.trailing.equalTo (self.view);
-    }];
+           make.top.equalTo(self.tabBar.mas_bottom);
+           make.leading.bottom.trailing.equalTo (self.view);
+       }];
     [self reloadData];
-    
+   
 }
 
 
+- (void)setNav {
+    
+    self.naView = [[SWTNavitageView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, sstatusHeight + 44+40)];
+    self.naView.rightBt.hidden = YES;
+    self.naView.titleLB.text = @"珍品阁";
+    [self.view addSubview:self.naView];
+    @weakify(self);
+       [[self.naView.leftBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+           @strongify(self);
+           [self.navigationController popViewControllerAnimated:YES];
+       }];
+       
+    
+    
+}
+
 - (void)addTabPageView {
     TYTabPagerBar *tabBar = [[TYTabPagerBar alloc] init];
-    tabBar.backgroundColor = [UIColor whiteColor];
+    tabBar.backgroundColor = [UIColor clearColor];
     tabBar.collectionView.bounces = NO;
     tabBar.contentInset = UIEdgeInsetsMake(0, 15, 5, 15);
 //    tabBar.layout.barStyle = TYPagerBarStyleProgressElasticView;
     tabBar.layout.normalTextFont = [UIFont systemFontOfSize:15];
-    tabBar.layout.normalTextColor = CharacterColor50;
-    tabBar.layout.selectedTextFont = [UIFont systemFontOfSize:16];
-    tabBar.layout.selectedTextColor = CharacterColor50;
-    tabBar.layout.progressColor = RedColor;
-    tabBar.layout.cellSpacing = 15;
+    tabBar.layout.normalTextColor = WhiteColor;
+    tabBar.layout.selectedTextFont = [UIFont systemFontOfSize:15];
+    tabBar.layout.selectedTextColor = WhiteColor;
+    tabBar.layout.progressColor = WhiteColor;
+    tabBar.layout.cellSpacing = 20;
     tabBar.dataSource = self;
     tabBar.delegate = self;
     [tabBar registerClass:[TYTabPagerBarCell class] forCellWithReuseIdentifier:[TYTabPagerBarCell cellIdentifier]];
@@ -76,6 +107,8 @@
     [self.view addSubview:tabBar];
     self.tabBar = tabBar;
 }
+
+
 
 - (void)addPagerController {
     TYPagerController *pagerController = [[TYPagerController alloc] init];
@@ -112,7 +145,7 @@
 #pragma mark - TYTabPagerBarDelegate
 
 - (CGFloat)pagerTabBar:(TYTabPagerBar *)pagerTabBar widthForItemAtIndex:(NSInteger)index {
-    return (ScreenW -60) / (self.titleArr.count);
+    return [self.titleArr[index] getWidhtWithFontSize:15];
 }
 - (void)pagerTabBar:(TYTabPagerBar *)pagerTabBar didSelectItemAtIndex:(NSInteger)index {
  
@@ -133,7 +166,7 @@
 
 - (UIViewController *)pagerController:(TYPagerController *)pagerController controllerForIndex:(NSInteger)index prefetching:(BOOL)prefetching {
    
-        SWTCanPaiSubTVC *vc = [[SWTCanPaiSubTVC alloc] init];
+        SWTZhenPinGeSubTVC   *vc = [[SWTZhenPinGeSubTVC alloc] initWithTableViewStyle:UITableViewStyleGrouped];
 //        LTSCCateModel *model = [LTSCCateModel new];
 //        if (index == 0) {
 //            model.pid = self.cateModel.pid;
@@ -144,7 +177,7 @@
 //        vc.shopId = self.shopId;
 //        vc.cateModel = model;
     vc.type = index;
-        return vc;
+    return vc;
    
 }
 
@@ -161,7 +194,6 @@
         [_tabBar scrollToItemFromIndex:fromIndex toIndex:toIndex progress:progress];
     
 }
-
 
 
 

@@ -171,7 +171,6 @@
     
     CGFloat yy =  115 + 55 + (ScreenW - 30) / 345 * 150 + 50;
     
-    CGFloat yyy = scrollView.contentOffset.y;
     
     if (scrollView.contentOffset.y<= -yy) {
         

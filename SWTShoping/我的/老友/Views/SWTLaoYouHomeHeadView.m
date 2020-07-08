@@ -21,6 +21,7 @@
     if (self) {
         
         UIImageView * imgV =[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 200)];
+        imgV.image= [UIImage imageNamed:@"shop_bg"];
         imgV.backgroundColor =[UIColor redColor];
         
         [self addSubview:imgV];

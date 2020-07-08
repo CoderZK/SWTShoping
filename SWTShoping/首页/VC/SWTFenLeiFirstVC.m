@@ -10,6 +10,7 @@
 #import "SWTFenLeiFirstLeftCell.h"
 #import "SWTJiFenCollectHeadView.h"
 #import "SWTFenLeiCollectTwoCell.h"
+#import "SWTCateSubVC.h"
 @interface SWTFenLeiFirstVC ()<UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 @property(nonatomic , strong)UITableView *leftV,*rightTV;
 @property(nonatomic , strong)UICollectionView *collectionView;
@@ -156,7 +157,9 @@
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
+    SWTCateSubVC * vc =[[SWTCateSubVC alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
     
 }
 

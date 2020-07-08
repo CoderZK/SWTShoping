@@ -45,7 +45,7 @@
     TYTabPagerBar *tabBar = [[TYTabPagerBar alloc] init];
     tabBar.backgroundColor = [UIColor whiteColor];
     tabBar.collectionView.bounces = NO;
-    tabBar.contentInset = UIEdgeInsetsMake(0, 15, 0, 15);
+    tabBar.contentInset = UIEdgeInsetsMake(0, 15, 5, 15);
 //    tabBar.layout.barStyle = TYPagerBarStyleProgressElasticView;
     tabBar.layout.normalTextFont = [UIFont systemFontOfSize:15];
     tabBar.layout.normalTextColor = CharacterColor50;

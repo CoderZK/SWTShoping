@@ -30,6 +30,7 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = RGB(182, 142, 101);
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 40;
     
 }
@@ -46,7 +47,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return 3;
+        return 2;
     }
     return 1;
 }
@@ -70,8 +71,9 @@
             return cell;
         }else {
             SWTLaoYouThreeCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTLaoYouThreeCell" forIndexPath:indexPath];
-            cell.type = indexPath.row;
+            cell.type = indexPath.row+1;
             cell.dataArray = @[@"文以及那里解放前哦我软件过期偶奇偶军分区的从教",@"金佛群文件费",@"起飞前噢ifIQ日期融进去偶然放入哦确认机器机器融券若干哦过情人节公积金哦解耦前夹肉融"].mutableCopy;
+            [cell layoutIfNeeded];
             return cell;
         }
     }else if (indexPath.section == 1) {

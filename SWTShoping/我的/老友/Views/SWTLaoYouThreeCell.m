@@ -12,6 +12,7 @@
 @interface SWTLaoYouThreeCell()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic , strong)UITableView *tableView;
 @property(nonatomic , strong)UIView *whiteV;
+@property(nonatomic , strong)UIImageView *titleImgV;
 
 
 @end
@@ -33,7 +34,17 @@
             make.right.equalTo(self).offset(-15);
             make.bottom.equalTo(self).offset(-20);
             make.top.equalTo(self).offset(40);
+            make.height.equalTo(@1);
             
+        }];
+        
+        self.titleImgV = [[UIImageView alloc] init];
+        [self addSubview:self.titleImgV];
+        [self.titleImgV mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.width.equalTo(@178);
+            make.height.equalTo(@25);
+            make.centerX.equalTo(self);
+            make.top.equalTo(self).offset(27.5);
         }];
         
         self.tableView = [[UITableView alloc] init];
@@ -46,7 +57,7 @@
             make.left.right.equalTo(self.whiteV);
             make.top.equalTo(self.whiteV).offset(30);
             make.bottom.equalTo(self.whiteV).offset(-10);
-            make.height.equalTo(@1);
+//            make.height.equalTo(@1);
         }];
         
         [self.tableView registerNib:[UINib nibWithNibName:@"SWTLaoYouDesNeiOneCell" bundle:nil] forCellReuseIdentifier:@"SWTLaoYouDesNeiOneCell"];
@@ -71,10 +82,20 @@
     _dataArray = dataArray;
     [self.tableView reloadData];
     [self.tableView layoutIfNeeded];
-    [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@(self.tableView.contentSize.height+10));
+//    [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
+//        make.height.equalTo(@(self.tableView.contentSize.height+10));
+//    }];
+    
+    NSLog(@"%f",self.tableView.contentSize.height);
+    
+    [self.whiteV mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@(self.tableView.contentSize.height+10 + 40));
     }];
 }
+
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    return 50+indexPath.row * 10;
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataArray.count;
@@ -91,12 +112,14 @@
             cell.bottomV.hidden = YES;
         }
         cell.titleLB.text = self.dataArray[indexPath.row];
+        self.titleImgV.image = [UIImage imageNamed:@"shop_icon_title3"];
         return cell;
     }else {
         SWTLaoYouDesNeiTwoCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTLaoYouDesNeiTwoCell" forIndexPath:indexPath];
         cell.imgV.image = [UIImage imageNamed: [NSString stringWithFormat:@"shop_icon_%ld",indexPath.row+7]];
         cell.contentLB.text = self.dataArray[indexPath.row];
-           return cell;
+        self.titleImgV.image = [UIImage imageNamed:@"shop_icon_title4"];
+        return cell;
     }
 
 }
