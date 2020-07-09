@@ -119,6 +119,13 @@
         cell.imgV.image = [UIImage imageNamed: [NSString stringWithFormat:@"shop_icon_%ld",indexPath.row+7]];
         cell.contentLB.text = self.dataArray[indexPath.row];
         self.titleImgV.image = [UIImage imageNamed:@"shop_icon_title4"];
+        if (indexPath.row + 1 == self.dataArray.count) {
+             NSLog(@"%f",self.tableView.contentSize.height);
+            [self.whiteV mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.height.equalTo(@(self.tableView.contentSize.height+10 + 40));
+            }];
+            
+        }
         return cell;
     }
 

@@ -9,5 +9,5 @@
 #import "BaseViewController.h"
 
 @interface GuanZhuVC : BaseViewController
-
+@property(nonatomic,assign)BOOL isMineZuJi;
 @end

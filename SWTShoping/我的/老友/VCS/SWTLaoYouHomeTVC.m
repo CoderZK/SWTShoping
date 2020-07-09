@@ -12,8 +12,11 @@
 #import "SWTLaoYouThreeCell.h"
 #import "SWTLaoYouPinLeiCell.h"
 #import "SWTLaoYouKaiDianLiuChengCell.h"
+#import "SWTLaoYouSectionHeadView.h"
+#import "SWTLaoYouDianPuInfoOneTVC.h"
 @interface SWTLaoYouHomeTVC ()
 @property(nonatomic , strong)SWTLaoYouHomeHeadView *headV;
+@property(nonatomic , strong)UIView*footV;
 @end
 
 @implementation SWTLaoYouHomeTVC
@@ -27,11 +30,39 @@
     [self.tableView registerClass:[SWTLaoYouThreeCell class] forCellReuseIdentifier:@"SWTLaoYouThreeCell"];
       [self.tableView registerClass:[SWTLaoYouPinLeiCell class] forCellReuseIdentifier:@"SWTLaoYouPinLeiCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTLaoYouKaiDianLiuChengCell" bundle:nil] forCellReuseIdentifier:@"SWTLaoYouKaiDianLiuChengCell"];
+    
+    [self.tableView registerClass:[SWTLaoYouSectionHeadView class] forHeaderFooterViewReuseIdentifier:@"head"];
+    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = RGB(182, 142, 101);
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 40;
+    
+    [self initFootV];
+    
+}
+
+- (void)initFootV {
+    self.footV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 150)];
+    self.footV.backgroundColor = WhiteColor;
+    
+    UIButton * button  =[[UIButton alloc] initWithFrame:CGRectMake(30, 50, ScreenW - 60, 40)];
+    [button setTitle:@"立即开店" forState:UIControlStateNormal];
+    button.titleLabel.font = kFont(14);
+    [button setBackgroundImage:[UIImage imageNamed:@"bg_href"] forState:UIControlStateNormal];
+    button.layer.cornerRadius = 20;
+    button.clipsToBounds = YES;
+    [self.footV addSubview:button];
+    @weakify(self);
+    [[button rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        @strongify(self);
+        SWTLaoYouDianPuInfoOneTVC * vc =[[SWTLaoYouDianPuInfoOneTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+        
+    }];
+    self.tableView.tableFooterView = self.footV;
     
 }
 
@@ -88,6 +119,26 @@
     
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return 0.01;
+    }else if (section == 1) {
+        return 50;
+    }else {
+        return 40;
+    }
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    SWTLaoYouSectionHeadView * view  =[tableView dequeueReusableHeaderFooterViewWithIdentifier:@"head"];
+    if (section == 1) {
+        view.titleLB.text = @"品类招聘";
+    }else if (section == 2){
+       view.titleLB.text = @"快速开店";
+    }
+    view.backgroundColor = WhiteColor;
+    return view;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

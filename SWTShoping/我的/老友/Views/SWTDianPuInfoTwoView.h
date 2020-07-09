@@ -11,7 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTDianPuInfoTwoView : UIView
-
+@property(nonatomic , strong)UIImageView *rigthImgV;
+@property(nonatomic , strong)UIButton *leftBt;
+@property(nonatomic , strong)UILabel *titleLB;
 @end
 
 NS_ASSUME_NONNULL_END

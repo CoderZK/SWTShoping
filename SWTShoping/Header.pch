@@ -56,6 +56,9 @@
 #import "SWTBottomBt.h"
 #import "TYPagerController.h"
 #import "TYTabPagerBar.h"
+#import "MXPhotoPickerController.h"
+#import "UIViewController+MXPhotoPicker.h"
+#import "zkPhotoShowVC.h"
 
 #define iOS11Later ([UIDevice currentDevice].systemVersion.floatValue >= 11.0f)
 

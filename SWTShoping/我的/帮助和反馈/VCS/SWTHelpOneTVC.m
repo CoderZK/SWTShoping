@@ -9,6 +9,7 @@
 #import "SWTHelpOneTVC.h"
 #import "SWTMineWalletCell.h"
 #import "SWTHelpFarVC.h"
+#import "SWTFanKuiTVC.h"
 @interface SWTHelpOneTVC ()
 
 @end
@@ -69,6 +70,10 @@
     }else {
         if (indexPath.row == 0) {
             SWTHelpFarVC * vc =[[SWTHelpFarVC alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else {
+            SWTFanKuiTVC * vc =[[SWTFanKuiTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         }

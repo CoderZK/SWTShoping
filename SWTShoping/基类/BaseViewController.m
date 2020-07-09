@@ -132,6 +132,26 @@ typedef void (^Nav2)();
     self.rightBlock2 = butnClick;
 }
 
+- (BOOL)isCanUsePhotos {
+    
+    AVAuthorizationStatus authStatus =  [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    if (authStatus == AVAuthorizationStatusRestricted || authStatus ==AVAuthorizationStatusDenied)
+    {
+        //无权限
+        return NO;
+    }
+    return YES;
+}
+- (BOOL)isCanUsePicture{
+    PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+    if (status == PHAuthorizationStatusRestricted ||
+        status == PHAuthorizationStatusDenied) {
+        //无权限
+        return NO;
+    }
+    return YES;
+}
+
 
 
 //- (void)gotoLoginVC {

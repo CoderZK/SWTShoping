@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTLaoYouSectionHeadView : UITableViewHeaderFooterView
 
+@property(nonatomic , strong)UILabel *titleLB;
+@property(nonatomic , strong)UIImageView *leftImgV,*rightImgV;
+
 @end
 
 NS_ASSUME_NONNULL_END

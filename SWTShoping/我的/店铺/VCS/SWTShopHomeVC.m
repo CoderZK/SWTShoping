@@ -17,6 +17,7 @@
 @property(nonatomic , strong)SWTNavitageView *naView;
 @property(nonatomic , strong)UILabel *titleLB;
 @property(nonatomic , strong)SWTShopHomeHeadView *headView;
+@property(nonatomic , assign)NSInteger  type;
 @end
 
 @implementation SWTShopHomeVC
@@ -77,9 +78,9 @@
     self.headView = [[SWTShopHomeHeadView alloc] initWithFrame:CGRectMake(0, -yy, ScreenW, yy)];
     self.headView.delegateSignal = [[RACSubject alloc] init];
     @weakify(self);
-    [self.headView.delegateSignal subscribeNext:^(id  _Nullable x) {
+    [self.headView.delegateSignal subscribeNext:^(NSNumber * x) {
         @strongify(self);
-        
+        self.type = x.intValue;
     }];
     [self.collectionView addSubview:self.headView];;
     
@@ -132,6 +133,16 @@
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    if (self.type == 102) {
+        vc.isYiKouJia = NO;
+    }else if (self.type == 103) {
+        vc.isYiKouJia = YES;
+    }
+    [self.navigationController pushViewController:vc animated:YES];
+    
     
     
 }

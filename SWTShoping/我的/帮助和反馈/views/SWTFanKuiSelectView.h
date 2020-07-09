@@ -11,7 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTFanKuiSelectView : UIView
-
+@property(nonatomic , strong)UIImageView *leftImgV;
+@property(nonatomic , strong)UILabel *titleLB;
+@property(nonatomic , strong)UIButton *button;
 @end
 
 NS_ASSUME_NONNULL_END

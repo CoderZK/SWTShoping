@@ -9,6 +9,7 @@
 #import "GuanZhuVC.h"
 #import "SWTMineAttentionZhiBoVC.h"
 #import "SWTMineAttentionShopTVC.h"
+#import "SWTMienZuJiSubVC.h"
 @interface GuanZhuVC ()<UIScrollViewDelegate>
 /** 三个按钮的View buttonView */
 @property(nonatomic , strong)UIView *buttonView;
@@ -43,6 +44,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"关注";
+    if (self.isMineZuJi) {
+        self.navigationItem.title = @"足迹";
+    }
     self.view.backgroundColor = BackgroundColor;
     
     
@@ -89,6 +93,9 @@
 //设置三个按钮
 - (void)setupHeaderView {
     NSArray *array = @[@"直播",@"店铺"];
+    if (self.isMineZuJi) {
+        array = @[@"直播",@"商品"];
+    }
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 40)];
     
     self.buttonView = view;
@@ -161,8 +168,14 @@
     
     SWTMineAttentionZhiBoVC * vc1 = [[SWTMineAttentionZhiBoVC alloc] init];
     [self addChildViewController:vc1];
-    SWTMineAttentionShopTVC * vc2 = [[SWTMineAttentionShopTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-    [self addChildViewController:vc2];
+    if (!self.isMineZuJi) {
+        SWTMineAttentionShopTVC * vc2 = [[SWTMineAttentionShopTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+        [self addChildViewController:vc2];
+    }else {
+        SWTMienZuJiSubVC * vc2 = [[SWTMienZuJiSubVC alloc] init];
+        [self addChildViewController:vc2];
+    }
+    
     
     
     

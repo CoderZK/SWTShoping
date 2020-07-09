@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTFanKuiTwoCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *backV;
+@property (weak, nonatomic) IBOutlet UIView *gBackV;
 
 @end
 

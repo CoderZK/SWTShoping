@@ -17,6 +17,8 @@
 #import "SWTGoodsDetailChuJiaView.h"
 #import "SWTGouMaiShowView.h"
 #import "SWTTiJiaoOrderTVC.h"
+#import "SWTVideoDetailOneCell.h"
+#import "SWTGouMaiShowView.h"
 @interface SWTGoodsDetailTVC ()
 @property(nonatomic , strong)SWTNavitageView *naView;
 @property(nonatomic , strong)SWTGoodsDetailHeadV *headV;
@@ -49,7 +51,7 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTGoodsDetailTwoCell" bundle:nil] forCellReuseIdentifier:@"SWTGoodsDetailTwoCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTGoodsDetailThreeCell" bundle:nil] forCellReuseIdentifier:@"SWTGoodsDetailThreeCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTGoodsDetailFiveCell" bundle:nil] forCellReuseIdentifier:@"SWTGoodsDetailFiveCell"];
-    
+     [self.tableView registerNib:[UINib nibWithNibName:@"SWTVideoDetailOneCell" bundle:nil] forCellReuseIdentifier:@"SWTVideoDetailOneCell"];
     [self.tableView registerClass:[SWTGoodsDetailFourCell class] forCellReuseIdentifier:@"SWTGoodsDetailFourCell"];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -96,21 +98,38 @@
         
         if (x.intValue == 100) {
             //点击店铺
-            SWTTiJiaoOrderTVC * vc =[[SWTTiJiaoOrderTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
+            
         }else if (x.intValue == 101) {
-            SWTGouMaiShowView * gouMaiV  = [[SWTGouMaiShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
-            [gouMaiV show];
+            
             //点击私信
         }else if (x.intValue == 102) {
-            //点击出价
-            self.chuJiaView  = [[SWTGoodsDetailChuJiaView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
-            [self.chuJiaView show];
+            if (self.isYiKouJia) {
+                SWTGouMaiShowView * gouMaiV  = [[SWTGouMaiShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+                gouMaiV.delegateSignal = [[RACSubject alloc] init];
+                @weakify(self);
+                [gouMaiV.delegateSignal subscribeNext:^(id  _Nullable x) {
+                    @strongify(self);
+                   //点击购买
+                  SWTTiJiaoOrderTVC * vc =[[SWTTiJiaoOrderTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                  vc.hidesBottomBarWhenPushed = YES;
+                  [self.navigationController pushViewController:vc animated:YES];
+                    
+                }];
+                [gouMaiV show];
+            }else {
+                //点击出价
+                self.chuJiaView  = [[SWTGoodsDetailChuJiaView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+                [self.chuJiaView show];
+            }
+            
         }
         
         
     }];
+    
+    if (self.isYiKouJia) {
+        [self.bottomView.chujiaBt setTitle:@"立即购买" forState:UIControlStateNormal];
+    }
     
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
@@ -132,6 +151,9 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if (self.isYiKouJia) {
+        return 3;
+    }
     return 5;
 }
 
@@ -139,6 +161,15 @@
     return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (self.isYiKouJia) {
+        if (indexPath.section == 0) {
+            return 70;
+        }else {
+        return UITableViewAutomaticDimension;
+        }
+    }
+    
     if (indexPath.section == 2) {
         return 30 + 40*3;
     }
@@ -146,10 +177,20 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    if (section == 4) {
-        return 0.01;
+    
+    if (self.isYiKouJia){
+        if (section == 2 || section == 1) {
+            return 0.01;
+        }
+        return 10;
+    }else {
+        if (section == 4) {
+            return 0.01;
+        }
+        return 10;
     }
-    return 10;
+    
+    
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
@@ -163,30 +204,55 @@
 
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (indexPath.section == 0) {
-        
-        SWTGoodsDetailTwoCell  * cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTGoodsDetailTwoCell" forIndexPath:indexPath];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
-        
-    }else if (indexPath.section == 1) {
-        SWTGoodsDetailThreeCell  * cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTGoodsDetailThreeCell" forIndexPath:indexPath];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
-    }else if (indexPath.section == 2) {
-        SWTGoodsDetailFourCell  * cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTGoodsDetailFourCell" forIndexPath:indexPath];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
-    }else if (indexPath.section == 3) {
-        SWTGoodsDetailFiveCell  *cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTGoodsDetailFiveCell" forIndexPath:indexPath];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
+    if (self.isYiKouJia) {
+        if (indexPath.section == 0) {
+            
+            SWTVideoDetailOneCell  * cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTVideoDetailOneCell" forIndexPath:indexPath];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+            
+        }else if (indexPath.section == 1) {
+            SWTGoodsDetailFiveCell  *cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTGoodsDetailFiveCell" forIndexPath:indexPath];
+            cell.clipsToBounds = YES;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+        }else {
+            SWTGoodsDetailTableViewContentCollCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+            cell.dataArray = @[@"",@"",@"",@"",@"",@"",@"",@""].mutableCopy;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+        }
     }else {
-        SWTGoodsDetailTableViewContentCollCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-        cell.dataArray = @[@"",@"",@"",@"",@"",@"",@"",@""].mutableCopy;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
+        if (indexPath.section == 0) {
+            
+            SWTGoodsDetailTwoCell  * cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTGoodsDetailTwoCell" forIndexPath:indexPath];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+            
+        }else if (indexPath.section == 1) {
+            SWTGoodsDetailThreeCell  * cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTGoodsDetailThreeCell" forIndexPath:indexPath];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.clipsToBounds = YES;
+            return cell;
+        }else if (indexPath.section == 2) {
+            SWTGoodsDetailFourCell  * cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTGoodsDetailFourCell" forIndexPath:indexPath];
+            cell.clipsToBounds = YES;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+        }else if (indexPath.section == 3) {
+            SWTGoodsDetailFiveCell  *cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTGoodsDetailFiveCell" forIndexPath:indexPath];
+            cell.clipsToBounds = YES;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+        }else {
+            SWTGoodsDetailTableViewContentCollCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+            cell.dataArray = @[@"",@"",@"",@"",@"",@"",@"",@""].mutableCopy;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+        }
     }
+    
+    
 
 }
 

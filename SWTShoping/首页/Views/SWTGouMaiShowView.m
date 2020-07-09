@@ -72,6 +72,8 @@
         [self.addBt setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
         self.addBt.titleLabel.font = kFont(14);
         [self.whiteV addSubview:self.addBt];
+        self.addBt.tag = 101;
+        [self.addBt addTarget:self action:@selector(clickAcion:) forControlEvents:UIControlEventTouchUpInside];
         
         self.jianBt = [[UIButton alloc] init];
         [self.jianBt setTitle:@"-" forState:UIControlStateNormal];
@@ -79,6 +81,8 @@
         [self.jianBt setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
         self.jianBt.titleLabel.font = kFont(14);
         [self.whiteV addSubview:self.jianBt];
+        self.jianBt.tag = 100;
+        [self.jianBt addTarget:self action:@selector(clickAcion:) forControlEvents:UIControlEventTouchUpInside];
         
         self.numberTF = [[UITextField alloc] init];
         self.numberTF.font = kFont(12);
@@ -102,9 +106,10 @@
         
         self.chuaddBt = [[UIButton alloc] init];
         self.chuaddBt.tag = 102;
-        [self.chuaddBt setTitle:@"加一手" forState:UIControlStateNormal];
+        [self.chuaddBt setTitle:@"立即购买" forState:UIControlStateNormal];
         self.chuaddBt.titleLabel.font = kFont(14);
         [self.chuaddBt setBackgroundImage:[UIImage imageNamed:@"rbg"] forState:UIControlStateNormal];
+        [self.chuaddBt addTarget:self action:@selector(clickAcion:) forControlEvents:UIControlEventTouchUpInside];
         [self.whiteV addSubview:self.chuaddBt];
         
         
@@ -182,6 +187,28 @@
     return self;
 }
 
+- (void)clickAcion:(UIButton *)button {
+    if (button.tag == 100) {
+        if (self.numberTF.text.intValue > 1) {
+            self.numberTF.text =  [NSString stringWithFormat:@"%d",self.numberTF.text.intValue - 1];
+        }
+        
+    }else if (button.tag == 101) {
+        self.numberTF.text =  [NSString stringWithFormat:@"%d",self.numberTF.text.intValue + 1];
+    }else if (button.tag == 102) {
+        if (self.numberTF.text.length == 0 || self.numberTF.text.intValue == 0){
+            [SVProgressHUD showErrorWithStatus:@"至少要购买1个"];
+            return;
+        };
+        if (self.delegateSignal) {
+            [self.delegateSignal sendNext:self.numberTF.text];
+            [self dismiss];
+        }
+        
+    }
+    
+    
+}
 
 - (void)show {
     [[UIApplication sharedApplication].keyWindow addSubview:self];
