@@ -22,6 +22,10 @@
 #import "SWTMineYouHuiQuanTVC.h"
 #import "SWTHelpOneTVC.h"
 #import "GuanZhuVC.h"
+#import "SWTMineOrderFartherVC.h"
+#import "SWTMinePingLunListTVC.h"
+#import "SWTSendMinePingLunTVC.h"
+#import "SWTLoginOneVC.h"
 @interface MineVC ()<XPCollectionViewWaterfallFlowLayoutDataSource,UICollectionViewDelegate,UICollectionViewDataSource>
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 @property(nonatomic , strong)UICollectionView *collectionView;
@@ -134,6 +138,17 @@
             cell.mineOneCellBlock = ^(NSInteger index) {
                 if (index == 0) {
                     
+                    
+                    SWTLoginOneVC * vc =[[SWTLoginOneVC alloc] init];
+                    BaseNavigationController * navc = [[BaseNavigationController alloc] initWithRootViewController:vc];
+                    [self presentViewController:navc animated:YES completion:nil];
+                    
+                    
+                    
+                    
+//                    SWTMinePingLunListTVC * vc =[[SWTMinePingLunListTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+//                    vc.hidesBottomBarWhenPushed = YES;
+//                    [self.navigationController pushViewController:vc animated:YES];
                 }else if (index == 1) {
                     GuanZhuVC * vc =[[GuanZhuVC alloc] init];
                     vc.hidesBottomBarWhenPushed = YES;
@@ -160,7 +175,9 @@
            SWTMineTwoCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTMineTwoCell" forIndexPath:indexPath];
             Weak(weakSelf);
             cell.mineTwoCellBlock = ^(NSInteger index) {
-                
+                SWTMineOrderFartherVC * vc =[[SWTMineOrderFartherVC alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
             };
             return cell;
         }else {
@@ -184,7 +201,9 @@
                     vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
                 }else if (index == 4) {
-                    
+                     SWTSendMinePingLunTVC* vc =[[SWTSendMinePingLunTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
                 }else if (index == 5) {
                     SWTHelpOneTVC * vc =[[SWTHelpOneTVC alloc] init];
                     vc.hidesBottomBarWhenPushed = YES;

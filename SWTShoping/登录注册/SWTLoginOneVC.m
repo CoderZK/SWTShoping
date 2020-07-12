@@ -7,7 +7,8 @@
 //
 
 #import "SWTLoginOneVC.h"
-
+#import "SWTLoginTwoVC.h"
+#import "SWTRegistVC.h"
 @interface SWTLoginOneVC ()
 @property (weak, nonatomic) IBOutlet UIButton *backBt;
 @property (weak, nonatomic) IBOutlet UIImageView *imgV;
@@ -18,6 +19,16 @@
 @end
 
 @implementation SWTLoginOneVC
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -41,6 +52,18 @@
     
 }
 - (IBAction)clickAction:(UIButton *)sender {
+    if (sender.tag == 100) {
+        SWTLoginTwoVC * vc =[[SWTLoginTwoVC alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else if (sender.tag == 101) {
+        
+    }else if (sender.tag == 102) {
+        SWTRegistVC * vc =[[SWTRegistVC alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    
 }
 
 - (IBAction)abck:(id)sender {

@@ -59,6 +59,7 @@
 #import "MXPhotoPickerController.h"
 #import "UIViewController+MXPhotoPicker.h"
 #import "zkPhotoShowVC.h"
+#import "LTSCEventBus.h"
 
 #define iOS11Later ([UIDevice currentDevice].systemVersion.floatValue >= 11.0f)
 
@@ -77,6 +78,7 @@
 #define RedColor [UIColor colorWithRed:163.0/255.0 green:41.0/255.0 blue:59.0/255.0 alpha:1]
 
  #define RedLightColor RGB(249, 0, 5)
+ #define RedBackColor RGB(253, 216, 217)
 //黄底字体纯黑
 #define WhiteColor [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1]
 //白底黑字

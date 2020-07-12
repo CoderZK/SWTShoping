@@ -41,17 +41,19 @@
 
 - (void)setCons {
     [self.titleLB mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.equalTo(self).offset(10);
+        make.top.equalTo(self).offset(10);
+        make.left.equalTo(self).offset(0);
         make.height.equalTo(@20);
     }];
     
     [self.leftBt mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.equalTo(self).offset(0);
+        make.left.equalTo(self).offset(0);
+        make.top.equalTo(self.titleLB.mas_bottom).offset(10);
         make.bottom.equalTo(self).offset(-10);
         make.width.equalTo(@((ScreenW -30)/2));
     }];
     [self.rigthImgV mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self).offset(0);
+        make.top.equalTo(self.leftBt);
         make.left.equalTo(self.leftBt.mas_right).offset(10);
         make.bottom.right.equalTo(self).offset(-10);
         make.width.equalTo(@((ScreenW -30)/2));

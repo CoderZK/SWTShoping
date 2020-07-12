@@ -17,14 +17,23 @@
         self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(10, 15, 200, 17)];
         self.titleLB.textColor = CharacterColor50;
         self.titleLB.font = kFont(14);
-        self.titleLB.text = @"我的订单";
+        self.titleLB.text = @"老友天地";
+        UIImageView *imgV  =[[UIImageView alloc] initWithFrame:CGRectMake(ScreenW - 21-20, 18, 11, 11)];
+        imgV.image = [UIImage imageNamed:@"you"];
+        
+        UIButton * button  =[[UIButton alloc] initWithFrame:CGRectMake(ScreenW / 2, 5, ScreenW / 2, 30)];
+        [self addSubview:button];
+        button.tag = 106;
+        [button addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self addSubview:imgV];
         [self addSubview:self.titleLB];
         CGFloat ww = 50;
         CGFloat space = (frame.size.width - 5* ww) / 6;
         NSArray * arr =  @[@"待付款",@"待发货",@"待收货",@"待评价",@"售后"];
         for (int i = 0 ; i < arr.count; i++) {
             
-            SWTMineHomeButton * bt  = [[SWTMineHomeButton alloc] initWithFrame:CGRectMake(space + (space + ww) * i, 32, ww, ww ) withImageWidth:22];
+            SWTMineHomeButton * bt  = [[SWTMineHomeButton alloc] initWithFrame:CGRectMake(space + (space + ww) * i, 42, ww, ww ) withImageWidth:22];
             bt.imgV.image = [UIImage imageNamed: [NSString stringWithFormat:@"mine%d",i+5]];
             bt.titleLB.text = arr[i];
             [self addSubview:bt];

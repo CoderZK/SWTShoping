@@ -45,10 +45,16 @@
         self.leftTwoLb.text = @"剩余时间: 1小时47分58秒";
         [self addSubview:self.leftTwoLb];
         
+        self.moneyLB = [[UILabel alloc] init];
+        self.moneyLB.font = kFont(12);
+        self.moneyLB.textColor = RedLightColor;
+        self.moneyLB.text = @"";
+        [self addSubview:self.moneyLB];
+        
         
         self.leftThreeLB = [[UILabel alloc] init];
         self.leftThreeLB.font = kFont(13);
-        self.leftThreeLB.textColor = RedColor;
+        self.leftThreeLB.textColor = RedLightColor;
         self.leftThreeLB.text = @"￥145";
         [self addSubview:self.leftThreeLB];
         
@@ -75,20 +81,27 @@
             make.height.equalTo(@17);
         }];
         
-        [self.leftTwoLb mas_makeConstraints:^(MASConstraintMaker *make) {
-                   make.left.equalTo(self.leftimgV.mas_right).offset(5);
-                   make.right.equalTo(self).offset(-10);
+        [self.moneyLB mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+            make.right.equalTo(self).offset(-10);
             make.top.equalTo(self.leftOneLB.mas_bottom).offset(7);
-                   make.height.equalTo(@17);
-               }];
+            make.height.equalTo(@17);
+        }];
+        
+        [self.leftTwoLb mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.leftimgV.mas_right).offset(5);
+            make.right.equalTo(self.moneyLB.mas_left).offset(-10);
+            make.top.equalTo(self.leftOneLB.mas_bottom).offset(7);
+            make.height.equalTo(@17);
+        }];
         
         
         [self.leftThreeLB mas_makeConstraints:^(MASConstraintMaker *make) {
-                   make.left.equalTo(self.leftimgV.mas_right).offset(5);
-                   make.right.equalTo(self).offset(-10);
+            make.left.equalTo(self.leftimgV.mas_right).offset(5);
+            make.right.equalTo(self).offset(-10);
             make.top.equalTo(self.leftTwoLb.mas_bottom).offset(7);
-                   make.height.equalTo(@17);
-               }];
+            make.height.equalTo(@17);
+        }];
         
         UIView * backV =[[UIView alloc] init];
         backV.backgroundColor = lineBackColor;
@@ -112,7 +125,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 

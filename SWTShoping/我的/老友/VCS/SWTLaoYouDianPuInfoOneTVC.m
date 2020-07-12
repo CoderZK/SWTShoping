@@ -47,8 +47,8 @@
     lb.textColor = CharacterColor50;
     [self.shopHeadPicV addSubview:lb];
     self.headPicBt = [[UIButton alloc] initWithFrame:CGRectMake(ScreenW - 70, 10, 60, 60)];
-    [self.headPicBt setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-    self.headPicBt.backgroundColor =[UIColor redColor];
+    [self.headPicBt setBackgroundImage:[UIImage imageNamed:@"dyx9"] forState:UIControlStateNormal];
+//    self.headPicBt.backgroundColor =[UIColor redColor];
     
     
     [self.shopHeadPicV addSubview:self.headPicBt];

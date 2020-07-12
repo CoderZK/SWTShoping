@@ -38,8 +38,6 @@
 }
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [LxmEventBus sendEvent:@"seeAllready" data:nil];
-    [LxmEventBus sendEvent:@"singCompleted" data:nil];
     if (_progress) {
         [_progress removeFromSuperview];
         [_wkWebView removeObserver:self forKeyPath:@"estimatedProgress"];
@@ -64,10 +62,10 @@
     [super viewDidLoad];
 
     UIView * line = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 0.5)];
-    line.backgroundColor = BGGrayColor;
+    line.backgroundColor = lineBackColor;
     [self.view addSubview:line];
     
-    _wkWebView=[[WKWebView alloc] initWithFrame:CGRectMake(0, 0.5, self.view.bounds.size.width, self.view.bounds.size.height - StateBarH - 44)];
+    _wkWebView=[[WKWebView alloc] initWithFrame:CGRectMake(0, 0.5, self.view.bounds.size.width, self.view.bounds.size.height - sstatusHeight - 44)];
     _wkWebView.allowsBackForwardNavigationGestures=YES;
     _wkWebView.navigationDelegate=self;
     [self.view addSubview:_wkWebView];
@@ -77,8 +75,8 @@
     _progress = [[UIProgressView alloc] initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height-1.5, self.view.bounds.size.width, 1.5)];
     _progress.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleTopMargin;
     //修改进度条颜色
-    _progress.progressTintColor = MainColor;
-    _progress.trackTintColor = MainColor;
+    _progress.progressTintColor = RedLightColor;
+    _progress.trackTintColor = RedLightColor;
     
     if (_loadUrl) {
         if (_postParames) {

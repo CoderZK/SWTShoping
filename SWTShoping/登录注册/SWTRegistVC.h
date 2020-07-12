@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTRegistVC : UIViewController
-
+@property(nonatomic,assign)BOOL isForgetPassword;
 @end
 
 NS_ASSUME_NONNULL_END

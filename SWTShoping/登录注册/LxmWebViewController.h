@@ -7,7 +7,7 @@
 //
 #import "BaseViewController.h"
 
-#define PregressColor MainColor
+
 
 @interface LxmWebViewController: BaseViewController
 

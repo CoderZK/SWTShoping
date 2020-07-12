@@ -7,8 +7,12 @@
 //
 
 #import "SWTLoginTwoVC.h"
-
+#import "SWTRegistVC.h"
 @interface SWTLoginTwoVC ()
+@property (weak, nonatomic) IBOutlet UITextField *phoneTF;
+@property (weak, nonatomic) IBOutlet UITextField *passwordTF;
+@property (weak, nonatomic) IBOutlet UIButton *loginBt;
+@property (weak, nonatomic) IBOutlet UIButton *weiXinBt;
 
 @end
 
@@ -18,16 +22,28 @@
     [super viewDidLoad];
     self.navigationItem.title = @"登录";
     
+    self.loginBt.layer.cornerRadius = self.weiXinBt.layer.cornerRadius = 22.5;
+    self.loginBt.clipsToBounds = self.weiXinBt.clipsToBounds = YES;
+    self.loginBt.layer.borderWidth = self.weiXinBt.layer.borderWidth = 0.8;
+    self.loginBt.layer.borderColor = self.weiXinBt.layer.borderColor = [UIColor darkGrayColor].CGColor;
+    
+    
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (IBAction)clickAction:(UIButton *)sender {
+    if (sender.tag == 100) {
+        
+    }else if (sender.tag == 101) {
+        SWTRegistVC * vc =[[SWTRegistVC alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else if (sender.tag == 102) {
+        SWTRegistVC * vc =[[SWTRegistVC alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.isForgetPassword = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    
 }
-*/
 
 @end

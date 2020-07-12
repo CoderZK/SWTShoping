@@ -11,6 +11,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTHeMaiTwoCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIButton *yiwenbt;
+@property (weak, nonatomic) IBOutlet UILabel *leftOneLB;
+@property (weak, nonatomic) IBOutlet UILabel *leftTwoLB;
+@property (weak, nonatomic) IBOutlet UIButton *leftBt;
+@property (weak, nonatomic) IBOutlet UILabel *rightLB;
+@property (weak, nonatomic) IBOutlet UISwitch *swithBt;
+@property (weak, nonatomic) IBOutlet UIView *lineV;
 
 @end
 

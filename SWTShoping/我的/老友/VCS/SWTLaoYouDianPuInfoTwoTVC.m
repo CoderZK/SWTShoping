@@ -58,25 +58,13 @@
 
     
     
-    UIButton * button  =[[UIButton alloc] initWithFrame:CGRectMake(40, CGRectGetMaxY(self.shopNumberV.frame) + 40, ScreenW - 80, 40)];
-    [button setTitle:@"下一步" forState:UIControlStateNormal];
-    button.titleLabel.font = kFont(14);
-    [button setBackgroundImage:[UIImage imageNamed:@"bg_href"] forState:UIControlStateNormal];
-    button.layer.cornerRadius = 20;
-    button.clipsToBounds = YES;
-    [self.headView addSubview:button];
-    
-    @weakify(self);
-    [[button rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        @strongify(self);
-        
-        
-    }];
+  
     
     UILabel * lb  =[[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(self.shopNumberV.frame) + 10, ScreenW - 20, 20)];
-    lb.textColor = CharacterColor70;
+    lb.textColor = CharacterColor102;
     lb.font = kFont(14);
     lb.text = @"认证信息";
+    [self.headView addSubview:lb];
     
     self.zhengV = [[SWTDianPuInfoTwoView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(lb.frame) + 10, ScreenW - 20, 50 + 100)];
     self.zhengV.titleLB.text = @"请上传省份证人像面";
@@ -86,12 +74,26 @@
     self.fanV.titleLB.text = @"请上传省份证国徽面";
     [self.headView addSubview:self.fanV];
     
-    self.zhengV = [[SWTDianPuInfoTwoView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(self.fanV.frame), ScreenW - 20, CGRectGetHeight(self.zhengV.frame))];
-    self.zhengV.titleLB.text = @"请上传手持身份照";
-    [self.headView addSubview:self.zhengV];
+    self.shouChiV = [[SWTDianPuInfoTwoView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(self.fanV.frame), ScreenW - 20, CGRectGetHeight(self.zhengV.frame))];
+    self.shouChiV.titleLB.text = @"请上传手持身份照";
+    [self.headView addSubview:self.shouChiV];
     
+    UIButton * button  =[[UIButton alloc] initWithFrame:CGRectMake(40, CGRectGetMaxY(self.shouChiV.frame) + 40, ScreenW - 80, 40)];
+      [button setTitle:@"下一步" forState:UIControlStateNormal];
+      button.titleLabel.font = kFont(14);
+      [button setBackgroundImage:[UIImage imageNamed:@"bg_href"] forState:UIControlStateNormal];
+      button.layer.cornerRadius = 20;
+      button.clipsToBounds = YES;
+      [self.headView addSubview:button];
+      
+      @weakify(self);
+      [[button rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+          @strongify(self);
+          
+          
+      }];
     self.nextBt = button;
     
-    self.headView.mj_h = CGRectGetMaxY(self.zhengV.frame) + 40;
+    self.headView.mj_h = CGRectGetMaxY(self.nextBt.frame) + 40;
 }
 @end

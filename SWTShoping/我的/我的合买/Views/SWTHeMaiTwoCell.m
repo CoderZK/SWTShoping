@@ -13,6 +13,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.lineV.backgroundColor = lineBackColor;
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

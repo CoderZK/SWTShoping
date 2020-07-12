@@ -186,27 +186,13 @@
            make.height.equalTo(@20);
        }];
 
-
-    UIButton * button  =[[UIButton alloc] init];
-    [button addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
-
-    [button setBackgroundImage:[UIImage imageNamed:@"feedback_addpic"] forState:UIControlStateNormal];
-    [self.whiteThreeNeiV addSubview:button];
     
-    [button mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.bottom.equalTo(self.whiteThreeNeiV);
-        make.width.equalTo(@((ScreenW - 30 - 30)/4));
-    }];
+    [self setPics];
 
     
 }
 
 
-
-- (void)clickAction:(UIButton *)button {
-    
-    [self addPict];
-}
 
 
 - (void)addPict {
@@ -219,6 +205,8 @@
             [self showMXPhotoCameraAndNeedToEdit:YES completion:^(UIImage *image, UIImage *originImage, CGRect cutRect) {
                 
                 [self.picArr addObject:image];
+                 self.numberTwoLB.text =  [NSString stringWithFormat:@"%ld/4",self.picArr.count];
+                [self setPics];
 
             }];
        
@@ -251,6 +239,8 @@
                         image = [UIImage imageWithCGImage:thum];
                     }
                     [self.picArr addObject:image];
+                    self.numberTwoLB.text =  [NSString stringWithFormat:@"%ld/4",self.picArr.count];
+                     [self setPics];
                 }
                 
               
@@ -280,7 +270,61 @@
     
     [self.whiteThreeNeiV.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
+    NSInteger allNu = self.picArr.count < 4 ? self.picArr.count + 1:4;
+    
+    CGFloat space = 10;
+    CGFloat leftM = 5;
+    CGFloat ww = (ScreenW - 30 - 30)/4;
+    for (int i = 0 ; i< allNu; i++) {
+        
+        
+        
+        
+        UIButton * anNiuBt = [[UIButton alloc] initWithFrame:CGRectMake(leftM + (space+ ww) * i, 0, ww, ww)];
+        anNiuBt.layer.cornerRadius = 3;
+        anNiuBt.tag = 100+i;
+        anNiuBt.clipsToBounds = YES;
+        anNiuBt.backgroundColor = RGB(250, 250, 250);
+    
+        [anNiuBt addTarget:self action:@selector(hitAction:) forControlEvents:UIControlEventTouchUpInside];
+        [self.whiteThreeNeiV addSubview:anNiuBt];
+        
+        UIButton * deleteBt = [[UIButton alloc] initWithFrame:CGRectMake(ww - 25 , 0, 25, 25)];
+        
+        deleteBt.tag = 200+i;
+        [deleteBt addTarget:self action:@selector(hitAction:) forControlEvents:UIControlEventTouchUpInside];
+
+        if (i<self.picArr.count) {
+            [anNiuBt setBackgroundImage:self.picArr[i] forState:UIControlStateNormal];
+                   
+            [deleteBt setImage:[UIImage imageNamed:@"48"] forState:UIControlStateNormal];
+            [anNiuBt addSubview:deleteBt];
+        }else {
+            [anNiuBt setBackgroundImage:[UIImage imageNamed:@"feedback_addpic"] forState:UIControlStateNormal];
+                   
+           
+        }
+       
+        
+        
+    }
     
 }
+
+- (void)hitAction:(UIButton *)anNiuBt {
+    
+    if (anNiuBt.tag >=200) {
+        //删除
+        [self.picArr removeObjectAtIndex:anNiuBt.tag - 200];
+        [self setPics];
+    }else {
+        if (anNiuBt.tag - 100  == self.picArr.count) {
+            //添加图片
+            [self addPict];
+            
+        }
+    }
+}
+
 
 @end
