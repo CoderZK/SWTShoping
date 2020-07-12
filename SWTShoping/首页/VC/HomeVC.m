@@ -16,7 +16,7 @@
 #import "SWTFenLeiFirstVC.h"
 #import "SWTVideoFartherVC.h"
 #import "SWTZhenPinGeFatherVC.h"
-
+#import "SWTZhiBoDetailVC.h"
 @interface HomeVC ()<UIScrollViewDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource,SWTHomeHeadViewDelegate>
 @property(nonatomic , strong)SWTHomeHeadView *headView;
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
@@ -202,9 +202,17 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
+    if (indexPath.row == 0) {
+        SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else {
+        SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+           vc.hidesBottomBarWhenPushed = YES;
+           [self.navigationController pushViewController:vc animated:YES];
+    }
+    
+   
    
 }
 

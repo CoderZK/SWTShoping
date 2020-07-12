@@ -163,6 +163,9 @@
 		66732D0B24BAE51700452F21 /* SWTHeMaiMineDingZhiShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66732D0A24BAE51700452F21 /* SWTHeMaiMineDingZhiShowView.m */; };
 		66732D0F24BAF6EA00452F21 /* SWTHeMaiDianPuOneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66732D0D24BAF6EA00452F21 /* SWTHeMaiDianPuOneCell.m */; };
 		66732D1024BAF6EA00452F21 /* SWTHeMaiDianPuOneCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66732D0E24BAF6EA00452F21 /* SWTHeMaiDianPuOneCell.xib */; };
+		66732D1624BB067E00452F21 /* SWTZhiBoDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 66732D1524BB067E00452F21 /* SWTZhiBoDetailVC.m */; };
+		66732D1924BB069C00452F21 /* SWTZhiBoHedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66732D1824BB069C00452F21 /* SWTZhiBoHedView.m */; };
+		66732D1C24BB071400452F21 /* SWTZhiBoBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66732D1B24BB071400452F21 /* SWTZhiBoBottomView.m */; };
 		6673BA8924B356B900037A14 /* SWTLaoYouPinLeiCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6673BA8824B356B900037A14 /* SWTLaoYouPinLeiCell.m */; };
 		6673BA8D24B35A7E00037A14 /* SWTLaoYouKaiDianLiuChengCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6673BA8B24B35A7E00037A14 /* SWTLaoYouKaiDianLiuChengCell.m */; };
 		6673BA8E24B35A7E00037A14 /* SWTLaoYouKaiDianLiuChengCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6673BA8C24B35A7E00037A14 /* SWTLaoYouKaiDianLiuChengCell.xib */; };
@@ -506,6 +509,12 @@
 		66732D0C24BAF6EA00452F21 /* SWTHeMaiDianPuOneCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTHeMaiDianPuOneCell.h; sourceTree = "<group>"; };
 		66732D0D24BAF6EA00452F21 /* SWTHeMaiDianPuOneCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTHeMaiDianPuOneCell.m; sourceTree = "<group>"; };
 		66732D0E24BAF6EA00452F21 /* SWTHeMaiDianPuOneCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTHeMaiDianPuOneCell.xib; sourceTree = "<group>"; };
+		66732D1424BB067E00452F21 /* SWTZhiBoDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTZhiBoDetailVC.h; sourceTree = "<group>"; };
+		66732D1524BB067E00452F21 /* SWTZhiBoDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTZhiBoDetailVC.m; sourceTree = "<group>"; };
+		66732D1724BB069C00452F21 /* SWTZhiBoHedView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTZhiBoHedView.h; sourceTree = "<group>"; };
+		66732D1824BB069C00452F21 /* SWTZhiBoHedView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTZhiBoHedView.m; sourceTree = "<group>"; };
+		66732D1A24BB071400452F21 /* SWTZhiBoBottomView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTZhiBoBottomView.h; sourceTree = "<group>"; };
+		66732D1B24BB071400452F21 /* SWTZhiBoBottomView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTZhiBoBottomView.m; sourceTree = "<group>"; };
 		6673BA8724B356B900037A14 /* SWTLaoYouPinLeiCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTLaoYouPinLeiCell.h; sourceTree = "<group>"; };
 		6673BA8824B356B900037A14 /* SWTLaoYouPinLeiCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTLaoYouPinLeiCell.m; sourceTree = "<group>"; };
 		6673BA8A24B35A7E00037A14 /* SWTLaoYouKaiDianLiuChengCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTLaoYouKaiDianLiuChengCell.h; sourceTree = "<group>"; };
@@ -642,6 +651,7 @@
 		337F3E5820E9FE3B00C5526A /* SWTShoping */ = {
 			isa = PBXGroup;
 			children = (
+				66732D1124BB060900452F21 /* 直播 */,
 				666658E124AA23AC006C17B4 /* Views */,
 				337F3EB120EA040400C5526A /* 其它 */,
 				337F3E8C20E9FF3500C5526A /* 登录注册 */,
@@ -1330,6 +1340,35 @@
 			path = VCS;
 			sourceTree = "<group>";
 		};
+		66732D1124BB060900452F21 /* 直播 */ = {
+			isa = PBXGroup;
+			children = (
+				66732D1324BB062100452F21 /* VCS */,
+				66732D1224BB061900452F21 /* views */,
+			);
+			path = "直播";
+			sourceTree = "<group>";
+		};
+		66732D1224BB061900452F21 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				66732D1724BB069C00452F21 /* SWTZhiBoHedView.h */,
+				66732D1824BB069C00452F21 /* SWTZhiBoHedView.m */,
+				66732D1A24BB071400452F21 /* SWTZhiBoBottomView.h */,
+				66732D1B24BB071400452F21 /* SWTZhiBoBottomView.m */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
+		66732D1324BB062100452F21 /* VCS */ = {
+			isa = PBXGroup;
+			children = (
+				66732D1424BB067E00452F21 /* SWTZhiBoDetailVC.h */,
+				66732D1524BB067E00452F21 /* SWTZhiBoDetailVC.m */,
+			);
+			path = VCS;
+			sourceTree = "<group>";
+		};
 		6673BA9524B36DFF00037A14 /* 我的订单 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1673,6 +1712,7 @@
 				66732D0824BAE4F000452F21 /* SWTHeMaiDianPuShowVIew.m in Sources */,
 				6678B7E624B0B49500EA3A56 /* SWTGoodsDetailThreeCell.m in Sources */,
 				667A44BC24B1E711006C9072 /* SWTBottomBt.m in Sources */,
+				66732D1624BB067E00452F21 /* SWTZhiBoDetailVC.m in Sources */,
 				337F3E5E20E9FE3C00C5526A /* ViewController.m in Sources */,
 				666BE54824B84CB600FBB207 /* SWTMineOrderFartherVC.m in Sources */,
 				6678B7F024B0C92A00EA3A56 /* SWTGoodsDetailNeiCell.m in Sources */,
@@ -1700,6 +1740,7 @@
 				667A44C824B21959006C9072 /* SWTLaoYouOneCell.m in Sources */,
 				667A44CE24B22DB8006C9072 /* SWTLaoYouHomeTVC.m in Sources */,
 				335010E320EDFC9300F8486B /* zkSignleTool.m in Sources */,
+				66732D1924BB069C00452F21 /* SWTZhiBoHedView.m in Sources */,
 				66689F3724B4242100C49A2E /* SWTHelpOneTVC.m in Sources */,
 				337F3EAD20EA014600C5526A /* BaseTableViewHeaderFooterView.m in Sources */,
 				666C70E224B611E5002C11E1 /* SWTFanKuiOneNeiCell.m in Sources */,
@@ -1707,6 +1748,7 @@
 				667A44B524B16271006C9072 /* SWTGoodsDetailFiveCell.m in Sources */,
 				6670696624B5611300AB0826 /* SWTCateButton.m in Sources */,
 				66732CC724B8B42500452F21 /* SWTSendMinePingLunTVC.m in Sources */,
+				66732D1C24BB071400452F21 /* SWTZhiBoBottomView.m in Sources */,
 				666A3A1624B74D1500318075 /* zkPhotoShowVC.m in Sources */,
 				667A44E024B23D2D006C9072 /* SWTLaoYouDesNeiTwoCell.m in Sources */,
 				6673BA9324B368D500037A14 /* SWTHeMaiOneCell.m in Sources */,

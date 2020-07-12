@@ -12,6 +12,7 @@
 #import "SWTDingJinShowView.h"
 #import "SWTHeMaiMineDingZhiShowView.h"
 #import "SWTHeMaiDianPuShowVIew.h"
+#import "SWTHeMaiMineDingZhiShowView.h"
 @interface SWTMineHeMaiTiJiaoOrderTVC ()
 @property(nonatomic , strong)UIView *bottomV;
 @property(nonatomic , strong)UIButton *leftBt,*rightBt,*gouBt;
@@ -198,7 +199,8 @@
         SWTHeMaiDianPuShowVIew *  dingzhiV  =[[SWTHeMaiDianPuShowVIew alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
         [dingzhiV show];
     }else {
-        
+        SWTHeMaiMineDingZhiShowView *  dingzhiV  =[[SWTHeMaiMineDingZhiShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+        [dingzhiV show];
     }
     
 }
