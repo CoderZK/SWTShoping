@@ -50,6 +50,7 @@
 #import "LTSCNoneView.h"
 
 
+
 #import "SWTNavitageView.h"
 #import "SWTShopHomeVC.h"
 #import "SWTGoodsDetailTVC.h"
@@ -60,6 +61,8 @@
 #import "UIViewController+MXPhotoPicker.h"
 #import "zkPhotoShowVC.h"
 #import "LTSCEventBus.h"
+
+#import "SWTURLDefineTool.h"
 
 #define iOS11Later ([UIDevice currentDevice].systemVersion.floatValue >= 11.0f)
 

@@ -11,10 +11,13 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SWTRegistVC">
             <connections>
                 <outlet property="codeBt" destination="slo-7C-H5t" id="rvJ-TM-DYw"/>
+                <outlet property="codeTF" destination="mQV-Ph-xIb" id="iRT-BP-sgI"/>
                 <outlet property="confirmBt" destination="kul-Or-kXr" id="dhk-Pe-BxX"/>
                 <outlet property="gouBt" destination="DEw-Bi-1iR" id="MsH-UI-78Z"/>
                 <outlet property="lb1" destination="AtS-4I-V8k" id="J1X-8g-KFX"/>
                 <outlet property="lb2" destination="Jp9-mJ-Imt" id="hc1-Wy-EJe"/>
+                <outlet property="passwordTF" destination="QUh-Q5-H0x" id="xtE-D2-NMn"/>
+                <outlet property="phoneTF" destination="Ue7-wH-AhT" id="pwG-Zh-8tY"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="xieYiBt" destination="EZh-iA-Q9l" id="WzL-lQ-GcZ"/>
                 <outlet property="yinsiBt" destination="bxH-fl-qzP" id="n93-4s-NWQ"/>
@@ -99,7 +102,7 @@
                         <constraint firstAttribute="height" constant="0.40000000000000002" id="OGU-5Y-fPX"/>
                     </constraints>
                 </view>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mQV-Ph-xIb">
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入验证码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mQV-Ph-xIb">
                     <rect key="frame" x="15" y="104.5" width="384" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="ReJ-ze-Jrl"/>

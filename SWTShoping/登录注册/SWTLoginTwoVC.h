@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTLoginTwoVC : UIViewController
-
+@property(nonatomic , strong)NSString *phoneStr,*passwordStr;
 @end
 
 NS_ASSUME_NONNULL_END

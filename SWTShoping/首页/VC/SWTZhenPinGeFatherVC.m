@@ -40,7 +40,7 @@
     [self addPagerController];
        
     [self.tabBar mas_makeConstraints:^(MASConstraintMaker *make) {
-           make.leading.trailing.equalTo(self.view);
+           make.left.right.equalTo(self.view);
            make.top.equalTo(self.view).offset(sstatusHeight + 44);
            make.height.equalTo(@40);
     }];

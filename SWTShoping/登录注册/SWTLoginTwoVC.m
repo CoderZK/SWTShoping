@@ -26,8 +26,43 @@
     self.loginBt.clipsToBounds = self.weiXinBt.clipsToBounds = YES;
     self.loginBt.layer.borderWidth = self.weiXinBt.layer.borderWidth = 0.8;
     self.loginBt.layer.borderColor = self.weiXinBt.layer.borderColor = [UIColor darkGrayColor].CGColor;
+    self.passwordTF.text = self.passwordTF;
+    self.phoneTF.text = self.phoneStr;
     
     
+    
+}
+
+
+- (void)loginAction  {
+    
+    if (self.phoneTF.text.length == 0) {
+        [SVProgressHUD showErrorWithStatus:@"请输入手机号"];
+        return;
+    }
+    if (self.passwordTF.text.length == 0 ) {
+        [SVProgressHUD showErrorWithStatus:@"请输入密码"];
+        return;
+    }
+    
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    [zkRequestTool networkingPOST:login_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+      
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+     
+        
+    }];
 }
 
 - (IBAction)clickAction:(UIButton *)sender {

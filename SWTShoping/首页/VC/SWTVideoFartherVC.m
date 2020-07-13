@@ -46,7 +46,7 @@
     [self addPagerController];
     
     [self.tabBar mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.trailing.equalTo(self.view);
+        make.left.right.equalTo(self.view);
         make.top.equalTo(self.headV.mas_bottom).offset(10);
         make.height.equalTo(@40);
     }];
@@ -159,7 +159,7 @@
     tabBar.layout.selectedTextFont = [UIFont systemFontOfSize:15];
     tabBar.layout.selectedTextColor = CharacterColor50;
     tabBar.layout.progressColor = RedColor;
-    tabBar.layout.cellSpacing = ((ScreenW - 30) - [@"热门 玉器 古字画 文玩视频" getWidhtWithFontSize:15])/3.0;
+    tabBar.layout.cellSpacing = ((ScreenW - 30) - [@"热门 玉器 古字画 文玩首饰" getWidhtWithFontSize:16])/3.0;
     tabBar.dataSource = self;
     tabBar.delegate = self;
     [tabBar registerClass:[TYTabPagerBarCell class] forCellWithReuseIdentifier:[TYTabPagerBarCell cellIdentifier]];

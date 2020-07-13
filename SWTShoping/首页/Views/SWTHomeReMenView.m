@@ -18,6 +18,8 @@
         self.imgV.image = [UIImage imageNamed:@"369"];
         [self addSubview:self.imgV];
         
+    
+        
         
         self.leftImgV  =[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 44, 20)];
         self.leftImgV.image =[UIImage imageNamed:@"shop6"];
@@ -29,7 +31,10 @@
         self.leftLB.textColor = WhiteColor;
         [self.leftImgV addSubview:self.leftLB];
         
-        self.rightLB = [[UILabel alloc] initWithFrame:CGRectMake(frame.size.width - 44 - 10 , 0, frame.size.width - 44 - 10, 18)];
+        self.Bt =[[UIButton alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+        [self addSubview:self.Bt];
+        
+        self.rightLB = [[UILabel alloc] initWithFrame:CGRectMake( 45 , 0, frame.size.width - 50 , 18)];
         self.rightLB.font = kFont(10);
         self.rightLB.textAlignment = NSTextAlignmentRight;
         self.rightLB.textColor = WhiteColor;

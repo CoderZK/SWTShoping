@@ -95,7 +95,7 @@
                         <constraint firstAttribute="height" constant="35" id="LDW-ur-Fj4"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                 </textField>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KK8-QT-H53">
                     <rect key="frame" x="15" y="144.5" width="384" height="0.5"/>

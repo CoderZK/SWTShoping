@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic , strong)UIImageView *leftImgV;
 @property(nonatomic , strong)UILabel *leftLB,*rightLB,*bottomLB,*centerLB;
 @property(nonatomic , strong)UIImageView *headImgV;
+@property(nonatomic , strong)UIButton *Bt;
 
 @end
 

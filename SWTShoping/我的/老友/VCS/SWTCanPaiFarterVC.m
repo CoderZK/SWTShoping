@@ -26,7 +26,7 @@
     [self addPagerController];
     
     [self.tabBar mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.top.trailing.equalTo(self.view);
+        make.left.top.right.equalTo(self.view);
         make.height.equalTo(@40);
     }];
     

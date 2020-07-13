@@ -26,6 +26,7 @@
 #import "SWTMinePingLunListTVC.h"
 #import "SWTSendMinePingLunTVC.h"
 #import "SWTLoginOneVC.h"
+#import "SWTMineZiLiaoVC.h"
 @interface MineVC ()<XPCollectionViewWaterfallFlowLayoutDataSource,UICollectionViewDelegate,UICollectionViewDataSource>
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 @property(nonatomic , strong)UICollectionView *collectionView;
@@ -133,6 +134,7 @@
     
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
+            //104 头像 105 编辑 106 问题 107 关注 100 - 103 我的竞拍...
             SWTMineOneCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTMineOneCell" forIndexPath:indexPath];
             Weak(weakSelf);
             cell.mineOneCellBlock = ^(NSInteger index) {
@@ -163,7 +165,9 @@
                 }else if (index == 4) {
                     
                 }else if (index == 5) {
-                    
+                    SWTMineZiLiaoVC * vc =[[SWTMineZiLiaoVC alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
                 }else if (index == 6) {
                     
                 }else if (index == 7) {

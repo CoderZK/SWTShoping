@@ -44,6 +44,8 @@
         for (int i = 0 ; i < 3; i++) {
             
             SWTHomeReMenView * renMenV = [[SWTHomeReMenView alloc] initWithFrame:CGRectMake( i*(space + ww), 0, ww, hh)];
+            renMenV.Bt.tag = i+100;
+            [renMenV.Bt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
             [self.scrollView addSubview:renMenV];
             
             
@@ -54,7 +56,11 @@
     return self;
 }
 
-
+- (void)clickAction:(UIButton *)button {
+    if (self.delegateSignal) {
+        [self.delegateSignal sendNext:@(button.tag - 100)];
+    }
+}
 
 
 @end

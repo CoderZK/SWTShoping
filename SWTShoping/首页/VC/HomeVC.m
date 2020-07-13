@@ -17,6 +17,7 @@
 #import "SWTVideoFartherVC.h"
 #import "SWTZhenPinGeFatherVC.h"
 #import "SWTZhiBoDetailVC.h"
+#import "SWTHeMaiFatherVC.h"
 @interface HomeVC ()<UIScrollViewDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource,SWTHomeHeadViewDelegate>
 @property(nonatomic , strong)SWTHomeHeadView *headView;
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
@@ -182,6 +183,16 @@
 
     if (indexPath.section == 0) {
         SWTHomeCollectionOneCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+        cell.delegateSignal = [[RACSubject alloc] init];
+        @weakify(self);
+        [cell.delegateSignal subscribeNext:^(id  _Nullable x) {
+            @strongify(self);
+            
+            SWTHeMaiFatherVC * vc =[[SWTHeMaiFatherVC alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+            
+        }];
         return cell;
     }else {
         if (indexPath.row == 0) {
