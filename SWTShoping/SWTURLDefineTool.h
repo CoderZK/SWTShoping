@@ -29,13 +29,50 @@
 
 /** 发送验证码 */
 #define SMSSEND_SWT URLOne@"sms/send"
-
 /** 注册 */
 #define register_SWT URLOne@"register"
-
 /** 登录 */
 #define login_SWT URLOne@"login"
-
+/** 获取用户协议 */
+#define agreement_SWT URLOne@"agreement"
+/** 隐私协议 */
+#define privacypolicy_SWT URLOne@"privacypolicy"
+/** 修改密码 */
+#define editpassword_SWT URLOne@"user/editpassword"
+/**轮播图 */
+#define lideshow_SWT URLOne@"index/lideshow"
+/** 一级分类接口 */
+#define goodTopcategory_SWT URLOne@"good/topcategory"
+/** 二级分类接口 */
+#define goodChildcategory_SWT URLOne@"good/childcategory"
+/** 商品详情 */
+#define goodDetail_SWT URLOne@"good/detail"
+/** 视频分裂接口 */
+#define videoCategory_SWT URLOne@"video/category"
+/**获取顶部视频信息 */
+#define videoTop_SWT URLOne@"video/top"
+/** 获取你喜欢的视频 */
+#define videoFav_SWT URLOne@"video/fav"
+/** 获取用户协议 */
+#define videoDetail_SWT URLOne@"detail"
+///** 获取用户协议 */
+//#define agreement_SWT URLOne@"agreement"
+///** 获取用户协议 */
+//#define agreement_SWT URLOne@"agreement"
+///** 获取用户协议 */
+//#define agreement_SWT URLOne@"agreement"
+///** 获取用户协议 */
+//#define agreement_SWT URLOne@"agreement"
+///** 获取用户协议 */
+//#define agreement_SWT URLOne@"agreement"
+///** 获取用户协议 */
+//#define agreement_SWT URLOne@"agreement"
+///** 获取用户协议 */
+//#define agreement_SWT URLOne@"agreement"
+///** 获取用户协议 */
+//#define agreement_SWT URLOne@"agreement"
+///** 获取用户协议 */
+//#define agreement_SWT URLOne@"agreement"
 
 
 #endif /* SWTURLDefineTool_h */

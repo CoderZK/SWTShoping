@@ -12,24 +12,84 @@
 #import "SWTFenLeiCollectTwoCell.h"
 #import "SWTCateSubVC.h"
 @interface SWTFenLeiFirstVC ()<UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
-@property(nonatomic , strong)UITableView *leftV,*rightTV;
+@property(nonatomic , strong)UITableView *leftV;
 @property(nonatomic , strong)UICollectionView *collectionView;
 @property(nonatomic , strong)UICollectionViewFlowLayout *layout;
 @property(nonatomic , strong)UIImageView *headImgV;
+@property(nonatomic , strong)NSString *selectFirstID;
+@property(nonatomic , strong)NSMutableArray<SWTModel *> *leftDataArr;
+
 @end
 
 @implementation SWTFenLeiFirstVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.selectFirstID = @"-1";
     self.navigationItem.title = @"分类";
     
     [self setNavigateView];
-    
     [self addTV];
-    
     [self addCollectionView];
+    
+    self.leftDataArr = @[].mutableCopy;
+    [self getFirstCateData];
+    self.leftV.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+
+        [self getFirstCateData];
+    }];
+
 }
+
+- (void)getFirstCateData {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    [zkRequestTool networkingPOST:goodTopcategory_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        [SVProgressHUD dismiss];
+        [self.leftV.mj_header endRefreshing];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            self.leftDataArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            if (self.selectFirstID.intValue == -1 && self.leftDataArr.count > 0) {
+                self.selectFirstID = self.leftDataArr[0].ID;
+                [self getScondCaterData];
+            }
+            [self.leftV reloadData];
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self.leftV.mj_header endRefreshing];
+       
+    }];
+}
+
+- (void)getScondCaterData {
+    
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"categoryid"] = self.selectFirstID;
+    [zkRequestTool networkingGET:goodChildcategory_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        [SVProgressHUD dismiss];
+        [self.collectionView.mj_header endRefreshing];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self.collectionView.mj_header endRefreshing];
+       
+    }];
+    
+}
+
 
 - (void)addTV {
     
@@ -112,7 +172,7 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return self.leftDataArr.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 40;

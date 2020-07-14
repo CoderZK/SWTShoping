@@ -77,6 +77,11 @@
         if (self.passwordTF.text.length < 6 || self.passwordTF.text.length > 16 ) {
             [SVProgressHUD showErrorWithStatus:@"请输入6-16位的密码"];
         }
+        if (self.gouBt.selected == NO) {
+            [SVProgressHUD showErrorWithStatus:@"请勾选用户和隐私协议"];
+            return;
+        }
+        
         
         [SVProgressHUD show];
         NSMutableDictionary * dict = @{}.mutableCopy;

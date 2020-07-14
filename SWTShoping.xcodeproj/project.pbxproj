@@ -122,6 +122,9 @@
 		666BB1D124B0671200341CE8 /* SWTGoodsDetailTableViewContentCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666BB1D024B0671200341CE8 /* SWTGoodsDetailTableViewContentCollCell.m */; };
 		666BE54824B84CB600FBB207 /* SWTMineOrderFartherVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 666BE54724B84CB600FBB207 /* SWTMineOrderFartherVC.m */; };
 		666BE54B24B84CCF00FBB207 /* SWTMineOrderSubTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 666BE54A24B84CCF00FBB207 /* SWTMineOrderSubTVC.m */; };
+		666BFDC024BDF9E200719972 /* SWTModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 666BFDBF24BDF9E200719972 /* SWTModel.m */; };
+		666BFDC524BDFB3800719972 /* SWTEditPasswordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 666BFDC324BDFB3800719972 /* SWTEditPasswordVC.m */; };
+		666BFDC624BDFB3800719972 /* SWTEditPasswordVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 666BFDC424BDFB3800719972 /* SWTEditPasswordVC.xib */; };
 		666C70D824B60C30002C11E1 /* SWTMienZuJiSubVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 666C70D724B60C30002C11E1 /* SWTMienZuJiSubVC.m */; };
 		666C70DB24B61165002C11E1 /* SWTFanKuiTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 666C70DA24B61165002C11E1 /* SWTFanKuiTVC.m */; };
 		666C70DE24B611C8002C11E1 /* SWTFanKuiOneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666C70DD24B611C8002C11E1 /* SWTFanKuiOneCell.m */; };
@@ -454,6 +457,11 @@
 		666BE54724B84CB600FBB207 /* SWTMineOrderFartherVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTMineOrderFartherVC.m; sourceTree = "<group>"; };
 		666BE54924B84CCF00FBB207 /* SWTMineOrderSubTVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTMineOrderSubTVC.h; sourceTree = "<group>"; };
 		666BE54A24B84CCF00FBB207 /* SWTMineOrderSubTVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTMineOrderSubTVC.m; sourceTree = "<group>"; };
+		666BFDBE24BDF9E200719972 /* SWTModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTModel.h; sourceTree = "<group>"; };
+		666BFDBF24BDF9E200719972 /* SWTModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTModel.m; sourceTree = "<group>"; };
+		666BFDC224BDFB3800719972 /* SWTEditPasswordVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTEditPasswordVC.h; sourceTree = "<group>"; };
+		666BFDC324BDFB3800719972 /* SWTEditPasswordVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTEditPasswordVC.m; sourceTree = "<group>"; };
+		666BFDC424BDFB3800719972 /* SWTEditPasswordVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTEditPasswordVC.xib; sourceTree = "<group>"; };
 		666C70D624B60C30002C11E1 /* SWTMienZuJiSubVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTMienZuJiSubVC.h; sourceTree = "<group>"; };
 		666C70D724B60C30002C11E1 /* SWTMienZuJiSubVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTMienZuJiSubVC.m; sourceTree = "<group>"; };
 		666C70D924B61165002C11E1 /* SWTFanKuiTVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTFanKuiTVC.h; sourceTree = "<group>"; };
@@ -768,6 +776,9 @@
 				66732CE324BAA1EE00452F21 /* SWTRegistVC.xib */,
 				66732CF624BAB4D200452F21 /* LxmWebViewController.h */,
 				66732CF524BAB4D200452F21 /* LxmWebViewController.m */,
+				666BFDC224BDFB3800719972 /* SWTEditPasswordVC.h */,
+				666BFDC324BDFB3800719972 /* SWTEditPasswordVC.m */,
+				666BFDC424BDFB3800719972 /* SWTEditPasswordVC.xib */,
 			);
 			path = "登录注册";
 			sourceTree = "<group>";
@@ -934,6 +945,8 @@
 		33DC823E20EA21CD00D1C283 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				666BFDBE24BDF9E200719972 /* SWTModel.h */,
+				666BFDBF24BDF9E200719972 /* SWTModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1693,6 +1706,7 @@
 				6678B7F124B0C92A00EA3A56 /* SWTGoodsDetailNeiCell.xib in Resources */,
 				666A39F624B74B3C00318075 /* mx_pic_selected_yes@2x.png in Resources */,
 				66732CD924B93EB600452F21 /* SWTPingJiaOneCell.xib in Resources */,
+				666BFDC624BDFB3800719972 /* SWTEditPasswordVC.xib in Resources */,
 				666C70E324B611E5002C11E1 /* SWTFanKuiOneNeiCell.xib in Resources */,
 				6678B7E224B0AE2B00EA3A56 /* SWTGoodsDetailTwoCell.xib in Resources */,
 				6673BA9F24B36FA000037A14 /* SWTTongYongOneCell.xib in Resources */,
@@ -1944,6 +1958,8 @@
 				666A3A1324B74D1500318075 /* TYPageControl.m in Sources */,
 				666A39FF24B74B3C00318075 /* MXImageGroupController.m in Sources */,
 				666BB1CE24B059BA00341CE8 /* SWTGoodsDetailHeadV.m in Sources */,
+				666BFDC024BDF9E200719972 /* SWTModel.m in Sources */,
+				666BFDC524BDFB3800719972 /* SWTEditPasswordVC.m in Sources */,
 				66732CCA24B8B43C00452F21 /* SWTMinePingLunListTVC.m in Sources */,
 				667A44B924B1DC9E006C9072 /* SWTGoodSDetailBottomView.m in Sources */,
 				666F691624BCA8F200592DC4 /* SWTMienAddressCell.m in Sources */,

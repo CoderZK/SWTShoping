@@ -63,6 +63,7 @@
 #import "LTSCEventBus.h"
 
 #import "SWTURLDefineTool.h"
+#import "SWTModel.h"
 
 #define iOS11Later ([UIDevice currentDevice].systemVersion.floatValue >= 11.0f)
 

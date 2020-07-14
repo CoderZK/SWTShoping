@@ -26,7 +26,7 @@
     self.loginBt.clipsToBounds = self.weiXinBt.clipsToBounds = YES;
     self.loginBt.layer.borderWidth = self.weiXinBt.layer.borderWidth = 0.8;
     self.loginBt.layer.borderColor = self.weiXinBt.layer.borderColor = [UIColor darkGrayColor].CGColor;
-    self.passwordTF.text = self.passwordTF;
+    self.passwordTF.text = self.passwordStr;
     self.phoneTF.text = self.phoneStr;
     
     
@@ -47,6 +47,8 @@
     
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"mobile"] = self.phoneTF.text;
+    dict[@"password"] = self.phoneTF.text;
     [zkRequestTool networkingPOST:login_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
       
         [SVProgressHUD dismiss];
@@ -67,7 +69,7 @@
 
 - (IBAction)clickAction:(UIButton *)sender {
     if (sender.tag == 100) {
-        
+        [self loginAction];
     }else if (sender.tag == 101) {
         SWTRegistVC * vc =[[SWTRegistVC alloc] init];
         vc.hidesBottomBarWhenPushed = YES;

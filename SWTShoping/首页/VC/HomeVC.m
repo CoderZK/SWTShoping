@@ -39,6 +39,8 @@
     
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     
+    [self getData];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -81,6 +83,25 @@
     
     
     
+}
+
+- (void)getData {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    [zkRequestTool networkingPOST:lideshow_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+   
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        
+    }];
 }
 
 - (void)setNavigateView {

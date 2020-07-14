@@ -9,6 +9,7 @@
 #import "SWTMineZiLiaoVC.h"
 #import "SWTMineZiLiaoCell.h"
 #import "SWTMineAddressTVC.h"
+#import "SWTEditPasswordVC.h"
 @interface SWTMineZiLiaoVC ()
 @property(nonatomic , strong)NSArray *leftArr;
 @property(nonatomic , strong)UIView *footV;
@@ -70,6 +71,12 @@
     
     if (indexPath.row == 3) {
         SWTMineAddressTVC * vc =[[SWTMineAddressTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else if (indexPath.row == 4) {
+        
+    }else if (indexPath.row == 5) {
+        SWTEditPasswordVC * vc =[[SWTEditPasswordVC alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
     }
