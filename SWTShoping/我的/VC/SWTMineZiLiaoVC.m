@@ -58,9 +58,21 @@
     cell.leftLB.text = self.leftArr[indexPath.row];
     cell.rightLB.hidden = NO;
     cell.rightImgV.hidden = YES;
+    cell.rightLB.hidden = YES;
     if (indexPath.row == 0) {
-        cell.rightLB.hidden = YES;
         cell.rightImgV.hidden = NO;
+    }else if (indexPath.row == 1){
+        cell.rightLB.hidden = NO;
+        cell.rightLB.text = [zkSignleTool shareTool].nickname;
+    }else if (indexPath.row == 2){
+        cell.rightLB.hidden = NO;
+        if (self.genderStr.length == 0 ) {
+            cell.rightLB.text = @"去设置";
+        }else if (self.genderStr.intValue == 1) {
+            cell.rightLB.text = @"男";
+        }else {
+            cell.rightLB.text = @"女";
+        }
     }
     return cell;
 }
@@ -68,6 +80,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
+    
     
     if (indexPath.row == 3) {
         SWTMineAddressTVC * vc =[[SWTMineAddressTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];

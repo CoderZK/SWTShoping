@@ -156,6 +156,10 @@
 		6670823424BC3F6B00A44820 /* SWTHeMaiSubVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6670823324BC3F6B00A44820 /* SWTHeMaiSubVC.m */; };
 		6670823824BC5D5000A44820 /* SWTHeMaiThreeCollectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6670823624BC5D5000A44820 /* SWTHeMaiThreeCollectCell.m */; };
 		6670823924BC5D5000A44820 /* SWTHeMaiThreeCollectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6670823724BC5D5000A44820 /* SWTHeMaiThreeCollectCell.xib */; };
+		6670E03F24BFDF5200662F5D /* SWTXiYieVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6670E03D24BFDF5200662F5D /* SWTXiYieVC.m */; };
+		6670E04024BFDF5200662F5D /* SWTXiYieVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6670E03E24BFDF5200662F5D /* SWTXiYieVC.xib */; };
+		6670E04724C02B2700662F5D /* zkPickView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6670E04324C02B2700662F5D /* zkPickView.m */; };
+		6670E04824C02B2700662F5D /* zkPickModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6670E04524C02B2700662F5D /* zkPickModel.m */; };
 		66732CC124B8A76600452F21 /* SWTMineOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66732CC024B8A76600452F21 /* SWTMineOrderCell.m */; };
 		66732CC724B8B42500452F21 /* SWTSendMinePingLunTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 66732CC624B8B42500452F21 /* SWTSendMinePingLunTVC.m */; };
 		66732CCA24B8B43C00452F21 /* SWTMinePingLunListTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 66732CC924B8B43C00452F21 /* SWTMinePingLunListTVC.m */; };
@@ -517,6 +521,13 @@
 		6670823524BC5D5000A44820 /* SWTHeMaiThreeCollectCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTHeMaiThreeCollectCell.h; sourceTree = "<group>"; };
 		6670823624BC5D5000A44820 /* SWTHeMaiThreeCollectCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTHeMaiThreeCollectCell.m; sourceTree = "<group>"; };
 		6670823724BC5D5000A44820 /* SWTHeMaiThreeCollectCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTHeMaiThreeCollectCell.xib; sourceTree = "<group>"; };
+		6670E03C24BFDF5200662F5D /* SWTXiYieVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTXiYieVC.h; sourceTree = "<group>"; };
+		6670E03D24BFDF5200662F5D /* SWTXiYieVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTXiYieVC.m; sourceTree = "<group>"; };
+		6670E03E24BFDF5200662F5D /* SWTXiYieVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTXiYieVC.xib; sourceTree = "<group>"; };
+		6670E04324C02B2700662F5D /* zkPickView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = zkPickView.m; sourceTree = "<group>"; };
+		6670E04424C02B2700662F5D /* zkPickModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zkPickModel.h; sourceTree = "<group>"; };
+		6670E04524C02B2700662F5D /* zkPickModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = zkPickModel.m; sourceTree = "<group>"; };
+		6670E04624C02B2700662F5D /* zkPickView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zkPickView.h; sourceTree = "<group>"; };
 		66732CBF24B8A76600452F21 /* SWTMineOrderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTMineOrderCell.h; sourceTree = "<group>"; };
 		66732CC024B8A76600452F21 /* SWTMineOrderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTMineOrderCell.m; sourceTree = "<group>"; };
 		66732CC524B8B42500452F21 /* SWTSendMinePingLunTVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTSendMinePingLunTVC.h; sourceTree = "<group>"; };
@@ -703,6 +714,8 @@
 		337F3E5820E9FE3B00C5526A /* SWTShoping */ = {
 			isa = PBXGroup;
 			children = (
+				337F3E8D20E9FF3500C5526A /* 首页 */,
+				337F3E8B20E9FF3400C5526A /* 消息 */,
 				66732D1124BB060900452F21 /* 直播 */,
 				666658E124AA23AC006C17B4 /* Views */,
 				337F3EB120EA040400C5526A /* 其它 */,
@@ -717,9 +730,7 @@
 				337F3E5D20E9FE3C00C5526A /* ViewController.m */,
 				33DC822F20EA20D600D1C283 /* LYGuideViewController.h */,
 				33DC823220EA20D700D1C283 /* LYGuideViewController.m */,
-				337F3E8B20E9FF3400C5526A /* 消息 */,
 				33DC823120EA20D600D1C283 /* TabBarController.h */,
-				337F3E8D20E9FF3500C5526A /* 首页 */,
 				33DC823020EA20D600D1C283 /* TabBarController.m */,
 				337F3EBA20EA057600C5526A /* Header.pch */,
 				337F3E5F20E9FE3C00C5526A /* Main.storyboard */,
@@ -776,6 +787,9 @@
 				66732CE324BAA1EE00452F21 /* SWTRegistVC.xib */,
 				66732CF624BAB4D200452F21 /* LxmWebViewController.h */,
 				66732CF524BAB4D200452F21 /* LxmWebViewController.m */,
+				6670E03C24BFDF5200662F5D /* SWTXiYieVC.h */,
+				6670E03D24BFDF5200662F5D /* SWTXiYieVC.m */,
+				6670E03E24BFDF5200662F5D /* SWTXiYieVC.xib */,
 				666BFDC224BDFB3800719972 /* SWTEditPasswordVC.h */,
 				666BFDC324BDFB3800719972 /* SWTEditPasswordVC.m */,
 				666BFDC424BDFB3800719972 /* SWTEditPasswordVC.xib */,
@@ -850,6 +864,7 @@
 		337F3EB120EA040400C5526A /* 其它 */ = {
 			isa = PBXGroup;
 			children = (
+				6670E04224C02B2700662F5D /* ZKPickView */,
 				666A3A0024B74D1500318075 /* zk_picShow */,
 				666A39E124B74B3C00318075 /* MXPhotoPickerController */,
 				66C8F79E24AB1E0B008C7A3A /* LTSCEventBus.h */,
@@ -1370,6 +1385,17 @@
 			path = VCS;
 			sourceTree = "<group>";
 		};
+		6670E04224C02B2700662F5D /* ZKPickView */ = {
+			isa = PBXGroup;
+			children = (
+				6670E04324C02B2700662F5D /* zkPickView.m */,
+				6670E04424C02B2700662F5D /* zkPickModel.h */,
+				6670E04524C02B2700662F5D /* zkPickModel.m */,
+				6670E04624C02B2700662F5D /* zkPickView.h */,
+			);
+			path = ZKPickView;
+			sourceTree = "<group>";
+		};
 		66732CC224B8B39600452F21 /* 我的评价 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1747,6 +1773,7 @@
 				337F3E6120E9FE3C00C5526A /* Main.storyboard in Resources */,
 				666325E024AE333F009D77AF /* SWTFenLeiFirstLeftCell.xib in Resources */,
 				666325CE24AE1A6A009D77AF /* SWTGuanZhuCollectionCell.xib in Resources */,
+				6670E04024BFDF5200662F5D /* SWTXiYieVC.xib in Resources */,
 				667A44DC24B23D1E006C9072 /* SWTLaoYouDesNeiOneCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1898,6 +1925,7 @@
 				33DC824F20EA224F00D1C283 /* HangQingVC.m in Sources */,
 				337F3E5B20E9FE3B00C5526A /* AppDelegate.m in Sources */,
 				66689F2524B4176A00C49A2E /* SWTMineYouHuiQuanCell.m in Sources */,
+				6670E03F24BFDF5200662F5D /* SWTXiYieVC.m in Sources */,
 				666F692224BCAE4200592DC4 /* SWTEditAddressTVC.m in Sources */,
 				6670823424BC3F6B00A44820 /* SWTHeMaiSubVC.m in Sources */,
 				666A39FA24B74B3C00318075 /* MXImagePreviewController.m in Sources */,
@@ -1940,6 +1968,7 @@
 				335010DD20EDF9AE00F8486B /* zkRequestTool.m in Sources */,
 				666C70F024B614C2002C11E1 /* SWTFanKuiSelectView.m in Sources */,
 				666C70DE24B611C8002C11E1 /* SWTFanKuiOneCell.m in Sources */,
+				6670E04724C02B2700662F5D /* zkPickView.m in Sources */,
 				33DC825520EA245E00D1C283 /* HomeVC.m in Sources */,
 				666BB1D124B0671200341CE8 /* SWTGoodsDetailTableViewContentCollCell.m in Sources */,
 				666325DB24AE2986009D77AF /* SWTFenLeiFirstVC.m in Sources */,
@@ -1957,6 +1986,7 @@
 				666BB1C224AF803200341CE8 /* SWTShopHomeVC.m in Sources */,
 				666A3A1324B74D1500318075 /* TYPageControl.m in Sources */,
 				666A39FF24B74B3C00318075 /* MXImageGroupController.m in Sources */,
+				6670E04824C02B2700662F5D /* zkPickModel.m in Sources */,
 				666BB1CE24B059BA00341CE8 /* SWTGoodsDetailHeadV.m in Sources */,
 				666BFDC024BDF9E200719972 /* SWTModel.m in Sources */,
 				666BFDC524BDFB3800719972 /* SWTEditPasswordVC.m in Sources */,

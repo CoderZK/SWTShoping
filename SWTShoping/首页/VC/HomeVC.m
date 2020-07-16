@@ -22,6 +22,9 @@
 @property(nonatomic , strong)SWTHomeHeadView *headView;
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 @property(nonatomic , strong)UICollectionView *collectionView;
+@property(nonatomic , strong)NSArray<SWTModel *> *bannerArr;
+@property(nonatomic , strong)NSMutableArray<SWTModel *> *recommendArr;
+@property(nonatomic , strong)NSMutableArray<SWTModel *> *hotArr;
 @end
 
 @implementation HomeVC
@@ -39,7 +42,11 @@
     
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     
-    [self getData];
+    
+//    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+//        self.page++;
+//        [self getData];
+//    }];
     
 }
 
@@ -55,6 +62,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.bannerArr = @[];
+    self.recommendArr = @[].mutableCopy;
+    self.hotArr = @[].mutableCopy;
     
     self.layout =[[XPCollectionViewWaterfallFlowLayout alloc] init];
     self.layout.dataSource = self;
@@ -82,18 +93,33 @@
     [self setheadViewVV];
     
     
+    [self getData];
+    [self getDataHotData];
+    [self getRecommendData];
+    self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+          [self getDataHotData];
+          [self getRecommendData];
+    }];
+    
     
 }
 
 - (void)getData {
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"type"] = @(1);
     [zkRequestTool networkingPOST:lideshow_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
    
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             
-            
+            self.bannerArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            NSMutableArray * picArr  = @[].mutableCopy;
+            for (SWTModel * model  in self.bannerArr) {
+                [picArr addObject:model.pic];
+                
+            }
+//            self.headView.sdView.imageURLStringsGroup = picArr;
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }
@@ -104,6 +130,50 @@
     }];
 }
 
+- (void)getDataHotData {
+        NSMutableDictionary * dict = @{}.mutableCopy;
+        [zkRequestTool networkingPOST:indexHot_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+       
+            [SVProgressHUD dismiss];
+            [self.collectionView.mj_header endRefreshing];
+            if ([responseObject[@"code"] intValue]== 200) {
+                
+//                self.recommendArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+//                [self.collectionView reloadData];
+    //            self.headView.sdView.imageURLStringsGroup = picArr;
+            }else {
+                [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+            }
+            
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+            [self.collectionView.mj_header endRefreshing];
+        }];
+}
+
+- (void)getRecommendData {
+    
+     NSMutableDictionary * dict = @{}.mutableCopy;
+        dict[@"type"] = @(1);
+        [zkRequestTool networkingPOST:indexRecommend_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+       
+            [SVProgressHUD dismiss];
+             [self.collectionView.mj_header endRefreshing];
+            if ([responseObject[@"code"] intValue]== 200) {
+                
+                self.recommendArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+                [self.collectionView reloadData];
+    //            self.headView.sdView.imageURLStringsGroup = picArr;
+            }else {
+                [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+            }
+            
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+             [self.collectionView.mj_header endRefreshing];
+        }];
+    
+}
 - (void)setNavigateView {
 
     ALCSearchView * searchTitleView = [[ALCSearchView alloc] initWithFrame:CGRectMake(0, 0, ScreenW - 120, 44)];

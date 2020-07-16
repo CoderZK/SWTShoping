@@ -39,6 +39,10 @@
 #define privacypolicy_SWT URLOne@"privacypolicy"
 /** 修改密码 */
 #define editpassword_SWT URLOne@"user/editpassword"
+
+/** 修改密码 */
+#define forgetpassword_SWT URLOne@"editpassword"
+
 /**轮播图 */
 #define lideshow_SWT URLOne@"index/lideshow"
 /** 一级分类接口 */
@@ -55,18 +59,18 @@
 #define videoFav_SWT URLOne@"video/fav"
 /** 获取用户协议 */
 #define videoDetail_SWT URLOne@"detail"
+/** 获取用户协议 */
+#define indexHot_SWT URLOne@"index/hot"
 ///** 获取用户协议 */
-//#define agreement_SWT URLOne@"agreement"
-///** 获取用户协议 */
-//#define agreement_SWT URLOne@"agreement"
-///** 获取用户协议 */
-//#define agreement_SWT URLOne@"agreement"
-///** 获取用户协议 */
-//#define agreement_SWT URLOne@"agreement"
-///** 获取用户协议 */
-//#define agreement_SWT URLOne@"agreement"
-///** 获取用户协议 */
-//#define agreement_SWT URLOne@"agreement"
+#define indexRecommend_SWT URLOne@"index/recommend"
+///** 帮助模块 */
+#define helpTop_SWT URLOne@"help/top"
+///** 帮助模块的子列表 */
+#define helpList_SWT URLOne@"help/list"
+///**帮助模块详情 */
+#define helpDetail_SWT URLOne@"help/detail"
+///** 获取用信息 */
+#define userDetail_SWT URLOne@"user/detail"
 ///** 获取用户协议 */
 //#define agreement_SWT URLOne@"agreement"
 ///** 获取用户协议 */

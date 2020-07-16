@@ -48,13 +48,23 @@
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"mobile"] = self.phoneTF.text;
-    dict[@"password"] = self.phoneTF.text;
+    dict[@"password"] = self.passwordTF.text;
     [zkRequestTool networkingPOST:login_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
       
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             
+            [zkSignleTool shareTool].session_token = responseObject[@"data"][@"accessToken"];
+            [zkSignleTool shareTool].session_uid =  responseObject[@"data"][@"userid"];
+            [zkSignleTool shareTool].isLogin = YES;
+            [zkSignleTool shareTool].level =  responseObject[@"data"][@"level"];
+            [zkSignleTool shareTool].phone = self.phoneTF.text;
+            
+            [zkSignleTool shareTool].nickname =  responseObject[@"data"][@"nickname"];
+            
             [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+            
+            
             
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];

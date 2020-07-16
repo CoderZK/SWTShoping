@@ -70,22 +70,31 @@
 - (void)getScondCaterData {
     
     [SVProgressHUD show];
+//    NSMutableDictionary * dict = @{}.mutableCopy;
+//    dict[@"categoryid"] = self.selectFirstID;
+//    [zkRequestTool networkingStringPOST:goodChildcategory_SWT parameters:self.selectFirstID success:^(NSURLSessionDataTask *task, id responseObject) {
+//
+//
+//
+//    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+//
+//
+//    }];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    dict[@"categoryid"] = self.selectFirstID;
-    [zkRequestTool networkingGET:goodChildcategory_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
-        
+    [zkRequestTool networkingPOST:goodChildcategory_SWT parameters:self.selectFirstID success:^(NSURLSessionDataTask *task, id responseObject) {
+
         [SVProgressHUD dismiss];
         [self.collectionView.mj_header endRefreshing];
         if ([responseObject[@"code"] intValue]== 200) {
-            
-            
+
+
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }
-        
+
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [self.collectionView.mj_header endRefreshing];
-       
+
     }];
     
 }

@@ -42,6 +42,8 @@
     
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"newpassword"] = self.nOneTF.text;
+    dict[@"password"] = self.oldTF.text;
     [zkRequestTool networkingPOST:editpassword_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         
         [SVProgressHUD dismiss];
@@ -52,8 +54,8 @@
                 
                 SWTLoginTwoVC * vc =[[SWTLoginTwoVC alloc] init];
                 vc.hidesBottomBarWhenPushed = YES;
-                //                               vc.phoneStr = self.phoneTF.text;
-                //                               vc.passwordStr = self.passwordTF.text;
+                vc.phoneStr = [zkSignleTool shareTool].phone;
+                vc.passwordStr = self.nOneTF.text;
                 [self.navigationController pushViewController:vc animated:YES];
                 
             });

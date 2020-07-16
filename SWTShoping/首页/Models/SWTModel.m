@@ -12,4 +12,6 @@
 + (NSDictionary *)mj_replacedKeyFromPropertyName {
     return @{@"ID":@"id",@"des":@"description"};
 }
+//MJCodingImplementation
+
 @end

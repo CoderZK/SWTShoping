@@ -10,6 +10,7 @@
 #import "SWTTongYongTwoCell.h"
 @interface SWTHelpSubTVC ()
 @property(nonatomic , strong)NSArray *titleArr;
+@property(nonatomic , strong)NSString *ID;
 @end
 
 @implementation SWTHelpSubTVC
@@ -19,8 +20,46 @@
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTTongYongTwoCell" bundle:nil] forCellReuseIdentifier:@"cell"];
     self.titleArr = @[@"发货时间",@"发货快递公司",@"运费问题",@"怎么联系商家"];
+    @weakify(self);
+    [LTSCEventBus registerEvent:@"helpsub" block:^(NSDictionary * dict) {
+       @strongify(self);
+        if ([dict.allKeys containsObject:@"ID"]) {
+            self.ID = dict[@"ID"];
+        }
+        if ([dict.allKeys containsObject:@"type"]) {
+            if ([dict[@"type"] intValue] == self.type) {
+                [self getData];
+            }
+        }
+        
+        
+        
+    }];
     
 }
+
+- (void)getData {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    [zkRequestTool networkingPOST:helpList_SWT parameters:self.ID success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+}
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.titleArr.count;

@@ -16,6 +16,9 @@
 @property(nonatomic,strong)NSString * session_token;
 //用户ID
 @property(nonatomic,strong)NSString * session_uid;
+@property(nonatomic,strong)NSString * nickname;
+@property(nonatomic,strong)NSString * level;
+@property(nonatomic,strong)NSString * phone;
 @property(nonatomic,strong)NSString * deviceToken;
 -(void)uploadDeviceToken;
 @end

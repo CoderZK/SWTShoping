@@ -31,6 +31,33 @@ static zkSignleTool * tool = nil;
     return [[NSUserDefaults standardUserDefaults] boolForKey:@"isLogin"];
 }
 
+- (void)setLevel:(NSString *)level {
+    [[NSUserDefaults standardUserDefaults] setObject:level forKey:@"level"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (NSString *)level {
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"level"];
+}
+
+- (void)setPhone:(NSString *)phone {
+    [[NSUserDefaults standardUserDefaults] setObject:phone forKey:@"phone"];
+          [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (NSString *)phone {
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"phone"];
+}
+
+- (void)setNickname:(NSString *)nickname {
+      [[NSUserDefaults standardUserDefaults] setObject:nickname forKey:@"nickname"];
+       [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (NSString *)nickname {
+     return [[NSUserDefaults standardUserDefaults] objectForKey:@"nickname"];
+}
+
 -(void)setSession_token:(NSString *)session_token
 {
     

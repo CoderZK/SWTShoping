@@ -74,9 +74,37 @@
     
     [self.view addSubview:self.collectionView];
     
+
+    [self getData];
+    self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+       
+        [self getData];
+    }];
+ 
     
-    
-    
+}
+
+
+- (void)getData {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    [zkRequestTool networkingPOST:userDetail_SWT parameters:[zkSignleTool shareTool].session_uid success:^(NSURLSessionDataTask *task, id responseObject) {
+
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            [zkSignleTool shareTool].nickname = responseObject[@"data"][@"nickname"];
+
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+
+        
+    }];
 }
 
 - (void)setNav {
