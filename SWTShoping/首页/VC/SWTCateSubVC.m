@@ -14,20 +14,19 @@
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 @property(nonatomic , strong)UICollectionView *collectionView;
 @property(nonatomic , strong)SWTCateSearchView *headV;
+@property(nonatomic , strong)NSString *cateID;
+@property(nonatomic , assign)NSInteger  jiaGeNumber,timeNumber,yiKouJia,paiMaiOrYiKouJia;
+
 @end
 
 @implementation SWTCateSubVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"玉翠珠宝";
+    self.navigationItem.title = self.naStr;
     [self addheadV];
     self.view.backgroundColor = BackgroundColor;
-    
-    
     [self addCollectionView];
-    
-    
     
     
     
@@ -36,6 +35,8 @@
 
 - (void)addheadV {
     self.headV = [[SWTCateSearchView alloc] init];
+    self.headV.selectIndex = self.selectIndex;
+    self.headV.dataArray = self.titleArr;
     [self.view addSubview:self.headV];
     [self.headV mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.top.equalTo(self.view);
@@ -58,8 +59,13 @@
             //筛选
             
         }else if (tag == 3) {
+            //最新
             
         }else if (tag == 4) {
+            //价格
+        }else {
+            //点击类型 tag 从100 开始
+            
             
         }
         

@@ -10,7 +10,7 @@
 #import "SWTMineZiLiaoCell.h"
 #import "SWTMineAddressTVC.h"
 #import "SWTEditPasswordVC.h"
-@interface SWTMineZiLiaoVC ()
+@interface SWTMineZiLiaoVC ()<zkPickViewDelelgate>
 @property(nonatomic , strong)NSArray *leftArr;
 @property(nonatomic , strong)UIView *footV;
 @end
@@ -84,7 +84,16 @@
     
     
     
-    if (indexPath.row == 3) {
+    if (indexPath.row == 1) {
+        
+        [self editNickName];
+    }else if (indexPath.row == 2) {
+        zkPickView * pickV = [[zkPickView alloc] init];
+        pickV.arrayType = titleArray;
+        pickV.array = @[@"男",@"女"].mutableCopy;
+        [pickV show];
+        pickV.delegate = self;
+    }else if (indexPath.row == 3) {
         SWTMineAddressTVC * vc =[[SWTMineAddressTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
@@ -97,6 +106,50 @@
     }
     
 }
+- (void)didSelectLeftIndex:(NSInteger)leftIndex centerIndex:(NSInteger)centerIndex rightIndex:(NSInteger )rightIndex {
+    
+    
+    
+}
 
+
+- (void)editNickName  {
+    
+    UIAlertController  * alertVC = [UIAlertController alertControllerWithTitle:@"修改昵称" message:nil preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction * action1 = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    UIAlertAction * action2 = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"请输入昵称" preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            UITextField*userNameTF = alertController.textFields.firstObject;
+           
+            
+            
+        }]];
+        
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField*_Nonnull textField) {
+            
+            textField.placeholder=@"请输入昵称";
+            
+            
+            
+        }];
+        
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
+
+    }];
+    
+    [alertVC addAction:action1];
+    [alertVC addAction:action2];
+    
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertVC animated:YES completion:nil];
+    
+}
 
 @end

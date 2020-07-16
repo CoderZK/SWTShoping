@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIView *leftV;
 @property (weak, nonatomic) IBOutlet UILabel *titleLB;
 
+
 @end
 
 NS_ASSUME_NONNULL_END

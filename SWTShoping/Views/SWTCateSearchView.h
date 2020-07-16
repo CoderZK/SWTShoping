@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic , strong)SWTCateButton *priceBt,*timeBt;
 @property(nonatomic , strong)UIView*redV;
 @property(nonatomic , strong)RACSubject *delegateSignal;
+@property(nonatomic , assign)NSInteger  selectIndex;
+@property(nonatomic , strong)NSMutableArray<SWTModel *> *dataArray;
 @end
 
 NS_ASSUME_NONNULL_END

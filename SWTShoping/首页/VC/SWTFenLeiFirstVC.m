@@ -17,8 +17,9 @@
 @property(nonatomic , strong)UICollectionViewFlowLayout *layout;
 @property(nonatomic , strong)UIImageView *headImgV;
 @property(nonatomic , strong)NSString *selectFirstID;
+@property(nonatomic , assign)NSInteger  selectIndex;
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *leftDataArr;
-
+@property(nonatomic , strong)NSMutableArray<SWTModel *> *rightDataArr;
 @end
 
 @implementation SWTFenLeiFirstVC
@@ -33,6 +34,7 @@
     [self addCollectionView];
     
     self.leftDataArr = @[].mutableCopy;
+    self.rightDataArr = [NSMutableArray array];
     [self getFirstCateData];
     self.leftV.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
 
@@ -51,11 +53,14 @@
         if ([responseObject[@"code"] intValue]== 200) {
             
             self.leftDataArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            [self.leftV reloadData];
             if (self.selectFirstID.intValue == -1 && self.leftDataArr.count > 0) {
+                self.selectIndex = 0;
                 self.selectFirstID = self.leftDataArr[0].ID;
+                [self.leftV selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
                 [self getScondCaterData];
             }
-            [self.leftV reloadData];
+            
             
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
@@ -70,16 +75,6 @@
 - (void)getScondCaterData {
     
     [SVProgressHUD show];
-//    NSMutableDictionary * dict = @{}.mutableCopy;
-//    dict[@"categoryid"] = self.selectFirstID;
-//    [zkRequestTool networkingStringPOST:goodChildcategory_SWT parameters:self.selectFirstID success:^(NSURLSessionDataTask *task, id responseObject) {
-//
-//
-//
-//    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-//
-//
-//    }];
     NSMutableDictionary * dict = @{}.mutableCopy;
     [zkRequestTool networkingPOST:goodChildcategory_SWT parameters:self.selectFirstID success:^(NSURLSessionDataTask *task, id responseObject) {
 
@@ -87,6 +82,8 @@
         [self.collectionView.mj_header endRefreshing];
         if ([responseObject[@"code"] intValue]== 200) {
 
+            self.rightDataArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            [self.collectionView reloadData];
 
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
@@ -189,24 +186,27 @@
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SWTFenLeiFirstLeftCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTFenLeiFirstLeftCell" forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.titleLB.text = @"玉翠珠宝";
+    cell.titleLB.text = self.leftDataArr[indexPath.row].name;
     return cell;
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+    self.selectIndex = indexPath.row;
+    self.selectFirstID = self.leftDataArr[indexPath.row].ID;
+    [self getScondCaterData];
     
     
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 4;
+
+    return 1;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 9;
+    return self.rightDataArr.count;
 }
 
 //- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
@@ -217,6 +217,8 @@
     
     
     SWTFenLeiCollectTwoCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTFenLeiCollectTwoCell" forIndexPath:indexPath];
+    cell.model = self.rightDataArr[indexPath.row];
+    
     return cell;
     
 }
@@ -228,6 +230,9 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     SWTCateSubVC * vc =[[SWTCateSubVC alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
+    vc.naStr = self.leftDataArr[self.selectIndex].name;
+    vc.titleArr = self.rightDataArr;
+    vc.selectIndex = indexPath.row;
     [self.navigationController pushViewController:vc animated:YES];
     
 }
@@ -237,7 +242,9 @@
     // 复用SectionHeaderView,SectionHeaderView是xib创建的
     SWTJiFenCollectHeadView *headerView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"SWTJiFenCollectHeadView" forIndexPath:indexPath];
     headerView.clipsToBounds = YES;
-    headerView.titleLB.text = @"推荐分类";
+    if (self.leftDataArr.count > self.selectIndex) {
+        headerView.titleLB.text = self.leftDataArr[self.selectIndex].name;
+    }
     return headerView;
     
 }

@@ -16,4 +16,10 @@
     self.imgV.clipsToBounds = YES;
 }
 
+- (void)setModel:(SWTModel *)model {
+    _model = model;
+    [self.imgV sd_setImageWithURL:[model.pic getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+    self.titleLB.text = model.name;
+}
+
 @end

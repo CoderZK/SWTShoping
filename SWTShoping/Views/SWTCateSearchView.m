@@ -8,6 +8,13 @@
 
 #import "SWTCateSearchView.h"
 
+
+@interface SWTCateSearchView()
+@property(nonatomic , assign)NSInteger  jiaGeClickNumber,timeNumber;
+
+
+@end
+
 @implementation SWTCateSearchView
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -94,10 +101,65 @@
         make.right.equalTo(self.whiteV).offset(-5);
         make.top.bottom.equalTo(self.whiteV);
     }];
-    self.scrollView.backgroundColor =[UIColor redColor];
+//    self.scrollView.backgroundColor =[UIColor redColor];
     
 }
 
+
+
+- (void)setDataArray:(NSMutableArray<SWTModel *> *)dataArray {
+    _dataArray = dataArray;
+    CGFloat xx = 10;
+    [self.scrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    for (int i = 0 ; i < dataArray.count + 1; i++) {
+        UIButton * button = [[UIButton alloc] init];
+        [button setTitleColor:CharacterColor70 forState:UIControlStateNormal];
+        [button setTitleColor:RedColor forState:UIControlStateSelected];
+        button.titleLabel.font = kFont(13);
+        button.mj_h = 40;
+        button.mj_x = xx;
+        if (i == 0) {
+            [button setTitle:@"全部" forState:UIControlStateNormal];
+            button.mj_w = [@"全部" getWidhtWithFontSize:13];
+           
+        }else {
+            [button setTitle:dataArray[i-1].name forState:UIControlStateNormal];
+            button.mj_w = [dataArray[i-1].name getWidhtWithFontSize:13];
+            
+            
+        }
+        if (i == self.selectIndex+1) {
+            button.selected = YES;
+        }
+        xx = CGRectGetMaxX(button.frame) + 20;
+        if (i == dataArray.count) {
+            self.scrollView.contentSize = CGSizeMake(xx, 30);
+        }
+        [self.scrollView addSubview:button];
+        button.tag = 100+i;
+        [button addTarget:self action:@selector(selectAction:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+}
+
+- (void)selectAction:(UIButton *)button {
+    for (int i = 0 ; i< self.dataArray.count + 1; i++) {
+        
+        UIButton * neiBt = (UIButton *)[self.scrollView  viewWithTag:i+100];
+        
+        if (neiBt == button) {
+            neiBt.selected = YES;
+        }else {
+            neiBt.selected = NO;
+        }
+        
+        if (self.delegateSignal) {
+            [self.delegateSignal sendNext:@(button.tag)];
+        }
+    }
+    
+    
+}
 
 - (void)clickAction:(UIButton *)button {
     if (button.tag == 100) {
@@ -109,7 +171,17 @@
             self.redV.centerX = button.centerX;
         }];
     }else if (button.tag == 102){
+        //筛选
         
+    }else if (button.tag == 103) {
+        self.jiaGeClickNumber++;
+        
+        self.priceBt.iconImgView.image = [UIImage imageNamed: [NSString stringWithFormat:@"dyx%ld",self.jiaGeClickNumber%3+6]];
+        
+        
+    }else if (button.tag == 104) {
+        self.timeNumber++;
+        self.timeBt.iconImgView.image = [UIImage imageNamed: [NSString stringWithFormat:@"dyx%ld",self.timeNumber%3+6]];
     }
     
     if (self.delegateSignal) {

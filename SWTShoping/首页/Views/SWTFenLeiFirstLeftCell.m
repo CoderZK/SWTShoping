@@ -31,13 +31,8 @@
         self.titleLB.textColor = CharacterColor70;
         self.leftV.hidden = YES;
     }
-    
-    
-    
-    
 
 }
-
 
 
 @end
