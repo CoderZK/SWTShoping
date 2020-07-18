@@ -12,8 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTCateSubVC : BaseViewController
 @property(nonatomic , strong)NSString *naStr;
-@property(nonatomic , assign)NSInteger  selectIndex;
-@property(nonatomic , strong)NSMutableArray<SWTModel *> *titleArr;
+//@property(nonatomic , assign)NSInteger  selectIndex;
+
+@property(nonatomic , strong)NSString *ID;
 @end
 
 NS_ASSUME_NONNULL_END

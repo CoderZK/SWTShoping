@@ -19,6 +19,8 @@ typedef void(^FailureBlock)(NSURLSessionDataTask * task,NSError * error);
  */
 +(void)networkingPOST:(NSString *)urlStr parameters:(id)parameters success:(SuccessBlock)success failure:(FailureBlock)failure;
 
++(void)networkingGET:(NSString *)urlStr parameters:(id)parameters success:(SuccessBlock)success failure:(FailureBlock)failure;
+
 //+(void)networkingJsonPOST:(NSString *)urlStr parameters:(id)parameters success:(SuccessBlock)success failure:(FailureBlock)failure;
 
 //+(void)networkingStringPOST:(NSString *)urlStr parameters:(id)parameters success:(SuccessBlock)success failure:(FailureBlock)failure;

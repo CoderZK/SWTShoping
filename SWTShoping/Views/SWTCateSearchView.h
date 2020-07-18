@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic , strong)RACSubject *delegateSignal;
 @property(nonatomic , assign)NSInteger  selectIndex;
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *dataArray;
+@property(nonatomic , assign)NSInteger  jiaGeClickNumber,timeNumber;
 @end
 
 NS_ASSUME_NONNULL_END

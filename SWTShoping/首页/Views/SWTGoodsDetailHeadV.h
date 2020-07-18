@@ -15,9 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic , strong)UIImageView *imgV;
 @property(nonatomic , strong)UIButton *jinRuBt;
 
-@property(nonatomic,strong)UIView *videoV;
-@property(nonatomic,strong)AVPlayerViewController *playVC;
-@property(nonatomic,strong)AVPlayer * avPlayer;
+
+//@property(nonatomic,strong)UIView *videoV;
+//@property(nonatomic,strong)AVPlayerViewController *playVC;
+//@property(nonatomic,strong)AVPlayer * avPlayer;
 
 
 @end

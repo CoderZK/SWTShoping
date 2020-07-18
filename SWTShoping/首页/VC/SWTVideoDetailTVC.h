@@ -11,7 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTVideoDetailTVC : BaseTableViewController
-
+@property(nonatomic , strong)NSString *videoID;
+@property(nonatomic , strong)NSString *videoNameStr;
 @end
 
 NS_ASSUME_NONNULL_END

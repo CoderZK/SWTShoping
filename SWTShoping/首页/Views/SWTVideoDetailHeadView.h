@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)AVPlayerViewController *playVC;
 @property(nonatomic,strong)AVPlayer * avPlayer;
 
+@property(nonatomic , strong)NSString *videoStr;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -151,7 +151,7 @@
                 <outlet property="chujiaBt" destination="8I7-2x-6mF" id="gPw-H0-znB"/>
                 <outlet property="collectionBt" destination="9dz-cr-Muc" id="wWP-nm-LUP"/>
                 <outlet property="desLB" destination="HNu-AF-Gun" id="tHh-1X-fYJ"/>
-                <outlet property="moneyLB" destination="foY-Xt-Agm" id="IPh-2d-OFB"/>
+                <outlet property="moneyLB" destination="5YI-F4-24e" id="c2J-3W-s6R"/>
                 <outlet property="refreshBt" destination="A1B-cb-Igc" id="i32-0e-AYo"/>
                 <outlet property="timeLB" destination="pRD-eA-i6U" id="K8C-OL-hGp"/>
                 <outlet property="titleLB" destination="GZn-at-hcm" id="AgG-yW-rHy"/>

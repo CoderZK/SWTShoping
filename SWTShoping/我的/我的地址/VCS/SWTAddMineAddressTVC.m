@@ -8,9 +8,10 @@
 
 #import "SWTAddMineAddressTVC.h"
 #import "SWTMineTwoAddCell.h"
-@interface SWTAddMineAddressTVC ()
+@interface SWTAddMineAddressTVC ()<UITextFieldDelegate>
 @property(nonatomic , strong)UIView *footV;
 @property(nonatomic , strong)NSArray *leftArr;
+@property(nonatomic , strong)NSString *shouHuoStr,*phoneStr,*detailStr;
 
 @end
 
@@ -35,6 +36,42 @@
     
 }
 
+- (void)addAddressAction {
+
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"realname"] = self.shouHuoStr;
+    dict[@"mobile"] = self.phoneStr;
+    dict[@"address"] = self.detailStr;
+    dict[@"userid"] = [zkSignleTool shareTool].session_uid;
+    dict[@"province"] = @"1111";
+    dict[@"district"] = @"3333";
+    dict[@"city"] = @"2222";
+    [zkRequestTool networkingPOST: [NSString stringWithFormat:@"%@/%@",addressAdd_SWT,[zkSignleTool shareTool].session_uid] parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([[NSString stringWithFormat:@"%@",responseObject[@"code"]] integerValue] == 200) {
+            [SVProgressHUD showSuccessWithStatus:@"添加地址成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+    }];
+    
+    
+    
+}
+
+
+
+
+
 - (void)initFootV  {
     
     self.footV = [[UIView alloc] init];
@@ -47,10 +84,11 @@
     loginOutBt.layer.cornerRadius = 22.5;
     loginOutBt.clipsToBounds = YES;
     [self.footV addSubview:loginOutBt];
+    @weakify(self);
     [[loginOutBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        
-        
-        
+        @strongify(self);
+        [self.tableView endEditing:YES];
+        [self addAddressAction];
         
     }];
     
@@ -75,6 +113,7 @@
 }
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SWTMineTwoAddCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    cell.rightTF.delegate = self;
     if (indexPath.row == 2) {
         cell.rightImgV.hidden = cell.rightTF.userInteractionEnabled =NO;
         cell.cons.constant = 25;
@@ -91,9 +130,25 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.row == 2) {
+        [self.tableView endEditing:YES];
+    }
     
     
-    
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    SWTMineTwoAddCell * cell = (SWTMineTwoAddCell *)textField.superview.superview;
+    NSIndexPath * indexPath  = [self.tableView indexPathForCell:cell];
+    if (indexPath.row == 0 ) {
+        self.shouHuoStr = textField.text;
+        
+    }else if (indexPath.row == 1){
+        self.phoneStr = textField.text;
+        
+    }else if (indexPath.row == 3) {
+        self.detailStr = textField.text;
+    }
 }
 
 @end

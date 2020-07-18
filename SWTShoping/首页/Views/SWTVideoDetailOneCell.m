@@ -19,6 +19,22 @@
    
 }
 
+- (void)setModel:(SWTModel *)model {
+    _model = model;
+    
+    [self.headBt sd_setBackgroundImageWithURL:[model.avatar getPicURL] forState:UIControlStateNormal placeholderImage:[UIImage  imageNamed:@"369"] options:SDWebImageRetryFailed];
+    self.nameLB.text = model.nickname;
+
+    //级别
+    
+    // 是否收藏
+    
+    
+    
+    
+    
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

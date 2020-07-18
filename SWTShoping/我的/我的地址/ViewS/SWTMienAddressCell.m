@@ -13,6 +13,16 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
+    
+    
+}
+
+- (void)setModel:(SWTModel *)model {
+    _model = model;
+    self.nameLB.text = model.realname;
+    self.phoneLB.text = model.mobile;
+    self.addressLB.text =  [NSString stringWithFormat:@"%@%@%@%@",model.price,model.city,model.district,model.address_info];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

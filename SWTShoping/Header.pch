@@ -77,8 +77,12 @@
 //屏幕的长宽
 #define ScreenW [UIScreen mainScreen].bounds.size.width
 #define ScreenH [UIScreen mainScreen].bounds.size.height
+#define ISLOGIN [zkSignleTool shareTool].isLogin
+
 
 #define kFont(x) [UIFont systemFontOfSize:x]
+
+
 
 #define Weak(weakSelf) __weak typeof(self) weakSelf = self;
 #define RedColor [UIColor colorWithRed:163.0/255.0 green:41.0/255.0 blue:59.0/255.0 alpha:1]

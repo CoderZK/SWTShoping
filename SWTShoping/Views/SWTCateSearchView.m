@@ -10,7 +10,7 @@
 
 
 @interface SWTCateSearchView()
-@property(nonatomic , assign)NSInteger  jiaGeClickNumber,timeNumber;
+
 
 
 @end
@@ -128,7 +128,7 @@
             
             
         }
-        if (i == self.selectIndex+1) {
+        if (i == self.selectIndex) {
             button.selected = YES;
         }
         xx = CGRectGetMaxX(button.frame) + 20;
@@ -153,11 +153,11 @@
             neiBt.selected = NO;
         }
         
-        if (self.delegateSignal) {
-            [self.delegateSignal sendNext:@(button.tag)];
-        }
+       
     }
-    
+    if (self.delegateSignal) {
+        [self.delegateSignal sendNext:@(button.tag)];
+    }
     
 }
 
@@ -175,13 +175,16 @@
         
     }else if (button.tag == 103) {
         self.jiaGeClickNumber++;
-        
+        self.timeNumber = 0;
         self.priceBt.iconImgView.image = [UIImage imageNamed: [NSString stringWithFormat:@"dyx%ld",self.jiaGeClickNumber%3+6]];
+         self.timeBt.iconImgView.image = [UIImage imageNamed: [NSString stringWithFormat:@"dyx%ld",self.timeNumber%3+6]];
         
         
     }else if (button.tag == 104) {
         self.timeNumber++;
+        self.jiaGeClickNumber = 0;
         self.timeBt.iconImgView.image = [UIImage imageNamed: [NSString stringWithFormat:@"dyx%ld",self.timeNumber%3+6]];
+        self.priceBt.iconImgView.image = [UIImage imageNamed: [NSString stringWithFormat:@"dyx%ld",self.jiaGeClickNumber%3+6]];
     }
     
     if (self.delegateSignal) {

@@ -24,6 +24,7 @@
 @property(nonatomic , strong)SWTGoodsDetailHeadV *headV;
 @property(nonatomic , strong)SWTGoodSDetailBottomView  *bottomView;
 @property(nonatomic , strong)SWTGoodsDetailChuJiaView *chuJiaView;
+@property(nonatomic , strong)SWTModel *dataModel;
 @end
 
 @implementation SWTGoodsDetailTVC
@@ -56,6 +57,15 @@
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.estimatedRowHeight = 40;
+    
+
+    [self getData];
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+   
+        [self getData];
+    }];
+
+    
 }
 
 
@@ -150,6 +160,31 @@
     
 }
 
+- (void)getData {
+    
+    [SVProgressHUD show];
+       NSMutableDictionary * dict = @{}.mutableCopy;
+       dict[@"tag"] = self.dataModel.tag;
+    [zkRequestTool networkingPOST:goodDetail_SWT parameters:self.goodID success:^(NSURLSessionDataTask *task, id responseObject) {
+           
+           [SVProgressHUD dismiss];
+        [self.tableView.mj_header endRefreshing];
+           if ([responseObject[@"code"] intValue]== 200) {
+               self.dataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
+               [self.headV.imgV sd_setImageWithURL:[self.dataModel.img getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+               [self.tableView reloadData];
+               
+           }else {
+               [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+           }
+           
+       } failure:^(NSURLSessionDataTask *task, NSError *error) {
+           
+           [self.tableView.mj_header endRefreshing];;
+           
+       }];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (self.isYiKouJia) {
         return 3;
@@ -227,6 +262,7 @@
             
             SWTGoodsDetailTwoCell  * cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTGoodsDetailTwoCell" forIndexPath:indexPath];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.model = self.dataModel;
             return cell;
             
         }else if (indexPath.section == 1) {

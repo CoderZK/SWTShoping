@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface NSString (Size)
-
+- (NSString *)getPriceStr;
 // 字典转json字符串方法
 +(NSString *)convertToJsonDataWithDict:(id)dict;
 

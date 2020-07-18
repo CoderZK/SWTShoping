@@ -29,14 +29,12 @@
                    headerFieldValueDictionary[@"Authorization"] = [zkSignleTool shareTool].session_token;
                    headerFieldValueDictionary[@"version"] = versionStr;
                    
-                  
                }else {
                    headerFieldValueDictionary[@"version"] = versionStr;
                }
            }else {
                headerFieldValueDictionary[@"version"] = versionStr;
            }
-       headerFieldValueDictionary[@"Authorization"] =@"12345";
        if (headerFieldValueDictionary != nil) {
            for (NSString *httpHeaderField in headerFieldValueDictionary.allKeys) {
                NSString *value = headerFieldValueDictionary[httpHeaderField];
@@ -62,6 +60,58 @@
 
     
 }
+
++(void)networkingGET:(NSString *)urlStr parameters:(id)parameters success:(SuccessBlock)success failure:(FailureBlock)failure
+{
+    
+       NSMutableDictionary *mDict = @{}.mutableCopy;
+       if ([parameters isKindOfClass:[NSString class]]) {
+           urlStr =  [NSString stringWithFormat:@"%@/%@",urlStr,parameters];
+       }else {
+          mDict = [NSMutableDictionary dictionaryWithDictionary:parameters];
+       }
+       NSString * versionStr = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+       AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
+       NSMutableDictionary *headerFieldValueDictionary = @{}.mutableCopy;
+       if ([zkSignleTool shareTool].session_token != nil) {
+               if ([zkSignleTool shareTool].isLogin) {
+                   
+                   headerFieldValueDictionary[@"Authorization"] = [zkSignleTool shareTool].session_token;
+                   headerFieldValueDictionary[@"version"] = versionStr;
+                   
+                  
+               }else {
+                   headerFieldValueDictionary[@"version"] = versionStr;
+               }
+           }else {
+               headerFieldValueDictionary[@"version"] = versionStr;
+           }
+       headerFieldValueDictionary[@"Authorization"] =@"12345";
+       if (headerFieldValueDictionary != nil) {
+           for (NSString *httpHeaderField in headerFieldValueDictionary.allKeys) {
+               NSString *value = headerFieldValueDictionary[httpHeaderField];
+               [manager.requestSerializer setValue:value forHTTPHeaderField:httpHeaderField];
+           }
+       }
+       manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/plain", @"text/html",@"text/json",@"text/javascript", nil];
+       [manager.requestSerializer setValue:@"http://iosapi.jkcsoft.com/public/index.html" forHTTPHeaderField:@"Referer"];
+       [manager GET:urlStr parameters:mDict progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+           if (success)
+           {
+               success(task,responseObject);
+           }
+       } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+
+           [SVProgressHUD dismiss];
+           if (failure)
+           {
+               failure(task,error);
+           }
+       }];
+
+    
+}
+
 
 //正常请求
 +(void)networkingHeadReaqestPOST:(NSString *)urlStr parameters:(id)parameters success:(SuccessBlock)success failure:(FailureBlock)failure
@@ -220,39 +270,39 @@
 
 
 
-+(NSURLSessionDataTask *)networkingGET:(NSString *)urlStr parameters:(id)parameters success:(SuccessBlock)success failure:(FailureBlock)failure
-{
-    
-    NSMutableDictionary *mDict = [NSMutableDictionary dictionaryWithDictionary:parameters];
-//    NSString *device = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
-//    [mDict setValue:device forKey:@"deviceId"];
-//    [mDict setValue:@1 forKey:@"channel"];
-//    NSString *version = [NSString stringWithFormat:@"V%@",[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
-//    [mDict setValue:version forKey:@"version"];
-//    NSString *mdSignature = [NSString stringToMD5:[NSString stringWithFormat:@"%@%@%@%@",device,@1,version,[device substringFromIndex:device.length-5]]];
-//    [mDict setValue:[NSString stringWithFormat:@"%@1",mdSignature] forKey:@"signature"];
-    
-    AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/plain", @"text/html",@"text/json",@"text/javascript", nil];
-    NSURLSessionDataTask * task =  [manager GET:urlStr parameters:mDict progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if (success)
-        {
-            success(task,responseObject);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        if ( [[NSString stringWithFormat:@"%@",error.userInfo[@"NSLocalizedDescription"]] isEqualToString:@"cancelled"]) {
-            return ;
-        }
-        [SVProgressHUD showErrorWithStatus:@"网络异常"];
-        if (failure)
-        {
-            failure(task,error);
-        }
-    }];
- 
-    return task;
-}
+//+(NSURLSessionDataTask *)networkingGET:(NSString *)urlStr parameters:(id)parameters success:(SuccessBlock)success failure:(FailureBlock)failure
+//{
+//
+//    NSMutableDictionary *mDict = [NSMutableDictionary dictionaryWithDictionary:parameters];
+////    NSString *device = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
+////    [mDict setValue:device forKey:@"deviceId"];
+////    [mDict setValue:@1 forKey:@"channel"];
+////    NSString *version = [NSString stringWithFormat:@"V%@",[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
+////    [mDict setValue:version forKey:@"version"];
+////    NSString *mdSignature = [NSString stringToMD5:[NSString stringWithFormat:@"%@%@%@%@",device,@1,version,[device substringFromIndex:device.length-5]]];
+////    [mDict setValue:[NSString stringWithFormat:@"%@1",mdSignature] forKey:@"signature"];
+//
+//    AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
+//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/plain", @"text/html",@"text/json",@"text/javascript", nil];
+//    NSURLSessionDataTask * task =  [manager GET:urlStr parameters:mDict progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//        if (success)
+//        {
+//            success(task,responseObject);
+//        }
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//
+//        if ( [[NSString stringWithFormat:@"%@",error.userInfo[@"NSLocalizedDescription"]] isEqualToString:@"cancelled"]) {
+//            return ;
+//        }
+//        [SVProgressHUD showErrorWithStatus:@"网络异常"];
+//        if (failure)
+//        {
+//            failure(task,error);
+//        }
+//    }];
+//
+//    return task;
+//}
 /**
  上传图片
  */

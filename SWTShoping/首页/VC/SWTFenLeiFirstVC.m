@@ -230,9 +230,9 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     SWTCateSubVC * vc =[[SWTCateSubVC alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
-    vc.naStr = self.leftDataArr[self.selectIndex].name;
-    vc.titleArr = self.rightDataArr;
-    vc.selectIndex = indexPath.row;
+    vc.naStr = self.rightDataArr[self.selectIndex].name;
+//    vc.selectIndex = indexPath.row;
+    vc.ID = self.rightDataArr[indexPath.row].ID;
     [self.navigationController pushViewController:vc animated:YES];
     
 }

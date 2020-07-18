@@ -265,8 +265,8 @@
     if (section == 0) {
         return 1;
     }
-    return 9;
-    //    return self.dataArray.count;
+//    return 9;
+    return self.recommendArr.count;
 }
 
 
@@ -308,10 +308,20 @@
         SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
-    }else {
+    }else if (indexPath.row == 1) {
         SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
            vc.hidesBottomBarWhenPushed = YES;
+        vc.goodID = self.recommendArr[indexPath.row].ID;
            [self.navigationController pushViewController:vc animated:YES];
+        
+    }else {
+        SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.isYiKouJia = YES;
+        vc.goodID = self.recommendArr[indexPath.row].ID;
+        [self.navigationController pushViewController:vc animated:YES];
+        
+        
     }
     
    

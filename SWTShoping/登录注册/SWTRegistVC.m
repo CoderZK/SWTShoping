@@ -129,7 +129,7 @@
     dict[@"mobile"] = self.phoneTF.text;
     dict[@"vcode"] = self.codeTF.text;
     dict[@"password"] = self.passwordTF.text;
-    [zkRequestTool networkingPOST:forgetpassword_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+    [zkRequestTool networkingPOST:forgotpassword_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
 
         if ([responseObject[@"code"] intValue]== 200) {
             

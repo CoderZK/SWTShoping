@@ -24,4 +24,20 @@
     
 }
 
+- (void)setModel:(SWTModel *)model {
+    _model = model;
+    [self.headImgV sd_setImageWithURL:[model.avatar getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+    
+    [self.imgV sd_setImageWithURL:[model.img getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+    
+    self.nameLB.text = model.name;
+    NSString * str = @"";
+    if (model.playnum.intValue > 10000) {
+        str =  [NSString stringWithFormat:@"%0.1f万人在观看",model.playnum.floatValue/10000.0];
+    }else {
+        str =  [NSString stringWithFormat:@"%@人在观看",model.playnum];
+    }
+    self.numberLB.text = str;
+}
+
 @end

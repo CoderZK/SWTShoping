@@ -90,6 +90,7 @@
             <connections>
                 <outlet property="desLB" destination="mzC-mm-dHm" id="49U-fi-tdO"/>
                 <outlet property="headImgV" destination="U0o-bu-C9d" id="8RA-eG-O9v"/>
+                <outlet property="imgV" destination="K32-Cl-3OA" id="2xv-Ta-igJ"/>
                 <outlet property="nameLB" destination="6AT-yY-VZv" id="bQ9-lB-AbA"/>
                 <outlet property="numberLB" destination="bx2-xr-rOS" id="cam-K6-j4o"/>
             </connections>
