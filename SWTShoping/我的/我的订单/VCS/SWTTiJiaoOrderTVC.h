@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTTiJiaoOrderTVC : BaseTableViewController
-
+@property(nonatomic , strong)NSString *goodID,*merchID,*moneyStr,*numStr;
 @end
 
 NS_ASSUME_NONNULL_END

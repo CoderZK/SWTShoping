@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTShopHomeVC : BaseViewController
-
+@property(nonatomic , strong)NSString *shopId;
 @end
 
 NS_ASSUME_NONNULL_END

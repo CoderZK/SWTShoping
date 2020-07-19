@@ -11,6 +11,7 @@
 #import "SWTHomeCollectionTwoCell.h"
 #import "SWTHomeCollectionThreeCell.h"
 #import "SWTShopHomeHeadView.h"
+#import "SWTShopIntroduceTVC.h"
 @interface SWTShopHomeVC ()<XPCollectionViewWaterfallFlowLayoutDataSource,UICollectionViewDelegate,UICollectionViewDataSource>@property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 @property(nonatomic , strong)UICollectionView *collectionView;
 //@property(nonatomic , strong)UIImageView *imagV;
@@ -18,6 +19,7 @@
 @property(nonatomic , strong)UILabel *titleLB;
 @property(nonatomic , strong)SWTShopHomeHeadView *headView;
 @property(nonatomic , assign)NSInteger  type;
+@property(nonatomic , strong)SWTModel *dataModel;
 @end
 
 @implementation SWTShopHomeVC
@@ -42,6 +44,32 @@
     
     
 }
+
+- (void)getData {
+    
+    [SVProgressHUD show];
+       NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"id"] = self.shopId;
+    [zkRequestTool networkingPOST:goodDetail_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+           
+           [SVProgressHUD dismiss];
+        [self.collectionView.mj_header endRefreshing];
+           if ([responseObject[@"code"] intValue]== 200) {
+               self.dataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
+               [self.collectionView reloadData];
+               
+           }else {
+               [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+           }
+           
+       } failure:^(NSURLSessionDataTask *task, NSError *error) {
+           
+           [self.collectionView.mj_header endRefreshing];;
+           
+       }];
+}
+
+
 
 - (void)addCollectionV {
     
@@ -81,6 +109,12 @@
     [self.headView.delegateSignal subscribeNext:^(NSNumber * x) {
         @strongify(self);
         self.type = x.intValue;
+        
+        if (x.intValue == 100) {
+            SWTShopIntroduceTVC * vc =[[SWTShopIntroduceTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }];
     [self.collectionView addSubview:self.headView];;
     

@@ -63,6 +63,8 @@
         @strongify(self);
         //点击提交订单
         
+        
+        
     }];
     
     
@@ -97,6 +99,37 @@
            make.right.equalTo(self.moneyLB.mas_left).offset(-5);
            make.height.equalTo(@25);
        }];
+    
+}
+
+
+- (void)addOrderAction {
+    
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"goodid"] = self.goodID;
+    dict[@"merchid"] = self.merchID;
+    dict[@"num"] = self.numStr;
+    dict[@"price"] = self.moneyStr;
+    dict[@"userid"] = [zkSignleTool shareTool].session_uid;
+
+    [zkRequestTool networkingPOST: [NSString stringWithFormat:@"%@/%@",addressAdd_SWT,[zkSignleTool shareTool].session_uid] parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([[NSString stringWithFormat:@"%@",responseObject[@"code"]] integerValue] == 200) {
+            [SVProgressHUD showSuccessWithStatus:@"添加地址成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+    }];
+    
     
 }
 

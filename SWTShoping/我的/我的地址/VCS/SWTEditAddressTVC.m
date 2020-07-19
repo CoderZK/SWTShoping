@@ -8,8 +8,9 @@
 
 #import "SWTEditAddressTVC.h"
 #import "SWTEditeAddressCell.h"
-@interface SWTEditAddressTVC ()
+@interface SWTEditAddressTVC ()<UITextFieldDelegate>
 @property(nonatomic , strong)UIView *footV;
+@property(nonatomic , strong)NSString *shouHuoStr,*phoneStr,*detailStr;
 @end
 
 @implementation SWTEditAddressTVC
@@ -27,6 +28,9 @@
         make.right.top.left.equalTo(self.view);
         make.bottom.equalTo(self.footV.mas_top);
     }];
+    self.shouHuoStr = self.model.realname;
+    self.phoneStr = self.model.mobile;
+    self.detailStr = self.model.address_info;
     
 }
 
@@ -53,7 +57,8 @@
     
     [[loginOutBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         
-        
+        [self.tableView endEditing:YES];
+        [self editAddressAction];
         
         
     }];
@@ -86,6 +91,41 @@
       }];
 }
 
+
+- (void)editAddressAction {
+
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"realname"] = self.shouHuoStr;
+    dict[@"mobile"] = self.phoneStr;
+    dict[@"address"] = self.detailStr;
+    dict[@"userid"] = [zkSignleTool shareTool].session_uid;
+    dict[@"province"] = @"444444";
+    dict[@"district"] = @"66666";
+    dict[@"city"] = @"555555";
+    dict[@"id"] = self.model.ID;
+    [zkRequestTool networkingPOST: [NSString stringWithFormat:@"%@/%@",addressEdit_SWT,[zkSignleTool shareTool].session_uid] parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([[NSString stringWithFormat:@"%@",responseObject[@"code"]] integerValue] == 200) {
+            [SVProgressHUD showSuccessWithStatus:@"修改地址成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+    }];
+    
+    
+    
+}
+
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 4;
 }
@@ -99,6 +139,16 @@
     }else {
         cell.rightImgV.hidden = YES;
     }
+    if (indexPath.row == 0) {
+         cell.leftTF.text = self.model.realname;
+    }else if (indexPath.row == 1) {
+        cell.leftTF.text = self.model.mobile;
+    }else if (indexPath.row == 2) {
+        cell.leftTF.text =  [NSString stringWithFormat:@"%@%@%@",self.model.province,self.model.city,self.model.district];
+    }else {
+        cell.leftTF.text = self.model.address_info;
+    }
+    cell.leftTF.delegate = self;
     return cell;
 }
 
@@ -109,4 +159,19 @@
     
     
 }
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    SWTEditeAddressCell * cell = (SWTEditeAddressCell *)textField.superview.superview;
+    NSIndexPath * indexPath  = [self.tableView indexPathForCell:cell];
+    if (indexPath.row == 0 ) {
+        self.shouHuoStr = textField.text;
+        
+    }else if (indexPath.row == 1){
+        self.phoneStr = textField.text;
+        
+    }else if (indexPath.row == 3) {
+        self.detailStr = textField.text;
+    }
+}
+
 @end

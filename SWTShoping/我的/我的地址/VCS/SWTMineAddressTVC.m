@@ -132,8 +132,10 @@
         @strongify(self);
         SWTEditAddressTVC * vc =[[SWTEditAddressTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
         vc.hidesBottomBarWhenPushed = YES;
+        vc.model = self.dataArray[indexPath.row];
         [self.navigationController pushViewController:vc animated:YES];;
     }];
+    cell.model = self.dataArray[indexPath.row];
     return cell;
 }
 

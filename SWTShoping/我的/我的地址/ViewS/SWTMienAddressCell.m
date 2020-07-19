@@ -22,7 +22,7 @@
     _model = model;
     self.nameLB.text = model.realname;
     self.phoneLB.text = model.mobile;
-    self.addressLB.text =  [NSString stringWithFormat:@"%@%@%@%@",model.price,model.city,model.district,model.address_info];
+    self.addressLB.text =  [NSString stringWithFormat:@"%@%@%@%@",model.province,model.city,model.district,model.address_info];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

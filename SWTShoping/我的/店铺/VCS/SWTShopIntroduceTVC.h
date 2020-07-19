@@ -1,8 +1,8 @@
 //
-//  SWTEditAddressTVC.h
+//  SWTShopIntroduceTVC.h
 //  SWTShoping
 //
-//  Created by kunzhang on 2020/7/13.
+//  Created by kunzhang on 2020/7/19.
 //  Copyright © 2020 kunzhang. All rights reserved.
 //
 
@@ -10,8 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SWTEditAddressTVC : BaseTableViewController
-@property(nonatomic , strong)SWTModel *model;
+@interface SWTShopIntroduceTVC : BaseTableViewController
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -13,8 +13,9 @@
 @property(nonatomic , strong)SWTNavitageView *naView;
 @property(nonatomic , strong)UIView *headV;
 @property (nonatomic, weak) TYPagerController *pagerController;
-@property(nonatomic , strong)NSArray *titleArr;
+//@property(nonatomic , strong)NSArray *titleArr;
 @property(nonatomic , assign)NSInteger selectIndex;
+@property(nonatomic , strong)NSMutableArray<SWTModel *> *dataArray;
 @end
 
 @implementation SWTZhenPinGeFatherVC
@@ -32,7 +33,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.titleArr = @[@"推荐",@"玉翠珠宝",@"书画篆刻",@"文玩首饰",@"紫砂陶瓷"];
+    self.dataArray = @[].mutableCopy;
     
     [self setNav];
     
@@ -49,8 +50,9 @@
            make.top.equalTo(self.tabBar.mas_bottom);
            make.leading.bottom.trailing.equalTo (self.view);
        }];
-    [self reloadData];
+//    [self reloadData];
    
+    [self getTopTitleData];
 }
 
 
@@ -129,15 +131,36 @@
     [_pagerController reloadData];
 }
 
+
+- (void)getTopTitleData {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    [zkRequestTool networkingPOST:merchSellcate_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            self.dataArray =[SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            [self reloadData];
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
+}
+
+
 - (NSInteger)numberOfItemsInPagerTabBar {
-    return self.titleArr.count;
+    return self.dataArray.count;
    
 }
 
 - (UICollectionViewCell<TYTabPagerBarCellProtocol> *)pagerTabBar:(TYTabPagerBar *)pagerTabBar cellForItemAtIndex:(NSInteger)index {
    
         UICollectionViewCell<TYTabPagerBarCellProtocol> *cell = [pagerTabBar dequeueReusableCellWithReuseIdentifier:[TYTabPagerBarCell cellIdentifier] forIndex:index];
-        cell.titleLabel.text = self.titleArr[index];
+    cell.titleLabel.text = self.dataArray[index].name;
         return cell;
     
     
@@ -145,7 +168,7 @@
 #pragma mark - TYTabPagerBarDelegate
 
 - (CGFloat)pagerTabBar:(TYTabPagerBar *)pagerTabBar widthForItemAtIndex:(NSInteger)index {
-    return [self.titleArr[index] getWidhtWithFontSize:15];
+    return [self.dataArray[index].name getWidhtWithFontSize:15];
 }
 - (void)pagerTabBar:(TYTabPagerBar *)pagerTabBar didSelectItemAtIndex:(NSInteger)index {
  
@@ -159,7 +182,7 @@
 
 - (NSInteger)numberOfControllersInPagerController {
    
-    return self.titleArr.count;
+    return self.dataArray.count;
     
     
 }
@@ -177,6 +200,7 @@
 //        vc.shopId = self.shopId;
 //        vc.cateModel = model;
     vc.type = index;
+    vc.cateID = self.dataArray[index].ID;
     return vc;
    
 }
