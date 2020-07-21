@@ -19,12 +19,14 @@
 #import "SWTTiJiaoOrderTVC.h"
 #import "SWTVideoDetailOneCell.h"
 #import "SWTGouMaiShowView.h"
+#import "SWTYiKouJiaGoodDetailCell.h"
 @interface SWTGoodsDetailTVC ()
 @property(nonatomic , strong)SWTNavitageView *naView;
 @property(nonatomic , strong)SWTGoodsDetailHeadV *headV;
 @property(nonatomic , strong)SWTGoodSDetailBottomView  *bottomView;
 @property(nonatomic , strong)SWTGoodsDetailChuJiaView *chuJiaView;
 @property(nonatomic , strong)SWTModel *dataModel;
+@property(nonatomic , strong)NSString *bayNumber;
 @end
 
 @implementation SWTGoodsDetailTVC
@@ -52,7 +54,7 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTGoodsDetailTwoCell" bundle:nil] forCellReuseIdentifier:@"SWTGoodsDetailTwoCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTGoodsDetailThreeCell" bundle:nil] forCellReuseIdentifier:@"SWTGoodsDetailThreeCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTGoodsDetailFiveCell" bundle:nil] forCellReuseIdentifier:@"SWTGoodsDetailFiveCell"];
-     [self.tableView registerNib:[UINib nibWithNibName:@"SWTVideoDetailOneCell" bundle:nil] forCellReuseIdentifier:@"SWTVideoDetailOneCell"];
+     [self.tableView registerNib:[UINib nibWithNibName:@"SWTYiKouJiaGoodDetailCell" bundle:nil] forCellReuseIdentifier:@"SWTYiKouJiaGoodDetailCell"];
     [self.tableView registerClass:[SWTGoodsDetailFourCell class] forCellReuseIdentifier:@"SWTGoodsDetailFourCell"];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -115,13 +117,19 @@
         }else if (x.intValue == 102) {
             if (self.isYiKouJia) {
                 SWTGouMaiShowView * gouMaiV  = [[SWTGouMaiShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+                gouMaiV.model = self.dataModel;
                 gouMaiV.delegateSignal = [[RACSubject alloc] init];
                 @weakify(self);
-                [gouMaiV.delegateSignal subscribeNext:^(id  _Nullable x) {
+                [gouMaiV.delegateSignal subscribeNext:^(NSString * x) {
                     @strongify(self);
                    //点击购买
                   SWTTiJiaoOrderTVC * vc =[[SWTTiJiaoOrderTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
                   vc.hidesBottomBarWhenPushed = YES;
+//                    vc.moneyStr =  [NSString stringWithFormat:@"%0.2f",x.intValue * self.dataModel.price.floatValue];
+                    vc.numStr = x;
+                    vc.goodID = self.goodID;
+                    vc.merchID = self.dataModel.merch_id;
+                    vc.model = self.dataModel;
                   [self.navigationController pushViewController:vc animated:YES];
                     
                 }];
@@ -171,6 +179,7 @@
         [self.tableView.mj_header endRefreshing];
            if ([responseObject[@"code"] intValue]== 200) {
                self.dataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
+               self.dataModel.merch_id = self.dataModel.merchid;
                [self.headV.imgV sd_setImageWithURL:[self.dataModel.img getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
                [self.tableView reloadData];
                
@@ -242,14 +251,19 @@
     if (self.isYiKouJia) {
         if (indexPath.section == 0) {
             
-            SWTVideoDetailOneCell  * cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTVideoDetailOneCell" forIndexPath:indexPath];
+            SWTYiKouJiaGoodDetailCell  * cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTYiKouJiaGoodDetailCell" forIndexPath:indexPath];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.model = self.dataModel;
+            cell.collectBt.tag = 100;
+            [cell.collectBt addTarget:self action:@selector(collection:) forControlEvents:UIControlEventTouchUpInside];
             return cell;
             
         }else if (indexPath.section == 1) {
             SWTGoodsDetailFiveCell  *cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTGoodsDetailFiveCell" forIndexPath:indexPath];
             cell.clipsToBounds = YES;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.model = self.dataModel;
+            [cell.gaunzhuBt addTarget:self action:@selector(gaunZhuAction) forControlEvents:UIControlEventTouchUpInside];
             return cell;
         }else {
             SWTGoodsDetailTableViewContentCollCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
@@ -263,6 +277,14 @@
             SWTGoodsDetailTwoCell  * cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTGoodsDetailTwoCell" forIndexPath:indexPath];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.model = self.dataModel;
+            cell.delegateSignal = [[RACSubject alloc] init];
+            @weakify(self);
+            [self.bottomView.delegateSignal subscribeNext:^(NSNumber * x) {
+                @strongify(self);
+                
+                NSLog(@"%@",x);
+                
+            }];
             return cell;
             
         }else if (indexPath.section == 1) {
@@ -316,7 +338,79 @@
 
 }
 
+//收藏操作
+- (void)collection:(UIButton *)button {
+ 
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"favid"] = @"-1";
+    dict[@"id"] = self.goodID;
+    dict[@"type"] = @"0";
+    dict[@"operation"] = [self.dataModel.isfav isEqualToString:@"no"] ? @"ADD":@"DELETE";
+    dict[@"userid"] =[zkSignleTool shareTool].session_uid;
+    [zkRequestTool networkingPOST:userFavOperate_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+       
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            if ([self.dataModel.isfav isEqualToString:@"no"]) {
+                [SVProgressHUD showSuccessWithStatus:@"收藏商品成功"];
+                self.dataModel.isfav = @"yes";
+            }else {
+                [SVProgressHUD showSuccessWithStatus:@"取消收藏商品成功"];
+                self.dataModel.isfav = @"no";
+            }
+            [self.tableView reloadData];
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+       
+        
+    }];
 
+    
+    
+    
+}
+
+//关注操作
+- (void)gaunZhuAction {
+ 
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"followid"] = @"-1";
+    dict[@"id"] = self.dataModel.merch_id;
+    dict[@"type"] = @"1";
+    dict[@"operation"] = [self.dataModel.isfollow isEqualToString:@"no"] ? @"ADD":@"DELETE";
+    dict[@"userid"] =[zkSignleTool shareTool].session_uid;
+    [zkRequestTool networkingPOST:userFollowOperate_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+       
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            if ([self.dataModel.isfollow isEqualToString:@"no"]) {
+                [SVProgressHUD showSuccessWithStatus:@"关注店铺成功"];
+                self.dataModel.isfollow = @"yes";
+            }else {
+                [SVProgressHUD showSuccessWithStatus:@"取消关注店铺"];
+                self.dataModel.isfollow = @"no";
+            }
+            [self.tableView reloadData];
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+       
+        
+    }];
+
+    
+    
+    
+}
 
 
 @end

@@ -124,6 +124,12 @@
 		666BB1CB24B005EB00341CE8 /* SWTGoodsDetailTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 666BB1CA24B005EB00341CE8 /* SWTGoodsDetailTVC.m */; };
 		666BB1CE24B059BA00341CE8 /* SWTGoodsDetailHeadV.m in Sources */ = {isa = PBXBuildFile; fileRef = 666BB1CD24B059BA00341CE8 /* SWTGoodsDetailHeadV.m */; };
 		666BB1D124B0671200341CE8 /* SWTGoodsDetailTableViewContentCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666BB1D024B0671200341CE8 /* SWTGoodsDetailTableViewContentCollCell.m */; };
+		666BCBEF24C5361500FFAC91 /* wwww.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666BCBEE24C5361500FFAC91 /* wwww.swift */; };
+		666BCBF724C56C3700FFAC91 /* SWTYiKouJiaGoodDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666BCBF524C56C3700FFAC91 /* SWTYiKouJiaGoodDetailCell.m */; };
+		666BCBF824C56C3700FFAC91 /* SWTYiKouJiaGoodDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 666BCBF624C56C3700FFAC91 /* SWTYiKouJiaGoodDetailCell.xib */; };
+		666BCBFC24C5795200FFAC91 /* SWTChooseAddcell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666BCBFA24C5795200FFAC91 /* SWTChooseAddcell.m */; };
+		666BCBFD24C5795200FFAC91 /* SWTChooseAddcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 666BCBFB24C5795200FFAC91 /* SWTChooseAddcell.xib */; };
+		666BCBFF24C5800A00FFAC91 /* City.plist in Resources */ = {isa = PBXBuildFile; fileRef = 666BCBFE24C5800A00FFAC91 /* City.plist */; };
 		666BE54824B84CB600FBB207 /* SWTMineOrderFartherVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 666BE54724B84CB600FBB207 /* SWTMineOrderFartherVC.m */; };
 		666BE54B24B84CCF00FBB207 /* SWTMineOrderSubTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 666BE54A24B84CCF00FBB207 /* SWTMineOrderSubTVC.m */; };
 		666BFDC024BDF9E200719972 /* SWTModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 666BFDBF24BDF9E200719972 /* SWTModel.m */; };
@@ -240,6 +246,7 @@
 		667D506524C48CBA00A59726 /* SWTShopIntorduceHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 667D506424C48CBA00A59726 /* SWTShopIntorduceHeadView.m */; };
 		667D506924C499DF00A59726 /* SWTShopIntroduceThreeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 667D506724C499DF00A59726 /* SWTShopIntroduceThreeCell.m */; };
 		667D506A24C499DF00A59726 /* SWTShopIntroduceThreeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 667D506824C499DF00A59726 /* SWTShopIntroduceThreeCell.xib */; };
+		667D506D24C49ED100A59726 /* SWTShopIntroducePingJiaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 667D506C24C49ED100A59726 /* SWTShopIntroducePingJiaCell.m */; };
 		66C8F7A024AB1E0B008C7A3A /* noneNet@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66C8F79A24AB1E0B008C7A3A /* noneNet@3x.png */; };
 		66C8F7A124AB1E0B008C7A3A /* LTSCNoneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66C8F79B24AB1E0B008C7A3A /* LTSCNoneView.m */; };
 		66C8F7A224AB1E0B008C7A3A /* noneNet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66C8F79C24AB1E0B008C7A3A /* noneNet@2x.png */; };
@@ -477,6 +484,15 @@
 		666BB1CD24B059BA00341CE8 /* SWTGoodsDetailHeadV.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTGoodsDetailHeadV.m; sourceTree = "<group>"; };
 		666BB1CF24B0671200341CE8 /* SWTGoodsDetailTableViewContentCollCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTGoodsDetailTableViewContentCollCell.h; sourceTree = "<group>"; };
 		666BB1D024B0671200341CE8 /* SWTGoodsDetailTableViewContentCollCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTGoodsDetailTableViewContentCollCell.m; sourceTree = "<group>"; };
+		666BCBED24C5361500FFAC91 /* SWTShoping-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SWTShoping-Bridging-Header.h"; sourceTree = "<group>"; };
+		666BCBEE24C5361500FFAC91 /* wwww.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wwww.swift; sourceTree = "<group>"; };
+		666BCBF424C56C3700FFAC91 /* SWTYiKouJiaGoodDetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTYiKouJiaGoodDetailCell.h; sourceTree = "<group>"; };
+		666BCBF524C56C3700FFAC91 /* SWTYiKouJiaGoodDetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTYiKouJiaGoodDetailCell.m; sourceTree = "<group>"; };
+		666BCBF624C56C3700FFAC91 /* SWTYiKouJiaGoodDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTYiKouJiaGoodDetailCell.xib; sourceTree = "<group>"; };
+		666BCBF924C5795200FFAC91 /* SWTChooseAddcell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTChooseAddcell.h; sourceTree = "<group>"; };
+		666BCBFA24C5795200FFAC91 /* SWTChooseAddcell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTChooseAddcell.m; sourceTree = "<group>"; };
+		666BCBFB24C5795200FFAC91 /* SWTChooseAddcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTChooseAddcell.xib; sourceTree = "<group>"; };
+		666BCBFE24C5800A00FFAC91 /* City.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = City.plist; sourceTree = "<group>"; };
 		666BE54624B84CB600FBB207 /* SWTMineOrderFartherVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTMineOrderFartherVC.h; sourceTree = "<group>"; };
 		666BE54724B84CB600FBB207 /* SWTMineOrderFartherVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTMineOrderFartherVC.m; sourceTree = "<group>"; };
 		666BE54924B84CCF00FBB207 /* SWTMineOrderSubTVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTMineOrderSubTVC.h; sourceTree = "<group>"; };
@@ -679,6 +695,8 @@
 		667D506624C499DF00A59726 /* SWTShopIntroduceThreeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTShopIntroduceThreeCell.h; sourceTree = "<group>"; };
 		667D506724C499DF00A59726 /* SWTShopIntroduceThreeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTShopIntroduceThreeCell.m; sourceTree = "<group>"; };
 		667D506824C499DF00A59726 /* SWTShopIntroduceThreeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTShopIntroduceThreeCell.xib; sourceTree = "<group>"; };
+		667D506B24C49ED100A59726 /* SWTShopIntroducePingJiaCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTShopIntroducePingJiaCell.h; sourceTree = "<group>"; };
+		667D506C24C49ED100A59726 /* SWTShopIntroducePingJiaCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTShopIntroducePingJiaCell.m; sourceTree = "<group>"; };
 		66C8F79A24AB1E0B008C7A3A /* noneNet@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "noneNet@3x.png"; sourceTree = "<group>"; };
 		66C8F79B24AB1E0B008C7A3A /* LTSCNoneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSCNoneView.m; sourceTree = "<group>"; };
 		66C8F79C24AB1E0B008C7A3A /* noneNet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "noneNet@2x.png"; sourceTree = "<group>"; };
@@ -775,6 +793,8 @@
 				337F3E6420E9FE5300C5526A /* LaunchScreen.storyboard */,
 				337F3E6720E9FE5300C5526A /* Info.plist */,
 				337F3E6820E9FE5300C5526A /* main.m */,
+				666BCBEE24C5361500FFAC91 /* wwww.swift */,
+				666BCBED24C5361500FFAC91 /* SWTShoping-Bridging-Header.h */,
 			);
 			path = SWTShoping;
 			sourceTree = "<group>";
@@ -1046,6 +1066,9 @@
 				667A44B224B16271006C9072 /* SWTGoodsDetailFiveCell.h */,
 				667A44B324B16271006C9072 /* SWTGoodsDetailFiveCell.m */,
 				667A44B424B16271006C9072 /* SWTGoodsDetailFiveCell.xib */,
+				666BCBF424C56C3700FFAC91 /* SWTYiKouJiaGoodDetailCell.h */,
+				666BCBF524C56C3700FFAC91 /* SWTYiKouJiaGoodDetailCell.m */,
+				666BCBF624C56C3700FFAC91 /* SWTYiKouJiaGoodDetailCell.xib */,
 				667A44B724B1DC9E006C9072 /* SWTGoodSDetailBottomView.h */,
 				667A44B824B1DC9E006C9072 /* SWTGoodSDetailBottomView.m */,
 				667A44BD24B1EDF7006C9072 /* SWTGoodsDetailChuJiaView.h */,
@@ -1385,6 +1408,8 @@
 				667D506624C499DF00A59726 /* SWTShopIntroduceThreeCell.h */,
 				667D506724C499DF00A59726 /* SWTShopIntroduceThreeCell.m */,
 				667D506824C499DF00A59726 /* SWTShopIntroduceThreeCell.xib */,
+				667D506B24C49ED100A59726 /* SWTShopIntroducePingJiaCell.h */,
+				667D506C24C49ED100A59726 /* SWTShopIntroducePingJiaCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1448,6 +1473,7 @@
 		6670E04224C02B2700662F5D /* ZKPickView */ = {
 			isa = PBXGroup;
 			children = (
+				666BCBFE24C5800A00FFAC91 /* City.plist */,
 				6670E04324C02B2700662F5D /* zkPickView.m */,
 				6670E04424C02B2700662F5D /* zkPickModel.h */,
 				6670E04524C02B2700662F5D /* zkPickModel.m */,
@@ -1597,6 +1623,9 @@
 				66689F3A24B4250200C49A2E /* SWTTongYongTwoCell.xib */,
 				66732CBF24B8A76600452F21 /* SWTMineOrderCell.h */,
 				66732CC024B8A76600452F21 /* SWTMineOrderCell.m */,
+				666BCBF924C5795200FFAC91 /* SWTChooseAddcell.h */,
+				666BCBFA24C5795200FFAC91 /* SWTChooseAddcell.m */,
+				666BCBFB24C5795200FFAC91 /* SWTChooseAddcell.xib */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -1751,6 +1780,7 @@
 				TargetAttributes = {
 					337F3E5520E9FE3B00C5526A = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1150;
 					};
 					337F3E6D20E9FE5400C5526A = {
 						CreatedOnToolsVersion = 9.4.1;
@@ -1800,8 +1830,10 @@
 				66732D0224BAB99E00452F21 /* SWTHeMaiTwoCell.xib in Resources */,
 				667D506224C48C7400A59726 /* SWTShopIntroduceTwoCell.xib in Resources */,
 				66732CED24BAA1EF00452F21 /* SWTLoginOneVC.xib in Resources */,
+				666BCBFF24C5800A00FFAC91 /* City.plist in Resources */,
 				667D505D24C48C5900A59726 /* SWTShopIntroduceCell.xib in Resources */,
 				66732CEC24BAA1EF00452F21 /* SWTLoginTwoVC.xib in Resources */,
+				666BCBF824C56C3700FFAC91 /* SWTYiKouJiaGoodDetailCell.xib in Resources */,
 				6678B7E724B0B49500EA3A56 /* SWTGoodsDetailThreeCell.xib in Resources */,
 				6669F5C624AB7BBE0013675E /* SWTMineOneCell.xib in Resources */,
 				66689F1F24B40D2700C49A2E /* SWTMineWalletCell.xib in Resources */,
@@ -1828,6 +1860,7 @@
 				666A39FD24B74B3C00318075 /* mx_pic_selected_no@2x.png in Resources */,
 				666F690124BCA2B900592DC4 /* SWTMineZiLiaoCell.xib in Resources */,
 				6670823924BC5D5000A44820 /* SWTHeMaiThreeCollectCell.xib in Resources */,
+				666BCBFD24C5795200FFAC91 /* SWTChooseAddcell.xib in Resources */,
 				666C70ED24B61210002C11E1 /* SWTFanKuiThreeCell.xib in Resources */,
 				6674244424B4CBCF007A6A56 /* SWTVideoDetailOneCell.xib in Resources */,
 				667A44B624B16271006C9072 /* SWTGoodsDetailFiveCell.xib in Resources */,
@@ -1985,10 +2018,12 @@
 				66732CF724BAB4D200452F21 /* LxmWebViewController.m in Sources */,
 				666658E424AA23B7006C17B4 /* ALCSearchView.m in Sources */,
 				66689F2824B4178500C49A2E /* SWTMineYouHuiQuanTVC.m in Sources */,
+				666BCBEF24C5361500FFAC91 /* wwww.swift in Sources */,
 				6674B24C24C09D3B0051A46C /* SWTShaiXuanRightView.m in Sources */,
 				666C70EC24B61210002C11E1 /* SWTFanKuiThreeCell.m in Sources */,
 				6669F5D924AB962F0013675E /* SWTMineSectionHeadView.m in Sources */,
 				337F3E6920E9FE5300C5526A /* main.m in Sources */,
+				667D506D24C49ED100A59726 /* SWTShopIntroducePingJiaCell.m in Sources */,
 				66689F1A24B40CDB00C49A2E /* SWTMineWalletTVC.m in Sources */,
 				666BB1C824B0005F00341CE8 /* SWTNavitageView.m in Sources */,
 				337F3EB420EA040400C5526A /* UIView+BSExtension.m in Sources */,
@@ -2022,6 +2057,7 @@
 				6670823824BC5D5000A44820 /* SWTHeMaiThreeCollectCell.m in Sources */,
 				666A39FB24B74B3C00318075 /* MXALAsset.m in Sources */,
 				666658EA24AA36A1006C17B4 /* SWTHomeCollectionHeadView.m in Sources */,
+				666BCBFC24C5795200FFAC91 /* SWTChooseAddcell.m in Sources */,
 				667A44D724B23A53006C9072 /* SWTLaoYouThreeCell.m in Sources */,
 				666A3A1D24B75E2C00318075 /* SWTLaoYouDianPuInfoOneTVC.m in Sources */,
 				666A3A1724B74D1500318075 /* zkPhotoShowCell.m in Sources */,
@@ -2049,6 +2085,7 @@
 				666658ED24AA3FA4006C17B4 /* XPCollectionViewWaterfallFlowLayout.m in Sources */,
 				6673BA8D24B35A7E00037A14 /* SWTLaoYouKaiDianLiuChengCell.m in Sources */,
 				666BB1CB24B005EB00341CE8 /* SWTGoodsDetailTVC.m in Sources */,
+				666BCBF724C56C3700FFAC91 /* SWTYiKouJiaGoodDetailCell.m in Sources */,
 				6670696024B5542A00AB0826 /* SWTZhenPinGeFatherVC.m in Sources */,
 				6673BA9A24B36E7200037A14 /* SWTTiJiaoOrderTVC.m in Sources */,
 				66732CDC24B93F0200452F21 /* SWTPingJiaHeadV.m in Sources */,
@@ -2244,6 +2281,7 @@
 			baseConfigurationReference = C0333005ECB5A67F63F21483 /* Pods-SWTShoping.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = JC4A2LS9A4;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2267,6 +2305,9 @@
 				PRODUCT_NAME = "商城测试";
 				PROVISIONING_PROFILE = "3bdcf4b3-e396-4d7a-ab2b-739f2269ddaa";
 				PROVISIONING_PROFILE_SPECIFIER = comxxxxx;
+				SWIFT_OBJC_BRIDGING_HEADER = "SWTShoping/SWTShoping-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -2276,6 +2317,7 @@
 			baseConfigurationReference = 93517C6A5478579AE5177242 /* Pods-SWTShoping.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = JC4A2LS9A4;
@@ -2299,6 +2341,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.zk.SWTShoping;
 				PRODUCT_NAME = "商城测试";
 				PROVISIONING_PROFILE_SPECIFIER = comxxxxx;
+				SWIFT_OBJC_BRIDGING_HEADER = "SWTShoping/SWTShoping-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -2306,6 +2350,7 @@
 		337F3E8620E9FE5400C5526A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = SWTShopingTests/Info.plist;
@@ -2324,6 +2369,7 @@
 		337F3E8720E9FE5400C5526A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = SWTShopingTests/Info.plist;
@@ -2342,6 +2388,7 @@
 		337F3E8920E9FE5400C5526A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = SWTShopingUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2359,6 +2406,7 @@
 		337F3E8A20E9FE5400C5526A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = SWTShopingUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

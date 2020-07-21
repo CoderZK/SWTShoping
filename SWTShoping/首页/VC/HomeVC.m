@@ -138,9 +138,9 @@
             [self.collectionView.mj_header endRefreshing];
             if ([responseObject[@"code"] intValue]== 200) {
                 
-//                self.recommendArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
-//                [self.collectionView reloadData];
-    //            self.headView.sdView.imageURLStringsGroup = picArr;
+                self.hotArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+                [self.collectionView reloadData];
+
             }else {
                 [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
             }
@@ -284,16 +284,23 @@
             [self.navigationController pushViewController:vc animated:YES];
             
         }];
+        cell.dataArray = self.hotArr;
         return cell;
     }else {
-        if (indexPath.row == 0) {
+        
+        SWTModel * model = self.recommendArr[indexPath.row];
+        
+        if ([model.showtype isEqualToString:@"live"]) {
             SWTHomeCollectionTwoCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionTwoCell" forIndexPath:indexPath];
+            model.playnum = model.watchnum;
+            cell.model = model;
             return cell;
         }else {
-            SWTHomeCollectionThreeCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionThreeCell" forIndexPath:indexPath];
+           SWTHomeCollectionThreeCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionThreeCell" forIndexPath:indexPath];
+            cell.model = model;
             return cell;
         }
-        
+
         
     }
 }
@@ -311,14 +318,14 @@
     }else if (indexPath.row == 1) {
         SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
            vc.hidesBottomBarWhenPushed = YES;
-        vc.goodID = self.recommendArr[indexPath.row].ID;
+        vc.goodID = self.recommendArr[indexPath.row].goodid;
            [self.navigationController pushViewController:vc animated:YES];
         
     }else {
         SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
         vc.hidesBottomBarWhenPushed = YES;
         vc.isYiKouJia = YES;
-        vc.goodID = self.recommendArr[indexPath.row].ID;
+        vc.goodID = self.recommendArr[indexPath.row].goodid;
         [self.navigationController pushViewController:vc animated:YES];
         
         

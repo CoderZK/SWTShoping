@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SWTGoodsDetailTVC : BaseTableViewController
 @property(nonatomic,assign)BOOL isYiKouJia;
 @property(nonatomic , strong)NSString *goodID;
+
 @end
 
 NS_ASSUME_NONNULL_END

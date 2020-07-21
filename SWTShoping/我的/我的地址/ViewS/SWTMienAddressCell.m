@@ -23,6 +23,7 @@
     self.nameLB.text = model.realname;
     self.phoneLB.text = model.mobile;
     self.addressLB.text =  [NSString stringWithFormat:@"%@%@%@%@",model.province,model.city,model.district,model.address_info];
+    self.morenLB.hidden = !model.is_default;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

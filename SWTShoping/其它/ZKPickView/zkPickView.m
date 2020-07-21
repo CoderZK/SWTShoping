@@ -14,7 +14,7 @@
 //RGB
 #define RGBA(r, g, b, a) [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:(a)]
 
-#define  conColor  [UIColor colorWithRed:253/255.0f green:216/255.0f blue:217/255.0f alpha:1.0]
+#define  conColor  [UIColor colorWithRed:163.0/255.0 green:41.0/255.0 blue:59.0/255.0 alpha:1]
 
 // 缩放比
 #define kScale ([UIScreen mainScreen].bounds.size.width) / 375
@@ -260,21 +260,21 @@
         NSString *showTitleValue=@"";
         if (component==0){
             zkPickModel *province=self.array[row];
-            showTitleValue=province.pname;
+            showTitleValue=province.areaname;
         }
         if (component==1){
             if (self.arrayType == AreaArrayTwo) {
                     zkPickModel *province=self.array[self.selectRowWithProvince];
                     zkPickModel * model = [[zkPickModel alloc] init];
                     model.ID = @"0";
-                    model.cname = @"不限";
+                    model.areaname = @"不限";
                     NSMutableArray<zkPickModel *> * ddd = [province.cityList mutableCopy];
                     [ddd insertObject:model atIndex:0];
-                    showTitleValue =  ddd[row].cname;
+                    showTitleValue =  ddd[row].areaname;
                 }else {
                     zkPickModel *province=self.array[self.selectRowWithProvince];
                     zkPickModel *city=province.cityList[row];
-                    showTitleValue=city.cname;
+                    showTitleValue=city.areaname;
                 }
         }
         if (component==2) {
@@ -284,10 +284,10 @@
                 zkPickModel *city=province.cityList[self.selectRowWithCity];
                 zkPickModel * model = [[zkPickModel alloc] init];
                 model.ID = @"0";
-                model.name = @"不限";
+                model.areaname = @"不限";
                 NSMutableArray<zkPickModel *> * ddd = [city.areaList mutableCopy];
                 [ddd insertObject:model atIndex:0];
-                showTitleValue =  ddd[row].name;
+                showTitleValue =  ddd[row].areaname;
             }else if (self.arrayType == AreaArrayTwo) {
                 zkPickModel *city=[[zkPickModel alloc] init];
                 city.areaList = @[].mutableCopy;
@@ -296,15 +296,15 @@
                 }
                 zkPickModel * model = [[zkPickModel alloc] init];
                 model.ID = @"0";
-                model.name = @"不限";
+                model.areaname = @"不限";
                 NSMutableArray<zkPickModel *> * ddd = [city.areaList mutableCopy];
                 [ddd insertObject:model atIndex:0];
-                showTitleValue =  ddd[row].name;
+                showTitleValue =  ddd[row].areaname;
                 
             }  else {
                 zkPickModel *city=province.cityList[self.selectRowWithCity];
                 zkPickModel * model = city.areaList[row];
-                showTitleValue = model.name;
+                showTitleValue = model.areaname;
             }
             
           
@@ -319,7 +319,7 @@
             return [NSString stringWithFormat:@"%@",self.array[row]];;
         }else {
             zkPickModel * model = self.array[row];
-            return model.name;
+            return model.areaname;
         }
         
     }

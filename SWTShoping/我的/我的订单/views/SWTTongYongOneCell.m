@@ -15,6 +15,7 @@
     // Initialization code
     self.lineV.backgroundColor = lineBackColor;
     self.rightTwoLB.textColor = RedColor;
+    self.leftTwoLB.hidden = YES;
     
 }
 

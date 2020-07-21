@@ -16,7 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *pic;
 @property(nonatomic,strong)NSString *category_id;
 @property(nonatomic,strong)NSString *keyword;
-@property(nonatomic,strong)NSString *mer_id;
+@property(nonatomic,strong)NSString *goodid;
+@property(nonatomic,strong)NSString *merch_id;
+@property(nonatomic,strong)NSString *merchid;
 @property(nonatomic,strong)NSString *buyway;
 @property(nonatomic,strong)NSString *title;
 @property(nonatomic,strong)NSString *subtitle;
@@ -63,6 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *category;
 @property(nonatomic,strong)NSString *creattime;
 @property(nonatomic,strong)NSString *isfollow; // no or yes
+@property(nonatomic,strong)NSString *isfav;// no or yes
 @property(nonatomic,strong)NSString *price;
 @property(nonatomic,strong)NSString *realname;
 @property(nonatomic,strong)NSString *address_info;
@@ -70,20 +73,23 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *city;
 @property(nonatomic,strong)NSString *district;
 @property(nonatomic,strong)NSString *mobile;
-//@property(nonatomic,strong)NSString *address;
-//@property(nonatomic,strong)NSString *institution_id;
-//@property(nonatomic,strong)NSString *scheduleId;
-//@property(nonatomic,strong)NSString *highRate;
-//@property(nonatomic,strong)NSString *lowRate;
-//@property(nonatomic,strong)NSString *averageRate;
-//@property(nonatomic,strong)NSString *weight;
-//@property(nonatomic,strong)NSString *systolic;//收缩压
-//@property(nonatomic,strong)NSString *diastolic;//舒畅
-//@property(nonatomic,strong)NSString *stepnumber;
-//@property(nonatomic,strong)NSString *lastday;
-//@property(nonatomic,strong)NSString *length;
-//@property(nonatomic,strong)NSString *period;
-//@property(nonatomic,strong)NSString *img;
+@property(nonatomic,strong)NSString *goodlist;
+@property(nonatomic,strong)NSString *goodimg;
+@property(nonatomic,strong)NSString *goodname;
+@property(nonatomic,strong)NSString *goodprice;
+@property(nonatomic,strong)NSString *store_name;
+
+@property(nonatomic,strong)NSString *categoryid;
+@property(nonatomic,strong)NSString *pushurl;
+@property(nonatomic,strong)NSString *readurl;
+@property(nonatomic,strong)NSString *watchnum;
+
+
+@property(nonatomic,strong)NSString *showtype;// 类型 live 直播 good 商品
+@property(nonatomic,strong)NSString *lmCouponsList;
+@property(nonatomic,strong)NSString *rate;//折扣
+@property(nonatomic,strong)NSString *useprice;//折扣总金额
+
 //@property(nonatomic,strong)NSString *low_rate;
 //@property(nonatomic,strong)NSString *average_rate;
 //@property(nonatomic,strong)NSString *high_rate;
@@ -139,7 +145,10 @@ NS_ASSUME_NONNULL_BEGIN
 ////@property(nonatomic,strong)ALMessageModel *menstrual;
 //
 //
-//@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *commentList;
+
+@property(nonatomic,strong)NSMutableArray<SWTModel *> *goodNeiList;
+
+@property(nonatomic,strong)NSMutableArray<SWTModel *> *youHuiQuanList;
 //@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *departmentList;
 //@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *recommendProjectList;
 //@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *province_important_departmentList;
@@ -161,13 +170,13 @@ NS_ASSUME_NONNULL_BEGIN
 //@property(nonatomic,strong)NSArray *times;
 //
 //
-//@property(nonatomic,assign)BOOL isDelete;
-//@property(nonatomic,assign)BOOL is_read;
-//@property(nonatomic,assign)BOOL isSelect;
-//@property(nonatomic,assign)BOOL isFinish;
-//@property(nonatomic,assign)BOOL isAllowComment;
-//@property(nonatomic,assign)BOOL isCancel;
-//@property(nonatomic,assign)BOOL isConsultation;
+@property(nonatomic,assign)BOOL is_default;
+@property(nonatomic,assign)BOOL isauction;//滴雨轩拍卖行
+@property(nonatomic,assign)BOOL isdirect;//直营店
+@property(nonatomic,assign)BOOL isoem;//代工工作室
+@property(nonatomic,assign)BOOL refund ;//包退
+@property(nonatomic,assign)BOOL postage ;//包邮
+@property(nonatomic,assign)BOOL isquality ;//优选好点
 //@property(nonatomic,assign)BOOL isAppointment;
 //@property(nonatomic,assign)BOOL isCollection;
 //@property(nonatomic,assign)BOOL isSelf;
@@ -211,6 +220,8 @@ NS_ASSUME_NONNULL_BEGIN
 ////@property(nonatomic,assign)CGFloat longitude;
 //
 //@property(nonatomic,assign)CGFloat  HHHHHH;
+//获取标签
+- (NSArray *)getTypeLBArr;
 
 @end
 

@@ -129,9 +129,12 @@
             <connections>
                 <outlet property="backV" destination="I4v-OA-76f" id="k2T-f2-Vvf"/>
                 <outlet property="contentLB" destination="mmi-DX-NTt" id="5BC-6A-Y1F"/>
+                <outlet property="gaunzhuBt" destination="xdk-Iz-pVt" id="51s-ea-a9u"/>
                 <outlet property="headBt" destination="xuJ-0b-SMW" id="kbd-ir-2Jf"/>
                 <outlet property="nameLB" destination="i9u-ZR-fuK" id="8rV-Dy-fr2"/>
                 <outlet property="titleLB" destination="zMC-OJ-TuD" id="ngC-Xu-xj1"/>
+                <outlet property="typeImgOne" destination="YvS-GI-ubT" id="PNE-vw-ZGh"/>
+                <outlet property="typeImgVTwo" destination="DHc-DP-ylR" id="n4c-U6-WVB"/>
                 <outlet property="typeLB" destination="jOJ-Ss-esb" id="DiX-Ga-XXn"/>
                 <outlet property="typeTwoLB" destination="MCB-SR-v6d" id="OG1-QL-tLF"/>
             </connections>

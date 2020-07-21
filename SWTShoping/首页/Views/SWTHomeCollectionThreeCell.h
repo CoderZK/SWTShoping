@@ -17,7 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *typeTwoLB;
 @property (weak, nonatomic) IBOutlet UILabel *moneyLB;
 @property (weak, nonatomic) IBOutlet UILabel *numberLB;
-
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightCons;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *yyCons;
+@property(nonatomic , strong)SWTModel *model;
 @end
 
 NS_ASSUME_NONNULL_END

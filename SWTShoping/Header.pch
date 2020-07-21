@@ -65,6 +65,7 @@
 #import "SWTURLDefineTool.h"
 #import "SWTModel.h"
 #import "zkPickView.h"
+#import "SWTXingXingView.h"
 
 
 #define iOS11Later ([UIDevice currentDevice].systemVersion.floatValue >= 11.0f)

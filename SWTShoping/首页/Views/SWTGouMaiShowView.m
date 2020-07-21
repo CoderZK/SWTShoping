@@ -90,7 +90,7 @@
         self.numberTF.keyboardType = UIKeyboardTypeNumberPad;
         self.numberTF.textColor = [UIColor blackColor];
         self.numberTF.backgroundColor = [UIColor groupTableViewBackgroundColor];
-        self.numberTF.text = @"5";
+        self.numberTF.text = @"1";
         [self.whiteV addSubview:self.numberTF];
         
         
@@ -180,11 +180,23 @@
             make.height.equalTo(@35);
         }];
         
-        
+        @weakify(self);
+        [[self.numberTF rac_textSignal] subscribeNext:^(NSString * _Nullable x) {
+            @strongify(self);
+            self.leftTwoLb.text =  [NSString stringWithFormat:@"￥%0.2f",self.model.price.floatValue * self.numberTF.text.intValue];
+        }];
         
     }
     
     return self;
+}
+
+- (void)setModel:(SWTModel *)model {
+    _model = model;
+    [self.leftimgV sd_setImageWithURL:[model.thumb getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+    
+    self.leftTwoLb.text =  [NSString stringWithFormat:@"￥%@",[model.price getPriceAllStr]];
+    self.leftOneLB.text = model.name;
 }
 
 - (void)clickAcion:(UIButton *)button {
@@ -192,9 +204,10 @@
         if (self.numberTF.text.intValue > 1) {
             self.numberTF.text =  [NSString stringWithFormat:@"%d",self.numberTF.text.intValue - 1];
         }
-        
+        self.leftTwoLb.text =  [NSString stringWithFormat:@"￥%0.2f",self.model.price.floatValue * self.numberTF.text.intValue];
     }else if (button.tag == 101) {
         self.numberTF.text =  [NSString stringWithFormat:@"%d",self.numberTF.text.intValue + 1];
+        self.leftTwoLb.text =  [NSString stringWithFormat:@"￥%0.2f",self.model.price.floatValue * self.numberTF.text.intValue];
     }else if (button.tag == 102) {
         if (self.numberTF.text.length == 0 || self.numberTF.text.intValue == 0){
             [SVProgressHUD showErrorWithStatus:@"至少要购买1个"];

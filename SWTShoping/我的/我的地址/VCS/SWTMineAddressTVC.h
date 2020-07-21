@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTMineAddressTVC : BaseTableViewController
+@property(nonatomic , copy)void(^sendAddressModelBlock)(SWTModel *model);
 
 @end
 

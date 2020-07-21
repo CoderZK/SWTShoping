@@ -8,10 +8,14 @@
 
 #import "SWTAddMineAddressTVC.h"
 #import "SWTMineTwoAddCell.h"
-@interface SWTAddMineAddressTVC ()<UITextFieldDelegate>
+@interface SWTAddMineAddressTVC ()<UITextFieldDelegate,zkPickViewDelelgate>
 @property(nonatomic , strong)UIView *footV;
 @property(nonatomic , strong)NSArray *leftArr;
 @property(nonatomic , strong)NSString *shouHuoStr,*phoneStr,*detailStr;
+@property(nonatomic , strong)UIView *tableFootV;
+@property(nonatomic , strong)UISwitch *switchBt;
+@property(nonatomic , strong)NSString *pStr,*cStr,*aStr,*addStr;
+@property(nonatomic , strong)NSMutableArray<zkPickModel *> *cityArr;
 
 @end
 
@@ -23,9 +27,9 @@
     
     self.navigationItem.title = @"添加地址";
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTMineTwoAddCell" bundle:nil] forCellReuseIdentifier:@"cell"];
-//       self.tableView.rowHeight = UITableViewAutomaticDimension;
-//       self.tableView.estimatedRowHeight = 40;
-       self.leftArr = @[@"收货人",@"手机号",@"地区",@"详细地址"];
+    //       self.tableView.rowHeight = UITableViewAutomaticDimension;
+    //       self.tableView.estimatedRowHeight = 40;
+    self.leftArr = @[@"收货人",@"手机号",@"地区",@"详细地址"];
     
     [self initFootV];
     
@@ -34,19 +38,31 @@
         make.bottom.equalTo(self.footV.mas_top);
     }];
     
+    self.cityArr = @[].mutableCopy;
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"City" ofType:@"plist"];
+    
+    NSArray *arr = [NSArray arrayWithContentsOfFile:path];
+    
+    for (int i = 0 ; i < arr.count; i++) {
+        zkPickModel * model = [zkPickModel mj_objectWithKeyValues:arr[i]];
+        [self.cityArr insertObject:model atIndex:0];
+    }
+    
+    [self initTFootV];
+    
 }
 
 - (void)addAddressAction {
-
+    
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"realname"] = self.shouHuoStr;
     dict[@"mobile"] = self.phoneStr;
     dict[@"address"] = self.detailStr;
     dict[@"userid"] = [zkSignleTool shareTool].session_uid;
-    dict[@"province"] = @"1111";
-    dict[@"district"] = @"3333";
-    dict[@"city"] = @"2222";
+    dict[@"province"] = self.pStr;
+    dict[@"district"] = self.aStr;
+    dict[@"city"] = self.cStr;
     [zkRequestTool networkingPOST: [NSString stringWithFormat:@"%@/%@",addressAdd_SWT,[zkSignleTool shareTool].session_uid] parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
@@ -70,7 +86,22 @@
 
 
 
-
+- (void)initTFootV  {
+    
+    self.tableFootV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 45)];
+    self.tableFootV.backgroundColor = WhiteColor;
+    
+    UILabel * lb = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 150, 20)];
+    lb.font = kFont(14);
+    lb.text = @"设为默认地址";
+    [self.tableFootV addSubview:lb];
+    self.switchBt = [[UISwitch alloc] init];
+    self.switchBt.mj_x = ScreenW - 70;
+    self.switchBt.mj_y = 7.5;
+    self.switchBt.on = NO;
+    [self.tableFootV addSubview:self.switchBt];
+    self.tableView.tableFooterView = self.tableFootV;
+}
 
 - (void)initFootV  {
     
@@ -118,10 +149,11 @@
         cell.rightImgV.hidden = cell.rightTF.userInteractionEnabled =NO;
         cell.cons.constant = 25;
         cell.rightTF.placeholder = @"请选择";
+        cell.rightTF.text = self.addStr;
     }else {
         cell.rightImgV.hidden = cell.rightTF.userInteractionEnabled =YES;
-               cell.cons.constant = 10;
-               cell.rightTF.placeholder = @"请填写";
+        cell.cons.constant = 10;
+        cell.rightTF.placeholder = @"请填写";
     }
     cell.leftLB.text  = self.leftArr[indexPath.row];
     return cell;
@@ -132,10 +164,26 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.row == 2) {
         [self.tableView endEditing:YES];
+        zkPickView * pickV  =[[zkPickView alloc] init];
+        pickV.arrayType = ArerArrayNormal;
+        pickV.array = self.cityArr;
+        [pickV show];
+        pickV.delegate = self;
     }
     
     
 }
+
+- (void)didSelectLeftIndex:(NSInteger)leftIndex centerIndex:(NSInteger)centerIndex rightIndex:(NSInteger )rightIndex {
+    self.pStr = self.cityArr[leftIndex].areaname;
+    self.cStr = self.cityArr[leftIndex].cityList[centerIndex].areaname;
+    self.aStr = self.cityArr[leftIndex].cityList[centerIndex].areaList[rightIndex].areaname;
+    self.addStr =  [NSString stringWithFormat:@"%@%@%@",self.pStr,self.cStr,self.aStr];
+    [self.tableView reloadData];
+    
+}
+
+
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     SWTMineTwoAddCell * cell = (SWTMineTwoAddCell *)textField.superview.superview;

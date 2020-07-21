@@ -143,6 +143,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    if (self.sendAddressModelBlock  != nil) {
+        self.sendAddressModelBlock(self.dataArray[indexPath.row]);
+        [self.navigationController popViewControllerAnimated:YES];
+    }
     
     
 }

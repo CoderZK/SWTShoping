@@ -11,7 +11,7 @@
 @implementation zkPickModel
 
 + (NSDictionary *)mj_replacedKeyFromPropertyName {
-    return @{@"ID":@"id"};
+    return @{@"ID":@"id",@"cityList":@"citys",@"areaList":@"areas"};
 }
 
 - (void)setCityList:(NSMutableArray<zkPickModel *> *)cityList {

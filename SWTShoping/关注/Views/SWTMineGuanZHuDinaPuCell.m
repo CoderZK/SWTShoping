@@ -112,20 +112,34 @@
     }
 }
 
-- (void)setDataArray:(NSMutableArray *)dataArray {
-    _dataArray = dataArray;
-    self.collectionView.size = CGSizeMake(100 * (self.dataArray.count), 134);
-    self.scrollview.contentSize = CGSizeMake(100 * (self.dataArray.count), 134);
+//- (void)setDataArray:(NSMutableArray *)dataArray {
+//    _dataArray = dataArray;
+//    self.collectionView.size = CGSizeMake(100 * (self.dataArray.count), 134);
+//    self.scrollview.contentSize = CGSizeMake(100 * (self.dataArray.count), 134);
+//    [self.collectionView reloadData];
+//
+//}
+
+
+- (void)setModel:(SWTModel *)model {
+    _model = model;
+    [self.headBt sd_setBackgroundImageWithURL:[model.avatar getPicURL] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"369"]];
+    self.nameLb.text = model.store_name;
+    
+    
+    self.collectionView.size = CGSizeMake(100 * (model.goodNeiList.count), 134);
+    self.scrollview.contentSize = CGSizeMake(100 * (model.goodNeiList.count), 134);
     [self.collectionView reloadData];
     
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.dataArray.count;
+    return self.model.goodNeiList.count;
 }
 
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     SWTGuanZhuCollectionCell * cell  =[collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    cell.model = self.model.goodNeiList[indexPath.row];
     return cell;
 }
 

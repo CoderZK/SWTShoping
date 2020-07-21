@@ -11,6 +11,8 @@
 @interface SWTEditAddressTVC ()<UITextFieldDelegate>
 @property(nonatomic , strong)UIView *footV;
 @property(nonatomic , strong)NSString *shouHuoStr,*phoneStr,*detailStr;
+@property(nonatomic , strong)UIView *tableFootV;
+@property(nonatomic , strong)UISwitch *switchBt;
 @end
 
 @implementation SWTEditAddressTVC
@@ -31,8 +33,28 @@
     self.shouHuoStr = self.model.realname;
     self.phoneStr = self.model.mobile;
     self.detailStr = self.model.address_info;
+    [self initTFootV];
     
 }
+
+
+- (void)initTFootV  {
+    
+    self.tableFootV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 45)];
+    self.tableFootV.backgroundColor = WhiteColor;
+    
+    UILabel * lb = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 150, 20)];
+    lb.font = kFont(14);
+    lb.text = @"设为默认地址";
+    [self.tableFootV addSubview:lb];
+    self.switchBt = [[UISwitch alloc] init];
+    self.switchBt.mj_x = ScreenW - 70;
+    self.switchBt.mj_y = 7.5;
+    self.switchBt.on = self.model.is_default;
+    [self.tableFootV addSubview:self.switchBt];
+    self.tableView.tableFooterView = self.tableFootV;
+}
+
 
 - (void)initFootV  {
     
@@ -55,8 +77,9 @@
     loginOutBtTwo.clipsToBounds = YES;
     [self.footV addSubview:loginOutBtTwo];
     
+    @weakify(self);
     [[loginOutBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        
+        @strongify(self);
         [self.tableView endEditing:YES];
         [self editAddressAction];
         
@@ -65,8 +88,8 @@
     
     
     [[loginOutBtTwo rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-           
-           
+         @strongify(self);
+        [self delectAddressAction];
            
            
        }];
@@ -89,6 +112,32 @@
           make.width.equalTo(@((ScreenW - 100)/2));
           make.top.equalTo(self.footV).offset(30);
       }];
+}
+
+- (void)delectAddressAction {
+
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"id"] = self.model.ID;
+    [zkRequestTool networkingPOST: [NSString stringWithFormat:@"%@/%@",addressDelete_SWT,self.model.ID] parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([[NSString stringWithFormat:@"%@",responseObject[@"code"]] integerValue] == 200) {
+            [SVProgressHUD showSuccessWithStatus:@"删除地址成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+    }];
+    
+    
+    
 }
 
 

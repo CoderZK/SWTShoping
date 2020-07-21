@@ -22,4 +22,7 @@ pod 'AlipaySDK-iOS'
 pod 'WechatOpenSDK'
 pod 'TYPagerController'
 
+#use_modular_headers!
+#pod 'TXIMSDK_TUIKit_iOS'
+
 end

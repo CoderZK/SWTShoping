@@ -32,7 +32,7 @@
         [self.leftImgV addSubview:self.leftLB];
         
         self.Bt =[[UIButton alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
-        [self addSubview:self.Bt];
+//        [self addSubview:self.Bt];
         
         self.rightLB = [[UILabel alloc] initWithFrame:CGRectMake( 45 , 0, frame.size.width - 50 , 18)];
         self.rightLB.font = kFont(10);
@@ -50,7 +50,7 @@
         self.centerLB.backgroundColor  =[UIColor colorWithWhite:0 alpha:0.4];
         self.centerLB.font = kFont(8);
         self.centerLB.text = @"     喜欢,怎么了";
-        [self addSubview:self.centerLB];
+//        [self addSubview:self.centerLB];
         self.centerLB.layer.cornerRadius = 7;
         self.centerLB.clipsToBounds = YES;
         

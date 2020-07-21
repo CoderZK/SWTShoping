@@ -19,6 +19,7 @@
 @interface SWTMineGuanZHuDinaPuCell : UITableViewCell
 @property(nonatomic , strong)NSMutableArray *dataArray;
 @property(nonatomic,assign)id<SWTMineGuanZHuDinaPuCellDelegate>delegate;
+@property(nonatomic , strong)SWTModel *model;
 @end
 
 

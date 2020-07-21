@@ -132,10 +132,11 @@
 }
 
 
+
 - (void)getTopTitleData {
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    [zkRequestTool networkingPOST:merchSellcate_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+    [zkRequestTool networkingPOST:merchCategory_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {

@@ -18,7 +18,7 @@
 - (IBAction)clickAction:(UIButton *)sender {
     
     if (self.delegateSignal) {
-        [self.delegateSignal sendNext: @""];
+        [self.delegateSignal sendNext: @(sender.tag)];
     }
     
 }

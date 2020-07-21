@@ -36,11 +36,34 @@
     self.leftDataArr = @[].mutableCopy;
     self.rightDataArr = [NSMutableArray array];
     [self getFirstCateData];
+    [self getTopImgStr];
     self.leftV.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
 
         [self getFirstCateData];
     }];
+    
 
+}
+
+- (void)getTopImgStr  {
+    
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"type"] = @"4";
+    [zkRequestTool networkingPOST:topimg_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            [self.headImgV sd_setImageWithURL:[ [NSString stringWithFormat:@"%@",responseObject[@"data"]] getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+      
+       
+    }];
+    
 }
 
 - (void)getFirstCateData {
@@ -71,6 +94,9 @@
        
     }];
 }
+
+
+
 
 - (void)getScondCaterData {
     

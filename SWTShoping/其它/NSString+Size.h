@@ -10,6 +10,7 @@
 
 @interface NSString (Size)
 - (NSString *)getPriceStr;
+- (NSString *)getPriceAllStr;
 // 字典转json字符串方法
 +(NSString *)convertToJsonDataWithDict:(id)dict;
 

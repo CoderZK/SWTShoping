@@ -46,7 +46,7 @@
 /** 获取经营主体 */
 #define merchBusinessentity_SWT URLOne@"merch/businessentity"
 /**获取所有顶级分类 */
-#define merchCategory_SWT URLOne@"merchCategory"
+#define merchCategory_SWT URLOne@"merch/category"
 /**
 删除 黑名单  */
 #define merchDel_black_merch_SWT URLOne@"merch/del_black_merch"
@@ -90,8 +90,13 @@
 #define editpassword_SWT URLOne@"user/editpassword"
 ///** 获取我的收藏 */
 #define userFav_SWT URLOne@"user/fav"
+///** 收藏 */
+#define userFavOperate_SWT URLOne@"user/fav/operate"
+
 ///** 用户关注的 */
 #define userFollow_SWT URLOne@"user/follow"
+///** 关注操作 */
+#define userFollowOperate_SWT URLOne@"user/follow/operate"
 /**设置支付密码接口 */
 #define userPay_SWT URLOne@"user/pay"
 /** 获取足迹列表 */
@@ -105,6 +110,9 @@
 #define addressEdit_SWT URLOne@"address/edit"
 /** 获取收货地址列表接口 */
 #define addressList_SWT URLOne@"address/list"
+/** 删除地址 */
+#define addressDelete_SWT URLOne@"address/delete"
+
 
 #pragma mark ---- 登录模块 -----
 /** 忘记密码 */
@@ -144,7 +152,11 @@
 
 
 
-#pragma mark ---- 商户信息接口  -----
+#pragma mark ---- 通用模块 -----
+
+#define topimg_SWT URLOne@"topimg"
+
+
 #pragma mark ---- 商户信息接口  -----
 #pragma mark ---- 商户信息接口  -----
 #pragma mark ---- 商户信息接口  -----

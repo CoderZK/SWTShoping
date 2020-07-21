@@ -64,6 +64,17 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="默认地址" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O7Z-zS-xGc">
+                        <rect key="frame" x="161" y="15.5" width="60" height="16"/>
+                        <color key="backgroundColor" red="0.99215686270000003" green="0.84705882349999995" blue="0.85098039219999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16" id="FbM-QX-C0n"/>
+                            <constraint firstAttribute="width" constant="60" id="LOS-hV-STD"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.99215686270000003" green="0.20392156859999999" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="KmB-Ci-Q1A" firstAttribute="top" secondItem="kuz-x4-Kh0" secondAttribute="top" constant="15" id="02E-s8-1as"/>
@@ -71,9 +82,11 @@
                     <constraint firstItem="KmB-Ci-Q1A" firstAttribute="leading" secondItem="kuz-x4-Kh0" secondAttribute="leading" constant="15" id="5kQ-mG-YE3"/>
                     <constraint firstAttribute="bottom" secondItem="rx7-O2-LCs" secondAttribute="bottom" constant="15" id="9Yp-S5-sux"/>
                     <constraint firstItem="rx7-O2-LCs" firstAttribute="top" secondItem="KmB-Ci-Q1A" secondAttribute="bottom" constant="10" id="FBA-se-JRk"/>
+                    <constraint firstItem="O7Z-zS-xGc" firstAttribute="centerY" secondItem="h2w-q7-BLe" secondAttribute="centerY" id="FpK-5j-b9g"/>
                     <constraint firstItem="1Bc-jS-RXh" firstAttribute="leading" secondItem="Ww7-Go-3GS" secondAttribute="trailing" constant="15" id="GSb-80-a9l"/>
                     <constraint firstItem="Ww7-Go-3GS" firstAttribute="leading" secondItem="rx7-O2-LCs" secondAttribute="trailing" constant="10" id="IvK-jF-j0z"/>
                     <constraint firstItem="h2w-q7-BLe" firstAttribute="leading" secondItem="KmB-Ci-Q1A" secondAttribute="trailing" constant="15" id="JkB-i6-gmQ"/>
+                    <constraint firstItem="O7Z-zS-xGc" firstAttribute="leading" secondItem="h2w-q7-BLe" secondAttribute="trailing" constant="15" id="Rcv-IV-i4M"/>
                     <constraint firstItem="1Bc-jS-RXh" firstAttribute="centerY" secondItem="kuz-x4-Kh0" secondAttribute="centerY" id="VZb-Rt-ml2"/>
                     <constraint firstItem="h2w-q7-BLe" firstAttribute="centerY" secondItem="KmB-Ci-Q1A" secondAttribute="centerY" id="gbz-XZ-Yr2"/>
                     <constraint firstItem="rx7-O2-LCs" firstAttribute="leading" secondItem="kuz-x4-Kh0" secondAttribute="leading" constant="15" id="tVn-wm-Yzt"/>
@@ -85,6 +98,7 @@
             <connections>
                 <outlet property="addressLB" destination="rx7-O2-LCs" id="g4G-E6-6rq"/>
                 <outlet property="editBt" destination="1Bc-jS-RXh" id="HWp-Ey-3Jd"/>
+                <outlet property="morenLB" destination="O7Z-zS-xGc" id="Rsz-CP-mqC"/>
                 <outlet property="nameLB" destination="KmB-Ci-Q1A" id="bWF-mN-Mav"/>
                 <outlet property="phoneLB" destination="h2w-q7-BLe" id="shR-LX-QfS"/>
             </connections>

@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)show;
 - (void)dismiss;
 @property(nonatomic , strong)RACSubject *delegateSignal;
+@property(nonatomic , strong)SWTModel *model;
 
 @end
 

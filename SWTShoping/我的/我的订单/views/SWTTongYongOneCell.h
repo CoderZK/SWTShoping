@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *leftLB;
 @property (weak, nonatomic) IBOutlet UILabel *rightLB;
 @property (weak, nonatomic) IBOutlet UILabel *rightTwoLB;
+@property (weak, nonatomic) IBOutlet UILabel *leftTwoLB;
 
 @end
 

@@ -17,7 +17,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *typeLB;
 @property (weak, nonatomic) IBOutlet UILabel *typeTwoLB;
 @property (weak, nonatomic) IBOutlet UILabel *titleLB;
+@property (weak, nonatomic) IBOutlet UIButton *gaunzhuBt;
+@property (weak, nonatomic) IBOutlet UIImageView *typeImgOne;
+@property (weak, nonatomic) IBOutlet UIImageView *typeImgVTwo;
 @property (weak, nonatomic) IBOutlet UILabel *contentLB;
+@property(nonatomic , strong)SWTModel *model;
 
 @end
 

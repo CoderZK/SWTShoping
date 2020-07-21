@@ -15,4 +15,12 @@
     // Initialization code
 }
 
+- (void)setModel:(SWTModel *)model {
+    _model = model;
+    [self.imgV sd_setImageWithURL:[model.goodimg getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+    self.titleLB.text = model.goodname;
+    
+    self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",[model.goodprice getPriceStr]];
+}
+
 @end

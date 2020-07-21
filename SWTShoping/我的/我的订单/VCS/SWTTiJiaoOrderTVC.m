@@ -9,25 +9,49 @@
 #import "SWTTiJiaoOrderTVC.h"
 #import "SWTLaoYouOneCell.h"
 #import "SWTTongYongOneCell.h"
+#import "SWTChooseAddcell.h"
+#import "SWTMineAddressTVC.h"
 @interface SWTTiJiaoOrderTVC ()
 @property(nonatomic , strong)NSArray *arrOne;
 @property(nonatomic , strong)NSArray *arrTwo;
 @property(nonatomic , strong)UIView *bottomView;
 @property(nonatomic , strong)UILabel *numberLB,*moneyLB;
 @property(nonatomic , strong)UIButton *tijiaoBt;
+@property(nonatomic , strong)NSString *timeStr;
+@property(nonatomic , strong)SWTModel *addressModel;
+@property(nonatomic , assign)CGFloat zheKouMoney;
+@property(nonatomic , strong)NSString *zheKouID;
 @end
 
 @implementation SWTTiJiaoOrderTVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    CGFloat allMoney = self.model.price.floatValue * self.numStr.intValue;
+    for (int i = 0 ; i < self.model.youHuiQuanList.count; i++) {
+        if (allMoney >= self.model.youHuiQuanList[i].useprice.floatValue) {
+            self.zheKouMoney = allMoney * (100-self.model.youHuiQuanList[i].rate.floatValue)/100.0;
+            self.zheKouID = self.model.youHuiQuanList[i].ID;
+            break;
+        }
+        
+    }
+    
     self.navigationItem.title = @"提交订单";
     [self.tableView registerClass:[SWTLaoYouOneCell class] forCellReuseIdentifier:@"SWTLaoYouOneCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTTongYongOneCell" bundle:nil] forCellReuseIdentifier:@"SWTTongYongOneCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"SWTChooseAddcell" bundle:nil] forCellReuseIdentifier:@"SWTChooseAddcell"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.arrOne = @[@"发货保障",@"退货无忧",@"配送方式"];
-    self.arrTwo = @[@"72小时不发货可申请退款",@"7天包退",@"卖家包邮"];
+    self.arrOne = @[@"发货保障",@"退货无忧",@"配送方式",@"商铺优惠券",@""];
+    self.arrTwo = @[@"72小时不发货可申请退款",@"7天包退",@"卖家包邮",@"商铺优惠券",@""];
     [self initBview];
+    
+    
+    
+    
+    
+    
 }
 
 
@@ -63,7 +87,7 @@
         @strongify(self);
         //点击提交订单
         
-        
+        [self addOrderAction];
         
     }];
     
@@ -80,13 +104,13 @@
     self.moneyLB.textColor = RedColor;
     self.moneyLB.font = kFont(13);
     [self.bottomView addSubview:self.moneyLB];
-    self.moneyLB.text = @"￥1234";
+    self.moneyLB.text =  [NSString stringWithFormat:@"￥%0.2f",self.model.price.floatValue * self.numStr.intValue - self.zheKouMoney];
     
     self.numberLB = [[UILabel alloc] init];
     self.numberLB.textColor = CharacterColor50;
     self.numberLB.font = kFont(13);
     [self.bottomView addSubview:self.numberLB];
-    self.numberLB.text = @"共一件, 合计: ";
+    self.numberLB.text =  [NSString stringWithFormat:@"共%@件, 合计: ",self.numStr];
     
     [self.moneyLB mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.bottomView);
@@ -95,30 +119,69 @@
     }];
     
     [self.numberLB mas_makeConstraints:^(MASConstraintMaker *make) {
-           make.centerY.equalTo(self.bottomView);
-           make.right.equalTo(self.moneyLB.mas_left).offset(-5);
-           make.height.equalTo(@25);
-       }];
+        make.centerY.equalTo(self.bottomView);
+        make.right.equalTo(self.moneyLB.mas_left).offset(-5);
+        make.height.equalTo(@25);
+    }];
     
 }
 
 
+- (void)getData {
+    
+    
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"page"] = @(1);
+    dict[@"pagesize"] = @(10);
+    [zkRequestTool networkingPOST: [NSString stringWithFormat:@"%@/%@",addressList_SWT,[zkSignleTool shareTool].session_uid] parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([[NSString stringWithFormat:@"%@",responseObject[@"code"]] integerValue] == 200) {
+            NSArray<SWTModel *>*arr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            if (arr.count > 0) {
+                if (arr[0].is_default) {
+                    self.addressModel = arr[0];
+                    [self.tableView reloadData];
+                }
+            }
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+    }];
+    
+    
+    
+}
+
+
+
 - (void)addOrderAction {
+    
+    if (self.addressModel == nil) {
+        [SVProgressHUD showErrorWithStatus:@"请选择收货地址"];
+        return;
+    }
     
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"goodid"] = self.goodID;
     dict[@"merchid"] = self.merchID;
     dict[@"num"] = self.numStr;
-    dict[@"price"] = self.moneyStr;
+    dict[@"price"] =  [NSString stringWithFormat:@"%0.2f",self.model.price.floatValue * self.numStr.intValue];;
     dict[@"userid"] = [zkSignleTool shareTool].session_uid;
-
-    [zkRequestTool networkingPOST: [NSString stringWithFormat:@"%@/%@",addressAdd_SWT,[zkSignleTool shareTool].session_uid] parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+    
+    [zkRequestTool networkingPOST: [NSString stringWithFormat:@"%@/%@/%@/%@",orderSubmit_SWT,self.merchID,self.goodID,[zkSignleTool shareTool].session_uid] parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];
         if ([[NSString stringWithFormat:@"%@",responseObject[@"code"]] integerValue] == 200) {
-            [SVProgressHUD showSuccessWithStatus:@"添加地址成功"];
+            [SVProgressHUD showSuccessWithStatus:@"提交订单成功"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.navigationController popViewControllerAnimated:YES];
             });
@@ -138,49 +201,70 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section ==0) {
-        return 1;
+    if (section ==0 ) {
+        return 2;
     }
-    return 4;
+    return 5;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            return 79;
+        }
         return 132;
     }
     return 50;
 }
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        SWTLaoYouOneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTLaoYouOneCell" forIndexPath:indexPath];
-        return cell;
+        if (indexPath.row == 0) {
+            SWTChooseAddcell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTChooseAddcell" forIndexPath:indexPath];
+            cell.model = self.addressModel;
+            return cell;
+        }else {
+            SWTLaoYouOneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTLaoYouOneCell" forIndexPath:indexPath];
+            cell.model = self.model;
+            cell.leftTwoLb.text = self.timeStr;
+            return cell;
+        }
+        
     }else {
         SWTTongYongOneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTTongYongOneCell" forIndexPath:indexPath];
-        if (indexPath.row == 3) {
-            cell.leftLB.hidden = YES;
-            cell.rightTwoLB.text  = @"145";
+        cell.leftTwoLB.hidden = YES;
+        cell.leftLB.text = self.arrOne[indexPath.row];
+        if (indexPath.row == 4) {
+            cell.rightTwoLB.text  =  [NSString stringWithFormat:@"￥%@",[self.model.price getPriceAllStr]];;
             cell.rightLB.text = @"小计:  ";
-        }else {
+        }else if (indexPath.row == 3) {
+            cell.rightLB.text = @"";
             cell.leftLB.text = self.arrOne[indexPath.row];
+            cell.rightTwoLB.text  =  [NSString stringWithFormat:@"￥%0.2f",self.zheKouMoney];
+        }else {
             cell.rightLB.text = self.arrTwo[indexPath.row];
             cell.rightTwoLB.text = @"";
         }
         return cell;
     }
     
-    
-    
-    SWTLaoYouOneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    return cell;
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        
+        SWTMineAddressTVC * vc =[[SWTMineAddressTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+        vc.hidesBottomBarWhenPushed = YES;
+        Weak(weakSelf);
+        vc.sendAddressModelBlock = ^(SWTModel * _Nonnull model) {
+            weakSelf.addressModel = model;
+            [weakSelf.tableView reloadData];
+        };
+        [self.navigationController pushViewController:vc animated:YES];
+        
+    }
     
     
 }
-
-
 
 @end

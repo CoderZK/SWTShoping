@@ -118,6 +118,15 @@
     return self;
 }
 
+- (void)setModel:(SWTModel *)model {
+    _model = model;
+    [self.shopNameBt setTitle:model.store_name forState:UIControlStateNormal];
+    self.leftOneLB.text = model.name;
+    
+    self.leftThreeLB.text =  [NSString stringWithFormat:@"￥%@",[model.price getPriceAllStr]];
+    
+}
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code

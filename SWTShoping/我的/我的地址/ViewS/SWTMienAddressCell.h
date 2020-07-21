@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *phoneLB;
 @property (weak, nonatomic) IBOutlet UILabel *addressLB;
 @property (weak, nonatomic) IBOutlet UIButton *editBt;
+@property (weak, nonatomic) IBOutlet UILabel *morenLB;
 @property(nonatomic , strong)SWTModel *model;
 @end
 

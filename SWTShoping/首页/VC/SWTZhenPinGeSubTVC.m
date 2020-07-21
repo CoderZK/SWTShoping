@@ -12,6 +12,7 @@
 @property(nonatomic , strong)UIImageView *imgV;
 @property(nonatomic,assign)NSInteger page;
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *dataArray;
+
 @end
 
 @implementation SWTZhenPinGeSubTVC
@@ -37,6 +38,28 @@
     }];
     
 }
+
+- (void)getTopImgStr  {
+    
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"type"] = @"4";
+    [zkRequestTool networkingPOST:topimg_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        [SVProgressHUD dismiss];
+
+        if ([responseObject[@"code"] intValue]== 200) {
+            [self.imgV sd_setImageWithURL:[ [NSString stringWithFormat:@"%@",responseObject[@"data"]] getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+   
+       
+    }];
+    
+}
+
 
 - (void)getData {
     
@@ -79,7 +102,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return self.dataArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -90,8 +113,9 @@
     SWTMineGuanZHuDinaPuCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     // cell.nameLB.text = @"fgkodkgfeoprkgkp";
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.dataArray = @[@"",@"",@"",@"",@"",@"",@"",@"",@"",@""].mutableCopy;
+//    cell.dataArray = @[@"",@"",@"",@"",@"",@"",@"",@"",@"",@""].mutableCopy;
     cell.delegate = self;
+    cell.model = self.dataArray[indexPath.row];
     return cell;
 }
 
@@ -126,11 +150,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
     NSLog(@"---\n%f",scrollView.contentOffset.y);
-    
     CGFloat yy =  120;
-    
-    CGFloat yyy = scrollView.contentOffset.y;
-    
     if (scrollView.contentOffset.y<= -yy) {
         self.imgV.mj_y = 0;
         self.imgV.mj_h = 150 - (scrollView.contentOffset.y + yy );

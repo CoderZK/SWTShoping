@@ -56,6 +56,34 @@
     return self;
 }
 
+- (void)setDataArray:(NSMutableArray<SWTModel *> *)dataArray {
+    _dataArray = dataArray;
+    for (int i = 1 ; i < 3; i++) {
+        SWTHomeReMenView * vv = [self.scrollView viewWithTag:i+100];
+        if (i<dataArray.count) {
+            vv.hidden = NO;
+            [vv.imgV sd_setImageWithURL:[dataArray[i].img getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+      
+            
+            NSString * str = @"";
+               if (dataArray[i].watchnum.intValue > 10000) {
+                   str =  [NSString stringWithFormat:@"%0.1f万人在观看",dataArray[i].watchnum.floatValue/10000.0];
+               }else {
+                   str =  [NSString stringWithFormat:@"%@人在观看",dataArray[i].watchnum];
+               }
+            vv.rightLB.text = str;
+            vv.bottomLB.text = dataArray[i].name;
+            
+            vv.headImgV.hidden = vv.centerLB.hidden = YES;
+            
+        }else {
+            vv.hidden = YES;
+        }
+    }
+    
+    
+}
+
 - (void)clickAction:(UIButton *)button {
     if (self.delegateSignal) {
         [self.delegateSignal sendNext:@(button.tag - 100)];
