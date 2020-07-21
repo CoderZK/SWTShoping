@@ -103,8 +103,10 @@
             <size key="customSize" width="801" height="576"/>
             <connections>
                 <outlet property="imgV" destination="GUN-9z-obn" id="Yuf-7K-byk"/>
+                <outlet property="leftTopImgV" destination="CCS-BZ-uEo" id="Ihv-it-ARe"/>
                 <outlet property="moneyLB" destination="FzC-fn-wKL" id="zYz-pE-VQg"/>
                 <outlet property="titleLB" destination="nsz-eJ-EQV" id="pak-Ij-34B"/>
+                <outlet property="zhiBoZhongLB" destination="2Ai-Wa-NKh" id="PcD-cj-apH"/>
             </connections>
             <point key="canvasLocation" x="510.86956521739137" y="-435.26785714285711"/>
         </collectionViewCell>

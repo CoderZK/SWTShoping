@@ -10,18 +10,14 @@
 #import "SWTMineAttentionZhiBoVC.h"
 #import "SWTMineAttentionShopTVC.h"
 #import "SWTMienZuJiSubVC.h"
-@interface GuanZhuVC ()<UIScrollViewDelegate>
-/** 三个按钮的View buttonView */
-@property(nonatomic , strong)UIView *buttonView;
-/** 下面的红色指示剂 */
-@property(nonatomic , strong)UIView *alertView;
-/** 滚动视图 */
-@property(nonatomic , strong)UIScrollView *scrollview;
-/** 选中的button */
-@property(nonatomic , strong)UIButton *selectBt;
-@property(nonatomic,strong)UIButton *editBt;
+@interface GuanZhuVC ()<TYTabPagerBarDataSource,TYTabPagerBarDelegate,TYPagerControllerDataSource,TYPagerControllerDelegate,UIScrollViewDelegate>
 
 
+
+@property (nonatomic, weak) TYPagerController *pagerController;
+@property (nonatomic, strong) TYTabPagerBar *tabBar;
+@property(nonatomic , assign)NSInteger selectIndex;
+@property(nonatomic , strong)NSArray *titleArr;
 
 @end
 
@@ -48,181 +44,157 @@
         self.navigationItem.title = @"足迹";
     }
     self.view.backgroundColor = BackgroundColor;
-    
-    
-        //设置下面的三个按钮
-         [self setupHeaderView];
-            //添加字控制器
-         [self addChildsVC];
-            //添加滚动视图
-         [self addScrollview];
-    
-}
-
-
-//添加滚动视图
-- (void)addScrollview {
-    //不需要调整inset
-    //self.automaticallyAdjustsScrollViewInsets = NO;
-    self.scrollview =[[UIScrollView alloc] init];
-    self.scrollview.frame = CGRectMake(0, 40 , ScreenW, ScreenH  - 40 - 49);
-    if (sstatusHeight > 20) {
-        self.scrollview.frame = CGRectMake(0, 40 , ScreenW, ScreenH  - 40 - 49 - 34);
-    }
-    
-    self.scrollview.backgroundColor =[UIColor whiteColor];
-    
-    self.scrollview.contentSize = CGSizeMake(self.childViewControllers.count * ScreenW, 0);
-    self.scrollview.delegate = self;
-    self.scrollview.pagingEnabled = YES;
-    [self.view insertSubview:_scrollview atIndex:1];
-    self.scrollview.showsHorizontalScrollIndicator = NO;
-    self.scrollview.scrollEnabled = YES;
-    
-    //调用动画结束时,使第一个界面有数据.
-    [self scrollViewDidEndScrollingAnimation:_scrollview];
-    
-
-    
-    
-}
-
-
-
-
-//设置三个按钮
-- (void)setupHeaderView {
-    NSArray *array = @[@"直播",@"店铺"];
-    if (self.isMineZuJi) {
-        array = @[@"直播",@"商品"];
-    }
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 40)];
-    
-    self.buttonView = view;
-//    self.buttonView.backgroundColor =[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_1"]];
-    self.buttonView.backgroundColor = BackgroundColor;
-    [self.view addSubview:self.buttonView];
-    
-    self.alertView =[[UIView alloc] init];
-    self.alertView.backgroundColor = RedColor;
-    self.alertView.height = 2;
-    self.alertView.y = 35 - 3;
-    
-    for (int i = 0 ; i < array.count; i ++ ) {
-        UIButton * button =[UIButton new];
-        [button setTitle:array[i] forState:UIControlStateNormal];
-        [button setTitleColor:CharacterColor50 forState:UIControlStateNormal];
-        //不可以点击时时红色
-        [button setTitleColor:RedColor forState:UIControlStateDisabled];
-        button.tag =i;
-        CGFloat ww = 100;
-        button.width = ww;
-        button.height = 35;
-        button.x = (ScreenW - 200)/2 + i * ww;
-        button.titleLabel.font = [UIFont systemFontOfSize:16];
-        
-        [self.buttonView addSubview:button];
-        [button addTarget:self action:@selector(clickbutton:) forControlEvents:UIControlEventTouchUpInside];
-
-        if (i == 0 ) {
-            [button layoutIfNeeded];
-            [button.titleLabel sizeToFit];
-            button.enabled = NO;
-            
-            self.selectBt = button;
-            self.alertView.width = button.titleLabel.width;
-            self.alertView.centerX = button.centerX;
-        }
-        
-    }
-    [self.buttonView addSubview:self.alertView];
-    
-}
-
-//点击上面分类按钮
-- (void)clickbutton:(UIButton *)button {
-    //设置当前的button 的选中状态
-    self.selectBt.enabled = YES;
-    button.enabled = NO;
-    self.selectBt = button;
-    
-    [UIView animateWithDuration:0.2 animations:^{
-        
-        self.alertView.width = button.titleLabel.width;
-        self.alertView.centerX = button.centerX;
-        
-    }];
-    
-    CGPoint Offset = self.scrollview.contentOffset;
-    Offset.x = button.tag * self.scrollview.width;
-    //设置偏移量,可以移动
-    [self.scrollview setContentOffset:Offset animated:YES];
    
     
+    self.titleArr = @[@"直播",@"店铺"];
+       [self addTabPageView];
+       [self addPagerController];
+       
+       [self.tabBar mas_makeConstraints:^(MASConstraintMaker *make) {
+           make.left.top.right.equalTo(self.view);
+           make.height.equalTo(@40);
+       }];
+       
+       [self.pagerController.view mas_makeConstraints:^(MASConstraintMaker *make) {
+           make.top.equalTo(self.tabBar.mas_bottom);
+           make.leading.bottom.trailing.equalTo (self.view);
+       }];
+       [self reloadData];
+    
+//    [self.scrollview mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.top.right.bottom.equalTo(self.view);
+//    }];
     
 }
 
-//添加子控制器
-- (void)addChildsVC {
-   
+
+- (void)addTabPageView {
+    TYTabPagerBar *tabBar = [[TYTabPagerBar alloc] init];
+    tabBar.backgroundColor = [UIColor whiteColor];
+    tabBar.collectionView.bounces = NO;
+    tabBar.contentInset = UIEdgeInsetsMake(0,100, 5, 100);
+        tabBar.layout.barStyle = TYPagerBarStyleProgressElasticView;
+    tabBar.layout.normalTextFont = [UIFont systemFontOfSize:15];
+    tabBar.layout.normalTextColor = CharacterColor50;
+    tabBar.layout.selectedTextFont = [UIFont systemFontOfSize:15];
+    tabBar.layout.selectedTextColor = CharacterColor50;
+    tabBar.layout.progressColor = RedColor;
+    tabBar.layout.cellSpacing = 20;
+    tabBar.dataSource = self;
+    tabBar.delegate = self;
+    [tabBar registerClass:[TYTabPagerBarCell class] forCellWithReuseIdentifier:[TYTabPagerBarCell cellIdentifier]];
     
-    SWTMineAttentionZhiBoVC * vc1 = [[SWTMineAttentionZhiBoVC alloc] init];
-    [self addChildViewController:vc1];
-    if (!self.isMineZuJi) {
-        SWTMineAttentionShopTVC * vc2 = [[SWTMineAttentionShopTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-        [self addChildViewController:vc2];
+    //    self.tabBar = [[TYTabPagerBar alloc] init];
+    //    self.tabBar.backgroundColor = UIColor.yellowColor;
+    //    self.tabBar.delegate = self;
+    //    self.tabBar.dataSource = self;
+    //    self.tabBar.layout.adjustContentCellsCenter = YES;
+    //    self.tabBar.layout.progressColor = RedColor;
+    //    self.tabBar.layout.textColorProgressEnable = NO;
+    //    self.tabBar.layout.selectedTextColor = UIColor.blackColor;
+    //    self.tabBar.layout.normalTextColor = CharacterColor50;
+    //    self.tabBar.layout.selectedTextFont = [UIFont systemFontOfSize:15];
+    //    self.tabBar.layout.normalTextFont = [UIFont systemFontOfSize:15];
+    //    self.tabBar.layout.progressVerEdging = 10;
+    //    self.tabBar.layout.progressHeight = 3;
+    //    self.tabBar.layout.progressWidth = 35;
+    //    self.tabBar.layout.cellWidth = floor(ScreenW/5.0);
+    //    self.tabBar.layout.cellSpacing = 0;
+    //    [self.tabBar registerClass:[TYTabPagerBarCell class] forCellWithReuseIdentifier:[TYTabPagerBarCell cellIdentifier]];
+    //
+    [self.view addSubview:tabBar];
+    self.tabBar = tabBar;
+}
+
+- (void)addPagerController {
+    TYPagerController *pagerController = [[TYPagerController alloc] init];
+    pagerController.view.backgroundColor = CharacterColor50;
+    pagerController.layout.prefetchItemCount = 1;
+    //pagerController.layout.autoMemoryCache = NO;
+    // 只有当scroll滚动动画停止时才加载pagerview，用于优化滚动时性能
+    pagerController.layout.addVisibleItemOnlyWhenScrollAnimatedEnd = YES;
+    pagerController.dataSource = self;
+    pagerController.delegate = self;
+    [self addChildViewController:pagerController];
+    [self.view addSubview:pagerController.view];
+    _pagerController = pagerController;
+}
+
+- (void)reloadData {
+    [_tabBar reloadData];
+    [_pagerController reloadData];
+}
+
+- (NSInteger)numberOfItemsInPagerTabBar {
+    return self.titleArr.count;
+    
+}
+
+- (UICollectionViewCell<TYTabPagerBarCellProtocol> *)pagerTabBar:(TYTabPagerBar *)pagerTabBar cellForItemAtIndex:(NSInteger)index {
+    
+    UICollectionViewCell<TYTabPagerBarCellProtocol> *cell = [pagerTabBar dequeueReusableCellWithReuseIdentifier:[TYTabPagerBarCell cellIdentifier] forIndex:index];
+    cell.titleLabel.text = self.titleArr[index];
+    return cell;
+    
+    
+}
+#pragma mark - TYTabPagerBarDelegate
+
+- (CGFloat)pagerTabBar:(TYTabPagerBar *)pagerTabBar widthForItemAtIndex:(NSInteger)index {
+    return (ScreenW - 240) / 2.0;
+}
+- (void)pagerTabBar:(TYTabPagerBar *)pagerTabBar didSelectItemAtIndex:(NSInteger)index {
+    
+    self.selectIndex = index;
+    [_pagerController scrollToControllerAtIndex:index animate:YES];
+    
+    
+}
+
+#pragma mark - TYPagerControllerDataSource
+
+- (NSInteger)numberOfControllersInPagerController {
+    
+    return self.titleArr.count;
+    
+    
+}
+
+- (UIViewController *)pagerController:(TYPagerController *)pagerController controllerForIndex:(NSInteger)index prefetching:(BOOL)prefetching {
+    
+    
+    if (index == 0) {
+        SWTMineAttentionZhiBoVC * vc1 = [[SWTMineAttentionZhiBoVC alloc] init];
+        return vc1;
     }else {
-        SWTMienZuJiSubVC * vc2 = [[SWTMienZuJiSubVC alloc] init];
-        [self addChildViewController:vc2];
+        if (self.isMineZuJi) {
+            SWTMienZuJiSubVC * vc2 = [[SWTMienZuJiSubVC alloc] init];
+            return vc2;
+        }else {
+           SWTMineAttentionShopTVC * vc2 = [[SWTMineAttentionShopTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+            return vc2;
+        }
     }
-    
-    
-    
-    
-}
-//滚动停止时
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    //调用动画结束时的方法.
-    [self scrollViewDidEndScrollingAnimation:scrollView];
-    NSInteger index =scrollView.contentOffset.x / scrollView.width;
-    [self clickbutton:self.buttonView.subviews[index]];
-    
-    
-    
-    
+
     
 }
 
-//动画结束时的方法
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+#pragma mark - TYPagerControllerDelegate
+
+- (void)pagerController:(TYPagerController *)pagerController transitionFromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex animated:(BOOL)animated {
     
-    NSInteger index = scrollView.contentOffset.x / scrollView.width;
+    self.selectIndex = toIndex;
+    [_tabBar scrollToItemFromIndex:fromIndex toIndex:toIndex animate:animated];
     
-    BaseViewController * vc = self.childViewControllers[index];
-    //要设置fram 不然系统会自动去掉状态栏高度
-    vc.view.frame = CGRectMake(scrollView.contentOffset.x, 0, _scrollview.width, _scrollview.height);
-    // vc.view.x = scrollView.contentOffset.x;
-    // vc.tableView.contentInset = UIEdgeInsetsMake(0, 0, 49, 0);
-//    vc.tableView.scrollIndicatorInsets = vc.collectionView.contentInset;
-    [scrollView addSubview:vc.view];
-    
+}
+
+-(void)pagerController:(TYPagerController *)pagerController transitionFromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex progress:(CGFloat)progress {
+    [_tabBar scrollToItemFromIndex:fromIndex toIndex:toIndex progress:progress];
     
 }
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

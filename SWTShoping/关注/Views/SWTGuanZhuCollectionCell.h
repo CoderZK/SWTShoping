@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIImageView *imgV;
 @property (weak, nonatomic) IBOutlet UILabel *titleLB;
 @property (weak, nonatomic) IBOutlet UILabel *moneyLB;
+@property (weak, nonatomic) IBOutlet UILabel *zhiBoZhongLB;
+@property (weak, nonatomic) IBOutlet UIImageView *leftTopImgV;
 @property(nonatomic , strong)SWTModel *model;
 @end
 

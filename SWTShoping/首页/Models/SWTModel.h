@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *name;
 @property(nonatomic,strong)NSString *pic;
 @property(nonatomic,strong)NSString *category_id;
+@property(nonatomic,strong)NSString *storename;
 @property(nonatomic,strong)NSString *keyword;
 @property(nonatomic,strong)NSString *goodid;
 @property(nonatomic,strong)NSString *merch_id;

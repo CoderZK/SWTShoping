@@ -94,7 +94,7 @@
     [self.renZhengBt setTitle:@" 官方" forState:UIControlStateNormal];
     self.renZhengBt.titleLabel.font = kFont(10);
     [self.renZhengBt setImage:[UIImage imageNamed:@"kkrenzheng"] forState:UIControlStateNormal];
-    [self.renZhengBt setTitleColor:CharacterColor153 forState:UIControlStateNormal];
+    [self.renZhengBt setTitleColor:CharacterColor102 forState:UIControlStateNormal];
     
     self.jinDianBt =[[UIButton alloc] init];
     [self.jinDianBt setBackgroundImage:[UIImage imageNamed:@"jindian"] forState:UIControlStateNormal];
@@ -131,6 +131,14 @@
     self.scrollview.contentSize = CGSizeMake(100 * (model.goodNeiList.count), 134);
     [self.collectionView reloadData];
     
+    NSArray * arr = [model getTypeLBArr];
+
+    if (arr.count > 0) {
+        self.renZhengBt.hidden = NO;
+        [self.renZhengBt setTitle:arr[0] forState:UIControlStateNormal];
+    }else {
+        self.renZhengBt.hidden = YES;
+    }
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -139,6 +147,7 @@
 
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     SWTGuanZhuCollectionCell * cell  =[collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    self.model.goodNeiList[indexPath.row].goodname = self.model.goodNeiList[indexPath.row].name;
     cell.model = self.model.goodNeiList[indexPath.row];
     return cell;
 }

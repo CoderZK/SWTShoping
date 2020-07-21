@@ -21,27 +21,27 @@
     [super viewDidLoad];
     self.navigationItem.title = @"我的收藏";
     
-     self.layout =[[XPCollectionViewWaterfallFlowLayout alloc] init];
-        self.layout.dataSource = self;
-        
-        self.collectionView  = [[UICollectionView alloc] initWithFrame:CGRectMake(0,0, ScreenW, ScreenH) collectionViewLayout:self.layout];;
-        
-        self.collectionView.dataSource = self;
-        self.collectionView.delegate = self;
-        
+    self.layout =[[XPCollectionViewWaterfallFlowLayout alloc] init];
+    self.layout.dataSource = self;
+    
+    self.collectionView  = [[UICollectionView alloc] initWithFrame:CGRectMake(0,0, ScreenW, ScreenH) collectionViewLayout:self.layout];;
+    
+    self.collectionView.dataSource = self;
+    self.collectionView.delegate = self;
+    
     //               self.collectionView.scrollEnabled = NO;
-        self.collectionView.backgroundColor = BackgroundColor;
-        [self.view addSubview:self.collectionView];
+    self.collectionView.backgroundColor = BackgroundColor;
+    [self.view addSubview:self.collectionView];
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"SWTGuanZhuCollectionCell" bundle:nil] forCellWithReuseIdentifier:@"SWTGuanZhuCollectionCell"];
     
-
+    
     self.dataArray = @[].mutableCopy;
     [self getData];
     self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self getData];
     }];
-
+    
     
     
 }
@@ -49,7 +49,7 @@
 - (void)getData {
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-
+    
     [zkRequestTool networkingPOST: userFav_SWT parameters:[zkSignleTool shareTool].session_uid success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.collectionView.mj_header endRefreshing];
         [self.collectionView.mj_footer endRefreshing];
@@ -80,17 +80,20 @@
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-   
-    return 9;
-   
+    
+    return self.dataArray.count;
+    
 }
 
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-
-
-        SWTGuanZhuCollectionCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTGuanZhuCollectionCell" forIndexPath:indexPath];
-        return cell;
+    
+    
+    SWTGuanZhuCollectionCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTGuanZhuCollectionCell" forIndexPath:indexPath];
+    self.dataArray[indexPath.row].goodprice = self.dataArray[indexPath.row].price;
+    cell.model = self.dataArray[indexPath.row];
+    cell.leftTopImgV.hidden = cell.zhiBoZhongLB.hidden = YES;
+    return cell;
     
 }
 
@@ -102,20 +105,22 @@
     
     SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
     vc.hidesBottomBarWhenPushed = YES;
+    vc.isYiKouJia = YES;
+    vc.goodID = self.dataArray[indexPath.row].ID;
     [self.navigationController pushViewController:vc animated:YES];
-   
+    
 }
 
-    
-- (NSInteger)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout numberOfColumnInSection:(NSInteger)section {
 
+- (NSInteger)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout numberOfColumnInSection:(NSInteger)section {
+    
     return 2;
     
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout itemWidth:(CGFloat)width heightForItemAtIndexPath:(NSIndexPath *)indexPath {
-  
-        return 150 + arc4random() % 100;
+    
+    return 150 + arc4random() % 100;
     
 }
 

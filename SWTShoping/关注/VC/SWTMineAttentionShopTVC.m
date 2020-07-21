@@ -10,7 +10,8 @@
 #import "SWTMineGuanZHuDinaPuCell.h"
 
 @interface SWTMineAttentionShopTVC ()<SWTMineGuanZHuDinaPuCellDelegate>
-@property(nonatomic , strong)NSMutableArray<SWTModel *> *dataArray;
+@property(nonatomic,assign)NSInteger page;
+@property(nonatomic,strong)NSMutableArray<SWTModel *> *dataArray;
 @end
 
 @implementation SWTMineAttentionShopTVC
@@ -21,39 +22,54 @@
     
     [self.tableView registerClass:[SWTMineGuanZHuDinaPuCell class] forCellReuseIdentifier:@"cell"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
+ 
+    self.page = 1;
     self.dataArray = @[].mutableCopy;
     [self getData];
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        self.page = 1;
         [self getData];
     }];
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        self.page++;
+        [self getData];
+    }];
+
+    
 }
 
-
 - (void)getData {
+    
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"page"] = @(self.page);
+    dict[@"pagesize"] = @(10);
     dict[@"type"] = @"1";
-    [zkRequestTool networkingPOST:  [NSString stringWithFormat:@"%@/%@",userFollow_SWT,[zkSignleTool shareTool].session_uid] parameters:[zkSignleTool shareTool].session_uid success:^(NSURLSessionDataTask *task, id responseObject) {
+    [zkRequestTool networkingPOST:[NSString stringWithFormat:@"%@/%@",userFollow_SWT,[zkSignleTool shareTool].session_uid] parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];
-        if ([responseObject[@"code"] intValue]== 200) {
+        if ([[NSString stringWithFormat:@"%@",responseObject[@"code"]] integerValue] == 200) {
+            NSArray<SWTModel *>*arr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            if (self.page == 1) {
+                [self.dataArray removeAllObjects];
+            }
+            [self.dataArray addObjectsFromArray:arr];
             
-            self.dataArray = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
             [self.tableView reloadData];
-            
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }
-        
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
-        
     }];
+
 }
+
+
+
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 10;
 }

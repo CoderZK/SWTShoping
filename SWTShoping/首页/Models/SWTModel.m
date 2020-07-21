@@ -10,8 +10,13 @@
 
 @implementation SWTModel
 + (NSDictionary *)mj_replacedKeyFromPropertyName {
-    return @{@"ID":@"id",@"des":@"description",@"store_name":@"storename",@"merch_id":@"mer_id"};
+    return @{@"ID":@"id",@"des":@"description",@"merch_id":@"mer_id"};
 }
+- (void)setStorename:(NSString *)storename {
+    _storename = storename;
+    self.store_name = storename;
+}
+
 //MJCodingImplementation
 
 - (void)setGoodlist:(NSString *)goodlist {

@@ -25,6 +25,7 @@
        if (sstatusHeight > 20) {
            frame = CGRectMake(0, 0, ScreenW, ScreenH - sstatusHeight - 44 - 40 - 49 - 34);
        }
+  
        self.collectionView  = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:self.layout];;
        
        self.collectionView.dataSource = self;
@@ -33,6 +34,12 @@
        //               self.collectionView.scrollEnabled = NO;
        self.collectionView.backgroundColor = BackgroundColor;
        [self.view addSubview:self.collectionView];
+    
+     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+          make.left.right.top.bottom.equalTo(self.view);
+      }];
+      
+    
        [self.collectionView registerNib:[UINib nibWithNibName:@"SWTGuanZhuCollectionCell" bundle:nil] forCellWithReuseIdentifier:@"SWTGuanZhuCollectionCell"];
        [self.view addSubview:self.collectionView];
 }
