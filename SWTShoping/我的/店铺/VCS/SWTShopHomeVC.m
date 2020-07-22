@@ -42,7 +42,7 @@
     [self addCollectionV];
     [self addHeadV];
     
-    
+    [self getData];
 }
 
 - (void)getData {
@@ -50,13 +50,16 @@
     [SVProgressHUD show];
        NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"id"] = self.shopId;
-    [zkRequestTool networkingPOST:goodDetail_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+    [zkRequestTool networkingPOST:merchDetail_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
            
            [SVProgressHUD dismiss];
         [self.collectionView.mj_header endRefreshing];
            if ([responseObject[@"code"] intValue]== 200) {
                self.dataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
+               self.dataModel.storename = self.dataModel.store_name;
                [self.collectionView reloadData];
+               self.naView.titleLB.text = self.dataModel.store_name;
+               self.headView.model = self.dataModel;
                
            }else {
                [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
@@ -114,6 +117,9 @@
             SWTShopIntroduceTVC * vc =[[SWTShopIntroduceTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
+        }else if (x.intValue == 101) {
+            //点击关注
+            
         }
     }];
     [self.collectionView addSubview:self.headView];;
@@ -207,6 +213,47 @@
     return 10.0;
 }
 
+
+//关注操作
+- (void)gaunZhuAction {
+ 
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"followid"] = @"-1";
+    dict[@"id"] = self.dataModel.ID;
+    dict[@"type"] = @"1";
+    dict[@"operation"] = [self.dataModel.isfollow isEqualToString:@"no"] ? @"ADD":@"DELETE";
+    dict[@"userid"] =[zkSignleTool shareTool].session_uid;
+    [zkRequestTool networkingPOST:userFollowOperate_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+       
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            if ([self.dataModel.isfollow isEqualToString:@"no"]) {
+                [SVProgressHUD showSuccessWithStatus:@"关注店铺成功"];
+                self.dataModel.isfollow = @"yes";
+            }else {
+                [SVProgressHUD showSuccessWithStatus:@"取消关注店铺"];
+                self.dataModel.isfollow = @"no";
+            }
+            if ([self.dataModel.isfollow isEqualToString:@"no"]) {
+                [self.headView.guanZhuBt setBackgroundImage:[UIImage imageNamed:@"Focus"] forState:UIControlStateNormal];
+            }else {
+                [self.headView.guanZhuBt setBackgroundImage:[UIImage imageNamed:@"dyx24"] forState:UIControlStateNormal];
+            }
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+       
+        
+    }];
+
+    
+    
+    
+}
 
 
 

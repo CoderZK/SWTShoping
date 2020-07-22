@@ -16,7 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 @property(nonatomic , strong)UICollectionView *collectionView;
 
-@property(nonatomic , strong)NSMutableArray *dataArray;
+@property(nonatomic , strong)NSMutableArray<SWTModel *> *dataArray;
+
+@property(nonatomic , strong)RACSubject *delegateSignal;
 
 @end
 

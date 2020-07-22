@@ -48,7 +48,7 @@
     [self initBview];
     
     
-    
+    [self getData];
     
     
     
@@ -133,7 +133,7 @@
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"page"] = @(1);
-    dict[@"pagesize"] = @(10);
+    dict[@"pagesize"] = @(2);
     [zkRequestTool networkingPOST: [NSString stringWithFormat:@"%@/%@",addressList_SWT,[zkSignleTool shareTool].session_uid] parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];

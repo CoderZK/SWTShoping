@@ -39,6 +39,8 @@
 /** 获取商品的所有顶级分类 */
 #define goodTopcategory_SWT URLOne@"good/topcategory"
 
+/** 商户精选商品 */
+#define goodMerchants_SWT URLOne@"good/merchants"
 
 #pragma mark ---- 商户信息接口  -----
 /** 加入黑名单 */
@@ -55,7 +57,7 @@
 /** 获取粉丝列表 */
 #define merchGet_follow_list_SWT URLOne@"merch/get_follow_list"
 /** 获取商户信息 */
-#define merchGet_merchinfo_SWT URLOne@"merch/get_merchinfo"
+#define merchDetail_SWT URLOne@"merch/detail"
 /** 根据分类获取商铺信息和商品信息 */
 #define merchList_SWT URLOne@"merch/list"
 /** 获取主营类目 */

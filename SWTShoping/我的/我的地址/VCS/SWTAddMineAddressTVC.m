@@ -63,6 +63,11 @@
     dict[@"province"] = self.pStr;
     dict[@"district"] = self.aStr;
     dict[@"city"] = self.cStr;
+    if (self.switchBt.on) {
+        dict[@"is_deafult"] = @"1";
+    }else {
+        dict[@"is_deafult"] = @"0";
+    }
     [zkRequestTool networkingPOST: [NSString stringWithFormat:@"%@/%@",addressAdd_SWT,[zkSignleTool shareTool].session_uid] parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];

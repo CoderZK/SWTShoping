@@ -75,17 +75,22 @@
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.row == 0) {
-        SWTHomeCollectionTwoCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionTwoCell" forIndexPath:indexPath];
-        return cell;
-    }else {
-        SWTHomeCollectionThreeCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionThreeCell" forIndexPath:indexPath];
-        return cell;
-    }
+    
+    SWTHomeCollectionThreeCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionThreeCell" forIndexPath:indexPath];
+    cell.model = self.dataArray[indexPath.row];
+    return cell;
+    
+//    if (indexPath.row == 0) {
+//        SWTHomeCollectionTwoCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionTwoCell" forIndexPath:indexPath];
+//        return cell;
+//    }else {
+//        SWTHomeCollectionThreeCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionThreeCell" forIndexPath:indexPath];
+//        return cell;
+//    }
     
 }
 
-- (void)setDataArray:(NSMutableArray *)dataArray {
+- (void)setDataArray:(NSMutableArray<SWTModel *> *)dataArray {
     _dataArray = dataArray;
     [self.collectionView reloadData];
     [self.collectionView layoutIfNeeded];
@@ -102,6 +107,9 @@
     //    vc.hidesBottomBarWhenPushed = YES;
     //    [self.navigationController pushViewController:vc animated:YES];
     
+    if (self.delegateSignal) {
+        [self.delegateSignal sendNext:self.dataArray[indexPath.row].goodid];
+    }
 }
 
 

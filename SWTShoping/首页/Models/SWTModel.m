@@ -17,6 +17,10 @@
     self.store_name = storename;
 }
 
+- (void)setLideshowlist:(NSMutableArray<SWTModel *> *)lideshowlist {
+    _lideshowlist = [SWTModel mj_objectArrayWithKeyValuesArray:lideshowlist];
+}
+
 //MJCodingImplementation
 
 - (void)setGoodlist:(NSString *)goodlist {

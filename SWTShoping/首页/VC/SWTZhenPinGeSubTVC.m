@@ -46,7 +46,7 @@
     [zkRequestTool networkingPOST:topimg_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         
         [SVProgressHUD dismiss];
-
+        
         if ([responseObject[@"code"] intValue]== 200) {
             [self.imgV sd_setImageWithURL:[ [NSString stringWithFormat:@"%@",responseObject[@"data"]] getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
         }else {
@@ -54,8 +54,8 @@
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-   
-       
+        
+        
     }];
     
 }
@@ -113,7 +113,7 @@
     SWTMineGuanZHuDinaPuCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     // cell.nameLB.text = @"fgkodkgfeoprkgkp";
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    cell.dataArray = @[@"",@"",@"",@"",@"",@"",@"",@"",@"",@""].mutableCopy;
+    //    cell.dataArray = @[@"",@"",@"",@"",@"",@"",@"",@"",@"",@""].mutableCopy;
     cell.delegate = self;
     cell.model = self.dataArray[indexPath.row];
     return cell;
@@ -134,11 +134,21 @@
         //点击的是头像或者进店
         SWTShopHomeVC * vc =[[SWTShopHomeVC alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
+        vc.shopId = self.dataArray[index].ID;
         [self.navigationController pushViewController:vc animated:YES];
         
         
     }else {
         //点击的是内部的其他信息
+        NSIndexPath * indexPath  = [self.tableView indexPathForCell:cell];
+        
+        
+        SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.goodID = self.dataArray[indexPath.row].goodNeiList[index].goodid;
+        [self.navigationController pushViewController:vc animated:YES];
+        
+        
         
         
     }

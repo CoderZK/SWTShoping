@@ -27,6 +27,8 @@
 @property(nonatomic , strong)SWTGoodsDetailChuJiaView *chuJiaView;
 @property(nonatomic , strong)SWTModel *dataModel;
 @property(nonatomic , strong)NSString *bayNumber;
+@property(nonatomic,assign)NSInteger page;
+@property(nonatomic,strong)NSMutableArray<SWTModel *> *dataArray;
 @end
 
 @implementation SWTGoodsDetailTVC
@@ -61,10 +63,19 @@
     self.tableView.estimatedRowHeight = 40;
     
 
+   
+    
+    self.page = 1;
+    self.dataArray = @[].mutableCopy;
     [self getData];
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-   
+        self.page = 1;
         [self getData];
+    }];
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        self.page++;
+        [self getJingXuanData];
+       
     }];
 
     
@@ -181,7 +192,14 @@
                self.dataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
                self.dataModel.merch_id = self.dataModel.merchid;
                [self.headV.imgV sd_setImageWithURL:[self.dataModel.img getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+               if ([self.dataModel.type isEqualToString:@"0"]) {
+                   self.isYiKouJia = YES;
+               }else {
+                   self.isYiKouJia = NO;
+               }
                [self.tableView reloadData];
+               
+               [self getJingXuanData];
                
            }else {
                [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
@@ -193,6 +211,39 @@
            
        }];
 }
+
+
+- (void)getJingXuanData {
+    
+    
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"page"] = @(self.page);
+    dict[@"pagesize"] = @(10);
+    [zkRequestTool networkingPOST: [NSString stringWithFormat:@"%@/%@",goodMerchants_SWT,self.dataModel.merchid] parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([[NSString stringWithFormat:@"%@",responseObject[@"code"]] integerValue] == 200) {
+            NSArray<SWTModel *>*arr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            if (self.page == 1) {
+                [self.dataArray removeAllObjects];
+            }
+            [self.dataArray addObjectsFromArray:arr];
+            [self.tableView reloadData];
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+    }];
+    
+    
+    
+}
+
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (self.isYiKouJia) {
@@ -267,8 +318,20 @@
             return cell;
         }else {
             SWTGoodsDetailTableViewContentCollCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-            cell.dataArray = @[@"",@"",@"",@"",@"",@"",@"",@""].mutableCopy;
+            cell.dataArray = self.dataArray;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.delegateSignal = [[RACSubject alloc] init];
+            @weakify(self);
+            [cell.delegateSignal subscribeNext:^(NSString * x) {
+                @strongify(self);
+                
+                SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                vc.hidesBottomBarWhenPushed = YES;
+                vc.isYiKouJia = YES;
+                vc.goodID = x;
+                [self.navigationController pushViewController:vc animated:YES];
+                
+            }];
             return cell;
         }
     }else {
@@ -301,11 +364,25 @@
             SWTGoodsDetailFiveCell  *cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTGoodsDetailFiveCell" forIndexPath:indexPath];
             cell.clipsToBounds = YES;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.model = self.dataModel;
+            [cell.gaunzhuBt addTarget:self action:@selector(gaunZhuAction) forControlEvents:UIControlEventTouchUpInside];
             return cell;
         }else {
             SWTGoodsDetailTableViewContentCollCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-            cell.dataArray = @[@"",@"",@"",@"",@"",@"",@"",@""].mutableCopy;
+            cell.dataArray = self.dataArray;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.delegateSignal = [[RACSubject alloc] init];
+            @weakify(self);
+            [cell.delegateSignal subscribeNext:^(NSString * x) {
+                @strongify(self);
+                
+                SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                vc.hidesBottomBarWhenPushed = YES;
+                vc.isYiKouJia = YES;
+                vc.goodID = x;
+                [self.navigationController pushViewController:vc animated:YES];
+                
+            }];
             return cell;
         }
     }

@@ -135,7 +135,7 @@
 
     if (arr.count > 0) {
         self.renZhengBt.hidden = NO;
-        [self.renZhengBt setTitle:arr[0] forState:UIControlStateNormal];
+        [self.renZhengBt setTitle: [NSString stringWithFormat:@" %@",arr[0]] forState:UIControlStateNormal];
     }else {
         self.renZhengBt.hidden = YES;
     }
@@ -148,6 +148,7 @@
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     SWTGuanZhuCollectionCell * cell  =[collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     self.model.goodNeiList[indexPath.row].goodname = self.model.goodNeiList[indexPath.row].name;
+    cell.leftTopImgV.hidden = cell.zhiBoZhongLB.hidden = YES;
     cell.model = self.model.goodNeiList[indexPath.row];
     return cell;
 }

@@ -91,8 +91,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *rate;//折扣
 @property(nonatomic,strong)NSString *useprice;//折扣总金额
 
-//@property(nonatomic,strong)NSString *low_rate;
-//@property(nonatomic,strong)NSString *average_rate;
+@property(nonatomic,strong)NSString *score;
+@property(nonatomic,strong)NSString *focusnum;
 //@property(nonatomic,strong)NSString *high_rate;
 //@property(nonatomic,strong)NSString *record_date;
 //@property(nonatomic,strong)NSString *recordDate;
@@ -150,7 +150,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *goodNeiList;
 
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *youHuiQuanList;
-//@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *departmentList;
+@property(nonatomic,strong)NSMutableArray<SWTModel *> *lideshowlist;
 //@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *recommendProjectList;
 //@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *province_important_departmentList;
 //@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *city_important_departmentList;

@@ -9,10 +9,7 @@
 #import "SWTShopHomeHeadView.h"
 
 @interface SWTShopHomeHeadView()<SDCycleScrollViewDelegate>
-@property(nonatomic , strong)UIView *whiteView;
-@property(nonatomic , strong)UIButton *headBt,*guanZhuBt,*lebftBt,*rightBt;
-@property(nonatomic , strong)UILabel *shopNameLB,*typeLB,*moenyLB,*scoreLB,*guanZhuNumberLB,*pingjiascoreLB,*chengJiaoLB,*tuiHuoLB;
-@property(nonatomic , strong)SDCycleScrollView *sdView;
+
 
 @end
 
@@ -44,10 +41,21 @@
     self.shopNameLB.textColor = WhiteColor;
     self.shopNameLB.text = @"货物优选";
     
-    self.typeLB = [[UILabel alloc] init];
-    self.typeLB.font = kFont(13);
-    self.typeLB.textColor = WhiteColor;
-    self.typeLB.text = @"好店";
+//    self.typeLB = [[UILabel alloc] init];
+//    self.typeLB.font = kFont(13);
+//    self.typeLB.textColor = WhiteColor;
+//    self.typeLB.text = @"好店";
+    
+    self.typeOneBt =[[UIButton alloc] init];
+    [self.typeOneBt setImage:[UIImage imageNamed:@"kkrenzheng"] forState:UIControlStateNormal];
+    self.typeOneBt.titleLabel.font = kFont(13);
+    [self.typeOneBt setTitleColor:WhiteColor forState:UIControlStateNormal];
+    
+    self.typeTwoBt =[[UIButton alloc] init];
+    [self.typeTwoBt setImage:[UIImage imageNamed:@"kkrenzheng"] forState:UIControlStateNormal];
+    self.typeTwoBt.titleLabel.font = kFont(13);
+    [self.typeTwoBt setTitleColor:WhiteColor forState:UIControlStateNormal];
+    
     
     self.guanZhuBt  = [[UIButton alloc] init];
     self.guanZhuBt.layer.cornerRadius = 8;
@@ -152,11 +160,14 @@
     
     [self addSubview:self.headBt];
     [self addSubview:self.shopNameLB];
-    [self addSubview:self.typeLB];
+//    [self addSubview:self.typeLB];
     [self addSubview:self.guanZhuBt];
     [self addSubview:self.moenyLB];
     [self addSubview:self.scoreLB];
     [self addSubview:self.guanZhuNumberLB];
+    
+    [self addSubview:self.typeTwoBt];
+    [self addSubview:self.typeOneBt];
     
     [self addSubview:mmLB];
     [self addSubview:ssLB];
@@ -188,13 +199,20 @@
         make.top.equalTo(self.headBt.mas_top).offset(2);
     }];
     
-    [self.typeLB mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.typeOneBt mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.shopNameLB.mas_left);
-        make.height.equalTo(@15);
+        make.height.equalTo(@17);
         make.top.equalTo(self.shopNameLB.mas_bottom).offset(5);
-        
+
     }];
     
+    [self.typeTwoBt mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.typeOneBt.mas_right).offset(10);
+        make.height.equalTo(@17);
+        make.top.equalTo(self.shopNameLB.mas_bottom).offset(5);
+
+    }];
+
     [self.guanZhuBt mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@16);
         make.centerY.equalTo(self.shopNameLB.mas_centerY);
@@ -346,5 +364,40 @@
     
     
 }
+
+- (void)setModel:(SWTModel *)model {
+    _model = model;
+    
+    [self.headBt sd_setBackgroundImageWithURL:[model.avatar getPicURL] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+    self.shopNameLB.text = model.nickname;
+    
+    self.typeOneBt.hidden = self.typeTwoBt.hidden = YES;
+    NSArray * arr = [model getTypeLBArr];
+    if (arr.count > 0) {
+        self.typeOneBt.hidden = NO;
+        [self.typeOneBt setTitle: [NSString stringWithFormat:@" %@",arr[0]] forState:UIControlStateNormal];
+        
+    }
+    if (arr.count > 1) {
+        self.typeTwoBt.hidden = NO;
+        [self.typeTwoBt setTitle: [NSString stringWithFormat:@" %@",arr[1]] forState:UIControlStateNormal];
+    }
+    self.scoreLB.text = model.score;
+    self.guanZhuNumberLB.text = [model.focusnum getPriceStr];
+    
+    
+    NSMutableArray * imgGroupArr = @[].mutableCopy;
+    for (SWTModel *neiM  in model.lideshowlist) {
+        [imgGroupArr addObject:neiM.pic];
+    }
+    self.sdView.imageURLStringsGroup = imgGroupArr;
+     if ([model.isfollow isEqualToString:@"no"]) {
+           [self.guanZhuBt setBackgroundImage:[UIImage imageNamed:@"Focus"] forState:UIControlStateNormal];
+       }else {
+          [self.guanZhuBt setBackgroundImage:[UIImage imageNamed:@"dyx24"] forState:UIControlStateNormal];
+       }
+    
+}
+
 
 @end

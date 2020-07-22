@@ -102,6 +102,7 @@
         //点击的是头像或者进店
         SWTShopHomeVC * vc =[[SWTShopHomeVC alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
+        vc.shopId = self.dataArray[index].ID;
         [self.navigationController pushViewController:vc animated:YES];
         
         

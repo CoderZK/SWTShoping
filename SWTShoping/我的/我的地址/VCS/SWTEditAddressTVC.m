@@ -8,11 +8,13 @@
 
 #import "SWTEditAddressTVC.h"
 #import "SWTEditeAddressCell.h"
-@interface SWTEditAddressTVC ()<UITextFieldDelegate>
+@interface SWTEditAddressTVC ()<UITextFieldDelegate,zkPickViewDelelgate>
 @property(nonatomic , strong)UIView *footV;
 @property(nonatomic , strong)NSString *shouHuoStr,*phoneStr,*detailStr;
 @property(nonatomic , strong)UIView *tableFootV;
 @property(nonatomic , strong)UISwitch *switchBt;
+@property(nonatomic , strong)NSString *pStr,*cStr,*aStr,*addStr;
+@property(nonatomic , strong)NSMutableArray<zkPickModel *> *cityArr;
 @end
 
 @implementation SWTEditAddressTVC
@@ -34,6 +36,18 @@
     self.phoneStr = self.model.mobile;
     self.detailStr = self.model.address_info;
     [self initTFootV];
+    
+    self.cityArr = @[].mutableCopy;
+       NSString *path = [[NSBundle mainBundle] pathForResource:@"City" ofType:@"plist"];
+       
+       NSArray *arr = [NSArray arrayWithContentsOfFile:path];
+       
+       for (int i = 0 ; i < arr.count; i++) {
+           zkPickModel * model = [zkPickModel mj_objectWithKeyValues:arr[i]];
+           [self.cityArr insertObject:model atIndex:0];
+       }
+       
+    
     
 }
 
@@ -153,6 +167,11 @@
     dict[@"district"] = @"66666";
     dict[@"city"] = @"555555";
     dict[@"id"] = self.model.ID;
+    if (self.switchBt.on) {
+        dict[@"is_deafult"] = @"1";
+    }else {
+        dict[@"is_deafult"] = @"0";
+    }
     [zkRequestTool networkingPOST: [NSString stringWithFormat:@"%@/%@",addressEdit_SWT,[zkSignleTool shareTool].session_uid] parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
@@ -204,10 +223,27 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+    if (indexPath.row == 2) {
+        [self.tableView endEditing:YES];
+        zkPickView * pickV  =[[zkPickView alloc] init];
+        pickV.arrayType = ArerArrayNormal;
+        pickV.array = self.cityArr;
+        [pickV show];
+        pickV.delegate = self;
+    }
     
     
 }
+
+- (void)didSelectLeftIndex:(NSInteger)leftIndex centerIndex:(NSInteger)centerIndex rightIndex:(NSInteger )rightIndex {
+    self.pStr = self.cityArr[leftIndex].areaname;
+    self.cStr = self.cityArr[leftIndex].cityList[centerIndex].areaname;
+    self.aStr = self.cityArr[leftIndex].cityList[centerIndex].areaList[rightIndex].areaname;
+    self.addStr =  [NSString stringWithFormat:@"%@%@%@",self.pStr,self.cStr,self.aStr];
+    [self.tableView reloadData];
+    
+}
+
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     SWTEditeAddressCell * cell = (SWTEditeAddressCell *)textField.superview.superview;
