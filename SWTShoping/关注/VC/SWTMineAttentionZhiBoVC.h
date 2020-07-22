@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTMineAttentionZhiBoVC : BaseViewController
-@property(nonatomic,assign)BOOL isPush;
+@property(nonatomic,assign)BOOL isMineZuJi;
 @end
 
 NS_ASSUME_NONNULL_END

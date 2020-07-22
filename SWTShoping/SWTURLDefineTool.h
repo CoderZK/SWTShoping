@@ -155,8 +155,11 @@
 
 
 #pragma mark ---- 通用模块 -----
-
+/** 顶部图片 */
 #define topimg_SWT URLOne@"topimg"
+/** 上传文件 */
+#define uploadfile_SWT URLOne@"uploadfile"
+
 
 
 #pragma mark ---- 商户信息接口  -----

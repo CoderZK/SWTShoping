@@ -10,5 +10,5 @@
 
 @interface GuanZhuVC : BaseViewController
 @property(nonatomic,assign)BOOL isMineZuJi;
-@property(nonatomic,assign)BOOL isPush;
+//@property(nonatomic,assign)BOOL isPush;
 @end

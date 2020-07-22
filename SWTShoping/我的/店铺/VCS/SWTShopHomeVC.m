@@ -176,11 +176,6 @@
     
     SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
-    if (self.type == 102) {
-        vc.isYiKouJia = NO;
-    }else if (self.type == 103) {
-        vc.isYiKouJia = YES;
-    }
     [self.navigationController pushViewController:vc animated:YES];
     
     
@@ -220,6 +215,9 @@
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"followid"] = @"-1";
+    if (self.dataModel.followid.length > 0) {
+        dict[@"favid"] = self.dataModel.followid;
+    }
     dict[@"id"] = self.dataModel.ID;
     dict[@"type"] = @"1";
     dict[@"operation"] = [self.dataModel.isfollow isEqualToString:@"no"] ? @"ADD":@"DELETE";

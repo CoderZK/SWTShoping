@@ -193,7 +193,7 @@
 
 - (void)setModel:(SWTModel *)model {
     _model = model;
-    [self.leftimgV sd_setImageWithURL:[model.thumb getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+    [self.leftimgV sd_setImageWithURL:[model.goodimg getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
     
     self.leftTwoLb.text =  [NSString stringWithFormat:@"￥%@",[model.price getPriceAllStr]];
     self.leftOneLB.text = model.name;

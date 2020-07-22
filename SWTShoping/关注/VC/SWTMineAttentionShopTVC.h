@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTMineAttentionShopTVC : BaseTableViewController
-@property(nonatomic,assign)BOOL isPush;
+
 @end
 
 NS_ASSUME_NONNULL_END

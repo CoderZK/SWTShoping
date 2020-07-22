@@ -71,7 +71,7 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return self.dataArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -82,7 +82,7 @@
     SWTMineGuanZHuDinaPuCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     // cell.nameLB.text = @"fgkodkgfeoprkgkp";
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.dataArray = @[@"",@"",@"",@"",@"",@"",@"",@"",@"",@""].mutableCopy;
+    cell.model = self.dataArray[indexPath.row];
     cell.delegate = self;
     return cell;
 }
@@ -108,6 +108,15 @@
         
     }else {
         //点击的是内部的其他信息
+        NSIndexPath * indexPath  = [self.tableView indexPathForCell:cell];
+        
+        
+        SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.goodID = self.dataArray[indexPath.row].goodNeiList[index].goodid;
+        [self.navigationController pushViewController:vc animated:YES];
+        
+        
         
         
     }

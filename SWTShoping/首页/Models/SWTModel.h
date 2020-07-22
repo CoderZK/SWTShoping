@@ -91,16 +91,18 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *rate;//折扣
 @property(nonatomic,strong)NSString *useprice;//折扣总金额
 
-@property(nonatomic,strong)NSString *score;
+//@property(nonatomic,strong)NSString *score;
+
+
+
+@property(nonatomic,strong)NSString *merchscore;
+@property(nonatomic,strong)NSString *goodper;
+@property(nonatomic,strong)NSString *successper;
+@property(nonatomic,strong)NSString *backper;
 @property(nonatomic,strong)NSString *focusnum;
-//@property(nonatomic,strong)NSString *high_rate;
-//@property(nonatomic,strong)NSString *record_date;
-//@property(nonatomic,strong)NSString *recordDate;
-//@property(nonatomic,strong)NSString *lastSessionTime;
-//@property(nonatomic,strong)NSString *toNickname;
-//@property(nonatomic,strong)NSString *doctorCnt;
-//@property(nonatomic,strong)NSString *fromNickname;
-//@property(nonatomic,strong)NSString *healthInfoRate;
+@property(nonatomic,strong)NSString *margin;
+@property(nonatomic,strong)NSString *followid;
+@property(nonatomic,strong)NSString *favid;
 //@property(nonatomic,strong)NSString *gender;
 //@property(nonatomic,strong)NSString *age;
 //@property(nonatomic,strong)NSString *userId;
@@ -151,7 +153,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *youHuiQuanList;
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *lideshowlist;
-//@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *recommendProjectList;
+@property(nonatomic,strong)NSMutableArray<SWTModel *> *auctionlist;
 //@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *province_important_departmentList;
 //@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *city_important_departmentList;
 //@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *recommendDoctorList;

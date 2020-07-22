@@ -14,7 +14,7 @@
 @property (nonatomic, strong) TYTabPagerBar *tabBar;//顶部菜单栏
 
 @property (nonatomic, weak) TYPagerController *pagerController;
-@property(nonatomic , strong)NSArray *titleArr;
+//@property(nonatomic , strong)NSArray *titleArr;
 @property(nonatomic , assign)NSInteger selectIndex;
 @property(nonatomic , strong)NSArray<SWTModel *> *dataArray;
 @end
@@ -25,7 +25,7 @@
     [super viewDidLoad];
     self.dataArray = @[];
     self.navigationItem.title = @"帮助";
-    self.titleArr = @[];
+//    self.titleArr = @[];
     [self addTabPageView];
     [self addPagerController];
     
@@ -54,7 +54,8 @@
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             
-            self.titleArr = @[@"购物相关",@"拍卖相关",@"合买相关"];
+//            self.titleArr = @[@"购物相关",@"拍卖相关",@"合买相关"];
+            self.dataArray = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
             [self reloadData];
             
             
@@ -110,14 +111,14 @@
 }
 
 - (NSInteger)numberOfItemsInPagerTabBar {
-    return self.titleArr.count;
+    return self.dataArray.count;
    
 }
 
 - (UICollectionViewCell<TYTabPagerBarCellProtocol> *)pagerTabBar:(TYTabPagerBar *)pagerTabBar cellForItemAtIndex:(NSInteger)index {
    
         UICollectionViewCell<TYTabPagerBarCellProtocol> *cell = [pagerTabBar dequeueReusableCellWithReuseIdentifier:[TYTabPagerBarCell cellIdentifier] forIndex:index];
-        cell.titleLabel.text = self.titleArr[index];
+    cell.titleLabel.text = self.dataArray[index].name;
         return cell;
     
     
@@ -139,7 +140,7 @@
 
 - (NSInteger)numberOfControllersInPagerController {
    
-    return self.titleArr.count;
+    return self.dataArray.count;
     
     
 }
@@ -158,6 +159,7 @@
 //        vc.shopId = self.shopId;
 //        vc.cateModel = model;
     vc.type = index;
+    vc.ID = self.dataArray[index].ID;
     return vc;
    
 }
@@ -169,7 +171,7 @@
         self.selectIndex = toIndex;
         [_tabBar scrollToItemFromIndex:fromIndex toIndex:toIndex animate:animated];
     
-     [self subVCGetData];
+//     [self subVCGetData];
     
     NSLog(@"\n===%@",@"22222");
     
@@ -185,14 +187,14 @@
     
 }
 
-- (void)subVCGetData {
-    
-    [LTSCEventBus sendEvent:@"helpsub" data:@{@"type":@(self.selectIndex),@"ID":@"1"}];
-    
-    if (self.dataArray.count > self.selectIndex) {
-          [LTSCEventBus sendEvent:@"helpsub" data:self.dataArray[self.selectIndex].ID];
-    }
-}
+//- (void)subVCGetData {
+//    
+//    [LTSCEventBus sendEvent:@"helpsub" data:@{@"type":@(self.selectIndex),@"ID":@"1"}];
+//    
+//    if (self.dataArray.count > self.selectIndex) {
+//          [LTSCEventBus sendEvent:@"helpsub" data:self.dataArray[self.selectIndex].ID];
+//    }
+//}
 
 
 @end

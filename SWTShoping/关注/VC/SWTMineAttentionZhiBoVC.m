@@ -13,7 +13,9 @@
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 
 @property(nonatomic , strong)UICollectionView *collectionView;
-@property(nonatomic , strong)NSMutableArray<SWTModel *> *dataArray;
+
+@property(nonatomic,assign)NSInteger page;
+@property(nonatomic,strong)NSMutableArray<SWTModel *> *dataArray;
 @end
 
 @implementation SWTMineAttentionZhiBoVC
@@ -46,37 +48,56 @@
         make.left.right.top.bottom.equalTo(self.view);
     }];
     
+
+    self.page = 1;
     self.dataArray = @[].mutableCopy;
     [self getData];
     self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        self.page = 1;
+        [self getData];
+    }];
+    self.collectionView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        self.page++;
         [self getData];
     }];
 }
 
 
 - (void)getData {
+    
+    
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"page"] = @(self.page);
+    dict[@"pagesize"] = @(10);
+    NSString * url =  [NSString stringWithFormat:@"%@/%@",userFollow_SWT,[zkSignleTool shareTool].session_uid];
     dict[@"type"] = @"0";
-    [zkRequestTool networkingPOST:  [NSString stringWithFormat:@"%@/%@",userFollow_SWT,[zkSignleTool shareTool].session_uid] parameters:[zkSignleTool shareTool].session_uid success:^(NSURLSessionDataTask *task, id responseObject) {
+    if (self.isMineZuJi) {
+        url =  [NSString stringWithFormat:@"%@/%@",userTrace_SWT,[zkSignleTool shareTool].session_uid];
+        dict[@"type"] = @"1";
+    }
+    [zkRequestTool networkingPOST:url parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.collectionView.mj_header endRefreshing];
         [self.collectionView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];
-        if ([responseObject[@"code"] intValue]== 200) {
+        if ([[NSString stringWithFormat:@"%@",responseObject[@"code"]] integerValue] == 200) {
+            NSArray<SWTModel *>*arr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            if (self.page == 1) {
+                [self.dataArray removeAllObjects];
+            }
+            [self.dataArray addObjectsFromArray:arr];
             
-            self.dataArray = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
             [self.collectionView reloadData];
-            
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }
-        
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
         [self.collectionView.mj_header endRefreshing];
         [self.collectionView.mj_footer endRefreshing];
-        
     }];
+    
+    
+    
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {

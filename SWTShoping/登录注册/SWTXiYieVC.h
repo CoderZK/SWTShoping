@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTXiYieVC : BaseViewController
 @property(nonatomic , assign)NSInteger  type; // 1 协议 2隐私协议
+@property(nonatomic , strong)NSString *titleStr,*contentStr;
 @end
 
 NS_ASSUME_NONNULL_END

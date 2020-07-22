@@ -19,10 +19,16 @@
     [super viewDidLoad];
     if (self.type == 1) {
         self.navigationItem.title = @"用户协议";
+        [self getData];
     }else if (self.type == 2) {
         self.navigationItem.title = @"隐私协议";
+        [self getData];
     }
-    [self getData];
+    if (self.titleStr.length > 0) {
+        self.navigationItem.title = self.titleStr;
+    }
+    self.TV.text = self.contentStr;
+    
 }
 - (void)getData {
     [SVProgressHUD show];

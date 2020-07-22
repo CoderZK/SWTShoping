@@ -29,6 +29,7 @@
 @property(nonatomic , strong)NSString *bayNumber;
 @property(nonatomic,assign)NSInteger page;
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *dataArray;
+@property(nonatomic,assign)BOOL isYiKouJia;
 @end
 
 @implementation SWTGoodsDetailTVC
@@ -156,9 +157,7 @@
         
     }];
     
-    if (self.isYiKouJia) {
-        [self.bottomView.chujiaBt setTitle:@"立即购买" forState:UIControlStateNormal];
-    }
+    
     
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
@@ -192,11 +191,19 @@
                self.dataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
                self.dataModel.merch_id = self.dataModel.merchid;
                [self.headV.imgV sd_setImageWithURL:[self.dataModel.img getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+               self.naView.titleLB.text = self.dataModel.name;
                if ([self.dataModel.type isEqualToString:@"0"]) {
                    self.isYiKouJia = YES;
                }else {
                    self.isYiKouJia = NO;
                }
+               
+               if (self.isYiKouJia) {
+                   [self.bottomView.chujiaBt setTitle:@"立即购买" forState:UIControlStateNormal];
+               }else {
+                  [self.bottomView.chujiaBt setTitle:@"出个价" forState:UIControlStateNormal];
+               }
+               
                [self.tableView reloadData];
                
                [self getJingXuanData];
@@ -299,7 +306,7 @@
 
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (self.isYiKouJia) {
+    if (self.isYiKouJia) {//yijo
         if (indexPath.section == 0) {
             
             SWTYiKouJiaGoodDetailCell  * cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTYiKouJiaGoodDetailCell" forIndexPath:indexPath];
@@ -421,6 +428,9 @@
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"favid"] = @"-1";
+    if (self.dataModel.favid.length > 0) {
+        dict[@"favid"] = self.dataModel.favid;
+    }
     dict[@"id"] = self.goodID;
     dict[@"type"] = @"0";
     dict[@"operation"] = [self.dataModel.isfav isEqualToString:@"no"] ? @"ADD":@"DELETE";
@@ -458,6 +468,9 @@
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"followid"] = @"-1";
+    if (self.dataModel.followid.length > 0) {
+        dict[@"favid"] = self.dataModel.followid;
+    }
     dict[@"id"] = self.dataModel.merch_id;
     dict[@"type"] = @"1";
     dict[@"operation"] = [self.dataModel.isfollow isEqualToString:@"no"] ? @"ADD":@"DELETE";

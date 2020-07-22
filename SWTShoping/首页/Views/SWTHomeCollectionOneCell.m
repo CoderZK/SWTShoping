@@ -45,6 +45,7 @@
             
             SWTHomeReMenView * renMenV = [[SWTHomeReMenView alloc] initWithFrame:CGRectMake( i*(space + ww), 0, ww, hh)];
             renMenV.Bt.tag = i+100;
+            renMenV.tag = i+100;
             [renMenV.Bt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
             [self.scrollView addSubview:renMenV];
             
@@ -58,8 +59,9 @@
 
 - (void)setDataArray:(NSMutableArray<SWTModel *> *)dataArray {
     _dataArray = dataArray;
-    for (int i = 1 ; i < 3; i++) {
+    for (int i = 0 ; i < 3; i++) {
         SWTHomeReMenView * vv = [self.scrollView viewWithTag:i+100];
+        vv.hidden = YES;
         if (i<dataArray.count) {
             vv.hidden = NO;
             [vv.imgV sd_setImageWithURL:[dataArray[i].img getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];

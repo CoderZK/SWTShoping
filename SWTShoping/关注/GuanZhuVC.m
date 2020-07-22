@@ -40,13 +40,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"关注";
+    self.titleArr = @[@"直播",@"店铺"];
     if (self.isMineZuJi) {
         self.navigationItem.title = @"足迹";
+        self.titleArr = @[@"直播",@"商品"];
     }
     self.view.backgroundColor = BackgroundColor;
    
     
-    self.titleArr = @[@"直播",@"店铺"];
+    
        [self addTabPageView];
        [self addPagerController];
        
@@ -165,6 +167,7 @@
     
     if (index == 0) {
         SWTMineAttentionZhiBoVC * vc1 = [[SWTMineAttentionZhiBoVC alloc] init];
+        vc1.isMineZuJi = self.isMineZuJi;
         return vc1;
     }else {
         if (self.isMineZuJi) {

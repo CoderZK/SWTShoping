@@ -382,9 +382,13 @@
         self.typeTwoBt.hidden = NO;
         [self.typeTwoBt setTitle: [NSString stringWithFormat:@" %@",arr[1]] forState:UIControlStateNormal];
     }
-    self.scoreLB.text = model.score;
+    self.scoreLB.text = model.merchscore;
     self.guanZhuNumberLB.text = [model.focusnum getPriceStr];
+    self.moenyLB.text = [model.margin getPriceStr];
     
+    self.pingjiascoreLB.text =  [NSString stringWithFormat:@"好评:%@%%",model.goodper];
+    self.chengJiaoLB.text = [NSString stringWithFormat:@"成交:%@%%",model.successper];
+    self.chengJiaoLB.text = [NSString stringWithFormat:@"退货:%@%%",model.backper];
     
     NSMutableArray * imgGroupArr = @[].mutableCopy;
     for (SWTModel *neiM  in model.lideshowlist) {

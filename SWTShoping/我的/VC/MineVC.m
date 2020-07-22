@@ -182,7 +182,6 @@
                 }else if (index == 1) {
                     GuanZhuVC * vc =[[GuanZhuVC alloc] init];
                     vc.hidesBottomBarWhenPushed = YES;
-                    vc.isPush = YES;
                     [self.navigationController pushViewController:vc animated:YES];
                     
                 }else if (index == 2) {
@@ -191,7 +190,6 @@
                     GuanZhuVC * vc =[[GuanZhuVC alloc] init];
                     vc.hidesBottomBarWhenPushed = YES;
                     vc.isMineZuJi = YES;
-                    vc.isPush = YES;
                     [self.navigationController pushViewController:vc animated:YES];
                 }else if (index == 4) {
                     
