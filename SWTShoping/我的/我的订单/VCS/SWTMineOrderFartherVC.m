@@ -13,7 +13,7 @@
 
 @property (nonatomic, weak) TYPagerController *pagerController;
 @property(nonatomic , strong)NSArray *titleArr;
-@property(nonatomic , assign)NSInteger selectIndex;
+
 
 @end
 
@@ -95,6 +95,9 @@
 - (void)reloadData {
     [_tabBar reloadData];
     [_pagerController reloadData];
+    
+    [_pagerController scrollToControllerAtIndex:self.selectIndex animate:YES];
+    
 }
 
 - (NSInteger)numberOfItemsInPagerTabBar {
@@ -116,7 +119,6 @@
     return [self.titleArr[index] getWidhtWithFontSize:15];
 }
 - (void)pagerTabBar:(TYTabPagerBar *)pagerTabBar didSelectItemAtIndex:(NSInteger)index {
-    
     self.selectIndex = index;
     [_pagerController scrollToControllerAtIndex:index animate:YES];
     
@@ -144,7 +146,12 @@
     //        vc.type = self.type;
     //        vc.shopId = self.shopId;
     //        vc.cateModel = model;
-    vc.type = index;
+    if(index == 0) {
+        vc.type = -2;
+    }else {
+      vc.type = index-1;
+    }
+    
     return vc;
     
 }

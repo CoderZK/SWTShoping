@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTMineOrderFartherVC : BaseViewController
-
+@property(nonatomic , assign)NSInteger selectIndex;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -31,7 +31,7 @@
         
         UIButton * button  =[[UIButton alloc] initWithFrame:CGRectMake(ScreenW / 2, 5, ScreenW / 2, 30)];
         [self addSubview:button];
-        button.tag = 106;
+        button.tag = 100;
         [button addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
         
         [self addSubview:imgV];
@@ -45,7 +45,7 @@
             bt.imgV.image = [UIImage imageNamed: [NSString stringWithFormat:@"mine%d",i+5]];
             bt.titleLB.text = arr[i];
             [self addSubview:bt];
-            bt.tag = i+100;
+            bt.tag = i+101;
             [bt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
         }
         

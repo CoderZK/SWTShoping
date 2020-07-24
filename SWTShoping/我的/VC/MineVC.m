@@ -216,6 +216,7 @@
             Weak(weakSelf);
             cell.mineTwoCellBlock = ^(NSInteger index) {
                 SWTMineOrderFartherVC * vc =[[SWTMineOrderFartherVC alloc] init];
+                vc.selectIndex = index;
                 vc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:vc animated:YES];
             };
