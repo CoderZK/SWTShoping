@@ -115,6 +115,7 @@
 		666A3A2024B75E7000318075 /* SWTLaoYouDianPuInfoTwoTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 666A3A1F24B75E7000318075 /* SWTLaoYouDianPuInfoTwoTVC.m */; };
 		666A3A2324B75E9A00318075 /* SWTDianPuInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 666A3A2224B75E9A00318075 /* SWTDianPuInfoView.m */; };
 		666A3A2624B76F2F00318075 /* SWTDianPuInfoTwoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 666A3A2524B76F2F00318075 /* SWTDianPuInfoTwoView.m */; };
+		666B3B8824C969150036DE4D /* SWTChuJiaListTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 666B3B8724C969150036DE4D /* SWTChuJiaListTVC.m */; };
 		666BB1B424AF6EF400341CE8 /* SWTFenLeiCollectTwoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666BB1B224AF6EF400341CE8 /* SWTFenLeiCollectTwoCell.m */; };
 		666BB1B524AF6EF400341CE8 /* SWTFenLeiCollectTwoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 666BB1B324AF6EF400341CE8 /* SWTFenLeiCollectTwoCell.xib */; };
 		666BB1B824AF6F3C00341CE8 /* SWTJiFenCollectHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 666BB1B724AF6F3C00341CE8 /* SWTJiFenCollectHeadView.m */; };
@@ -467,6 +468,8 @@
 		666A3A2224B75E9A00318075 /* SWTDianPuInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTDianPuInfoView.m; sourceTree = "<group>"; };
 		666A3A2424B76F2F00318075 /* SWTDianPuInfoTwoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTDianPuInfoTwoView.h; sourceTree = "<group>"; };
 		666A3A2524B76F2F00318075 /* SWTDianPuInfoTwoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTDianPuInfoTwoView.m; sourceTree = "<group>"; };
+		666B3B8624C969150036DE4D /* SWTChuJiaListTVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTChuJiaListTVC.h; sourceTree = "<group>"; };
+		666B3B8724C969150036DE4D /* SWTChuJiaListTVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTChuJiaListTVC.m; sourceTree = "<group>"; };
 		666BB1B124AF6EF400341CE8 /* SWTFenLeiCollectTwoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTFenLeiCollectTwoCell.h; sourceTree = "<group>"; };
 		666BB1B224AF6EF400341CE8 /* SWTFenLeiCollectTwoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTFenLeiCollectTwoCell.m; sourceTree = "<group>"; };
 		666BB1B324AF6EF400341CE8 /* SWTFenLeiCollectTwoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTFenLeiCollectTwoCell.xib; sourceTree = "<group>"; };
@@ -1115,6 +1118,8 @@
 				6670695F24B5542A00AB0826 /* SWTZhenPinGeFatherVC.m */,
 				6670696124B554A700AB0826 /* SWTZhenPinGeSubTVC.h */,
 				6670696224B554A700AB0826 /* SWTZhenPinGeSubTVC.m */,
+				666B3B8624C969150036DE4D /* SWTChuJiaListTVC.h */,
+				666B3B8724C969150036DE4D /* SWTChuJiaListTVC.m */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -2071,6 +2076,7 @@
 				6674243C24B4C6EC007A6A56 /* SWTVideoDetailHeadView.m in Sources */,
 				666A39FC24B74B3C00318075 /* MXImageEditController.m in Sources */,
 				666BB1B424AF6EF400341CE8 /* SWTFenLeiCollectTwoCell.m in Sources */,
+				666B3B8824C969150036DE4D /* SWTChuJiaListTVC.m in Sources */,
 				337F3EAE20EA014600C5526A /* BaseCollectionReusableView.m in Sources */,
 				666A39FE24B74B3C00318075 /* MXPhotoPickerController.m in Sources */,
 				335010DD20EDF9AE00F8486B /* zkRequestTool.m in Sources */,

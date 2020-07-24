@@ -44,14 +44,14 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="出局" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TL6-l3-UUn">
-                        <rect key="frame" x="369" y="22" width="27" height="16"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="出局" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TL6-l3-UUn">
+                        <rect key="frame" x="356" y="17" width="40" height="16"/>
                         <constraints>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="iCq-ED-nDE"/>
+                            <constraint firstAttribute="width" constant="40" id="iCq-ED-nDE"/>
                             <constraint firstAttribute="height" constant="16" id="sbI-1I-ag5"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <nil key="textColor"/>
+                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2020-4-13" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ujN-eK-HWr">
@@ -69,7 +69,7 @@
                     <constraint firstItem="e6g-BG-kYy" firstAttribute="top" secondItem="Deo-xO-24g" secondAttribute="top" id="5ze-bt-Mt2"/>
                     <constraint firstItem="Deo-xO-24g" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="AHF-h2-E9H"/>
                     <constraint firstItem="ujN-eK-HWr" firstAttribute="bottom" secondItem="IA8-Cc-ziK" secondAttribute="bottom" id="EOp-Ld-mlJ"/>
-                    <constraint firstItem="TL6-l3-UUn" firstAttribute="top" secondItem="e6g-BG-kYy" secondAttribute="top" id="Fyr-13-Mwu"/>
+                    <constraint firstItem="TL6-l3-UUn" firstAttribute="top" secondItem="e6g-BG-kYy" secondAttribute="top" constant="-5" id="Fyr-13-Mwu"/>
                     <constraint firstItem="IA8-Cc-ziK" firstAttribute="bottom" secondItem="Deo-xO-24g" secondAttribute="bottom" id="LwP-pI-Tvh"/>
                     <constraint firstAttribute="trailing" secondItem="TL6-l3-UUn" secondAttribute="trailing" constant="10" id="Mf4-dx-5FX"/>
                     <constraint firstItem="ujN-eK-HWr" firstAttribute="trailing" secondItem="TL6-l3-UUn" secondAttribute="trailing" id="dHE-wv-38p"/>

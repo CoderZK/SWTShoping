@@ -31,6 +31,7 @@
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 @property(nonatomic , strong)UICollectionView *collectionView;
 @property(nonatomic , strong)UIImageView *imagV;
+
 @end
 
 @implementation MineVC
@@ -39,6 +40,11 @@
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    
+    if (!ISLOGIN) {
+        [self gotoLoginVC];
+    }
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -70,17 +76,17 @@
     [self.collectionView registerNib:[UINib nibWithNibName:@"SWTMineOneCell" bundle:nil] forCellWithReuseIdentifier:@"SWTMineOneCell"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"SWTHomeCollectionThreeCell" bundle:nil] forCellWithReuseIdentifier:@"SWTHomeCollectionThreeCell"];
     
-            [self.collectionView registerClass:[SWTMineSectionHeadView class]  forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeaderView"];
+    [self.collectionView registerClass:[SWTMineSectionHeadView class]  forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeaderView"];
     
     [self.view addSubview:self.collectionView];
     
-
+    
     [self getData];
     self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-       
+        
         [self getData];
     }];
- 
+    
     
 }
 
@@ -89,12 +95,12 @@
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
     [zkRequestTool networkingPOST:userDetail_SWT parameters:[zkSignleTool shareTool].session_uid success:^(NSURLSessionDataTask *task, id responseObject) {
-
+        
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             
             [zkSignleTool shareTool].nickname = responseObject[@"data"][@"nickname"];
-
+            
             
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
@@ -102,7 +108,7 @@
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
-
+        
         
     }];
 }
@@ -169,16 +175,17 @@
                 if (index == 0) {
                     
                     
-                    SWTLoginOneVC * vc =[[SWTLoginOneVC alloc] init];
-                    BaseNavigationController * navc = [[BaseNavigationController alloc] initWithRootViewController:vc];
-                    [self presentViewController:navc animated:YES completion:nil];
+                    SWTCanPaiFarterVC * vc =[[SWTCanPaiFarterVC alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [weakSelf.navigationController pushViewController:vc animated:YES];
                     
                     
                     
                     
-//                    SWTMinePingLunListTVC * vc =[[SWTMinePingLunListTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-//                    vc.hidesBottomBarWhenPushed = YES;
-//                    [self.navigationController pushViewController:vc animated:YES];
+                    
+                    //                    SWTMinePingLunListTVC * vc =[[SWTMinePingLunListTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                    //                    vc.hidesBottomBarWhenPushed = YES;
+                    //                    [self.navigationController pushViewController:vc animated:YES];
                 }else if (index == 1) {
                     GuanZhuVC * vc =[[GuanZhuVC alloc] init];
                     vc.hidesBottomBarWhenPushed = YES;
@@ -205,7 +212,7 @@
             };
             return cell;
         }else if (indexPath.row == 1) {
-           SWTMineTwoCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTMineTwoCell" forIndexPath:indexPath];
+            SWTMineTwoCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTMineTwoCell" forIndexPath:indexPath];
             Weak(weakSelf);
             cell.mineTwoCellBlock = ^(NSInteger index) {
                 SWTMineOrderFartherVC * vc =[[SWTMineOrderFartherVC alloc] init];
@@ -214,11 +221,11 @@
             };
             return cell;
         }else {
-           SWTMineThreeCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTMineThreeCell" forIndexPath:indexPath];
+            SWTMineThreeCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTMineThreeCell" forIndexPath:indexPath];
             Weak(weakSelf);
             cell.mineThreeCellBlock = ^(NSInteger index) {
                 if (index == 0) {
-                   SWTMineCollectVC * vc =[[SWTMineCollectVC alloc] init];
+                    SWTMineCollectVC * vc =[[SWTMineCollectVC alloc] init];
                     vc.hidesBottomBarWhenPushed = YES;
                     [weakSelf.navigationController pushViewController:vc animated:YES];
                 }else if (index == 1) {
@@ -234,7 +241,7 @@
                     vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
                 }else if (index == 4) {
-                     SWTSendMinePingLunTVC* vc =[[SWTSendMinePingLunTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                    SWTSendMinePingLunTVC* vc =[[SWTSendMinePingLunTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
                     vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
                 }else if (index == 5) {
@@ -252,7 +259,7 @@
                     [self.navigationController pushViewController:vc animated:YES];
                 }
             };
-           return cell;
+            return cell;
         }
     }else {
         if (indexPath.row == 0) {
@@ -263,7 +270,7 @@
             return cell;
         }
     }
- 
+    
 }
 
 
@@ -272,15 +279,15 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-   
+    
     SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-       vc.hidesBottomBarWhenPushed = YES;
-       [self.navigationController pushViewController:vc animated:YES];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
     
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-
+    
     if (indexPath.section == 0) {
         return nil;
     }else {
@@ -289,8 +296,8 @@
         headerView.clipsToBounds = YES;
         return headerView;
     }
-
-
+    
+    
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout numberOfColumnInSection:(NSInteger)section {

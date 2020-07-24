@@ -21,6 +21,14 @@
         UIImageView *imgV  =[[UIImageView alloc] initWithFrame:CGRectMake(ScreenW - 21-20, 18, 11, 11)];
         imgV.image = [UIImage imageNamed:@"you"];
         
+        UILabel * lb  =[[UILabel alloc] initWithFrame:CGRectMake(ScreenW - 100 - 40, 14, 100, 20)];
+        lb.text = @"查看全部订单";
+        lb.font = kFont(13);
+        lb.textAlignment = NSTextAlignmentRight;
+        lb.textColor = CharacterColor70;
+        [self addSubview:lb];
+        
+        
         UIButton * button  =[[UIButton alloc] initWithFrame:CGRectMake(ScreenW / 2, 5, ScreenW / 2, 30)];
         [self addSubview:button];
         button.tag = 106;

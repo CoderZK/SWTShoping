@@ -67,6 +67,12 @@
         self.bottomLB.textColor = WhiteColor;
         [self addSubview:self.bottomLB];
 
+        
+        self.Bt = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+        [self addSubview:self.Bt];
+        
+        
+        
         self.layer.cornerRadius = 5;
         self.clipsToBounds = YES;
         

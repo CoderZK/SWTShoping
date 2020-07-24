@@ -13,6 +13,7 @@
 @interface SWTMineZiLiaoVC ()<zkPickViewDelelgate>
 @property(nonatomic , strong)NSArray *leftArr;
 @property(nonatomic , strong)UIView *footV;
+@property(nonatomic , strong)UIImage *image;
 @end
 
 @implementation SWTMineZiLiaoVC
@@ -61,6 +62,7 @@
     cell.rightLB.hidden = YES;
     if (indexPath.row == 0) {
         cell.rightImgV.hidden = NO;
+        cell.rightImgV.image = self.image;
     }else if (indexPath.row == 1){
         cell.rightLB.hidden = NO;
         cell.rightLB.text = [zkSignleTool shareTool].nickname;
@@ -80,11 +82,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    
-    
-    
-    if (indexPath.row == 1) {
+
+    if (indexPath.row == 0) {
+        [self addPict];
+    }else if (indexPath.row == 1) {
         
         [self editNickName];
     }else if (indexPath.row == 2) {
@@ -120,7 +121,7 @@
         
     }];
     UIAlertAction * action2 = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-
+        
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"请输入昵称" preferredStyle:UIAlertControllerStyleAlert];
         
         [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
@@ -128,7 +129,7 @@
         [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
             UITextField*userNameTF = alertController.textFields.firstObject;
-           
+            
             
             
         }]];
@@ -142,7 +143,7 @@
         }];
         
         [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
-
+        
     }];
     
     [alertVC addAction:action1];
@@ -151,5 +152,98 @@
     [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertVC animated:YES completion:nil];
     
 }
+
+
+- (void)addPict {
+    
+    UIAlertController *ac = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        if ([self isCanUsePhotos]) {
+            
+         
+            [self showMXPhotoCameraAndNeedToEdit:YES completion:^(UIImage *image, UIImage *originImage, CGRect cutRect) {
+                
+                self.image = image;
+                [self updateImage];
+
+            }];
+       
+        }else{
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相机" message:@"请在iPhone的""设置-隐私-相机""中允许访问相机" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+        
+    }];
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        if ([self isCanUsePicture]) {
+            [self showMXPickerWithMaximumPhotosAllow:1 completion:^(NSArray *assets) {
+                
+                for (ALAsset *asset in assets) {
+                    ALAssetRepresentation *assetRep = [asset defaultRepresentation];
+                    CGImageRef imgRef = [assetRep fullResolutionImage];
+                    UIImage *image = [[UIImage alloc] initWithCGImage:imgRef
+                                                                scale:assetRep.scale
+                                                          orientation:(UIImageOrientation)assetRep.orientation];
+                    
+                    if (!image) {
+                        image = [[UIImage alloc] initWithCGImage:[[asset defaultRepresentation] fullScreenImage]
+                                                           scale:assetRep.scale
+                                                     orientation:(UIImageOrientation)assetRep.orientation];
+                        
+                    }
+                    if (!image) {
+                        CGImageRef thum = [asset aspectRatioThumbnail];
+                        image = [UIImage imageWithCGImage:thum];
+                    }
+                    
+                    self.image = image;
+                    [self updateImage];
+                  
+                }
+                
+              
+                
+                
+            }];
+           
+        }else{
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }];
+    
+   
+    
+    UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [ac addAction:action1];
+    [ac addAction:action2];
+    [ac addAction:action3];
+    
+    [self.navigationController presentViewController:ac animated:YES completion:nil];
+    
+}
+
+- (void)updateImage {
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"type"] = @"head";
+    dict[@"userid"] = [zkSignleTool shareTool].session_uid;
+    [zkRequestTool NetWorkingUpLoad:uploadfile_SWT images:@[self.image] name:@"file" parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        if ([responseObject[@"code"] intValue] == 200) {
+            
+            [self.tableView reloadData];
+            
+        }else {
+            [self showAlertWithKey:responseObject[@"code"] message:responseObject[@"msg"] ];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
+    
+    
+}
+
 
 @end

@@ -11,6 +11,7 @@
 #import "SWTHomeCollectionTwoCell.h"
 #import "SWTHomeCollectionThreeCell.h"
 #import "SWTShaiXuanRightView.h"
+#import "SWTZhiBoDetailVC.h"
 @interface SWTCateSubVC ()<UIScrollViewDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource>
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 @property(nonatomic , strong)UICollectionView *collectionView;
@@ -62,23 +63,23 @@
     
     [SVProgressHUD show];
     [zkRequestTool networkingPOST:goodChildcategory_SWT parameters:self.ID success:^(NSURLSessionDataTask *task, id responseObject) {
-
+        
         [SVProgressHUD dismiss];
         [self.collectionView.mj_header endRefreshing];
         if ([responseObject[@"code"] intValue]== 200) {
-
+            
             self.titleArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
             self.headV.selectIndex = 0;
-              self.headV.dataArray = self.titleArr;
+            self.headV.dataArray = self.titleArr;
             
-
+            
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }
-
+        
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [self.collectionView.mj_header endRefreshing];
-
+        
     }];
     
 }
@@ -87,7 +88,7 @@
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
     [zkRequestTool networkingPOST:goodMaterial_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
- 
+        
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             
@@ -131,7 +132,7 @@
             SWTShaiXuanRightView * shaiXuanView = [[SWTShaiXuanRightView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH) withArr:self.caiZhiArr];
             Weak(weakSelf);
             shaiXuanView.shaiXuanBlock = ^(NSString * _Nonnull lowMoneyStr, NSString * _Nonnull heightMoneyStr, NSArray * _Nonnull caiLiaoIDarr, NSDictionary * _Nonnull fuwuDict) {
-              NSLog(@"%@\n%@\n%@\n%@",lowMoneyStr,heightMoneyStr,caiLiaoIDarr,fuwuDict);
+                NSLog(@"%@\n%@\n%@\n%@",lowMoneyStr,heightMoneyStr,caiLiaoIDarr,fuwuDict);
                 weakSelf.lowMoneyStr = lowMoneyStr;
                 weakSelf.heightMoneyStr = heightMoneyStr;
                 weakSelf.fuwuDict = fuwuDict;
@@ -190,6 +191,7 @@
     dict[@"topprice"] = self.heightMoneyStr;
     dict[@"type"] = @(self.paiMaiOrYiKouJia);
     dict[@"categoryid"] =  self.cateID;
+    dict[@"pid"] = self.ID;
     [zkRequestTool networkingPOST: [NSString stringWithFormat:@"%@/%@",goodList_SWT,self.cateID] parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.collectionView.mj_header endRefreshing];
         [self.collectionView.mj_footer endRefreshing];
@@ -197,12 +199,12 @@
         if ([responseObject[@"code"] intValue]== 200) {
             
             NSArray<SWTModel *>*arr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
-               if (self.page == 1) {
-                   [self.dataArray removeAllObjects];
-               }
-               [self.dataArray addObjectsFromArray:arr];
+            if (self.page == 1) {
+                [self.dataArray removeAllObjects];
+            }
+            [self.dataArray addObjectsFromArray:arr];
             
-               [self.collectionView reloadData];
+            [self.collectionView reloadData];
             
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
@@ -264,17 +266,19 @@
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     SWTModel * model = self.dataArray[indexPath.row];
+    model.playnum = model.watchnum;
     
-    SWTHomeCollectionTwoCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionTwoCell" forIndexPath:indexPath];
-    return cell;
-    
-//    if (indexPath.row == 0) {
-//        SWTHomeCollectionTwoCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionTwoCell" forIndexPath:indexPath];
-//        return cell;
-//    }else {
-//        SWTHomeCollectionThreeCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionThreeCell" forIndexPath:indexPath];
-//        return cell;
-//    }
+    if ([model.showtype isEqualToString:@"live"]) {
+        SWTHomeCollectionTwoCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionTwoCell" forIndexPath:indexPath];
+        model.playnum = model.watchnum;
+        cell.model = model;
+        return cell;
+    }else {
+        SWTHomeCollectionThreeCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionThreeCell" forIndexPath:indexPath];
+        model.goodprice = model.price;
+        cell.model = model;
+        return cell;
+    }
     
 }
 
@@ -284,16 +288,25 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
     
+    SWTModel * model = self.dataArray[indexPath.row];
+    
+    if ([model.showtype isEqualToString:@"live"]) {
+        SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else {
+        SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.goodID = self.dataArray[indexPath.row].goodid;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout numberOfColumnInSection:(NSInteger)section {
- 
+    
     return 2;
     
 }

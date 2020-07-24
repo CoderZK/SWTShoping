@@ -37,11 +37,6 @@
     self.rightDataArr = [NSMutableArray array];
     [self getFirstCateData];
     [self getTopImgStr];
-    self.leftV.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-
-        [self getFirstCateData];
-    }];
-    
 
 }
 

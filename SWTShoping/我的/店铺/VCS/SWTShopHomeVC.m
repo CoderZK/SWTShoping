@@ -20,6 +20,8 @@
 @property(nonatomic , strong)SWTShopHomeHeadView *headView;
 @property(nonatomic , assign)NSInteger  type;
 @property(nonatomic , strong)SWTModel *dataModel;
+@property(nonatomic,assign)NSInteger page;
+@property(nonatomic,strong)NSMutableArray<SWTModel *> *dataArray;
 @end
 
 @implementation SWTShopHomeVC
@@ -43,33 +45,77 @@
     [self addHeadV];
     
     [self getData];
+    self.page = 1;
+    self.dataArray = @[].mutableCopy;
+    [self getTwoData];
+    self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        self.page = 1;
+        [self getTwoData];
+    }];
+    self.collectionView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        self.page++;
+        [self getTwoData];
+    }];
+    
 }
+
+- (void)getTwoData {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"page"] = @(self.page);
+    dict[@"id"] = self.shopId;
+    dict[@"pagesize"] = @(10);
+    dict[@"type"] = @(self.type);
+    [zkRequestTool networkingPOST: merchMerchgood_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.collectionView.mj_header endRefreshing];
+        [self.collectionView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([[NSString stringWithFormat:@"%@",responseObject[@"code"]] integerValue] == 200) {
+            NSArray<SWTModel *>*arr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            if (self.page == 1) {
+                [self.dataArray removeAllObjects];
+            }
+            [self.dataArray addObjectsFromArray:arr];
+            
+            [self.collectionView reloadData];
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self.collectionView.mj_header endRefreshing];
+        [self.collectionView.mj_footer endRefreshing];
+    }];
+    
+    
+    
+}
+
 
 - (void)getData {
     
     [SVProgressHUD show];
-       NSMutableDictionary * dict = @{}.mutableCopy;
+    NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"id"] = self.shopId;
     [zkRequestTool networkingPOST:merchDetail_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
-           
-           [SVProgressHUD dismiss];
+        
+        [SVProgressHUD dismiss];
         [self.collectionView.mj_header endRefreshing];
-           if ([responseObject[@"code"] intValue]== 200) {
-               self.dataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
-               self.dataModel.storename = self.dataModel.store_name;
-               [self.collectionView reloadData];
-               self.naView.titleLB.text = self.dataModel.store_name;
-               self.headView.model = self.dataModel;
-               
-           }else {
-               [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
-           }
-           
-       } failure:^(NSURLSessionDataTask *task, NSError *error) {
-           
-           [self.collectionView.mj_header endRefreshing];;
-           
-       }];
+        if ([responseObject[@"code"] intValue]== 200) {
+            self.dataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
+            self.dataModel.storename = self.dataModel.store_name;
+            [self.collectionView reloadData];
+            self.naView.titleLB.text = self.dataModel.store_name;
+            self.headView.model = self.dataModel;
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.collectionView.mj_header endRefreshing];;
+        
+    }];
 }
 
 
@@ -120,6 +166,18 @@
         }else if (x.intValue == 101) {
             //点击关注
             
+        }else if (x.intValue == 102) {
+            //竞拍
+            self.type  = 0;
+            self.page = 1;
+            [self getTwoData];
+            
+        }else if (x.intValue == 103) {
+            //一口价
+            self.type  = 1;
+            self.page = 1;
+            [self getTwoData];
+            
         }
     }];
     [self.collectionView addSubview:self.headView];;
@@ -137,8 +195,8 @@
     }];
     
     [[self.naView.rightBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-           
-       }];
+        
+    }];
     [self.view addSubview:self.naView];
 }
 
@@ -151,18 +209,21 @@
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return 9;
-    //    return self.dataArray.count;
+     return self.dataArray.count;
 }
 
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.row == 0) {
+    SWTModel * model = self.dataArray[indexPath.row];
+    if ([model.showtype isEqualToString:@"live"]) {
         SWTHomeCollectionTwoCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionTwoCell" forIndexPath:indexPath];
+        model.playnum = model.watchnum;
+        cell.model = model;
         return cell;
     }else {
         SWTHomeCollectionThreeCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionThreeCell" forIndexPath:indexPath];
+        cell.model = model;
         return cell;
     }
     
@@ -211,7 +272,7 @@
 
 //关注操作
 - (void)gaunZhuAction {
- 
+    
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"followid"] = @"-1";
@@ -223,7 +284,7 @@
     dict[@"operation"] = [self.dataModel.isfollow isEqualToString:@"no"] ? @"ADD":@"DELETE";
     dict[@"userid"] =[zkSignleTool shareTool].session_uid;
     [zkRequestTool networkingPOST:userFollowOperate_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
-       
+        
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             if ([self.dataModel.isfollow isEqualToString:@"no"]) {
@@ -244,10 +305,10 @@
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
-       
+        
         
     }];
-
+    
     
     
     
@@ -270,6 +331,6 @@
     }else {
         self.naView.imgV.mj_h = sstatusHeight + 44;
     }
-
+    
 }
 @end

@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *moneyLB;
 @property (weak, nonatomic) IBOutlet UILabel *typeLB;
 @property (weak, nonatomic) IBOutlet UILabel *timeLB;
+@property(nonatomic , strong)SWTModel *model;
 
 @end
 

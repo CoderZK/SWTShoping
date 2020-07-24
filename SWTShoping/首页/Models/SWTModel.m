@@ -33,6 +33,10 @@
     self.youHuiQuanList =  [SWTModel mj_objectArrayWithKeyValuesArray:[lmCouponsList mj_JSONObject]];
 }
 
+
+- (void)setAuctionlist:(NSMutableArray<SWTModel *> *)auctionlist {
+    _auctionlist = [SWTModel mj_objectArrayWithKeyValuesArray:auctionlist];
+}
 - (NSArray *)getTypeLBArr {
     NSMutableArray * titleArr = @[].mutableCopy;
     if (self.isauction) {

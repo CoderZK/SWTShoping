@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTChuJiaListTVC : BaseTableViewController
-
+@property(nonatomic , strong)NSString *goodID;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -31,7 +31,7 @@
        self.contentLB.attributedText = [model.content getMutableAttributeStringWithFont:13 lineSpace:3 textColor:CharacterColor70];
     
     self.scanNUmberLB.text =  [NSString stringWithFormat:@"%@人正在观看",model.playnum];
-    self.timeLB.text = model.creattime;
+    self.timeLB.text = model.createtime;
 }
 
 @end

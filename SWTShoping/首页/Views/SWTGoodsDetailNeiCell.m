@@ -26,6 +26,30 @@
     
 }
 
+- (void)setModel:(SWTModel *)model {
+    _model = model;
+    
+    self.timeLB.text = model.createtime;
+    if (model.status.intValue == 1) {
+        self.typeLB.text = @"领先";
+        self.typeLB.layer.borderWidth = 0.5;
+        self.typeLB.layer.borderColor = RedLightColor.CGColor;
+    }else {
+        self.typeLB.text = @"出局";
+        self.typeLB.layer.borderWidth = 0.5;
+        self.typeLB.layer.borderColor = CharacterColor102.CGColor;
+    }
+    
+    
+    
+    [self.headImgV sd_setImageWithURL:[model.avatar getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+    self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",model.price];
+    self.phoneLB.text = model.nickname;
+    
+    
+    
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

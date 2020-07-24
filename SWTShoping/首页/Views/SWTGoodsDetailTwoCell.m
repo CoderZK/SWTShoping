@@ -39,7 +39,7 @@
     }
     
     self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",[model.price getPriceAllStr]];
-    self.desLB.text =  [NSString stringWithFormat:@"市场估计:%@以上  加价%@以上  出价%@次数",[model.marketprice getPriceStr],@"1000",model.bidsnum];
+    self.desLB.text =  [NSString stringWithFormat:@"市场估计:%@以上  加价%@以上  出价%@次数",[model.marketprice getPriceStr],model.stepprice,model.bidsnum];
 }
 
 @end

@@ -173,10 +173,13 @@
     dict[@"goodid"] = self.goodID;
     dict[@"merchid"] = self.merchID;
     dict[@"num"] = self.numStr;
-    dict[@"price"] =  [NSString stringWithFormat:@"%0.2f",self.model.price.floatValue * self.numStr.intValue];;
+    dict[@"price"] =  [NSString stringWithFormat:@"%0.2f",self.model.price.doubleValue * self.numStr.doubleValue - self.zheKouMoney];;
     dict[@"userid"] = [zkSignleTool shareTool].session_uid;
-    
-    [zkRequestTool networkingPOST: [NSString stringWithFormat:@"%@/%@/%@/%@",orderSubmit_SWT,self.merchID,self.goodID,[zkSignleTool shareTool].session_uid] parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+    dict[@"merchid"] = self.merchID;
+    dict[@"goodid"] = self.goodID;
+    dict[@"couponid"] = self.zheKouID;
+    dict[@"addressid"] = self.addressModel.ID;
+    [zkRequestTool networkingPOST: orderSubmit_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];
@@ -185,6 +188,13 @@
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.navigationController popViewControllerAnimated:YES];
             });
+        }else if ([[NSString stringWithFormat:@"%@",responseObject[@"code"]] integerValue] == 401) {
+            // 优惠券失效
+            [SVProgressHUD showErrorWithStatus:responseObject[@"msg"]];
+            self.zheKouMoney = 0;
+            self.zheKouID = nil;
+            self.moneyLB.text =  [NSString stringWithFormat:@"￥%0.2f",self.model.price.floatValue * self.numStr.intValue - self.zheKouMoney];
+            [self.tableView reloadData];
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }

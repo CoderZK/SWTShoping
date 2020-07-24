@@ -41,8 +41,8 @@
      
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
-            
-            self.TV.text = responseObject[@"data"];
+            SWTModel * mm = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
+            self.TV.text = mm.content;
             
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];

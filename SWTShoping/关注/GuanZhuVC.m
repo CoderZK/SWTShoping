@@ -28,7 +28,9 @@
     [super viewWillAppear:animated];
     
     
-    
+    if (!ISLOGIN) {
+        [self gotoLoginVC];
+    }
     
 }
 

@@ -43,6 +43,8 @@
     
 }
 
+
+
 - (void)initFootV {
     self.footV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 150)];
     self.footV.backgroundColor = WhiteColor;

@@ -10,8 +10,7 @@
 
 @interface SWTGoodsDetailChuJiaView()
 @property(nonatomic , strong)UIView *whiteV;
-@property(nonatomic , strong)UILabel *moneyLB;
-@property(nonatomic , strong)UIButton *moneyBt,*chujiaBt;
+
 @end
 
 @implementation SWTGoodsDetailChuJiaView
@@ -69,7 +68,7 @@
         lb2.font = kFont(15);
         lb2.textColor = CharacterColor50;
         lb2.textAlignment = NSTextAlignmentCenter;
-        lb2.text = @"领先价格: ";
+        lb2.text = @"最新价格: ";
         [moenyV addSubview:lb2];
         [moenyV addSubview:self.moneyLB];
         
@@ -92,6 +91,7 @@
         [self.moneyBt mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(moenyV.mas_bottom).offset(30);
             make.height.equalTo(@45);
+            make.width.equalTo(@120);
             make.centerX.equalTo(self.whiteV);
             
         }];
