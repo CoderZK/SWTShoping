@@ -17,7 +17,8 @@
 @property(nonatomic , strong)UIImageView *imgV;
 @property(nonatomic , strong)UIView *headView;
 @property(nonatomic,assign)BOOL isShopBackImg;
-
+@property(nonatomic , strong)UIImage *image;
+@property(nonatomic , strong)NSString *headImgStr,*shopBackImagStr;
 @end
 
 @implementation SWTLaoYouDianPuInfoOneTVC
@@ -48,7 +49,7 @@
     [self.shopHeadPicV addSubview:lb];
     self.headPicBt = [[UIButton alloc] initWithFrame:CGRectMake(ScreenW - 70, 10, 60, 60)];
     [self.headPicBt setBackgroundImage:[UIImage imageNamed:@"dyx9"] forState:UIControlStateNormal];
-//    self.headPicBt.backgroundColor =[UIColor redColor];
+    //    self.headPicBt.backgroundColor =[UIColor redColor];
     
     
     [self.shopHeadPicV addSubview:self.headPicBt];
@@ -119,9 +120,39 @@
     
     [[button rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         @strongify(self);
-        SWTLaoYouDianPuInfoTwoTVC * vc =[[SWTLaoYouDianPuInfoTwoTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-        vc.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:vc animated:YES];
+        
+        if (self.headImgStr.length == 0) {
+            [SVProgressHUD showErrorWithStatus:@"请选择商铺头像"];
+            return;
+        }
+        
+        if (self.shopNameV.rightTF.text.length == 0) {
+            [SVProgressHUD showErrorWithStatus:@"请输入商铺名字"];
+            return;
+        }
+        
+        if (self.shopDesV.rightTF.text.length == 0) {
+            [SVProgressHUD showErrorWithStatus:@"请输入商铺介绍"];
+            return;
+        }
+        
+        if (self.shopWinXinV.rightTF.text.length == 0) {
+            [SVProgressHUD showErrorWithStatus:@"请输入商铺微信号"];
+            return;
+        }
+        
+        if (self.shopPhoneV.rightTF.text.length == 0) {
+            [SVProgressHUD showErrorWithStatus:@"请输入商铺联系手机号"];
+            return;
+        }
+        
+        if (self.shopBackImagStr.length == 0) {
+            [SVProgressHUD showErrorWithStatus:@"请选择商铺头背景图"];
+            return;
+        }
+        
+        [self oneSetpAction];
+        
         
     }];
     
@@ -131,6 +162,42 @@
     
 }
 
+
+- (void)oneSetpAction {
+    
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"avatar"] = self.headImgStr;
+    dict[@"store_name"] = self.shopNameV.rightTF.text;
+    dict[@"description"] = self.shopDesV.rightTF.text;
+    dict[@"weixin"] = self.shopWinXinV.rightTF.text;
+    dict[@"mobile"] = self.shopPhoneV.rightTF.text;
+    dict[@"bg_image"] = self.shopBackImagStr;
+    dict[@"memberid"] = [zkSignleTool shareTool].session_uid;
+    [zkRequestTool networkingPOST:registerStep1_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            SWTLaoYouDianPuInfoTwoTVC * vc =[[SWTLaoYouDianPuInfoTwoTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+            vc.hidesBottomBarWhenPushed = YES;
+            vc.firstID = responseObject[@"data"][@"id"];
+            [self.navigationController pushViewController:vc animated:YES];
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+    
+    
+    
+}
 
 - (void)addPict {
     
@@ -143,9 +210,13 @@
                 
                 if (self.isShopBackImg) {
                     self.imgV.image = image;
+                    
                 }else {
                     [self.headPicBt setBackgroundImage:image forState:UIControlStateNormal];
+                    
                 }
+                self.image = image;
+                [self updateImage];
                 
             }];
             
@@ -181,7 +252,11 @@
                         self.imgV.image = image;
                     }else {
                         [self.headPicBt setBackgroundImage:image forState:UIControlStateNormal];
+                        
                     }
+                    self.image = image;
+                    [self updateImage];
+                    
                 }
                 
                 
@@ -206,6 +281,30 @@
     
 }
 
+- (void)updateImage {
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"type"] = @"head";
+    dict[@"userid"] = [zkSignleTool shareTool].session_uid;
+    [zkRequestTool NetWorkingUpLoad:uploadfile_SWT images:@[self.image] name:@"file" parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        if ([responseObject[@"code"] intValue] == 200) {
+            if (self.isShopBackImg) {
+                self.shopBackImagStr = responseObject[@"data"];
+            }else {
+                self.headImgStr = responseObject[@"data"];
+            }
+            [self.tableView reloadData];
+            
+        }else {
+            [self showAlertWithKey:responseObject[@"code"] message:responseObject[@"msg"] ];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
+    
+    
+}
 
 
 @end

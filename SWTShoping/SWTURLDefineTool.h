@@ -66,6 +66,9 @@
 /** 根据分类获取商铺信息和商品信息 */
 #define merchList_SWT URLOne@"merch/list"
 
+/** 获取注册界面展示信息 */
+#define registerGet_info_SWT URLOne@"register/get_info"
+
 /**
 商户商品信息 */
 #define merchMerchgood_SWT URLOne@"merch/merchgood"
@@ -78,7 +81,11 @@
 /** 获取商品的所有顶级分类 */
 #define goodTopcategory_SWT URLOne@"good/topcategory"
 
+/** 注册第一步*/
+#define registerStep1_SWT URLOne@"register/step1"
 
+/**注册第二部*/
+#define registerStep2_SWT URLOne@"register/step2"
 
 #pragma mark ---- 帮助信息模   -----
 ///** 帮助模块 */
@@ -154,10 +161,19 @@
 #define videoFav_SWT URLOne@"video/fav"
 
 #pragma mark ----订单信息接口 -----
+
+/** 申请退款 */
+#define orderBack_SWT URLOne@"order/back"
 /** 发表评论接口*/
 #define orderComment_SWT URLOne@"order/comment"
+/** 确认收货 */
+#define orderDelivery_SWT URLOne@"order/delivery"
+/** 修改订单地址接口 */
+#define orderEditaddress_SWT URLOne@"order/editaddress"
 /** 获取订单列表 */
 #define orderList_SWT URLOne@"order/list"
+/** 支付设置订单状态 */
+#define orderPay_SWT URLOne@"order/pay"
 /** 提交订单 */
 #define orderSubmit_SWT URLOne@"order/submit"
 

@@ -64,7 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *good_id;
 @property(nonatomic,strong)NSString *avatar;
 @property(nonatomic,strong)NSString *category;
-//@property(nonatomic,strong)NSString *creattime;
+@property(nonatomic,strong)NSString *spec;
 @property(nonatomic,strong)NSString *createtime;
 @property(nonatomic,strong)NSString *isfollow; // no or yes
 @property(nonatomic,strong)NSString *isfav;// no or yes

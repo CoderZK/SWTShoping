@@ -17,6 +17,7 @@
 @interface SWTLaoYouHomeTVC ()
 @property(nonatomic , strong)SWTLaoYouHomeHeadView *headV;
 @property(nonatomic , strong)UIView*footV;
+@property(nonatomic , strong)NSDictionary *dataDict;
 @end
 
 @implementation SWTLaoYouHomeTVC
@@ -40,9 +41,36 @@
     self.tableView.estimatedRowHeight = 40;
     
     [self initFootV];
+ 
+    
+    [self getData];
     
 }
 
+- (void)getData {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    [zkRequestTool networkingPOST:registerGet_info_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            self.dataDict = responseObject[@"data"];
+            self.headV.dataDict = self.dataDict;
+            [self.tableView reloadData];
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+}
 
 
 - (void)initFootV {
@@ -101,6 +129,7 @@
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             SWTLaoYouTwoCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTLaoYouTwoCell" forIndexPath:indexPath];
+            cell.dataDict = self.dataDict;
             return cell;
         }else {
             SWTLaoYouThreeCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTLaoYouThreeCell" forIndexPath:indexPath];
@@ -139,6 +168,7 @@
        view.titleLB.text = @"快速开店";
     }
     view.backgroundColor = WhiteColor;
+    view.clipsToBounds = YES;
     return view;
 }
 

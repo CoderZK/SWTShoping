@@ -36,6 +36,7 @@
 }
 
 - (void)clickAction:(UIButton *)button {
+    self.score = button.tag - 100;
     for (int i = 100 ; i < 105; i++) {
         UIButton * buNei  = [self viewWithTag:i];
         if (buNei.tag <= button.tag ) {

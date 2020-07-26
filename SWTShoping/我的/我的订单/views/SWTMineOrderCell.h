@@ -19,6 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic , strong)UIButton *rightOneBt,*rightTwoBt;
 @property(nonatomic , strong)UILabel *statusLB,*numberAndMoneyLB;
 
+@property(nonatomic , strong)SWTModel *model;
+//0未支付1待发货2待收货3待评价4已完成5已关闭-1交易失败 -2 全部
+
 @end
 
 NS_ASSUME_NONNULL_END

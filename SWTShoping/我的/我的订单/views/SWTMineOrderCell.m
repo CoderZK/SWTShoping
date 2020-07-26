@@ -134,6 +134,7 @@
         [self.numberAndMoneyLB mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.leftimgV).offset(8);
             make.right.equalTo(self).offset(-15);
+            make.width.equalTo(@120);
         }];
         
         [self.leftOneLB mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -208,6 +209,71 @@
     [super setSelected:selected animated:animated];
     
     // Configure the view for the selected state
+}
+
+- (void)setModel:(SWTModel *)model {
+    _model = model;
+    
+    [self.shopNameBt setTitle: [NSString stringWithFormat:@" %@",model.store_name] forState:UIControlStateNormal];
+    self.leftOneLB.text = model.goodname;
+    
+    self.leftTwoLb.text =model.spec;
+    self.leftThreeLB.hidden = YES;
+    //0未支付1待发货2待收货3待评价4已完成5已关闭-1交易失败 -2 全部
+    self.rightTwoBt.hidden = self.rightOneBt.hidden = NO;
+    if (model.status.intValue == -1) {
+        self.leftThreeLB.hidden = NO;
+        self.typeOneLB.hidden = self.typeTwoLB.hidden = YES;
+        self.leftThreeLB.hidden = NO;
+        self.leftThreeLB.text = model.goodprice;
+        self.rightOneBt.hidden = YES;
+        [self.rightTwoBt setTitle:@" 钱款> " forState:UIControlStateNormal];
+    }else {
+        
+        
+        
+        self.typeOneLB.hidden = self.typeTwoLB.hidden = YES;
+        
+        NSArray * arr = [model getTypeLBArr];
+        if (arr.count > 0) {
+            self.typeOneLB.hidden = NO;
+            self.typeOneLB.text =  [NSString stringWithFormat:@" %@ ",arr[0]];
+        }
+        if (arr.count > 1) {
+            self.typeTwoLB.hidden = NO;
+            self.typeTwoLB.text =  [NSString stringWithFormat:@" %@ ",arr[1]];
+        }
+        
+        if (model.state.intValue == 0) {
+            self.statusLB.text = @" 待付款 ";
+            [self.rightOneBt setTitle:@" 改地址 " forState:UIControlStateNormal];
+            [self.rightTwoBt setTitle:@" 付款 " forState:UIControlStateNormal];
+        }else if (model.state.intValue == 1) {
+            self.statusLB.text = @" 待商家发货 ";
+            [self.rightTwoBt setTitle:@" 提醒卖家发货 " forState:UIControlStateNormal];
+            self.rightOneBt.hidden = YES;
+        }else if (model.state.intValue == 2) {
+            self.statusLB.text = @" 待收货 ";
+            
+            [self.rightOneBt setTitle:@" 查看物流 " forState:UIControlStateNormal];
+            [self.rightTwoBt setTitle:@" 确认收货 " forState:UIControlStateNormal];
+            
+        }else if (model.state.intValue == 3) {
+            self.statusLB.text = @" 待评价 ";
+            [self.rightOneBt setTitle:@" 查看物流 " forState:UIControlStateNormal];
+            [self.rightTwoBt setTitle:@" 评价 " forState:UIControlStateNormal];
+        }else if (model.state.intValue == 4) {
+            self.statusLB.text = @" 已完成 ";
+            
+        }else if (model.state.intValue == 5) {
+            self.statusLB.text = @" 交易失败 ";
+            
+        }
+
+    }
+    
+    
+    
 }
 
 @end

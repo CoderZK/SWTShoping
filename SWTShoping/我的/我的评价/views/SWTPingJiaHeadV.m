@@ -52,11 +52,11 @@
         [self.whiteView addSubview:self.leftTwoLb];
         
         
-        self.leftThreeLB = [[UILabel alloc] init];
-        self.leftThreeLB.font = kFont(13);
-        self.leftThreeLB.textColor = RedColor;
-        self.leftThreeLB.text = @"退款: ￥145";
-        [self.whiteView addSubview:self.leftThreeLB];
+//        self.leftThreeLB = [[UILabel alloc] init];
+//        self.leftThreeLB.font = kFont(13);
+//        self.leftThreeLB.textColor = RedColor;
+//        self.leftThreeLB.text = @"退款: ￥145";
+//        [self.whiteView addSubview:self.leftThreeLB];
         
         
         UILabel * miaoShuLB  =[[UILabel alloc] init];
@@ -68,7 +68,7 @@
         self.textV.placeholder = @"在这里写下您的评价,并上传卖家秀哦~";
         self.textV.font = kFont(14);
         [self.whiteView addSubview:self.textV];
-        self.textV.backgroundColor = [UIColor redColor];
+//        self.textV.backgroundColor = [UIColor redColor];
         
         
         self.xingView1 = [[SWTXingXingView alloc] initWithFrame:CGRectMake(0, 0, 27*5-10, 17)];
@@ -145,12 +145,12 @@
         }];
         
         
-        [self.leftThreeLB mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.leftimgV.mas_right).offset(5);
-            make.right.equalTo(self).offset(-10);
-            make.top.equalTo(self.leftTwoLb.mas_bottom).offset(7);
-            make.height.equalTo(@17);
-        }];
+//        [self.leftThreeLB mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.equalTo(self.leftimgV.mas_right).offset(5);
+//            make.right.equalTo(self).offset(-10);
+//            make.top.equalTo(self.leftTwoLb.mas_bottom).offset(7);
+//            make.height.equalTo(@17);
+//        }];
         
         
         [miaoShuLB mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -183,7 +183,7 @@
         [self.picV  mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.leftimgV);
             make.right.equalTo(self).offset(-10);
-            make.height.equalTo(@90);
+            make.height.equalTo(@((ScreenW - 30 - 30)/4));
             make.top.equalTo(self.textV.mas_bottom).offset(20);
         }];
         
@@ -234,15 +234,87 @@
     return self;
 }
 
+- (void)setModel:(SWTModel *)model {
+    _model = model;
+    [self.leftimgV sd_setImageWithURL:[model.thumb getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+    self.leftOneLB.text = model.goodname;
+    self.leftTwoLb.text = model.spec;
+    self.leftThreeLB.hidden = YES;
+ 
+}
+
 
 - (void)setPicArr:(NSMutableArray<UIImage *> *)picArr {
     _picArr = picArr;
+    [self setPics];
+}
+
+
+
+
+- (void)setPics {
+    
+    [self.picV.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    NSInteger allNu = self.picArr.count < 4 ? self.picArr.count + 1:4;
+    
+    CGFloat space = 10;
+    CGFloat leftM = 5;
+    CGFloat ww = (ScreenW - 30 - 30)/4;
+    for (int i = 0 ; i< allNu; i++) {
+        
+        
+        
+        
+        UIButton * anNiuBt = [[UIButton alloc] initWithFrame:CGRectMake(leftM + (space+ ww) * i, 0, ww, ww)];
+        anNiuBt.layer.cornerRadius = 3;
+        anNiuBt.tag = 100+i;
+        anNiuBt.clipsToBounds = YES;
+        anNiuBt.backgroundColor = RGB(250, 250, 250);
+    
+        [anNiuBt addTarget:self action:@selector(hitAction:) forControlEvents:UIControlEventTouchUpInside];
+        [self.picV addSubview:anNiuBt];
+        
+        UIButton * deleteBt = [[UIButton alloc] initWithFrame:CGRectMake(ww - 25 , 0, 25, 25)];
+        
+        deleteBt.tag = 200+i;
+        [deleteBt addTarget:self action:@selector(hitAction:) forControlEvents:UIControlEventTouchUpInside];
+
+        if (i<self.picArr.count) {
+            [anNiuBt setBackgroundImage:self.picArr[i] forState:UIControlStateNormal];
+                   
+            [deleteBt setImage:[UIImage imageNamed:@"48"] forState:UIControlStateNormal];
+            [anNiuBt addSubview:deleteBt];
+        }else {
+            [anNiuBt setBackgroundImage:[UIImage imageNamed:@"feedback_addpic"] forState:UIControlStateNormal];
+                   
+           
+        }
+       
+        
+        
+    }
     
 }
 
-- (void)setPics  {
+- (void)hitAction:(UIButton *)anNiuBt {
     
-    
+    if (anNiuBt.tag >=200) {
+        //删除
+        [self.picArr removeObjectAtIndex:anNiuBt.tag - 200];
+        [self setPics];
+        [self.delegateSignal sendNext: [NSString stringWithFormat:@"%ld",anNiuBt.tag - 200]];
+    }else {
+        if (anNiuBt.tag - 100  == self.picArr.count) {
+            //添加图片
+            if (self.delegateSignal) {
+                [self.delegateSignal sendNext:@"123"];
+            }
+            
+        }
+    }
 }
+
+
 
 @end

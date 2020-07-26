@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTLaoYouDianPuInfoTwoTVC : BaseTableViewController
-
+@property(nonatomic , strong)NSString *firstID;
 @end
 
 NS_ASSUME_NONNULL_END

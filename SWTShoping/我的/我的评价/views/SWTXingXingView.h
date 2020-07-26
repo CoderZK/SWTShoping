@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTXingXingView : UIView
-
+@property(nonatomic , assign)NSInteger  score;
 @end
 
 NS_ASSUME_NONNULL_END
