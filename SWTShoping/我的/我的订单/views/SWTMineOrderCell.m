@@ -15,6 +15,10 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
+        self.leftHeadImgV = [[UIImageView alloc] init];
+        self.leftHeadImgV.layer.cornerRadius = 15;
+        self.leftHeadImgV.clipsToBounds = YES;
+        [self addSubview:self.leftHeadImgV];
         
         self.shopNameBt = [[UIButton alloc] init];
         [self.shopNameBt setImage:[UIImage imageNamed:@"shop1-1"] forState:UIControlStateNormal];
@@ -111,9 +115,14 @@
         [self.rightTwoBt setTitleColor:RedLightColor forState:UIControlStateNormal];
         [self.rightOneBt setTitleColor:RedLightColor forState:UIControlStateNormal];
         
+        [self.leftHeadImgV mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self).offset(8.5);
+            make.width.height.equalTo(@30);
+            make.left.equalTo(self).offset(15);
+        }];
         
         [self.shopNameBt mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self).offset(15);
+            make.left.equalTo(self).offset(45);
             make.top.equalTo(self).offset(10);
             make.height.equalTo(@17);
         }];
@@ -216,7 +225,9 @@
     
     [self.shopNameBt setTitle: [NSString stringWithFormat:@" %@",model.store_name] forState:UIControlStateNormal];
     self.leftOneLB.text = model.goodname;
-    
+    [self.leftimgV sd_setImageWithURL:[model.thumb getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+     [self.leftHeadImgV sd_setImageWithURL:[model.avatar getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+
     self.leftTwoLb.text =model.spec;
     self.leftThreeLB.hidden = YES;
     //0未支付1待发货2待收货3待评价4已完成5已关闭-1交易失败 -2 全部

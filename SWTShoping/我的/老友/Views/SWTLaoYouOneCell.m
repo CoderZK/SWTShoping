@@ -123,8 +123,19 @@
     [self.shopNameBt setTitle:model.store_name forState:UIControlStateNormal];
     self.leftOneLB.text = model.name;
     
-    self.leftThreeLB.text =  [NSString stringWithFormat:@"￥%@",[model.price getPriceAllStr]];
+    self.leftTwoLb.text =  [NSString stringWithFormat:@"￥%@",[model.price getPriceAllStr]];
     
+    self.leftThreeLB.text = model.createtime;
+    self.leftThreeLB.textColor = CharacterColor70;
+    
+    if (self.type == 2) {
+        self.rightImgV.image = [UIImage imageNamed:@"cpjl_yzp"];
+    }else if (self.type == 0) {
+        self.rightImgV.image = [UIImage imageNamed:@"cpjl_bcy"];
+    }else if (self.type == 1) {
+        self.rightImgV.image = [UIImage imageNamed:@"cpjl_ylx"];
+    }
+
 }
 
 - (void)awakeFromNib {

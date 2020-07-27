@@ -103,6 +103,10 @@
 #define privacypolicy_SWT URLOne@"privacypolicy"
 
 #pragma mark ---- 用户信息接口  -----
+
+/** 获参拍记录 */
+#define userAuctionlog_SWT URLOne@"user/auctionlog"
+
 /** 获取我的优惠券列表 */
 #define userCoupon_SWT URLOne@"user/coupon"
 ///** 获取用信息 */
@@ -118,6 +122,12 @@
 #define userFollow_SWT URLOne@"user/follow"
 ///** 关注操作 */
 #define userFollowOperate_SWT URLOne@"user/follow/operate"
+
+///** 猜你喜欢 */
+#define userLike_SWT URLOne@"user/like"
+///** 我的钱包 */
+#define userMypackage_SWT URLOne@"user/mypackage"
+
 /**设置支付密码接口 */
 #define userPay_SWT URLOne@"user/pay"
 /** 获取足迹列表 */

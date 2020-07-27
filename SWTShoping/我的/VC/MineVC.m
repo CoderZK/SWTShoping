@@ -31,6 +31,7 @@
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 @property(nonatomic , strong)UICollectionView *collectionView;
 @property(nonatomic , strong)UIImageView *imagV;
+@property(nonatomic , strong)NSMutableArray<SWTModel *> *likeArr;
 
 @end
 
@@ -88,6 +89,11 @@
     }];
     
     
+    if (ISLOGIN) {
+        self.likeArr = @[].mutableCopy;
+        [self getUserLikeData];
+    }
+    
 }
 
 
@@ -97,9 +103,34 @@
     [zkRequestTool networkingPOST:userDetail_SWT parameters:[zkSignleTool shareTool].session_uid success:^(NSURLSessionDataTask *task, id responseObject) {
         
         [SVProgressHUD dismiss];
+        [self.collectionView.mj_header endRefreshing];
         if ([responseObject[@"code"] intValue]== 200) {
             
             [zkSignleTool shareTool].nickname = responseObject[@"data"][@"nickname"];
+            
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+         [self.collectionView.mj_header endRefreshing];
+        
+    }];
+}
+
+
+- (void)getUserLikeData {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    [zkRequestTool networkingPOST:userLike_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            self.likeArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            [self.collectionView reloadData];
             
             
         }else {
@@ -159,7 +190,7 @@
     if (section == 0) {
         return 3;
     }
-    return 9;
+    return self.likeArr.count;
     //    return self.dataArray.count;
 }
 
@@ -263,13 +294,18 @@
             return cell;
         }
     }else {
-        if (indexPath.row == 0) {
-            SWTHomeCollectionTwoCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionTwoCell" forIndexPath:indexPath];
-            return cell;
-        }else {
-            SWTHomeCollectionThreeCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionThreeCell" forIndexPath:indexPath];
-            return cell;
-        }
+        
+        SWTHomeCollectionThreeCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionThreeCell" forIndexPath:indexPath];
+        cell.model = self.likeArr[indexPath.row];
+        return cell;
+        
+//        if (indexPath.row == 0) {
+//            SWTHomeCollectionTwoCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionTwoCell" forIndexPath:indexPath];
+//            return cell;
+//        }else {
+//            SWTHomeCollectionThreeCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionThreeCell" forIndexPath:indexPath];
+//            return cell;
+//        }
     }
     
 }
@@ -283,6 +319,7 @@
     
     SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
     vc.hidesBottomBarWhenPushed = YES;
+    vc.goodID = self.likeArr[indexPath.row].goodid;
     [self.navigationController pushViewController:vc animated:YES];
     
 }

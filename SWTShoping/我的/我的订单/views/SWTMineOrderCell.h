@@ -10,7 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SWTMineOrderCell : UITableViewCell
+@interface SWTMineOrderCell :UITableViewCell
+@property(nonatomic , strong)UIImageView *leftHeadImgV;
 @property(nonatomic , strong)UIImageView *leftimgV;//蹄片
 @property(nonatomic , strong)UILabel *leftOneLB,*leftTwoLb,*leftThreeLB,*typeOneLB,*typeTwoLB;
 @property(nonatomic , strong)UIImageView *rightImgV;

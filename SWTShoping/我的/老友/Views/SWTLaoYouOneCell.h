@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic , strong)UILabel *moneyLB;
 
 @property(nonatomic , strong)SWTModel *model;
+@property(nonatomic , assign)NSInteger  type;
 
 @end
 

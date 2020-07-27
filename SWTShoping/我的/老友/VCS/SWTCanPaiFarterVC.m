@@ -143,7 +143,13 @@
 //        vc.type = self.type;
 //        vc.shopId = self.shopId;
 //        vc.cateModel = model;
-    vc.type = index;
+    if (index == 0) {
+        vc.type = 2;
+    }else if (index == 1) {
+        vc.type = 0;
+    }else {
+        vc.type = 1;
+    }
         return vc;
    
 }
