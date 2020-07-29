@@ -124,7 +124,7 @@
 - (void)getMyFavData {
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    dict[@"tag"] = self.dataModel.tag;
+    dict[@"categoryid"] = self.dataModel.category;
     [zkRequestTool networkingPOST:videoFav_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         
         [SVProgressHUD dismiss];

@@ -195,10 +195,15 @@
 #pragma mark ---- 通用模块 -----
 /** 顶部图片 */
 #define topimg_SWT URLOne@"topimg"
+/** 查询快递接口 */
+#define expressg_SWT URLOne@"express"
+
+
 /** 上传文件 */
 #define uploadfile_SWT URLOne@"uploadfile"
 
-
+/** 上传文件 */
+#define uploadfiles_SWT URLOne@"uploadfiles"
 
 
 #pragma mark ---- 商户信息接口  -----

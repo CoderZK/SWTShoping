@@ -284,6 +284,9 @@
     NSString * distanceStr;
     
     NSDate * beDate = [NSDate dateWithTimeIntervalSince1970:beTime];
+    if (str.stringValue.length > 10) {
+        beDate = [NSDate dateWithTimeIntervalSince1970:beTime/1000.0];
+    }
     NSDateFormatter * df = [[NSDateFormatter alloc]init];
     [df setDateFormat:@"yyyy/MM/dd HH:mm"];
     distanceStr = [df stringFromDate:beDate];
@@ -296,6 +299,9 @@
     NSString * distanceStr;
     
     NSDate * beDate = [NSDate dateWithTimeIntervalSince1970:beTime];
+    if (str.stringValue.length > 10) {
+        beDate = [NSDate dateWithTimeIntervalSince1970:beTime/1000.0];
+    }
     NSDateFormatter * df = [[NSDateFormatter alloc]init];
     [df setDateFormat:@"yyyy-MM-dd HH:mm"];
     distanceStr = [df stringFromDate:beDate];
@@ -308,6 +314,9 @@
     NSString * distanceStr;
     
     NSDate * beDate = [NSDate dateWithTimeIntervalSince1970:beTime];
+    if (str.stringValue.length > 10) {
+        beDate = [NSDate dateWithTimeIntervalSince1970:beTime/1000.0];
+    }
     NSDateFormatter * df = [[NSDateFormatter alloc]init];
     [df setDateFormat:@"MM月dd日 HH: mm"];
     distanceStr = [df stringFromDate:beDate];
@@ -328,6 +337,7 @@
     
 //        long long beTime = [str longLongValue];//1000.0;
     NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
+    
     double distanceTime = now - beTime;
     NSString * distanceStr;
     

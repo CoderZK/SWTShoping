@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTXingXingView : UIView
 @property(nonatomic , assign)NSInteger  score;
+@property(nonatomic , strong)RACSubject *delegateSignal;
 @end
 
 NS_ASSUME_NONNULL_END

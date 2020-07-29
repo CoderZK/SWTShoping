@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTLaoYouPinLeiCell : UITableViewCell
-
+@property(nonatomic , strong)NSMutableArray<SWTModel *> *dataArray;
 @end
 
 NS_ASSUME_NONNULL_END

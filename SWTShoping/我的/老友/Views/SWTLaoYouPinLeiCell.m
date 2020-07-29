@@ -36,14 +36,19 @@
     return self;
 }
 
-
+- (void)setDataArray:(NSMutableArray<SWTModel *> *)dataArray {
+    _dataArray = dataArray;
+    [self.whiteV.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    [self addsub];
+}
 
 - (void)addsub {
-    NSArray * arr = @[@"玉翠租宝",@"工艺作品",@"文玩杂项",@"紫砂陶壶",@"书画抓可",@"查究滋补",@"花鸟文娱",@"奢侈品"];
     CGFloat space = (ScreenW - 4* 80)/5;
-    for (int i = 0 ; i < arr.count; i++) {
+    for (int i = 0 ; i < self.dataArray.count; i++) {
         SWTMineHomeButton * buttom  =[[SWTMineHomeButton alloc] initWithFrame:CGRectMake(space + (space + 80)* (i%4), (i/4)* 100  , 80, 80) withImageWidth:50];
-        buttom.titleLB.text = arr[i];
+        buttom.titleLB.text = self.dataArray[i].name;
+        [buttom.imgV sd_setImageWithURL:[self.dataArray[i].pic getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
         [self.whiteV addSubview:buttom];
     }
     

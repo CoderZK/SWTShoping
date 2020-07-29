@@ -98,6 +98,8 @@ static zkSignleTool * tool = nil;
     
 }
 
+
+
 - (void)setDeviceToken:(NSString *)deviceToken {
     
     [[NSUserDefaults standardUserDefaults] setObject:deviceToken forKey:@"deviceToken"];

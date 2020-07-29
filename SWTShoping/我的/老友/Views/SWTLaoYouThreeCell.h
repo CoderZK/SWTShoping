@@ -12,7 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTLaoYouThreeCell : UITableViewCell
 @property(nonatomic , assign)NSInteger  type;// 1 2
-@property(nonatomic , strong)NSMutableArray *dataArray;
+
+@property(nonatomic , strong)NSString *htmlStr;
+@property(nonatomic , strong)NSMutableDictionary *dataDict;
+@property(nonatomic , strong)NSString *titleStr;
+
 @end
 
 NS_ASSUME_NONNULL_END

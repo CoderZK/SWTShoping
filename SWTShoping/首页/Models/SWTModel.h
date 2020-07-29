@@ -105,7 +105,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *followid;
 @property(nonatomic,strong)NSString *favid;
 @property(nonatomic,strong)NSString *newprice;
-//@property(nonatomic,strong)NSString *age;
+@property(nonatomic,strong)NSString *growth_value;//分数
 //@property(nonatomic,strong)NSString *userId;
 //@property(nonatomic,strong)NSString *marriageStatus;
 //@property(nonatomic,strong)NSString *birthStatus;

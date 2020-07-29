@@ -378,7 +378,8 @@
         
         for (UIImage * image in images)
         {
-            [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 0.5) name:name fileName:@"teswwt1.jpg" mimeType:@"image/jpeg"];
+//            [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 0.5) name:name fileName:@"teswwt1.jpg" mimeType:@"image/jpeg"];
+            [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 0.5) name:name fileName: [NSString stringWithFormat:@"teswwt%u.jpg",arc4random() % 1000] mimeType:@"image/jpeg"];
             
         }
         

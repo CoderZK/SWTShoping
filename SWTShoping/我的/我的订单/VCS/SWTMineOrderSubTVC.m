@@ -12,6 +12,7 @@
 #import "SWTTuiHuoOneTVC.h"
 #import "SWTMineAddressTVC.h"
 #import "SWTSendMinePingLunTVC.h"
+#import "SWTWuLiuTVC.h"
 @interface SWTMineOrderSubTVC ()
 @property(nonatomic,assign)NSInteger page;
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *dataArray;
@@ -37,6 +38,18 @@
         self.page++;
         [self getData];
     }];
+    
+    
+       @weakify(self);
+       [LTSCEventBus registerEvent:@"sucess" block:^(id data) {
+           @strongify(self);
+           
+           self.page = 1;
+           [self getData];
+           
+           
+       }];
+    
 }
 
 
@@ -114,6 +127,7 @@
         
         SWTSendMinePingLunTVC* vc =[[SWTSendMinePingLunTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
         vc.hidesBottomBarWhenPushed = YES;
+        vc.model = model;
         [self.navigationController pushViewController:vc animated:YES];
         
     }else if (model.status.intValue == 4) {
@@ -133,10 +147,10 @@
         [self editOrderAddressOneWithModel:model];
     }else if (model.status.intValue == 1) {
         
-    }else if (model.status.intValue == 2) {
-        
-    }else if (model.status.intValue == 3) {
-        
+    }else if (model.status.intValue == 2 || model.status.intValue == 3) {
+        SWTWuLiuTVC * vc =[[SWTWuLiuTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
     }else if (model.status.intValue == 4) {
         
     }else if (model.status.intValue == 5) {
@@ -162,12 +176,12 @@
     dict[@"addressid"] = addressID;
     dict[@"orderid"] = model.ID;
     dict[@"price"] = model.goodprice;
+    dict[@"id"] = model.ID;
     [zkRequestTool networkingPOST:urlStr parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
-  
-        [SVProgressHUD dismiss];
+        
         if ([responseObject[@"code"] intValue]== 200) {
             
-            
+            [LTSCEventBus sendEvent:@"sucess" data:nil];
             if (type == -20) {
                [SVProgressHUD showSuccessWithStatus:@"付款成功"];
             }else if (type == 0){

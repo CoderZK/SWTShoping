@@ -11,16 +11,18 @@
 @interface SWTSendMinePingLunTVC ()
 @property(nonatomic , strong)SWTPingJiaHeadV *headV;
 @property(nonatomic , strong)NSMutableArray<UIImage *> *picArr;
+@property(nonatomic , strong)NSMutableArray *picStrArr;
 @end
 
 @implementation SWTSendMinePingLunTVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.picArr = @[].mutableCopy;
     self.navigationItem.title = @"发表评价";
     self.headV  =[[SWTPingJiaHeadV alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
     self.tableView.tableHeaderView = self.headV;
+    self.headV.picArr = self.picArr;
     self.headV.delegateSignal = [[RACSubject alloc] init];
     @weakify(self);
     [self.headV.delegateSignal subscribeNext:^(NSString * x) {
@@ -44,7 +46,10 @@
     [button setTitle:@"发布" forState:UIControlStateNormal];
     [button addTarget:self action:@selector(fabuAction) forControlEvents:UIControlEventTouchUpInside];
     
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    
 
+    self.picStrArr = @[].mutableCopy;
 }
 
 
@@ -119,10 +124,80 @@
 
 
 - (void)fabuAction {
-   
+    
+    
+    if (self.headV.textV.text.length == 0) {
+        [SVProgressHUD showErrorWithStatus:@"请输入描述"];
+        return;
+    }
+       
+    
+    if (self.picArr.count > 0) {
+        [self updateImage];
+    }else {
+        [self pingJiaAction];
+    }
+    
     
     
 }
 
+- (void)updateImage {
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"type"] = @"comment";
+    dict[@"userid"] = [zkSignleTool shareTool].session_uid;
+    [zkRequestTool NetWorkingUpLoad:uploadfiles_SWT images:self.picArr name:@"files" parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        if ([responseObject[@"code"] intValue] == 200) {
+            self.picStrArr = responseObject[@"data"];
+            [self pingJiaAction];
+        }else {
+            [self showAlertWithKey:responseObject[@"code"] message:responseObject[@"msg"] ];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
+    
+    
+}
+
+
+//发不评价
+- (void)pingJiaAction {
+    
+    
+   
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"comment"] = self.headV.textV.text;
+    dict[@"id"] = self.model.ID;
+    dict[@"imgurl"] = [self.picStrArr componentsJoinedByString:@","];
+    dict[@"score"] = @(self.headV.xingView1.score+1);
+    [zkRequestTool networkingPOST:orderComment_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+      
+        if ([responseObject[@"code"] intValue]== 200) {
+            [SVProgressHUD showSuccessWithStatus:@"评价成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+
+    
+    
+    
+}
 
 @end

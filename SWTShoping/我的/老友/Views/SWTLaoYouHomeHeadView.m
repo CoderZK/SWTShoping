@@ -51,7 +51,7 @@
         lb3.textAlignment = NSTextAlignmentCenter;
         lb3.textColor = WhiteColor;
         lb3.font = kFont(13);
-        lb3.numberOfLines = 0;
+        lb3.numberOfLines = 3;
         [imgVTwo addSubview:lb3];
         lb3.text = @"平台商品覆盖玉翠珠宝, 文玩杂项, 工艺作品, 紫砂陶瓷, 书画篆刻等多个分类, 应有尽有";
         [lb3 mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -27,12 +27,13 @@
 #import "SWTSendMinePingLunTVC.h"
 #import "SWTLoginOneVC.h"
 #import "SWTMineZiLiaoVC.h"
+#import "SWTChengZhangShowView.h"
 @interface MineVC ()<XPCollectionViewWaterfallFlowLayoutDataSource,UICollectionViewDelegate,UICollectionViewDataSource>
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 @property(nonatomic , strong)UICollectionView *collectionView;
 @property(nonatomic , strong)UIImageView *imagV;
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *likeArr;
-
+@property(nonatomic , strong)NSMutableArray<SWTModel *> *leverArr;
 @end
 
 @implementation MineVC
@@ -93,6 +94,8 @@
         self.likeArr = @[].mutableCopy;
         [self getUserLikeData];
     }
+    self.leverArr = @[].mutableCopy;
+    [self getVipListData];
     
 }
 
@@ -119,6 +122,31 @@
         
     }];
 }
+
+
+- (void)getVipListData {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    [zkRequestTool networkingPOST:levelList_SWT parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        [SVProgressHUD dismiss];
+        [self.collectionView.mj_header endRefreshing];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            self.leverArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+         [self.collectionView.mj_header endRefreshing];
+        
+    }];
+}
+
 
 
 - (void)getUserLikeData {
@@ -236,7 +264,9 @@
                     vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
                 }else if (index == 6) {
-                    
+                    SWTChengZhangShowView * chengzhangV = [[SWTChengZhangShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+                    chengzhangV.leverArr = self.leverArr;
+                    [chengzhangV show];
                 }else if (index == 7) {
                     
                 }

@@ -45,7 +45,11 @@
             buNei.selected = NO;
         }
     }
+    if (self.delegateSignal) {
+        [self.delegateSignal sendNext:@(button.tag -100)];
+    }
 }
+
 
 
 @end

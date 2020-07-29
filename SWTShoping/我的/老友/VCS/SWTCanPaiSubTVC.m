@@ -75,6 +75,7 @@
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SWTLaoYouOneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     cell.type = self.type;
+    self.dataArray[indexPath.row].name = self.dataArray[indexPath.row].goodname;
     cell.model = self.dataArray[indexPath.row];
     return cell;
 }

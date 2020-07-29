@@ -69,7 +69,7 @@
         if ([responseObject[@"code"] intValue]== 200) {
             
             
-            self.dataArrayTwo = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            self.dataArrayTwo = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"][@"list"]];
             
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];

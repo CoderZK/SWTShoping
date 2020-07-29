@@ -9,12 +9,7 @@
 #import "SWTPingJiaHeadV.h"
 #import "SWTXingXingView.h"
 @interface SWTPingJiaHeadV()
-@property(nonatomic , strong)UIView *whiteView,*whiteTwoView;
-@property(nonatomic , strong)UIImageView *leftimgV;//蹄片
-@property(nonatomic , strong)UILabel *leftOneLB,*leftTwoLb,*leftThreeLB,*manyiLB,*shopNameLB;
-@property(nonatomic , strong)SWTXingXingView *xingView1,*xingView2,*xingView3;
-@property(nonatomic , strong)IQTextView *textV;
-@property(nonatomic , strong)UIScrollView *picV;
+
 
 @end
 
@@ -52,11 +47,11 @@
         [self.whiteView addSubview:self.leftTwoLb];
         
         
-//        self.leftThreeLB = [[UILabel alloc] init];
-//        self.leftThreeLB.font = kFont(13);
-//        self.leftThreeLB.textColor = RedColor;
-//        self.leftThreeLB.text = @"退款: ￥145";
-//        [self.whiteView addSubview:self.leftThreeLB];
+        //        self.leftThreeLB = [[UILabel alloc] init];
+        //        self.leftThreeLB.font = kFont(13);
+        //        self.leftThreeLB.textColor = RedColor;
+        //        self.leftThreeLB.text = @"退款: ￥145";
+        //        [self.whiteView addSubview:self.leftThreeLB];
         
         
         UILabel * miaoShuLB  =[[UILabel alloc] init];
@@ -68,59 +63,80 @@
         self.textV.placeholder = @"在这里写下您的评价,并上传卖家秀哦~";
         self.textV.font = kFont(14);
         [self.whiteView addSubview:self.textV];
-//        self.textV.backgroundColor = [UIColor redColor];
+        //        self.textV.backgroundColor = [UIColor redColor];
         
         
         self.xingView1 = [[SWTXingXingView alloc] initWithFrame:CGRectMake(0, 0, 27*5-10, 17)];
         [self.whiteView addSubview:self.xingView1];
+        self.xingView1.delegateSignal = [[RACSubject alloc] init];
+        
         
         UILabel * miaoShuLB1  =[[UILabel alloc] init];
-        miaoShuLB1.text = @"非常好";
+        miaoShuLB1.text = @"非常差";
         miaoShuLB1.font = kFont(14);
         [self.whiteView addSubview:miaoShuLB1];
         self.manyiLB = miaoShuLB1;
         
         
+        @weakify(self);
+        [self.xingView1.delegateSignal subscribeNext:^(NSNumber * x) {
+            @strongify(self);
+            
+            if (x.intValue <= 0) {
+                miaoShuLB1.text = @"差";
+            }else if (x.intValue <= 2){
+                miaoShuLB1.text = @"一般";
+            }else if (x.intValue <= 3){
+                miaoShuLB1.text = @"很好";
+            }else {
+                miaoShuLB1.text = @"非常好";
+            }
+            
+            
+            
+        }];
+        
         self.picV =[[UIScrollView alloc] init];
         [self.whiteView addSubview:self.picV];
         
-        self.whiteTwoView = [[UIView alloc] init];
-        self.whiteTwoView.backgroundColor = WhiteColor;
-        self.whiteTwoView.layer.cornerRadius = 5;
-        self.whiteTwoView.clipsToBounds = YES;
-        [self addSubview:self.whiteTwoView];
+        //        self.whiteTwoView = [[UIView alloc] init];
+        //        self.whiteTwoView.backgroundColor = WhiteColor;
+        //        self.whiteTwoView.layer.cornerRadius = 5;
+        //        self.whiteTwoView.clipsToBounds = YES;
+        //        [self addSubview:self.whiteTwoView];
         
-        
-        UILabel * miaoShuLB3  =[[UILabel alloc] init];
-        miaoShuLB3.text = @"水御堂";
-        miaoShuLB3.font = kFont(14);
-        [self.whiteTwoView addSubview:miaoShuLB3];
-        self.shopNameLB = miaoShuLB3;
-        
-        UILabel * lb1 = [[UILabel alloc] init];
-        lb1.font = kFont(13);
-        lb1.textColor = CharacterColor70;
-        lb1.text = @"服务态度";
-        [self.whiteTwoView addSubview:lb1];
-        
-        self.xingView2  =[[SWTXingXingView alloc] initWithFrame:CGRectMake(0, 0, 25*5 -10, 15)];
-        [self.whiteTwoView addSubview:self.xingView2];
-        
-        UILabel * lb2 = [[UILabel alloc] init];
-        lb2.font = kFont(13);
-        lb2.textColor = CharacterColor70;
-        lb2.text = @"物流态度";
-        [self.whiteTwoView addSubview:lb2];
-        
-        self.xingView3  =[[SWTXingXingView alloc] initWithFrame:CGRectMake(0, 0, 25*5 -10, 15)];
-        [self.whiteTwoView addSubview:self.xingView3];
+        //
+        //        UILabel * miaoShuLB3  =[[UILabel alloc] init];
+        //        miaoShuLB3.text = @"水御堂";
+        //        miaoShuLB3.font = kFont(14);
+        //        [self.whiteTwoView addSubview:miaoShuLB3];
+        //        self.shopNameLB = miaoShuLB3;
+        //
+        //        UILabel * lb1 = [[UILabel alloc] init];
+        //        lb1.font = kFont(13);
+        //        lb1.textColor = CharacterColor70;
+        //        lb1.text = @"服务态度";
+        //        [self.whiteTwoView addSubview:lb1];
+        //
+        //        self.xingView2  =[[SWTXingXingView alloc] initWithFrame:CGRectMake(0, 0, 25*5 -10, 15)];
+        //        [self.whiteTwoView addSubview:self.xingView2];
+        //
+        //        UILabel * lb2 = [[UILabel alloc] init];
+        //        lb2.font = kFont(13);
+        //        lb2.textColor = CharacterColor70;
+        //        lb2.text = @"物流态度";
+        //        [self.whiteTwoView addSubview:lb2];
+        //
+        //        self.xingView3  =[[SWTXingXingView alloc] initWithFrame:CGRectMake(0, 0, 25*5 -10, 15)];
+        //        [self.whiteTwoView addSubview:self.xingView3];
         
         
         [self.whiteView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.top.equalTo(self).offset(15);
             make.right.equalTo(self).offset(-15);
-            make.height.equalTo(@(90 + 20 + 150 + 20 + 17 + 15 + 95 ));
+            make.height.equalTo(@(90 + 20 + 150 + 20 + 17+ 15 + 95));
         }];
+        
         
         
         [self.leftimgV mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -145,12 +161,12 @@
         }];
         
         
-//        [self.leftThreeLB mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.left.equalTo(self.leftimgV.mas_right).offset(5);
-//            make.right.equalTo(self).offset(-10);
-//            make.top.equalTo(self.leftTwoLb.mas_bottom).offset(7);
-//            make.height.equalTo(@17);
-//        }];
+        //        [self.leftThreeLB mas_makeConstraints:^(MASConstraintMaker *make) {
+        //            make.left.equalTo(self.leftimgV.mas_right).offset(5);
+        //            make.right.equalTo(self).offset(-10);
+        //            make.top.equalTo(self.leftTwoLb.mas_bottom).offset(7);
+        //            make.height.equalTo(@17);
+        //        }];
         
         
         [miaoShuLB mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -183,50 +199,50 @@
         [self.picV  mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.leftimgV);
             make.right.equalTo(self).offset(-10);
-            make.height.equalTo(@((ScreenW - 30 - 30)/4));
+            make.height.equalTo(@((ScreenW - 30 - 50)/4));
             make.top.equalTo(self.textV.mas_bottom).offset(20);
         }];
         
         // 90 + 20 + 150 + 20 + 17 + 15 + 95
         
         
-        [self.whiteTwoView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.equalTo(self.whiteView);
-            make.top.equalTo(self.whiteView.mas_bottom).offset(15);
-            make.height.equalTo(@140);
-        }];
-        
-        [self.shopNameLB mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.top.equalTo(self.whiteTwoView).offset(10);
-            make.height.equalTo(@20);
-            
-        }];
-        [lb1 mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.shopNameLB);
-            make.top.equalTo(self.shopNameLB.mas_bottom).offset(10);
-            make.height.equalTo(@20);
-        }];
-        
-        [self.xingView2 mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(lb1.mas_right).offset(15);
-            make.top.equalTo(lb1).offset(2.5);
-            make.height.equalTo(@15);
-            make.width.equalTo(@(25*5-10));
-        }];
-        
-        [lb2 mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.shopNameLB);
-            make.top.equalTo(lb1.mas_bottom).offset(10);
-            make.height.equalTo(@20);
-        }];
-        
-        [self.xingView3 mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(lb2.mas_right).offset(15);
-            make.top.equalTo(lb2).offset(2.5);
-            make.height.equalTo(@15);
-            make.width.equalTo(@(25*5-10));
-        }];
-        
+        //        [self.whiteTwoView mas_makeConstraints:^(MASConstraintMaker *make) {
+        //            make.left.right.equalTo(self.whiteView);
+        //            make.top.equalTo(self.whiteView.mas_bottom).offset(15);
+        //            make.height.equalTo(@140);
+        //        }];
+        //
+        //        [self.shopNameLB mas_makeConstraints:^(MASConstraintMaker *make) {
+        //            make.left.top.equalTo(self.whiteTwoView).offset(10);
+        //            make.height.equalTo(@20);
+        //
+        //        }];
+        //        [lb1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        //            make.left.equalTo(self.shopNameLB);
+        //            make.top.equalTo(self.shopNameLB.mas_bottom).offset(10);
+        //            make.height.equalTo(@20);
+        //        }];
+        //
+        //        [self.xingView2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        //            make.left.equalTo(lb1.mas_right).offset(15);
+        //            make.top.equalTo(lb1).offset(2.5);
+        //            make.height.equalTo(@15);
+        //            make.width.equalTo(@(25*5-10));
+        //        }];
+        //
+        //        [lb2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        //            make.left.equalTo(self.shopNameLB);
+        //            make.top.equalTo(lb1.mas_bottom).offset(10);
+        //            make.height.equalTo(@20);
+        //        }];
+        //
+        //        [self.xingView3 mas_makeConstraints:^(MASConstraintMaker *make) {
+        //            make.left.equalTo(lb2.mas_right).offset(15);
+        //            make.top.equalTo(lb2).offset(2.5);
+        //            make.height.equalTo(@15);
+        //            make.width.equalTo(@(25*5-10));
+        //        }];
+        //
         
         
     }
@@ -240,7 +256,8 @@
     self.leftOneLB.text = model.goodname;
     self.leftTwoLb.text = model.spec;
     self.leftThreeLB.hidden = YES;
- 
+    self.shopNameLB.text = model.store_name;
+    
 }
 
 
@@ -260,7 +277,7 @@
     
     CGFloat space = 10;
     CGFloat leftM = 5;
-    CGFloat ww = (ScreenW - 30 - 30)/4;
+    CGFloat ww = (ScreenW - 30 - 50)/4;
     for (int i = 0 ; i< allNu; i++) {
         
         
@@ -271,7 +288,7 @@
         anNiuBt.tag = 100+i;
         anNiuBt.clipsToBounds = YES;
         anNiuBt.backgroundColor = RGB(250, 250, 250);
-    
+        
         [anNiuBt addTarget:self action:@selector(hitAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.picV addSubview:anNiuBt];
         
@@ -279,18 +296,18 @@
         
         deleteBt.tag = 200+i;
         [deleteBt addTarget:self action:@selector(hitAction:) forControlEvents:UIControlEventTouchUpInside];
-
+        
         if (i<self.picArr.count) {
             [anNiuBt setBackgroundImage:self.picArr[i] forState:UIControlStateNormal];
-                   
+            
             [deleteBt setImage:[UIImage imageNamed:@"48"] forState:UIControlStateNormal];
             [anNiuBt addSubview:deleteBt];
         }else {
             [anNiuBt setBackgroundImage:[UIImage imageNamed:@"feedback_addpic"] forState:UIControlStateNormal];
-                   
-           
+            
+            
         }
-       
+        
         
         
     }
@@ -303,7 +320,7 @@
         //删除
         [self.picArr removeObjectAtIndex:anNiuBt.tag - 200];
         [self setPics];
-        [self.delegateSignal sendNext: [NSString stringWithFormat:@"%ld",anNiuBt.tag - 200]];
+//        [self.delegateSignal sendNext: [NSString stringWithFormat:@"%ld",anNiuBt.tag - 200]];
     }else {
         if (anNiuBt.tag - 100  == self.picArr.count) {
             //添加图片

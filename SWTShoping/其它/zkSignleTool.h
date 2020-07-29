@@ -20,5 +20,9 @@
 @property(nonatomic,strong)NSString * level;
 @property(nonatomic,strong)NSString * phone;
 @property(nonatomic,strong)NSString * deviceToken;
+
+@property(nonatomic,assign)CGFloat h1;
+@property(nonatomic,assign)CGFloat h2;
+
 -(void)uploadDeviceToken;
 @end

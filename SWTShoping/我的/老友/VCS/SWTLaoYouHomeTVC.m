@@ -17,7 +17,10 @@
 @interface SWTLaoYouHomeTVC ()
 @property(nonatomic , strong)SWTLaoYouHomeHeadView *headV;
 @property(nonatomic , strong)UIView*footV;
-@property(nonatomic , strong)NSDictionary *dataDict;
+@property(nonatomic , strong)NSMutableDictionary *dataDict;
+@property(nonatomic , strong)NSMutableArray<SWTModel *> *dataArrayTwo;
+
+
 @end
 
 @implementation SWTLaoYouHomeTVC
@@ -26,10 +29,11 @@
     [super viewDidLoad];
     self.navigationItem.title = @"我要开店";
     [self initAddHeadV];
+    self.dataDict = @{}.mutableCopy;
     
     [self.tableView registerClass:[SWTLaoYouTwoCell class] forCellReuseIdentifier:@"SWTLaoYouTwoCell"];
     [self.tableView registerClass:[SWTLaoYouThreeCell class] forCellReuseIdentifier:@"SWTLaoYouThreeCell"];
-      [self.tableView registerClass:[SWTLaoYouPinLeiCell class] forCellReuseIdentifier:@"SWTLaoYouPinLeiCell"];
+    [self.tableView registerClass:[SWTLaoYouPinLeiCell class] forCellReuseIdentifier:@"SWTLaoYouPinLeiCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTLaoYouKaiDianLiuChengCell" bundle:nil] forCellReuseIdentifier:@"SWTLaoYouKaiDianLiuChengCell"];
     
     [self.tableView registerClass:[SWTLaoYouSectionHeadView class] forHeaderFooterViewReuseIdentifier:@"head"];
@@ -39,9 +43,9 @@
     self.tableView.backgroundColor = RGB(182, 142, 101);
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 40;
-    
     [self initFootV];
- 
+    self.dataArrayTwo = @[].mutableCopy;
+    [self getDataTwo];
     
     [self getData];
     
@@ -56,7 +60,8 @@
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             
-            self.dataDict = responseObject[@"data"];
+            NSDictionary * dict  = responseObject[@"data"];
+            self.dataDict = [dict mutableCopy];
             self.headV.dataDict = self.dataDict;
             [self.tableView reloadData];
             
@@ -107,8 +112,11 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (self.dataDict== nil) {
+        return 0;
+    }
     if (section == 0) {
-        return 2;
+        return 3;
     }
     return 1;
 }
@@ -116,10 +124,51 @@
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             return 190;
+        }else if (indexPath.row == 1) {
+            
+            if (self.dataDict == nil) {
+                return 0;
+            }else {
+                NSString *htmlStr = [NSString stringWithFormat:@"<div style=\"font-size:14px\">%@</div>",self.dataDict[@"modelcontent1"]];
+                
+                //富文本，两种都可以
+                NSDictionary *options = @{ NSDocumentTypeDocumentAttribute : NSHTMLTextDocumentType, NSCharacterEncodingDocumentAttribute :@(NSUTF8StringEncoding) };
+                NSData *data = [htmlStr dataUsingEncoding:NSUTF8StringEncoding];
+                //或者
+                //    NSDictionary *option = @{NSDocumentTypeDocumentAttribute : NSHTMLTextDocumentType};
+                //    NSData *data = [htmlStr dataUsingEncoding:NSUnicodeStringEncoding];
+                //设置富文本
+                NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc] initWithData:data options:options documentAttributes:nil error:nil];
+                //设置段落格式
+                NSMutableParagraphStyle *para = [[NSMutableParagraphStyle alloc] init];
+                para.lineSpacing = 4;
+                para.paragraphSpacing = 10;
+                [attStr addAttribute:NSParagraphStyleAttributeName value:para range:NSMakeRange(0, attStr.length)];
+                
+                
+                //设置文本的Font没有效果，默认12字号，这个只能服务器端控制吗？ 暂时没有找到方法修改字号
+                [attStr addAttribute:NSFontAttributeName value:para range:NSMakeRange(0, attStr.length)];
+                //计算加载完成之后Label的frame
+                //              CGFloat hh =  [attStr boundingRectWithSize:CGSizeMake(ScreenW - 20 - 30 , MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading  context:nil].size.height;
+                
+                CGFloat  hh  = [htmlStr getHeigtWithFontSize:14 lineSpace:4 width:ScreenW - 50];
+                return hh+70;
+            }
+            
+        }else {
+            CGFloat hh1 = [self.dataDict[@"modelsublabel1"] getHeigtWithFontSize:12 lineSpace:0 width:ScreenW - 105] > 23 ?  [self.dataDict[@"modelsublabel1"] getHeigtWithFontSize:12 lineSpace:0 width:ScreenW - 105] + 47:70;
+            CGFloat hh2 = [self.dataDict[@"modelsublabel2"] getHeigtWithFontSize:12 lineSpace:0 width:ScreenW - 105] > 23 ?  [self.dataDict[@"modelsublabel2"] getHeigtWithFontSize:12 lineSpace:0 width:ScreenW - 105] + 47:70;
+            CGFloat hh3 = [self.dataDict[@"modelsublabel3"] getHeigtWithFontSize:12 lineSpace:0 width:ScreenW - 105] > 23 ?  [self.dataDict[@"modelsublabel3"] getHeigtWithFontSize:12 lineSpace:0 width:ScreenW - 105] + 47:70;
+            return 70 + hh1+hh2+hh3;
         }
-        return UITableViewAutomaticDimension;
     }else if (indexPath.section == 1){
-        return 180;
+        if (self.dataArrayTwo.count <4) {
+            return 90;
+        }else {
+            return 180;
+        }
+        
+        
     }else {
         return 52+(ScreenW - 20)/5.0;
     }
@@ -130,21 +179,33 @@
         if (indexPath.row == 0) {
             SWTLaoYouTwoCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTLaoYouTwoCell" forIndexPath:indexPath];
             cell.dataDict = self.dataDict;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }else {
             SWTLaoYouThreeCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTLaoYouThreeCell" forIndexPath:indexPath];
-            cell.type = indexPath.row+1;
-            cell.dataArray = @[@"文以及那里解放前哦我软件过期偶奇偶军分区的从教",@"金佛群文件费",@"起飞前噢ifIQ日期融进去偶然放入哦确认机器机器融券若干哦过情人节公积金哦解耦前夹肉融"].mutableCopy;
-            [cell layoutIfNeeded];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.type = indexPath.row;
+            if (indexPath.row == 1) {
+                cell.htmlStr = self.dataDict[@"modelcontent1"];
+                cell.titleStr = self.dataDict[@"modeltitle1"];
+            }else {
+                cell.dataDict = self.dataDict;
+                cell.titleStr = self.dataDict[@"modeltitle2"];
+            }
+            
+            cell.clipsToBounds = YES;
             return cell;
         }
     }else if (indexPath.section == 1) {
         
         SWTLaoYouPinLeiCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTLaoYouPinLeiCell" forIndexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.dataArray = self.dataArrayTwo;
         return cell;
     }else {
         SWTLaoYouKaiDianLiuChengCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTLaoYouKaiDianLiuChengCell" forIndexPath:indexPath];
-               return cell;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
     }
     
     
@@ -165,7 +226,7 @@
     if (section == 1) {
         view.titleLB.text = @"品类招聘";
     }else if (section == 2){
-       view.titleLB.text = @"快速开店";
+        view.titleLB.text = @"快速开店";
     }
     view.backgroundColor = WhiteColor;
     view.clipsToBounds = YES;
@@ -180,4 +241,29 @@
 }
 
 
+//分类
+- (void)getDataTwo {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    [zkRequestTool networkingPOST:goodTopcategory_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            
+            self.dataArrayTwo = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            [self.tableView reloadData];
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+}
+
 @end
+

@@ -15,11 +15,11 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        self.leftHeadImgV = [[UIImageView alloc] init];
-        self.leftHeadImgV.layer.cornerRadius = 15;
-        self.leftHeadImgV.clipsToBounds = YES;
-        [self addSubview:self.leftHeadImgV];
-        
+//        self.leftHeadImgV = [[UIImageView alloc] init];
+//        self.leftHeadImgV.layer.cornerRadius = 15;
+//        self.leftHeadImgV.clipsToBounds = YES;
+//        [self addSubview:self.leftHeadImgV];
+//
         self.shopNameBt = [[UIButton alloc] init];
         [self.shopNameBt setImage:[UIImage imageNamed:@"shop1-1"] forState:UIControlStateNormal];
         self.shopNameBt.titleLabel.font = kFont(14);
@@ -115,14 +115,14 @@
         [self.rightTwoBt setTitleColor:RedLightColor forState:UIControlStateNormal];
         [self.rightOneBt setTitleColor:RedLightColor forState:UIControlStateNormal];
         
-        [self.leftHeadImgV mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self).offset(8.5);
-            make.width.height.equalTo(@30);
-            make.left.equalTo(self).offset(15);
-        }];
+//        [self.leftHeadImgV mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.top.equalTo(self).offset(8.5);
+//            make.width.height.equalTo(@30);
+//            make.left.equalTo(self).offset(15);
+//        }];
         
         [self.shopNameBt mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self).offset(45);
+            make.left.equalTo(self).offset(15);
             make.top.equalTo(self).offset(10);
             make.height.equalTo(@17);
         }];
@@ -226,7 +226,7 @@
     [self.shopNameBt setTitle: [NSString stringWithFormat:@" %@",model.store_name] forState:UIControlStateNormal];
     self.leftOneLB.text = model.goodname;
     [self.leftimgV sd_setImageWithURL:[model.thumb getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
-     [self.leftHeadImgV sd_setImageWithURL:[model.avatar getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+//     [self.leftHeadImgV sd_setImageWithURL:[model.avatar getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
 
     self.leftTwoLb.text =model.spec;
     self.leftThreeLB.hidden = YES;
@@ -255,28 +255,28 @@
             self.typeTwoLB.text =  [NSString stringWithFormat:@" %@ ",arr[1]];
         }
         
-        if (model.state.intValue == 0) {
+        if (model.status.intValue == 0) {
             self.statusLB.text = @" 待付款 ";
             [self.rightOneBt setTitle:@" 改地址 " forState:UIControlStateNormal];
             [self.rightTwoBt setTitle:@" 付款 " forState:UIControlStateNormal];
-        }else if (model.state.intValue == 1) {
+        }else if (model.status.intValue == 1) {
             self.statusLB.text = @" 待商家发货 ";
             [self.rightTwoBt setTitle:@" 提醒卖家发货 " forState:UIControlStateNormal];
             self.rightOneBt.hidden = YES;
-        }else if (model.state.intValue == 2) {
+        }else if (model.status.intValue == 2) {
             self.statusLB.text = @" 待收货 ";
             
             [self.rightOneBt setTitle:@" 查看物流 " forState:UIControlStateNormal];
             [self.rightTwoBt setTitle:@" 确认收货 " forState:UIControlStateNormal];
             
-        }else if (model.state.intValue == 3) {
+        }else if (model.status.intValue == 3) {
             self.statusLB.text = @" 待评价 ";
             [self.rightOneBt setTitle:@" 查看物流 " forState:UIControlStateNormal];
             [self.rightTwoBt setTitle:@" 评价 " forState:UIControlStateNormal];
-        }else if (model.state.intValue == 4) {
+        }else if (model.status.intValue == 4) {
             self.statusLB.text = @" 已完成 ";
             
-        }else if (model.state.intValue == 5) {
+        }else if (model.status.intValue == 5) {
             self.statusLB.text = @" 交易失败 ";
             
         }
