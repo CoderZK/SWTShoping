@@ -14,6 +14,9 @@
 @interface SWTHeMaiSubVC ()<UIScrollViewDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource>
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 @property(nonatomic , strong)UICollectionView *collectionView;
+@property(nonatomic,assign)NSInteger page;
+@property(nonatomic,strong)NSMutableArray<SWTModel *> *dataArray;
+@property(nonatomic , strong)SWTModel *topDataModel;
 @end
 
 @implementation SWTHeMaiSubVC
@@ -21,8 +24,62 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self addCollectionView];
+    self.page = 1;
+    self.dataArray = @[].mutableCopy;
+    [self getData];
+    self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        self.page = 1;
+        [self getData];
+    }];
+    self.collectionView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        self.page++;
+        [self getData];
+    }];
+    
 }
 
+- (void)getData {
+    
+    
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"page"] = @(self.page);
+    dict[@"pagesize"] = @(10);
+    dict[@"categoryid"] = self.pidId;
+    if (self.type < 2) {
+        dict[@"type"] = @(self.type+1);
+    }else {
+        dict[@"type"] = @(3);
+    }
+    NSString * url = liveList_SWT;
+    if (self.isHeMai) {
+        url = shareList_SWT;
+    }
+    [zkRequestTool networkingPOST: url parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.collectionView.mj_header endRefreshing];
+        [self.collectionView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([[NSString stringWithFormat:@"%@",responseObject[@"code"]] integerValue] == 200) {
+            NSArray<SWTModel *>*arr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"][@"list"]];
+            
+            if (self.page == 1) {
+                [self.dataArray removeAllObjects];
+                self.topDataModel =[SWTModel mj_objectWithKeyValues:responseObject[@"data"][@"top"]];
+            }
+            [self.dataArray addObjectsFromArray:arr];
+            
+            [self.collectionView reloadData];
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self.collectionView.mj_header endRefreshing];
+        [self.collectionView.mj_footer endRefreshing];
+    }];
+    
+    
+    
+}
 - (void)addCollectionView {
     
     self.layout =[[XPCollectionViewWaterfallFlowLayout alloc] init];
@@ -63,8 +120,8 @@
     if (section == 0) {
         return 1;
     }
-    return 9;
-    //    return self.dataArray.count;
+//    return 9;
+    return self.dataArray.count;
 }
 
 
@@ -72,11 +129,13 @@
     
     if (indexPath.section == 0) {
         SWTHeMaiThreeCollectCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-        
+        cell.model = self.topDataModel;
         return cell;
     }else {
         
         SWTHomeCollectionTwoCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionTwoCell" forIndexPath:indexPath];
+        self.dataArray[indexPath.row].playnum = self.dataArray[indexPath.row].watchnum;
+        cell.model = self.dataArray[indexPath.row];
         return cell;
         
         

@@ -156,6 +156,9 @@
 #pragma mark ---- 直播功能 -----
 /**获取所有顶级分类  */
 #define liveTopcategory_SWT URLOne@"live/topcategory"
+/** 直播列表  */
+#define liveList_SWT URLOne@"live/list"
+
 
 #pragma mark ---- 视频信息接口 -----
 
@@ -202,11 +205,24 @@
 /** 上传文件 */
 #define uploadfile_SWT URLOne@"uploadfile"
 
-/** 上传文件 */
+/** 上传多文件 */
 #define uploadfiles_SWT URLOne@"uploadfiles"
 
 
-#pragma mark ---- 商户信息接口  -----
+#pragma mark ---- 合买信息接口  -----
+/** 上传多文件 */
+#define shareGoodlist_SWT URLOne@"share/goodlist"
+/** 直播列表 */
+#define shareList_SWT URLOne@"share/list"
+/** 支付设置订单状态 */
+#define sharePay_SWT URLOne@"share/pay"
+/** 提交合买订单 */
+#define shareSubmit_SWT URLOne@"share/submit"
+/** 获取所有顶级分类 */
+#define shareTopcategory_SWT URLOne@"share/topcategory"
+
+
+
 #pragma mark ---- 商户信息接口  -----
 #pragma mark ---- 商户信息接口  -----
 

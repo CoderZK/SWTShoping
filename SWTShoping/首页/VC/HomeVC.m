@@ -18,6 +18,7 @@
 #import "SWTZhenPinGeFatherVC.h"
 #import "SWTZhiBoDetailVC.h"
 #import "SWTHeMaiFatherVC.h"
+
 @interface HomeVC ()<UIScrollViewDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource,SWTHomeHeadViewDelegate>
 @property(nonatomic , strong)SWTHomeHeadView *headView;
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
@@ -235,6 +236,9 @@
     }else {
         if (index == 0) {
             
+            SWTHeMaiFatherVC * vc =[[SWTHeMaiFatherVC alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
         }else if (index == 1) {
             SWTZhenPinGeFatherVC * vc =[[SWTZhenPinGeFatherVC alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
@@ -276,12 +280,21 @@
         SWTHomeCollectionOneCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
         cell.delegateSignal = [[RACSubject alloc] init];
         @weakify(self);
-        [cell.delegateSignal subscribeNext:^(id  _Nullable x) {
+        //点击今日热门
+        [cell.delegateSignal subscribeNext:^(NSNumber * x) {
             @strongify(self);
+            SWTModel * neiModel = self.hotArr[x.intValue];
+            if ([neiModel.type isEqualToString:@"share"]) {
+                SWTHeMaiFatherVC * vc =[[SWTHeMaiFatherVC alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                vc.isHeMai = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else {
+                SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
             
-            SWTHeMaiFatherVC * vc =[[SWTHeMaiFatherVC alloc] init];
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
             
         }];
         cell.dataArray = self.hotArr;
@@ -335,6 +348,11 @@
     // 复用SectionHeaderView,SectionHeaderView是xib创建的
     SWTHomeCollectionHeadView *headerView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeaderView" forIndexPath:indexPath];
     headerView.clipsToBounds = YES;
+    if (indexPath.section == 0) {
+        headerView.titleLB.text = @"今日热门";
+    }else {
+       headerView.titleLB.text = @"精品推荐";
+    }
     return headerView;
     
 }

@@ -18,6 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *titleLB;
 @property (weak, nonatomic) IBOutlet UILabel *contentLB;
 @property (weak, nonatomic) IBOutlet UILabel *timeLB;
+@property (weak, nonatomic) IBOutlet UILabel *heMaiLB;
+
+@property(nonatomic , strong)SWTModel *model;
+
 @end
 
 NS_ASSUME_NONNULL_END

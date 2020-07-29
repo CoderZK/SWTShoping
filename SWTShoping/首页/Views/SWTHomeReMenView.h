@@ -13,7 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SWTHomeReMenView : UIView
 @property(nonatomic , strong)UIImageView *imgV;
 @property(nonatomic , strong)UIImageView *leftImgV;
-@property(nonatomic , strong)UILabel *leftLB,*rightLB,*bottomLB,*centerLB;
+
+@property(nonatomic , strong)UILabel *leftLB,*rightLB,*bottomLB,*centerLB,*heMaiLB;
 @property(nonatomic , strong)UIImageView *headImgV;
 @property(nonatomic , strong)UIButton *Bt;
 

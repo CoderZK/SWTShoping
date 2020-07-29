@@ -38,6 +38,7 @@
         str =  [NSString stringWithFormat:@"%@人在观看",model.playnum];
     }
     self.numberLB.text = str;
+    self.desLB.text = model.store_name;
 }
 
 @end

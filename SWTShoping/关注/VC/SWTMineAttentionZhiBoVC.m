@@ -109,14 +109,18 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     
-    return 9;
-    //    return self.dataArray.count;
+//    return 9;
+    return self.dataArray.count;
 }
 
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     SWTHomeCollectionTwoCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionTwoCell" forIndexPath:indexPath];
+    self.dataArray[indexPath.row].img = self.dataArray[indexPath.row].liveimg;
+    self.dataArray[indexPath.row].name = self.dataArray[indexPath.row].livename;
+    self.dataArray[indexPath.row].playnum = self.dataArray[indexPath.row].watchnum;
+    cell.model = self.dataArray[indexPath.row];
     return cell;
     
 }

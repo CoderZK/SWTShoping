@@ -19,13 +19,20 @@
         [self addSubview:self.imgV];
         
     
+        self.heMaiLB = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 88 * 0.6, 20 * 0.6)];
+        self.heMaiLB.backgroundColor = [UIColor colorWithWhite:1 alpha:0.5];
+//        self.heMaiLB.textAlignment = NSTextAlignmentRight;
+        self.heMaiLB.font = kFont(6);
+        self.heMaiLB.textColor = WhiteColor;
+        self.heMaiLB.text = @"              定制合买";
+        [self addSubview:self.heMaiLB];
         
         
-        self.leftImgV  =[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 44, 20)];
+        self.leftImgV  =[[UIImageView alloc] initWithFrame:CGRectMake(0, 0,  44 * 0.6, 20 * 0.6)];
         self.leftImgV.image =[UIImage imageNamed:@"shop6"];
         [self addSubview:self.leftImgV];
-        self.leftLB =[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 44, 20)];
-        self.leftLB.font = kFont(10);
+        self.leftLB =[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 44 * 0.6, 20 * 0.6)];
+        self.leftLB.font = kFont(8);
         self.leftLB.textAlignment = NSTextAlignmentCenter;
         self.leftLB.text = @"直播中";
         self.leftLB.textColor = WhiteColor;
@@ -34,8 +41,8 @@
         self.Bt =[[UIButton alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
 //        [self addSubview:self.Bt];
         
-        self.rightLB = [[UILabel alloc] initWithFrame:CGRectMake( 45 , 0, frame.size.width - 50 , 18)];
-        self.rightLB.font = kFont(10);
+        self.rightLB = [[UILabel alloc] initWithFrame:CGRectMake( 45 , 0, frame.size.width - 50 , 12)];
+        self.rightLB.font = kFont(8);
         self.rightLB.textAlignment = NSTextAlignmentRight;
         self.rightLB.textColor = WhiteColor;
         [self addSubview:self.rightLB];

@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTHeMaiSubVC : BaseViewController
 @property(nonatomic , assign)NSInteger  type;
+@property(nonatomic , assign)BOOL isHeMai;
+@property(nonatomic , strong)NSString *pidId;
 @end
 
 NS_ASSUME_NONNULL_END

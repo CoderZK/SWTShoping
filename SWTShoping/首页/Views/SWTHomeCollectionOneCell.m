@@ -67,12 +67,14 @@
             [vv.imgV sd_setImageWithURL:[dataArray[i].img getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
       
             
-            NSString * str = @"";
+               NSString * str = @"";
                if (dataArray[i].watchnum.intValue > 10000) {
                    str =  [NSString stringWithFormat:@"%0.1f万人在观看",dataArray[i].watchnum.floatValue/10000.0];
                }else {
                    str =  [NSString stringWithFormat:@"%@人在观看",dataArray[i].watchnum];
                }
+      
+            vv.heMaiLB.hidden = ![dataArray[i].type isEqualToString:@"share"];
             vv.rightLB.text = str;
             vv.bottomLB.text = dataArray[i].name;
             

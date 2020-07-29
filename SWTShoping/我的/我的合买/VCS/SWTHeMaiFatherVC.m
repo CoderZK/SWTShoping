@@ -13,8 +13,10 @@
 @property(nonatomic , strong)SWTNavitageView *naView;
 @property(nonatomic , strong)UIView *headV;
 @property (nonatomic, weak) TYPagerController *pagerController;
-@property(nonatomic , strong)NSArray *titleArr;
+@property(nonatomic , strong)NSMutableArray *titleArr;
 @property(nonatomic , assign)NSInteger selectIndex;
+@property(nonatomic , strong)NSArray<SWTModel *> *dataArray;
+
 
 
 
@@ -42,7 +44,7 @@
     
     [self setNav];
 
-    self.titleArr = @[@"热门",@"玉器",@"古字画",@"文玩首饰"];
+    self.titleArr = @[@"关注",@"热门"].mutableCopy;
     [self addTabPageView];
     [self addPagerController];
     
@@ -56,9 +58,38 @@
         make.top.equalTo(self.tabBar.mas_bottom);
         make.leading.bottom.trailing.equalTo (self.view);
     }];
-    [self reloadData];
+   
+
+    [self getTopTitleData];
     
     
+}
+
+
+- (void)getTopTitleData {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    NSString * url = liveTopcategory_SWT;
+    if (self.isHeMai) {
+        url = shareTopcategory_SWT;
+    }
+    [zkRequestTool networkingPOST:url parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            self.dataArray  =[SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            for (SWTModel * nn  in self.dataArray) {
+                [self.titleArr addObject:nn.name];
+            }
+            [self reloadData];
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
 }
 
 
@@ -73,7 +104,7 @@
     tabBar.layout.selectedTextFont = [UIFont systemFontOfSize:15];
     tabBar.layout.selectedTextColor = WhiteColor;
     tabBar.layout.progressColor = RedColor;
-    tabBar.layout.cellSpacing = ((ScreenW - 30) - [@"热门 玉器 古字画 文玩首饰" getWidhtWithFontSize:16])/3.0;
+    tabBar.layout.cellSpacing = 20;
     tabBar.dataSource = self;
     tabBar.delegate = self;
     [tabBar registerClass:[TYTabPagerBarCell class] forCellWithReuseIdentifier:[TYTabPagerBarCell cellIdentifier]];
@@ -167,6 +198,10 @@
     //        vc.shopId = self.shopId;
     //        vc.cateModel = model;
     vc.type = index;
+    vc.isHeMai = self.isHeMai;
+    if (index>=2) {
+        vc.pidId = self.dataArray[index - 2].ID;
+    }
     return vc;
     
 }
@@ -189,7 +224,10 @@
     
     self.naView = [[SWTNavitageView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 115 + sstatusHeight + 44)];
     self.naView.rightBt.hidden = YES;
-    self.naView.titleLB.text = @"合买定制";
+    self.naView.titleLB.text = @"直播";
+    if (self.isHeMai) {
+       self.naView.titleLB.text = @"合买定制";
+    }
     @weakify(self);
     [[self.naView.leftBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         @strongify(self);

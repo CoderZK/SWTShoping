@@ -67,7 +67,7 @@
 #import "zkPickView.h"
 #import "SWTXingXingView.h"
 #import "SWTXiYieVC.h"
-
+#import "SWTZhiBoDetailVC.h"
 
 #define iOS11Later ([UIDevice currentDevice].systemVersion.floatValue >= 11.0f)
 
