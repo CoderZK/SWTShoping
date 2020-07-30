@@ -27,6 +27,8 @@
         
         self.gouWuBt = [[UIButton alloc] init];
         [self.gouWuBt setBackgroundImage:[UIImage imageNamed:@"live_gwc"] forState:UIControlStateNormal];
+        self.gouWuBt.tag = 100;
+        [self.gouWuBt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.gouWuBt];
         
         self.TF =[[UITextField alloc] init];
@@ -52,18 +54,24 @@
         self.heMaibt.titleLabel.font = kFont(12);
         self.heMaibt.backgroundColor = [UIColor redColor];
         [self addSubview:self.heMaibt];
+        self.heMaibt.tag = 101;
+        [self.heMaibt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
         
         self.shareBt =[[UIButton alloc] init];
         self.shareBt.titleLabel.numberOfLines = 2;
         self.shareBt.titleLabel.font = kFont(12);
         self.shareBt.backgroundColor = [UIColor redColor];
         [self addSubview:self.shareBt];
+        self.shareBt.tag = 102;
+        [self.shareBt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
         
         self.collectBt =[[UIButton alloc] init];
         self.collectBt.titleLabel.numberOfLines = 2;
         self.collectBt.titleLabel.font = kFont(12);
         self.collectBt.backgroundColor = [UIColor redColor];
         [self addSubview:self.collectBt];
+        self.collectBt.tag = 103;
+        [self.collectBt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
         
         self.numberLB = [[UILabel alloc] init];
         self.numberLB.layer.cornerRadius = 6;
@@ -110,7 +118,7 @@
         [self.heMaibt mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.shareBt.mas_left).offset(-15);
             make.centerY.equalTo(self.gouWuBt);
-            make.height.width.equalTo(self.collectBt);
+            make.height.width.equalTo(@30);
         }];
         
         [self.TF mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -132,6 +140,27 @@
     }
     
     return self;
+}
+
+- (void)setIsHeMai:(BOOL)isHeMai {
+    _isHeMai = isHeMai;
+    
+    if (isHeMai) {
+//        self.heMaibt.hidden = YES;
+        [self.heMaibt mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.width.equalTo(@0);
+             make.right.equalTo(self.shareBt.mas_left).offset(0);
+        }];
+    }
+   
+}
+
+- (void)clickAction:(UIButton *)button {
+    
+    if (self.delegateSignal) {
+        [self.delegateSignal sendNext:@(button.tag - 100)];
+    }
+    
 }
 
 @end

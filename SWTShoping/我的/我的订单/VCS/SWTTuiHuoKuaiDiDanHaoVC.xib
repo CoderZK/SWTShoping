@@ -66,13 +66,16 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请填写" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xF7-VV-lNm">
-                    <rect key="frame" x="130" y="134" width="274" height="30"/>
+                <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请选择" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xF7-VV-lNm">
+                    <rect key="frame" x="130" y="134" width="254" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="BTa-bd-lcO"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <action selector="action:" destination="-1" eventType="editingDidEnd" id="kaw-lI-UCw"/>
+                    </connections>
                 </textField>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V8R-LV-lCh">
                     <rect key="frame" x="0.0" y="173.5" width="414" height="0.5"/>
@@ -117,27 +120,35 @@
                         <action selector="tijiaoAction:" destination="-1" eventType="touchUpInside" id="6iQ-tH-xTJ"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eaf-fD-XP9">
+                    <rect key="frame" x="115" y="126" width="289" height="45.5"/>
+                    <state key="normal" image="yous"/>
+                </button>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
                 <constraint firstItem="q57-Av-wb2" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="15" id="1SA-ZQ-5ZK"/>
                 <constraint firstItem="eTQ-wm-Hok" firstAttribute="trailing" secondItem="qld-kn-Hlf" secondAttribute="trailing" id="2ZD-Sc-GY6"/>
+                <constraint firstItem="eaf-fD-XP9" firstAttribute="top" secondItem="gBI-8D-A9H" secondAttribute="bottom" constant="2" id="2df-hz-knd"/>
                 <constraint firstItem="qld-kn-Hlf" firstAttribute="centerY" secondItem="lj5-8o-B53" secondAttribute="centerY" id="2gt-Ig-cn2"/>
                 <constraint firstItem="BNg-Gp-OgA" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="4YV-LS-MdN"/>
                 <constraint firstItem="gBI-8D-A9H" firstAttribute="top" secondItem="lj5-8o-B53" secondAttribute="bottom" constant="14.5" id="55n-pB-3gj"/>
                 <constraint firstItem="gBI-8D-A9H" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="622-Ac-kOm"/>
                 <constraint firstItem="QDa-iF-we3" firstAttribute="top" secondItem="Hnq-44-mu9" secondAttribute="bottom" constant="40" id="6Oc-35-Akt"/>
                 <constraint firstItem="BQa-qv-7uH" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="15" id="76t-iw-juf"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="xF7-VV-lNm" secondAttribute="trailing" constant="30" id="DZH-n8-Qwr"/>
+                <constraint firstItem="eaf-fD-XP9" firstAttribute="leading" secondItem="q57-Av-wb2" secondAttribute="trailing" id="G1l-O9-zeH"/>
                 <constraint firstItem="Hnq-44-mu9" firstAttribute="top" secondItem="BQa-qv-7uH" secondAttribute="bottom" constant="14.5" id="GOI-bO-8z6"/>
                 <constraint firstItem="V8R-LV-lCh" firstAttribute="top" secondItem="q57-Av-wb2" secondAttribute="bottom" constant="14.5" id="HM8-er-vGs"/>
                 <constraint firstItem="QDa-iF-we3" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="30" id="IeK-Wv-cat"/>
                 <constraint firstItem="lj5-8o-B53" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="15" id="K3k-lN-XWT"/>
                 <constraint firstItem="xF7-VV-lNm" firstAttribute="leading" secondItem="q57-Av-wb2" secondAttribute="trailing" constant="15" id="Lbr-v3-gzN"/>
                 <constraint firstItem="eTQ-wm-Hok" firstAttribute="centerY" secondItem="BQa-qv-7uH" secondAttribute="centerY" id="LrV-sP-5y2"/>
-                <constraint firstItem="xF7-VV-lNm" firstAttribute="trailing" secondItem="qld-kn-Hlf" secondAttribute="trailing" id="POv-OX-mfH"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="BNg-Gp-OgA" secondAttribute="trailing" id="QMP-7E-Mjf"/>
+                <constraint firstItem="V8R-LV-lCh" firstAttribute="top" secondItem="eaf-fD-XP9" secondAttribute="bottom" constant="2" id="SqU-Ax-Lna"/>
                 <constraint firstItem="V8R-LV-lCh" firstAttribute="trailing" secondItem="gBI-8D-A9H" secondAttribute="trailing" id="V8N-wB-Hf7"/>
                 <constraint firstItem="q57-Av-wb2" firstAttribute="top" secondItem="gBI-8D-A9H" secondAttribute="bottom" constant="15" id="Y9I-u7-k2d"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="eaf-fD-XP9" secondAttribute="trailing" constant="10" id="YrH-fe-7tW"/>
                 <constraint firstItem="BQa-qv-7uH" firstAttribute="top" secondItem="V8R-LV-lCh" secondAttribute="bottom" constant="15" id="a6E-yA-xHI"/>
                 <constraint firstItem="Hnq-44-mu9" firstAttribute="leading" secondItem="gBI-8D-A9H" secondAttribute="leading" id="aJn-BL-VNu"/>
                 <constraint firstItem="lj5-8o-B53" firstAttribute="top" secondItem="BNg-Gp-OgA" secondAttribute="bottom" constant="15" id="aRR-Qi-PW4"/>
@@ -157,5 +168,6 @@
     </objects>
     <resources>
         <image name="bg_href" width="144" height="29"/>
+        <image name="yous" width="12" height="12"/>
     </resources>
 </document>

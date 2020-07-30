@@ -22,7 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"我的订单";
-    self.titleArr = @[@"全部",@"待付款",@"待发货",@"待收货",@"待评价",@"售后"];
+    self.titleArr = @[@"全部",@"待付款",@"待发货",@"待收货",@"待评价",@"已完成",@"售后"];
     [self addTabPageView];
     [self addPagerController];
     

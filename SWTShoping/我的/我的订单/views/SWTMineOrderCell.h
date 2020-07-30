@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic , strong)UIImageView *rightImgV;
 @property(nonatomic , strong)UIButton *shopNameBt;//标题名字
 
-@property(nonatomic , strong)UIButton *rightOneBt,*rightTwoBt;
+@property(nonatomic , strong)UIButton *rightOneBt,*rightTwoBt,*rightThreeBt;
 @property(nonatomic , strong)UILabel *statusLB,*numberAndMoneyLB;
 
 @property(nonatomic , strong)SWTModel *model;

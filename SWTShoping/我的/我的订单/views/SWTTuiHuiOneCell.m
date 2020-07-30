@@ -198,6 +198,16 @@
 }
 
 
+- (void)setModel:(SWTModel *)model {
+    _model = model;
+    [self.leftimgV sd_setImageWithURL:[model.thumb getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+    self.leftOneLB.text = model.goodname;
+    self.leftTwoLb.text =  [NSString stringWithFormat:@"规格:%@",model.spec];
+    self.numberAndMoneyLB.text =  [NSString stringWithFormat:@"￥%@\nx%@",model.goodprice,model.goodnum];
+    
+    
+}
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code

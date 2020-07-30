@@ -28,12 +28,33 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.estimatedRowHeight = 40;
     
-   
-    
-    
-    
+    [self getBackAddressData];
     
 }
+
+- (void)getBackAddressData {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"id"] = self.model.ID;
+    [zkRequestTool networkingPOST:orderBackaddress_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+}
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
@@ -63,6 +84,7 @@
         
         [[cell.leftBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
             @strongify(self);
+            [self cheHuiAction];
         }];
         [[cell.rightBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
                  @strongify(self);
@@ -79,9 +101,13 @@
         }else if (indexPath.row == 1) {
             SWTTuiHuiOneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTTuiHuiOneCell" forIndexPath:indexPath];
             cell.lineV.hidden = YES;
+            cell.model = self.model;
                return cell;
         }else {
             SWTTuiHuoDesCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTTuiHuoDesCell" forIndexPath:indexPath];
+            cell.reasonStr = self.reasonStr;
+            cell.picArr = self.picArr;
+            cell.contextStr = self.contextStr;
                return cell;
         }
     }
@@ -98,7 +124,31 @@
     
 }
 
-
+- (void)cheHuiAction {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"id"] = self.model.ID;
+    [zkRequestTool networkingPOST:orderUndo_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+  
+        if ([responseObject[@"code"] intValue]== 200) {
+            [SVProgressHUD showSuccessWithStatus:@"撤回成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+}
 
 
 @end

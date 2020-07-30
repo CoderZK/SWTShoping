@@ -11,7 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTZhiBoBottomView : UIView
-
+@property(nonatomic , strong)RACSubject *delegateSignal;
+@property(nonatomic,assign)BOOL isHeMai;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -19,6 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic , strong)UIButton *rightOneBt,*rightTwoBt;
 @property(nonatomic , strong)UILabel *statusLB,*numberAndMoneyLB;
 @property(nonatomic , strong)UIView *lineV;
+
+@property(nonatomic , strong)SWTModel *model;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -11,6 +11,7 @@
 #import "SWTMineZiLiaoCell.h"
 #import "SWTFanKuiSelectView.h"
 #import "SWTTiJiaoTuiHuoTwoTVC.h"
+#import "SWTTuiHuoTypeCell.h"
 @interface SWTTuiHuoOneTVC ()<zkPickViewDelelgate>
 
 @property(nonatomic , strong)UIView *whiteViewOne,*whiteViewTwo,*whiteViewThree;
@@ -22,6 +23,9 @@
 @property(nonatomic , strong)UIView *headV;
 @property(nonatomic , strong)NSMutableArray *picArr;
 @property(nonatomic , strong)NSString *yuanYin;
+@property(nonatomic , strong)NSString *type; // 1 退款 , 2 退货退款
+@property(nonatomic , strong)UIButton *nextBt;
+@property(nonatomic , strong)NSArray *picStrArr;
 
 @end
 
@@ -29,10 +33,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"退货";
+    self.type = @"1";
+    self.navigationItem.title = @"申请售后";
     [self.tableView registerClass:[SWTTuiHuiOneCell class] forCellReuseIdentifier:@"SWTTuiHuiOneCell"];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTMineZiLiaoCell" bundle:nil] forCellReuseIdentifier:@"cell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"SWTTuiHuoTypeCell" bundle:nil] forCellReuseIdentifier:@"SWTTuiHuoTypeCell"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     self.picArr = @[].mutableCopy;
@@ -87,7 +93,7 @@
     }];
     
     self.TV = [[IQTextView alloc] init];
-    self.TV.placeholder = @"填写退货问题";
+    self.TV.placeholder = @"填写退款或退货问题";
     self.TV.backgroundColor = [UIColor clearColor];
     self.TV.font = kFont(14);
     @weakify(self);
@@ -170,11 +176,12 @@
     
     
     UIButton * button  =[[UIButton alloc] init];
-    [button setTitle:@"下一步" forState:UIControlStateNormal];
+    [button setTitle:@"退款" forState:UIControlStateNormal];
     button.titleLabel.font = kFont(14);
     [button setBackgroundImage:[UIImage imageNamed:@"bg_href"] forState:UIControlStateNormal];
     button.layer.cornerRadius = 20;
     button.clipsToBounds = YES;
+    self.nextBt = button;
     [self.headV addSubview:button];
     
     [button mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -186,9 +193,18 @@
     
     [[button rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         @strongify(self);
-        SWTTiJiaoTuiHuoTwoTVC * vc =[[SWTTiJiaoTuiHuoTwoTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-        vc.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:vc animated:YES];
+        
+        if ([button.titleLabel.text containsString:@"退款"]) {
+            [self tuihuoActionOne];
+        }else {
+            SWTTiJiaoTuiHuoTwoTVC * vc =[[SWTTiJiaoTuiHuoTwoTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+            vc.hidesBottomBarWhenPushed = YES;
+            vc.model = self.model;
+            vc.reasonStr = self.yuanYin;
+            vc.contextStr = self.TV.text;
+            vc.picArr = self.picArr;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }];
     
     [self setPics];
@@ -196,24 +212,110 @@
     
 }
 
+- (void)tuihuoActionOne {
+    if (self.picArr.count > 0) {
+        [self updateImage];
+    }else {
+        [self tuihuoActionTwo];
+    }
+}
+
+- (void)updateImage {
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"type"] = @"comment";
+    dict[@"userid"] = [zkSignleTool shareTool].session_uid;
+    [zkRequestTool NetWorkingUpLoad:uploadfiles_SWT images:self.picArr name:@"files" parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        if ([responseObject[@"code"] intValue] == 200) {
+            self.picStrArr = responseObject[@"data"];
+            [self tuihuoActionTwo];
+        }else {
+            [self showAlertWithKey:responseObject[@"code"] message:responseObject[@"msg"] ];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
+    
+    
+}
+
+- (void)tuihuoActionTwo {
+    [SVProgressHUD show];
+    
+    if (self.yuanYin.length == 0) {
+        [SVProgressHUD showErrorWithStatus:@"请选择原因"];
+        return;
+    }
+    if (self.TV.text.length == 0) {
+        [SVProgressHUD showErrorWithStatus:@"请输入退款或者退货描述"];
+    }
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"context"] = self.TV.text;
+    dict[@"id"] = self.model.ID;
+    dict[@"imgs"] = [self.picStrArr componentsJoinedByString:@","];
+    dict[@"reason"] = self.yuanYin;
+    dict[@"type"] = self.type;
+    [zkRequestTool networkingPOST:orderBack_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+       
+        if ([responseObject[@"code"] intValue]== 200) {
+            [SVProgressHUD showSuccessWithStatus:@"申请退货退款成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+            
+            
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return 3;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         return 115;
     }
-    return 60;
+    return 45;
 }
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         
         SWTTuiHuiOneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTTuiHuiOneCell" forIndexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.model= self.model;
         return cell;
-    }else {
+    }else if (indexPath.row == 1) {
+        SWTTuiHuoTypeCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTTuiHuoTypeCell" forIndexPath:indexPath];
+        cell.delegateSignal = [[RACSubject alloc] init];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        @weakify(self);
+        [cell.delegateSignal subscribeNext:^(NSString * x) {
+            @strongify(self);
+            self.type = x;
+            if (x.intValue == 1) {
+                [self.nextBt setTitle:@"退款" forState:UIControlStateNormal];
+            }else {
+                [self.nextBt setTitle:@"下一步" forState:UIControlStateNormal];
+            }
+        }];
+        return cell;
+    } else {
         SWTMineZiLiaoCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-        cell.leftLB.text = @"退货原因";
+        cell.leftLB.text = @"退款或退货原因";
         cell.rightLB.text = self.yuanYin;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
     
@@ -223,7 +325,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.row == 1) {
+    if (indexPath.row == 2) {
         zkPickView * pickV = [[zkPickView alloc] init];
         pickV.arrayType = titleArray;
         pickV.array = @[@"买错",@"发错货"].mutableCopy;
@@ -368,7 +470,8 @@
 
 - (void)didSelectLeftIndex:(NSInteger)leftIndex centerIndex:(NSInteger)centerIndex rightIndex:(NSInteger)rightIndex
 {
-    
+    self.yuanYin = @[@"买错",@"发错货"][leftIndex];
+    [self.tableView reloadData];
 }
 
 @end

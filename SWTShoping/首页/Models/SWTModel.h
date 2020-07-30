@@ -108,7 +108,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *growth_value;//分数
 @property(nonatomic,strong)NSString *liveimg;
 @property(nonatomic,strong)NSString *livename;
-//@property(nonatomic,strong)NSString *birthStatus;
+@property(nonatomic,strong)NSString *goodnum;
 //@property(nonatomic,strong)NSString *operateHurt;
 //@property(nonatomic,strong)NSString *familyHistory;
 //@property(nonatomic,strong)NSString *drugAllergy;

@@ -177,6 +177,10 @@
 
 /** 申请退款 */
 #define orderBack_SWT URLOne@"order/back"
+/** 退货地址 */
+#define orderBackaddress_SWT URLOne@"order/backaddress"
+/** 物流信息填写 */
+#define orderBackexpress_SWT URLOne@"order/backexpress"
 /** 发表评论接口*/
 #define orderComment_SWT URLOne@"order/comment"
 /** 确认收货 */
@@ -190,8 +194,11 @@
 /** 提交订单 */
 #define orderSubmit_SWT URLOne@"order/submit"
 
+/** 申请撤回 */
+#define orderUndo_SWT URLOne@"order/undo"
 
-
+/** 获取快递公司号 */
+#define merchorderGet_express_list_SWT URLOne@"merchorder/get_express_list"
 
 
 

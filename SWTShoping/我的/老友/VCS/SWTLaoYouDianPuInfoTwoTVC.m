@@ -172,6 +172,8 @@
     [self.fanV.leftBt addTarget:self action:@selector(chooseImageAction:) forControlEvents:UIControlEventTouchUpInside];
     
     self.shouChiV = [[SWTDianPuInfoTwoView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(self.fanV.frame), ScreenW - 20, CGRectGetHeight(self.zhengV.frame))];
+    self.shouChiV.rigthImgV.image = [UIImage imageNamed:@"sfz_3"];
+    [self.shouChiV.leftBt setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
     self.shouChiV.titleLB.text = @"请上传手持身份照";
     [self.headView addSubview:self.shouChiV];
     self.shouChiV.leftBt.tag = 1;

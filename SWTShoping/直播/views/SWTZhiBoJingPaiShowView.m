@@ -1,0 +1,175 @@
+//
+//  SWTZhiBoJingPaiShowView.m
+//  SWTShoping
+//
+//  Created by kunzhang on 2020/7/30.
+//  Copyright © 2020 kunzhang. All rights reserved.
+//
+
+#import "SWTZhiBoJingPaiShowView.h"
+#import "SWTZhiBoJingPaiShowCell.h"
+@interface SWTZhiBoJingPaiShowView()<UITableViewDelegate,UITableViewDataSource>
+@property(nonatomic , strong)UIView *whiteV;
+@property(nonatomic , strong)UIView *redV;
+@property(nonatomic , strong)UITableView *tableView;
+@property(nonatomic , strong)UIButton *headBt,*dianPuBt;
+@property(nonatomic , strong)UILabel *shopNameLB,*typeLB;
+@end
+
+
+
+
+@implementation SWTZhiBoJingPaiShowView
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        
+        UIButton *button = [[UIButton alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        [button addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:button];
+        
+        
+       
+        
+        self.whiteV = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenH, ScreenW, 380)];
+        self.whiteV.backgroundColor = WhiteColor;
+        [self addSubview:self.whiteV];
+        CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+            shapeLayer.path = [UIBezierPath bezierPathWithRoundedRect:self.whiteV.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(5, 5)].CGPath;
+            self.whiteV.layer.mask = shapeLayer;
+
+        
+        self.redV = [[UIView alloc] init];
+        self.redV.backgroundColor = RedBackColor;
+        [self.whiteV addSubview:self.redV];
+        
+        
+        self.headBt = [[UIButton alloc] init];
+        self.headBt.layer.cornerRadius = 17.5;
+        self.headBt.clipsToBounds = YES;
+        [self.headBt setBackgroundImage:[UIImage imageNamed:@"369"] forState:UIControlStateNormal];
+        [self.redV addSubview:self.headBt];
+        
+        self.shopNameLB = [[UILabel alloc] init];
+        self.shopNameLB.textColor = CharacterColor50;
+        self.shopNameLB.font = kFont(14);
+        self.shopNameLB.text = @"玉成其美";
+        [self.redV addSubview:self.shopNameLB];
+        
+        self.typeLB = [[UILabel alloc] init];
+        self.typeLB.font = kFont(12);
+        self.typeLB.textColor = CharacterColor102;
+        self.typeLB.text = @"官方品质";
+        [self.redV addSubview:self.typeLB];
+        
+        
+        self.dianPuBt = [[UIButton alloc] init];
+        [self.dianPuBt setBackgroundImage:[UIImage imageNamed:@"bg_jrzbj"] forState:UIControlStateNormal];
+        self.dianPuBt.layer.cornerRadius = 15;
+        self.dianPuBt.clipsToBounds = YES;
+        [self.dianPuBt setTitle:@"店铺" forState:UIControlStateNormal];
+        self.dianPuBt.titleLabel.font = kFont(14);
+        [self.redV addSubview:self.dianPuBt];
+        
+        self.tableView   = [[UITableView alloc] init];
+        self.tableView.autoresizingMask  =  UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+        self.tableView.delegate=self;
+        self.tableView.dataSource=self;
+        self.tableView.tableFooterView = [[UIView alloc] init];
+        [self.whiteV addSubview:_tableView];
+        
+        [self.tableView registerNib:[UINib nibWithNibName:@"SWTZhiBoJingPaiShowCell" bundle:nil] forCellReuseIdentifier:@"cell"];
+
+        
+        [self.redV mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.right.left.equalTo(self.whiteV);
+            make.height.equalTo(@65);
+        }];
+        
+        [self.headBt mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.top.equalTo(self.redV).offset(15);
+            make.width.height.equalTo(@35);
+        }];
+        [self.shopNameLB mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.headBt.mas_right).offset(5);
+            make.height.equalTo(@17);
+            make.top.equalTo(self.headBt);
+        }];
+        
+        [self.typeLB mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.shopNameLB);
+            make.top.equalTo(self.shopNameLB.mas_bottom).offset(3);
+            make.height.equalTo(@15);
+        }];
+        
+        
+        [self.dianPuBt mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(self.redV).offset(-15);
+            make.centerY.equalTo(self.headBt);
+            make.height.equalTo(@30);
+            make.width.equalTo(@70);
+        }];
+        
+        
+  
+        
+        [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.equalTo(self.whiteV);
+            make.top.equalTo(self.redV.mas_bottom);
+            if (sstatusHeight > 20) {
+                make.bottom.equalTo(self.whiteV).offset(-34);
+            }else {
+                make.bottom.equalTo(self.whiteV);
+            }
+            
+        }];
+        
+        
+    }
+    
+    return self;
+}
+
+
+- (void)show {
+    [[UIApplication sharedApplication].keyWindow addSubview:self];
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        self.whiteV.mj_y = ScreenH - 380;
+        self.backgroundColor =[UIColor colorWithWhite:0 alpha:0.6];
+    }];
+}
+
+
+- (void)dismiss {
+    [UIView animateWithDuration:0.2 animations:^{
+        self.whiteV.mj_y = ScreenH;
+        self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];;
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
+    }];
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 10;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 95;
+}
+- (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    SWTZhiBoJingPaiShowCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    return cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
+    
+}
+
+
+
+@end

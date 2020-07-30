@@ -15,7 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *leftTwoLB;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *picCons;
 @property (weak, nonatomic) IBOutlet UIView *backV;
-
+@property(nonatomic , strong)NSArray<UIImage *> *picArr;
+@property (weak, nonatomic) IBOutlet UIView *picV;
+@property(nonatomic , strong)NSString *reasonStr,*contextStr;
 @end
 
 NS_ASSUME_NONNULL_END

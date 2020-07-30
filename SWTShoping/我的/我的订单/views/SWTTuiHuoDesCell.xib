@@ -74,6 +74,7 @@
                 <outlet property="leftOneLB" destination="OTW-y3-gNd" id="eC3-JJ-Dda"/>
                 <outlet property="leftTwoLB" destination="GMD-Cn-zpO" id="8aa-xg-rgb"/>
                 <outlet property="picCons" destination="biI-d2-hje" id="z9k-uM-wRH"/>
+                <outlet property="picV" destination="7f4-sl-vrr" id="ZFE-yr-qia"/>
             </connections>
             <point key="canvasLocation" x="55.797101449275367" y="9.375"/>
         </tableViewCell>

@@ -11,6 +11,7 @@
 #import "SWTHomeCollectionTwoCell.h"
 #import "SWTHomeCollectionHeadView.h"
 #import "SWTHeMaiThreeCollectCell.h"
+#import "SWTZhiBoDetailVC.h"
 @interface SWTHeMaiSubVC ()<UIScrollViewDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource>
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 @property(nonatomic , strong)UICollectionView *collectionView;
@@ -150,10 +151,16 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.row == 0) {
-        
-    }else {
-        SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+        SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
+        vc.isHeMai = self.isHeMai;
+        vc.model = self.topDataModel;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else {
+        SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.isHeMai = self.isHeMai;
+        vc.model = self.dataArray[indexPath.row];
         [self.navigationController pushViewController:vc animated:YES];
     }
     

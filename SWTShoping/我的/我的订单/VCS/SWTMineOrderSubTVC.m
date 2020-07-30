@@ -96,8 +96,10 @@
     cell.model = self.dataArray[indexPath.row];
     cell.rightOneBt.tag = indexPath.row;
     cell.rightTwoBt.tag = indexPath.row;
+    cell.rightThreeBt.tag = indexPath.row;
     [cell.rightTwoBt addTarget:self action:@selector(rightTwoAction:) forControlEvents:UIControlEventTouchUpInside];
     [cell.rightOneBt addTarget:self action:@selector(rightOneAction:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.rightThreeBt addTarget:self action:@selector(rightThreeAction:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 
@@ -158,6 +160,17 @@
     }
     
 }
+//点击售后
+- (void)rightThreeAction:(UIButton *)button {
+    
+    SWTTuiHuoOneTVC * vc =[[SWTTuiHuoOneTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+    vc.hidesBottomBarWhenPushed = YES;
+    vc.model = self.dataArray[button.tag];
+    [self.navigationController pushViewController:vc animated:YES];
+    
+    
+}
+
 - (void)editOrderAddressOneWithModel:(SWTModel *)orderModel {
     
           SWTMineAddressTVC * vc =[[SWTMineAddressTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
