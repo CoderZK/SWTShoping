@@ -123,6 +123,9 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eaf-fD-XP9">
                     <rect key="frame" x="115" y="126" width="289" height="45.5"/>
                     <state key="normal" image="yous"/>
+                    <connections>
+                        <action selector="action:" destination="-1" eventType="touchUpInside" id="lqO-En-Y4p"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>

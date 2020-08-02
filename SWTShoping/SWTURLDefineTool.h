@@ -106,6 +106,8 @@
 
 /** 获参拍记录 */
 #define userAuctionlog_SWT URLOne@"user/auctionlog"
+/** 修改基本信息 */
+#define userEdit_SWT URLOne@"user/edit"
 
 /** 获取我的优惠券列表 */
 #define userCoupon_SWT URLOne@"user/coupon"
@@ -200,6 +202,8 @@
 /** 获取快递公司号 */
 #define merchorderGet_express_list_SWT URLOne@"merchorder/get_express_list"
 
+/** 提醒发货接口 */
+#define pushmsgRemindsend_SWT URLOne@"pushmsg/remindsend"
 
 
 #pragma mark ---- 通用模块 -----
@@ -230,7 +234,12 @@
 
 
 
-#pragma mark ---- 商户信息接口  -----
+#pragma mark ---- 消息接口  -----
+/** 获取消息列表 */
+#define pushmsgList_SWT URLOne@"pushmsg/list"
+/** 消息详情 */
+#define pushmsgDetail_SWT URLOne@"pushmsg/detail"
+
 #pragma mark ---- 商户信息接口  -----
 
 

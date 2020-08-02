@@ -194,17 +194,7 @@
     [[button rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         @strongify(self);
         
-        if ([button.titleLabel.text containsString:@"退款"]) {
-            [self tuihuoActionOne];
-        }else {
-            SWTTiJiaoTuiHuoTwoTVC * vc =[[SWTTiJiaoTuiHuoTwoTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-            vc.hidesBottomBarWhenPushed = YES;
-            vc.model = self.model;
-            vc.reasonStr = self.yuanYin;
-            vc.contextStr = self.TV.text;
-            vc.picArr = self.picArr;
-            [self.navigationController pushViewController:vc animated:YES];
-        }
+        [self tuihuoActionOne];
     }];
     
     [self setPics];
@@ -262,12 +252,11 @@
        
         if ([responseObject[@"code"] intValue]== 200) {
             [SVProgressHUD showSuccessWithStatus:@"申请退货退款成功"];
+            [LTSCEventBus sendEvent:@"sucess" data:nil];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.navigationController popViewControllerAnimated:YES];
             });
-            
-            
-            
+
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }
@@ -307,7 +296,7 @@
             if (x.intValue == 1) {
                 [self.nextBt setTitle:@"退款" forState:UIControlStateNormal];
             }else {
-                [self.nextBt setTitle:@"下一步" forState:UIControlStateNormal];
+                [self.nextBt setTitle:@"退款退货" forState:UIControlStateNormal];
             }
         }];
         return cell;

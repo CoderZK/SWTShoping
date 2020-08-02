@@ -283,6 +283,9 @@
                            make.right.equalTo(self.rightTwoBt.mas_left).offset(-15);
                        }];
             
+            
+           
+            
         }else if (model.status.intValue == 2) {
             self.statusLB.text = @" 待收货 ";
             
@@ -303,7 +306,7 @@
             }];
         }else if (model.status.intValue == 4) {
             self.statusLB.text = @" 已完成 ";
-            
+            self.rightOneBt.hidden = self.rightTwoBt.hidden = self.rightThreeBt.hidden = YES;
             
         }else if (model.status.intValue == 5) {
             self.statusLB.text = @" 交易失败 ";
@@ -312,6 +315,18 @@
             self.statusLB.text = @" 售后 ";
             self.rightOneBt.hidden = self.rightTwoBt.hidden = YES;
         }
+        
+        
+        if (model.status.intValue == 1 || model.status.intValue == 2 || model.status.intValue == 3) {
+            if (model.backstatus.intValue == 0) {
+                [self.rightThreeBt setTitle:@" 售后 " forState:UIControlStateNormal];
+            }else if (model.backstatus.intValue == 1) {
+                [self.rightThreeBt setTitle:@" 退款中 " forState:UIControlStateNormal];
+            }else {
+                 [self.rightThreeBt setTitle:@" 退款完成 " forState:UIControlStateNormal];
+            }
+        }
+        
         
     }
     

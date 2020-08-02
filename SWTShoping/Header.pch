@@ -68,7 +68,7 @@
 #import "SWTXingXingView.h"
 #import "SWTXiYieVC.h"
 #import "SWTZhiBoDetailVC.h"
-
+#import "ImSDK.h"
 #define iOS11Later ([UIDevice currentDevice].systemVersion.floatValue >= 11.0f)
 
 //状态栏

@@ -13,7 +13,7 @@
 #import "SWTTuiHuoThreeCell.h"
 #import "SWTTuiHuoKuaiDiDanHaoVC.h"
 @interface SWTTiJiaoTuiHuoTwoTVC ()
-
+@property(nonatomic , strong)SWTModel *addressModel;
 @end
 
 @implementation SWTTiJiaoTuiHuoTwoTVC
@@ -42,6 +42,7 @@
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             
+            self.addressModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
             
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
@@ -90,6 +91,7 @@
                  @strongify(self);
             SWTTuiHuoKuaiDiDanHaoVC * vc =[[SWTTuiHuoKuaiDiDanHaoVC alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
+            vc.model = self.model;
             [self.navigationController pushViewController:vc animated:YES];
         }];
         
@@ -97,6 +99,8 @@
     }else {
         if (indexPath.row == 0) {
             SWTTuiHuoAddressCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTTuiHuoAddressCell" forIndexPath:indexPath];
+            cell.leftOneLB.text = self.addressModel.address;
+            cell.leftTwoLB.text = self.addressModel.mobile;
                return cell;
         }else if (indexPath.row == 1) {
             SWTTuiHuiOneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTTuiHuiOneCell" forIndexPath:indexPath];

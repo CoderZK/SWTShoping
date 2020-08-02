@@ -9,10 +9,10 @@
 #import "SWTZhiBoBottomView.h"
 
 
-@interface SWTZhiBoBottomView()
+@interface SWTZhiBoBottomView()<UITextFieldDelegate>
 
 @property(nonatomic , strong)UIButton *gouWuBt ,*shareBt,*collectBt,*heMaibt;
-@property(nonatomic , strong)UITextField *TF;
+
 @property(nonatomic , strong)UIView *lineV;
 @property(nonatomic , strong)UILabel *numberLB;
 
@@ -33,6 +33,11 @@
         
         self.TF =[[UITextField alloc] init];
         self.TF.font = kFont(14);
+        self.TF.returnKeyType = UIReturnKeySend;
+        self.TF.delegate = self;
+        self.TF.tintColor = WhiteColor;
+        self.TF.textColor = WhiteColor;
+        
         [self addSubview:self.TF];
         
         NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:@"和主播交流一下" attributes:
@@ -161,6 +166,19 @@
         [self.delegateSignal sendNext:@(button.tag - 100)];
     }
     
+}
+
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField.text.length == 0) {
+        [SVProgressHUD showErrorWithStatus:@"请输入内容"];
+        
+    }else {
+        if (self.delegateSignal) {
+            [self.delegateSignal sendNext:@(100)];
+        }
+    }
+    return YES;;
 }
 
 @end

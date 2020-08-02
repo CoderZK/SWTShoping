@@ -7,7 +7,7 @@
 //
 
 #import "BaseViewController.h"
-//#import "LogionTVC.h"
+#import "SWTLoginOneVC.h"
 typedef void (^Nav)(UIButton *);
 typedef void (^Nav2)();
 
@@ -161,13 +161,13 @@ typedef void (^Nav2)();
 
 
 
-//- (void)gotoLoginVC {
-//    
-//    LogionTVC * vc =[[LogionTVC alloc] init];
-//    BaseNavigationController * navc =[[BaseNavigationController alloc] initWithRootViewController:vc];;
-//    [self presentViewController:navc animated:YES completion:nil];
-//    
-//    
-//}
+- (void)gotoLoginVC {
+    
+    SWTLoginOneVC * vc =[[SWTLoginOneVC alloc] init];
+    BaseNavigationController * navc =[[BaseNavigationController alloc] initWithRootViewController:vc];;
+    [self presentViewController:navc animated:YES completion:nil];
+    
+    
+}
 
 @end

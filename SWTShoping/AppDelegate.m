@@ -21,9 +21,9 @@
 #define WXAppSecret @"c8ad8b1d626b309c3f3e3b7b271b11e7"
 #define QQAppID @"1104758682"
 #define QQAppKey @"h97lgfazyRUzXJKy"
+#define TXIMAPPID 1400404340
 
-
-@interface AppDelegate ()
+@interface AppDelegate ()<V2TIMSDKListener>
 
 @end
 
@@ -59,7 +59,34 @@
         
     }
     
+    
+    [self initTengXunIM];
+    
     return YES;
+}
+
+- (void)initTengXunIM {
+    // 1. 从 IM 控制台获取应用 SDKAppID，详情请参考 SDKAppID。
+    // 2. 初始化 config 对象
+    V2TIMSDKConfig *config = [[V2TIMSDKConfig alloc] init];
+    // 3. 指定 log 输出级别，详情请参考 SDKConfig。
+    config.logLevel = V2TIM_LOG_INFO;
+    // 4. 初始化 SDK 并设置 V2TIMSDKListener 的监听对象。
+    // initSDK 后 SDK 会自动连接网络，网络连接状态可以在 V2TIMSDKListener 回调里面监听。
+    [[V2TIMManager sharedInstance] initSDK:TXIMAPPID config:config listener:self];
+}
+
+- (void)onConnecting {
+    // 正在连接到腾讯云服务器
+    NSLog(@"%@",@"正在连接腾讯");
+}
+- (void)onConnectSuccess {
+    // 已经成功连接到腾讯云服务器
+     NSLog(@"%@",@"已经连接到腾讯云");
+}
+- (void)onConnectFailed:(int)code err:(NSString*)err {
+    // 连接腾讯云服务器失败
+    NSLog(@"%@",@"连接到腾讯云失败");
 }
 
 - (void)configUSharePlatforms

@@ -31,8 +31,8 @@
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
     [zkRequestTool networkingPOST:merchorderGet_express_list_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
-      
-       
+        
+        [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             
             self.dataArray = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"][@"list"]];
@@ -43,14 +43,52 @@
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
-      
+        
         
     }];
 }
 
 - (IBAction)tijiaoAction:(UIButton *)sender {
+    if (self.orderTF.text.length == 0) {
+        [SVProgressHUD showErrorWithStatus:@"请填写物流单号"];
+        return;
+    }
+    if (self.nameTF.text.length  ==0 ) {
+        [SVProgressHUD showErrorWithStatus:@"请选择物流公司"];
+        return;
+    }
     
+    if (self.desTF.text.length == 0) {
+        [SVProgressHUD showErrorWithStatus:@"请输入备注"];
+        return;
+    }
     
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"express"] = self.dataArray[self.selectIndex].express;
+    dict[@"expressname"] = self.dataArray[self.selectIndex].name;
+    dict[@"id"] = self.model.ID;
+    dict[@"sn"] = self.orderTF.text;
+    dict[@"remark"] = self.desTF.text;
+    [zkRequestTool networkingPOST:orderBackexpress_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            [SVProgressHUD showSuccessWithStatus:@"填写订单号成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        
+        
+    }];
     
     
     
@@ -62,11 +100,11 @@
     for (SWTModel * model  in self.dataArray) {
         [arr addObject:model.name];
     }
-     zkPickView * pickV = [[zkPickView alloc] init];
-           pickV.arrayType = titleArray;
-           pickV.array = arr;
-           [pickV show];
-           pickV.delegate = self;
+    zkPickView * pickV = [[zkPickView alloc] init];
+    pickV.arrayType = titleArray;
+    pickV.array = arr;
+    [pickV show];
+    pickV.delegate = self;
 }
 
 - (void)didSelectLeftIndex:(NSInteger)leftIndex centerIndex:(NSInteger)centerIndex rightIndex:(NSInteger)rightIndex {
@@ -74,14 +112,6 @@
     self.nameTF.text = self.dataArray[leftIndex].name;
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

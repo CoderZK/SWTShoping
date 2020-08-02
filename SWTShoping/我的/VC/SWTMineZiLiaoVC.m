@@ -14,6 +14,9 @@
 @property(nonatomic , strong)NSArray *leftArr;
 @property(nonatomic , strong)UIView *footV;
 @property(nonatomic , strong)UIImage *image;
+@property(nonatomic , strong)NSString *nickName;
+@property(nonatomic , strong)NSString *headImgStr;
+
 @end
 
 @implementation SWTMineZiLiaoVC
@@ -37,7 +40,10 @@
     loginOutBt.titleLabel.font = kFont(14);
     [[loginOutBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         
-        
+        [zkSignleTool shareTool].isLogin = NO;
+        [zkSignleTool shareTool].session_uid = nil;
+        self.tabBarController.selectedIndex = 0;
+        [self.navigationController popToRootViewControllerAnimated:YES];
         
         
     }];
@@ -109,47 +115,43 @@
 }
 - (void)didSelectLeftIndex:(NSInteger)leftIndex centerIndex:(NSInteger)centerIndex rightIndex:(NSInteger )rightIndex {
     
-    
+    [self.tableView reloadData];
+    self.genderStr = @(leftIndex+1).stringValue;
+    [self getEditData];
     
 }
 
 
 - (void)editNickName  {
     
-    UIAlertController  * alertVC = [UIAlertController alertControllerWithTitle:@"修改昵称" message:nil preferredStyle:(UIAlertControllerStyleAlert)];
-    UIAlertAction * action1 = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"请输入昵称" preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
-    }];
-    UIAlertAction * action2 = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        UITextField*userNameTF = alertController.textFields.firstObject;
         
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"请输入昵称" preferredStyle:UIAlertControllerStyleAlert];
+        self.nickName = userNameTF.text;
+        if (self.nickName.length == 0) {
+            [SVProgressHUD showErrorWithStatus:@"请输入昵称"];
+            return;
+        }
         
-        [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
         
-        [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-            UITextField*userNameTF = alertController.textFields.firstObject;
-            
-            
-            
-        }]];
+        [self getEditData];
         
-        [alertController addTextFieldWithConfigurationHandler:^(UITextField*_Nonnull textField) {
-            
-            textField.placeholder=@"请输入昵称";
-            
-            
-            
-        }];
+    }]];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField*_Nonnull textField) {
         
-        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
+        textField.placeholder=@"请输入昵称";
+        
+        
         
     }];
     
-    [alertVC addAction:action1];
-    [alertVC addAction:action2];
-    
-    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertVC animated:YES completion:nil];
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
     
 }
 
@@ -233,6 +235,8 @@
         if ([responseObject[@"code"] intValue] == 200) {
             
             [self.tableView reloadData];
+            self.headImgStr = responseObject[@"data"];
+            [self getEditData];
             
         }else {
             [self showAlertWithKey:responseObject[@"code"] message:responseObject[@"msg"] ];
@@ -243,6 +247,34 @@
     }];
     
     
+}
+
+- (void)getEditData {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"avatar"] = self.headImgStr;
+    dict[@"gender"] = self.genderStr;
+    dict[@"id"] = [zkSignleTool shareTool].session_uid;
+    dict[@"mobile"] = @"18221022803";
+    dict[@"nickname"] = self.nickName;
+    [zkRequestTool networkingPOST:userEdit_SWT  parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
 }
 
 

@@ -69,14 +69,14 @@
                         <action selector="clickAction:" destination="-1" eventType="touchUpInside" id="QW1-SK-b0i"/>
                     </connections>
                 </button>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dyx4" translatesAutoresizingMaskIntoConstraints="NO" id="W6u-eF-ZPY">
+                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dyx4" translatesAutoresizingMaskIntoConstraints="NO" id="W6u-eF-ZPY">
                     <rect key="frame" x="222" y="305" width="126" height="2"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="2" id="b29-my-STu"/>
                         <constraint firstAttribute="width" constant="126" id="ybb-6r-A4c"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IUQ-nG-iNW">
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IUQ-nG-iNW">
                     <rect key="frame" x="197" y="297.5" width="20" height="17"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -112,18 +112,17 @@
                         <constraint firstAttribute="width" constant="0.5" id="nb2-Oa-Z0u"/>
                     </constraints>
                 </view>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dyx3" translatesAutoresizingMaskIntoConstraints="NO" id="Wdj-Hy-fw1">
+                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dyx3" translatesAutoresizingMaskIntoConstraints="NO" id="Wdj-Hy-fw1">
                     <rect key="frame" x="66" y="305" width="126" height="2"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="2" id="BR1-lt-EYW"/>
                         <constraint firstAttribute="width" constant="126" id="yUF-L3-9de"/>
                     </constraints>
                 </imageView>
-                <button opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CjJ-Uo-XDV">
+                <button hidden="YES" opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CjJ-Uo-XDV">
                     <rect key="frame" x="15" y="344.5" width="384" height="45"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="45" id="BqM-TA-e8s"/>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="MLM-ns-25K"/>
                     </constraints>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="8" maxY="0.0"/>
                     <state key="normal" title="微信登录" image="dyx5">

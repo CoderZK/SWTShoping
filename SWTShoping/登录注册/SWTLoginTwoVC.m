@@ -59,8 +59,11 @@
             [zkSignleTool shareTool].isLogin = YES;
             [zkSignleTool shareTool].level =  responseObject[@"data"][@"level"];
             [zkSignleTool shareTool].phone = self.phoneTF.text;
-            
+            [zkSignleTool shareTool].userSig = responseObject[@"data"][@"usersig"];
             [zkSignleTool shareTool].nickname =  responseObject[@"data"][@"nickname"];
+            
+            [self loginIM];
+            
             
             [self.navigationController dismissViewControllerAnimated:YES completion:nil];
             
@@ -74,6 +77,16 @@
         
      
         
+    }];
+}
+
+- (void)loginIM {
+    
+    
+    [[V2TIMManager sharedInstance] login:[zkSignleTool shareTool].session_uid userSig:[zkSignleTool shareTool].userSig succ:^{
+        NSLog(@"%@",@"登录腾讯成功");
+    } fail:^(int code, NSString *desc) {
+        NSLog(@"%@",@"登录腾旭失败");
     }];
 }
 

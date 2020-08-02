@@ -67,7 +67,7 @@
                         <action selector="clickAction:" destination="-1" eventType="touchUpInside" id="ESJ-SU-8T9"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KTX-mZ-Iuy">
+                <button hidden="YES" opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KTX-mZ-Iuy">
                     <rect key="frame" x="40" y="319" width="334" height="45"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="45" id="iKs-cj-ZwV"/>

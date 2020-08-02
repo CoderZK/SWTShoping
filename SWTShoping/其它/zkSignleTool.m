@@ -78,6 +78,15 @@ static zkSignleTool * tool = nil;
     return [[NSUserDefaults standardUserDefaults] objectForKey:@"id"];
 }
 
+- (void)setUserSig:(NSString *)userSig {
+    [[NSUserDefaults standardUserDefaults]setObject:userSig forKey:@"userSig"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (NSString *)userSig {
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"userSig"];
+}
+
 -(void)uploadDeviceToken
 {
     if (self.isLogin&&self.session_token&&self.deviceToken)

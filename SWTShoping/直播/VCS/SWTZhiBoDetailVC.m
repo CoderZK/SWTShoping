@@ -13,10 +13,12 @@
 #import "SWTZhiBoChuJiaBottomView.h"
 #import "SWTHeMaiDianPuShowVIew.h"
 #import "SWTZhiBoJingPaiShowView.h"
-@interface SWTZhiBoDetailVC ()
+@interface SWTZhiBoDetailVC ()<V2TIMAdvancedMsgListener>
 @property(nonatomic , strong)SWTZhiBoHedView *headV;
 @property(nonatomic , strong)SWTZhiBoBottomView *bottomV;
 @property(nonatomic , strong)SWTZhiBoChuJiaBottomView *chuJiaBottomV;
+@property(nonatomic , strong)NSMutableArray<SWTModel *> *DataArr;
+@property(nonatomic , strong)NSString *groupId;
 
 
 @end
@@ -26,11 +28,13 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
+    [[V2TIMManager sharedInstance] addAdvancedMsgListener:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [[V2TIMManager sharedInstance] removeAdvancedMsgListener:self];
 }
 
 - (void)viewDidLoad {
@@ -42,7 +46,10 @@
     [self addBottomV];
     [self addChuJiaBottomV];
     self.chuJiaBottomV.hidden = YES;
-
+    [self getGoodsListData];
+    
+    [self creaeteAVRoom];
+    
 }
 
 - (void)addCha {
@@ -109,6 +116,9 @@
             //收藏
             SWTZhiBoJingPaiShowView *  jingPaiV  =[[SWTZhiBoJingPaiShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
             [jingPaiV show];
+        }else if (x.intValue == 100) {
+            //点击发送按钮
+            [self sendMessage];
         }
         
         
@@ -129,6 +139,80 @@
         }
     }];
     
+    
+}
+
+
+- (void)getGoodsListData {
+    
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"liveid"] = self.model.ID;
+    [zkRequestTool networkingPOST:shareGoodlist_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+    
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            
+            
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+ 
+        
+    }];
+
+    
+}
+
+//创建直播室
+- (void)creaeteAVRoom {
+    V2TIMManager * manager = [V2TIMManager sharedInstance];
+    [manager joinGroup:@"ceshiroom" msg:@"333" succ:^{
+       NSLog(@"%@",@"进入直播间成功");
+        self.groupId = @"ceshiroom";
+    } fail:^(int code, NSString *desc) {
+         NSLog(@"%@",@"进入直播间失败");
+    }];
+    
+
+    
+    
+}
+//发送消息
+- (void)sendMessage {
+    
+    V2TIMMessage * msg = [[V2TIMManager sharedInstance] createTextMessage:self.bottomV.TF.text];
+    
+    
+    [[V2TIMManager sharedInstance] sendMessage:msg receiver:nil groupID:self.groupId priority:(V2TIM_PRIORITY_DEFAULT) onlineUserOnly:YES offlinePushInfo:nil progress:^(uint32_t progress) {
+        
+    } succ:^{
+        NSLog(@"%@",@"发送成功");
+    } fail:^(int code, NSString *desc) {
+        NSLog(@"%@",@"发送失败");
+    }];
+    
+}
+
+
+/// 收到新消息
+- (void)onRecvNewMessage:(V2TIMMessage *)msg{
+    NSLog(@"message === \n %@",msg);
+}
+
+/// 收到消息已读回执（仅单聊有效）
+- (void)onRecvC2CReadReceipt:(NSArray<V2TIMMessageReceipt *> *)receiptList{
+    
+    
+}
+
+/// 收到消息撤回
+- (void)onRecvMessageRevoked:(NSString *)msgID {
     
 }
 
