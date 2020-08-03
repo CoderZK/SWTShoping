@@ -38,7 +38,7 @@
     self.leftTwoLB.text = contextStr;
 }
 
-- (void)setPicArr:(NSArray<UIImage *> *)picArr {
+- (void)setPicArr:(NSArray*)picArr {
     _picArr = picArr;
     [self.picV.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     if (picArr.count == 0) {
@@ -49,7 +49,12 @@
         for (int i = 0 ; i < picArr.count; i++) {
             UIImageView * imgV  = [[UIImageView alloc] initWithFrame:CGRectMake(80 * i , 0, 70, 70)];
             [self.picV addSubview:imgV];
+            if ([picArr isKindOfClass:[UIImage class]]) {
             imgV.image = picArr[i];
+            }else {
+                [imgV sd_setImageWithURL:[picArr[i] getPicURL] placeholderImage:[UIImage imageNamed:@"369"]];
+            }
+            
         }
         
     }

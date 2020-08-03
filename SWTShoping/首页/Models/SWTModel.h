@@ -112,10 +112,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *address;
 @property(nonatomic,strong)NSString *express;
 @property(nonatomic,strong)NSString *backstatus;// 退款状态
-//@property(nonatomic,strong)NSString *otherAllergy;
-//@property(nonatomic,strong)NSString *habit;
-//@property(nonatomic,strong)NSString *birthdate;
-//@property(nonatomic,strong)NSString *height;
+@property(nonatomic,strong)NSString *isshowexpress;
+@property(nonatomic,strong)NSString *imgs;
+@property(nonatomic,strong)NSString *reason;
+@property(nonatomic,strong)NSString *text;
 //@property(nonatomic,strong)NSString *orderNo;
 //@property(nonatomic,strong)NSString *doctorId;
 //@property(nonatomic,strong)NSString *check_info;

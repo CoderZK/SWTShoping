@@ -35,6 +35,9 @@
 
 - (void)getData {
     
+    if (!ISLOGIN) {
+        [self gotoLoginVC];
+    }
     
    [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;

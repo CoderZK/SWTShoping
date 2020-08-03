@@ -280,11 +280,11 @@
             self.rightOneBt.hidden = YES;
             self.rightThreeBt.hidden = NO;
             [self.rightThreeBt mas_updateConstraints:^(MASConstraintMaker *make) {
-                           make.right.equalTo(self.rightTwoBt.mas_left).offset(-15);
-                       }];
+                make.right.equalTo(self.rightTwoBt.mas_left).offset(-15);
+            }];
             
             
-           
+            
             
         }else if (model.status.intValue == 2) {
             self.statusLB.text = @" 待收货 ";
@@ -292,9 +292,9 @@
             [self.rightOneBt setTitle:@" 查看物流 " forState:UIControlStateNormal];
             [self.rightTwoBt setTitle:@" 确认收货 " forState:UIControlStateNormal];
             self.rightThreeBt.hidden = NO;
-           [self.rightThreeBt mas_updateConstraints:^(MASConstraintMaker *make) {
-               make.right.equalTo(self.rightOneBt.mas_left).offset(-15);
-           }];
+            [self.rightThreeBt mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.right.equalTo(self.rightOneBt.mas_left).offset(-15);
+            }];
             
         }else if (model.status.intValue == 3) {
             self.statusLB.text = @" 待评价 ";
@@ -313,25 +313,19 @@
             
         }else if (model.status.intValue == 6) {
             self.statusLB.text = @" 售后 ";
-            self.rightOneBt.hidden = self.rightTwoBt.hidden = YES;
-        }
-        
-        
-        if (model.status.intValue == 1 || model.status.intValue == 2 || model.status.intValue == 3) {
-            if (model.backstatus.intValue == 0) {
-                [self.rightThreeBt setTitle:@" 售后 " forState:UIControlStateNormal];
+            self.rightOneBt.hidden =  YES;
+            if (model.backstatus.intValue == -1) {
+                
+                [self.rightTwoBt setTitle:@" 失败 " forState:UIControlStateNormal];
             }else if (model.backstatus.intValue == 1) {
-                [self.rightThreeBt setTitle:@" 退款中 " forState:UIControlStateNormal];
+                [self.rightTwoBt setTitle:@" 退款中 " forState:UIControlStateNormal];
             }else {
-                 [self.rightThreeBt setTitle:@" 退款完成 " forState:UIControlStateNormal];
+                [self.rightThreeBt setTitle:@" 退款完成 " forState:UIControlStateNormal];
             }
+            
         }
         
         
     }
-    
-    
-    
 }
-
 @end

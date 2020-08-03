@@ -32,6 +32,10 @@
 
 - (void)getData {
     
+    if (!ISLOGIN) {
+        [self gotoLoginVC];
+    }
+    
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"receiveid"] = [zkSignleTool shareTool].session_uid;

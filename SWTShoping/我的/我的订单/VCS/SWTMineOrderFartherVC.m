@@ -148,8 +148,10 @@
     //        vc.cateModel = model;
     if(index == 0) {
         vc.type = -2;
-    }else {
+    }else if (index + 1< self.titleArr.count){
       vc.type = index-1;
+    }else {
+        vc.type = 6;
     }
     
     return vc;

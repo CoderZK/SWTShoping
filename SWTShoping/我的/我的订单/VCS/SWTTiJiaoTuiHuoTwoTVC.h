@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SWTTiJiaoTuiHuoTwoTVC : BaseTableViewController
 @property(nonatomic , strong)SWTModel *model;
 @property(nonatomic , strong)NSString *reasonStr,*contextStr;
-@property(nonatomic , strong)NSArray<UIImage *> *picArr;
+@property(nonatomic , strong)NSArray *picArr;
 @end
 
 NS_ASSUME_NONNULL_END

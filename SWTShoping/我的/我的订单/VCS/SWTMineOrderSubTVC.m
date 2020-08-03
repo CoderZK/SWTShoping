@@ -94,6 +94,9 @@
 
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SWTMineOrderCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    if (self.type == 6) {
+        self.dataArray[indexPath.row].status = @"6";
+    }
     cell.model = self.dataArray[indexPath.row];
     cell.rightOneBt.tag = indexPath.row;
     cell.rightTwoBt.tag = indexPath.row;
@@ -101,6 +104,7 @@
     [cell.rightTwoBt addTarget:self action:@selector(rightTwoAction:) forControlEvents:UIControlEventTouchUpInside];
     [cell.rightOneBt addTarget:self action:@selector(rightOneAction:) forControlEvents:UIControlEventTouchUpInside];
     [cell.rightThreeBt addTarget:self action:@selector(rightThreeAction:) forControlEvents:UIControlEventTouchUpInside];
+    
     return cell;
 }
 
@@ -112,6 +116,7 @@
     if (self.type == 6){
         SWTTiJiaoTuiHuoTwoTVC * vc =[[SWTTiJiaoTuiHuoTwoTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
         vc.hidesBottomBarWhenPushed = YES;
+        vc.model = self.dataArray[indexPath.row];
         [self.navigationController pushViewController:vc animated:YES];
     }
     
@@ -123,7 +128,7 @@
 }
 
 //右侧按钮
-//0未支付1待发货2待收货3待评价4已完成5已关闭-1交易失败 -2 全部
+//0未支付1待发货2待收货3待评价4已完成5已关闭-1交易失败 -2 全部 6 售后
 - (void)rightTwoAction:(UIButton *)button {
     SWTModel * model = self.dataArray[button.tag];
     if (model.status.intValue == 0) {
@@ -145,6 +150,11 @@
         [self actionModel:model withOrderID:nil withUrlStr:@"1234" withtype:-4];
     }else if (model.status.intValue == 5) {
        [self actionModel:model withOrderID:nil withUrlStr:@"1234" withtype:-5];
+    }else if (model.status.intValue == 6) {
+        SWTTiJiaoTuiHuoTwoTVC * vc =[[SWTTiJiaoTuiHuoTwoTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.model = model;
+        [self.navigationController pushViewController:vc animated:YES];
     }
     
 }

@@ -188,7 +188,7 @@
 }
 
 - (void)getData {
-    
+
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"tag"] = self.dataModel.tag;
@@ -467,6 +467,11 @@
 //收藏操作
 - (void)collection:(UIButton *)button {
     
+    
+    if (!ISLOGIN) {
+        [self gotoLoginVC];
+    }
+    
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"favid"] = @"-1";
@@ -507,6 +512,10 @@
 //关注操作
 - (void)gaunZhuAction {
     
+    if (!ISLOGIN) {
+        [self gotoLoginVC];
+    }
+    
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"followid"] = @"-1";
@@ -546,6 +555,11 @@
 
 
 - (void)getNewPirceAndAc {
+    
+    if (!ISLOGIN) {
+        [self gotoLoginVC];
+    }
+    
     
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;

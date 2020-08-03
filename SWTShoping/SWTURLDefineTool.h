@@ -181,6 +181,10 @@
 #define orderBack_SWT URLOne@"order/back"
 /** 退货地址 */
 #define orderBackaddress_SWT URLOne@"order/backaddress"
+/** 退货详情 */
+#define orderBackdetail_SWT URLOne@"order/backdetail"
+
+
 /** 物流信息填写 */
 #define orderBackexpress_SWT URLOne@"order/backexpress"
 /** 发表评论接口*/

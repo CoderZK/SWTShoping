@@ -14,6 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIButton *leftBt;
 @property (weak, nonatomic) IBOutlet UIButton *rightBt;
 @property (weak, nonatomic) IBOutlet UIView *lineV;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *wdCons;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *riCons;
+@property(nonatomic,assign)NSInteger type;
+@property(nonatomic , strong)SWTModel *model;
 
 @end
 

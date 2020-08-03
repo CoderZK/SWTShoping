@@ -405,7 +405,7 @@
     
     CGFloat space = 10;
     CGFloat leftM = 0;
-    CGFloat ww = (ScreenW - 30 - 20)/4;
+    CGFloat ww = (ScreenW - 30 - 20)/4; 
     for (int i = 0 ; i< allNu; i++) {
         
         

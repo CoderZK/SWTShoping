@@ -14,6 +14,7 @@
 #import "SWTTuiHuoKuaiDiDanHaoVC.h"
 @interface SWTTiJiaoTuiHuoTwoTVC ()
 @property(nonatomic , strong)SWTModel *addressModel;
+@property(nonatomic , strong)SWTModel *detailModel;
 @end
 
 @implementation SWTTiJiaoTuiHuoTwoTVC
@@ -29,8 +30,38 @@
     self.tableView.estimatedRowHeight = 40;
     
     [self getBackAddressData];
+    [self getDetailData];
     
 }
+
+//获取退货详情
+- (void)getDetailData {
+   
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"id"] = self.model.ID;
+    [zkRequestTool networkingPOST:orderBackdetail_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+       
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            self.detailModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
+            [self.tableView reloadData];
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+
+    
+    
+}
+
 
 - (void)getBackAddressData {
     [SVProgressHUD show];
@@ -82,17 +113,24 @@
         
         SWTTuiHuoThreeCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTTuiHuoThreeCell" forIndexPath:indexPath];
         @weakify(self);
-        
+        cell.model = self.detailModel;
         [[cell.leftBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
             @strongify(self);
-            [self cheHuiAction];
+            if ([cell.leftBt.titleLabel.text isEqualToString:@"撤销申请"]) {
+               [self cheHuiAction];
+            }
+            
         }];
         [[cell.rightBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
                  @strongify(self);
-            SWTTuiHuoKuaiDiDanHaoVC * vc =[[SWTTuiHuoKuaiDiDanHaoVC alloc] init];
-            vc.hidesBottomBarWhenPushed = YES;
-            vc.model = self.model;
-            [self.navigationController pushViewController:vc animated:YES];
+            if ([cell.rightBt.titleLabel.text isEqualToString:@"填写物流单号"] || [cell.rightBt.titleLabel.text isEqualToString:@"修改物流单号"] ) {
+                
+                SWTTuiHuoKuaiDiDanHaoVC * vc =[[SWTTuiHuoKuaiDiDanHaoVC alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                vc.model = self.model;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            
         }];
         
         return cell;
@@ -109,9 +147,9 @@
                return cell;
         }else {
             SWTTuiHuoDesCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTTuiHuoDesCell" forIndexPath:indexPath];
-            cell.reasonStr = self.reasonStr;
-            cell.picArr = self.picArr;
-            cell.contextStr = self.contextStr;
+            cell.reasonStr = self.detailModel.reason;
+            cell.picArr = [self.detailModel.imgs componentsSeparatedByString:@","];
+            cell.contextStr = self.detailModel.text;
                return cell;
         }
     }
@@ -138,6 +176,7 @@
   
         if ([responseObject[@"code"] intValue]== 200) {
             [SVProgressHUD showSuccessWithStatus:@"撤回成功"];
+            [LTSCEventBus sendEvent:@"sucess" data:nil];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.navigationController popViewControllerAnimated:YES];
             });

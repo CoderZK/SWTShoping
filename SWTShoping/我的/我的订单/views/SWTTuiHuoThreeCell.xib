@@ -43,7 +43,7 @@
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <state key="normal" title="填写物流单号">
-                            <color key="titleColor" red="0.81568627449999997" green="0.050980392159999999" blue="0.15686274510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </state>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uY8-67-JVS">
@@ -85,7 +85,9 @@
             <connections>
                 <outlet property="leftBt" destination="CcJ-65-lJV" id="80X-V9-7wq"/>
                 <outlet property="lineV" destination="uY8-67-JVS" id="FNA-BT-jlE"/>
+                <outlet property="riCons" destination="I1B-md-l9W" id="Jlb-RS-8wy"/>
                 <outlet property="rightBt" destination="IxM-4Y-aA3" id="LQa-4S-CGn"/>
+                <outlet property="wdCons" destination="EEY-pf-xlw" id="kFt-aZ-EGw"/>
             </connections>
             <point key="canvasLocation" x="73" y="-9"/>
         </tableViewCell>
