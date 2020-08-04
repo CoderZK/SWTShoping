@@ -11,7 +11,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTMineKeFuTwoCell : UITableViewCell
-
+@property(nonatomic , strong)UIButton *headBt;
+@property(nonatomic , strong)UIImageView *imgV;
+@property(nonatomic , strong)UILabel *titleLB;
+@property(nonatomic , strong)UIView * lineV;
+@property(nonatomic , strong)UITableView *tableview;
+@property(nonatomic , strong)NSMutableArray *dataArray;
+@property(nonatomic , strong)RACSubject *delegateSignal;
 @end
 
 NS_ASSUME_NONNULL_END

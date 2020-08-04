@@ -11,7 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTHuoDeShowView : UIView
-
+- (void)show;
+- (void)dismiss;
 @end
 
 NS_ASSUME_NONNULL_END

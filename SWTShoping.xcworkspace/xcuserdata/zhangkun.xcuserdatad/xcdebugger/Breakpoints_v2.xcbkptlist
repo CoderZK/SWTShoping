@@ -7,7 +7,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
-            uuid = "A7579AEB-4CBE-4893-BB1A-003A394567EB"
+            uuid = "14CA234B-3DCC-47BF-9661-245729DB6DCD"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -19,48 +19,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A5FB6CD1-9170-41F2-82EC-B630E2492EDD"
+            uuid = "8289330B-17B3-4BCD-B034-24083B520E4F"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SWTShoping/&#x6211;&#x7684;/&#x6211;&#x7684;&#x8ba2;&#x5355;/views/SWTTuiHuoThreeCell.m"
+            filePath = "SWTShoping/&#x6211;&#x7684;/&#x6211;&#x7684;&#x5ba2;&#x670d;/Views/SWTMineKeFuTwoCell.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
-            landmarkName = "-setModel:"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "-setDataArray:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "5CE38CC5-E9BD-40A7-AB07-BB29D387D8EF"
+            uuid = "CDEE6778-7241-4DC0-92F4-70A2374C90B6"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SWTShoping/&#x6211;&#x7684;/&#x6211;&#x7684;&#x8ba2;&#x5355;/views/SWTTuiHuoThreeCell.m"
+            filePath = "SWTShoping/&#x6211;&#x7684;/&#x8001;&#x53cb;/Views/SWTLaoYouOneCell.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
+            startingLineNumber = "140"
+            endingLineNumber = "140"
             landmarkName = "-setModel:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "35FDDF52-E247-449A-989C-DE053165A4FE"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SWTShoping/&#x6211;&#x7684;/&#x6211;&#x7684;&#x8ba2;&#x5355;/VCS/SWTTiJiaoTuiHuoTwoTVC.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
-            landmarkName = "-getDetailData"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

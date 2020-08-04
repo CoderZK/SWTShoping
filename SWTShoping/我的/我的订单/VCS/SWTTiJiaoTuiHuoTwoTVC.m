@@ -25,22 +25,22 @@
     [self.tableView registerClass:[SWTTuiHuiOneCell class] forCellReuseIdentifier:@"SWTTuiHuiOneCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTTuiHuoAddressCell" bundle:nil] forCellReuseIdentifier:@"SWTTuiHuoAddressCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTTuiHuoDesCell" bundle:nil] forCellReuseIdentifier:@"SWTTuiHuoDesCell"];
-     [self.tableView registerNib:[UINib nibWithNibName:@"SWTTuiHuoThreeCell" bundle:nil] forCellReuseIdentifier:@"SWTTuiHuoThreeCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"SWTTuiHuoThreeCell" bundle:nil] forCellReuseIdentifier:@"SWTTuiHuoThreeCell"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.estimatedRowHeight = 40;
     
-    [self getBackAddressData];
+    //    [self getBackAddressData];
     [self getDetailData];
     
 }
 
 //获取退货详情
 - (void)getDetailData {
-   
+    
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"id"] = self.model.ID;
     [zkRequestTool networkingPOST:orderBackdetail_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
-       
+        
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             
@@ -57,35 +57,35 @@
         [self.tableView.mj_footer endRefreshing];
         
     }];
-
+    
     
     
 }
 
 
-- (void)getBackAddressData {
-    [SVProgressHUD show];
-    NSMutableDictionary * dict = @{}.mutableCopy;
-    dict[@"id"] = self.model.ID;
-    [zkRequestTool networkingPOST:orderBackaddress_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
-        [self.tableView.mj_header endRefreshing];
-        [self.tableView.mj_footer endRefreshing];
-        [SVProgressHUD dismiss];
-        if ([responseObject[@"code"] intValue]== 200) {
-            
-            self.addressModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
-            
-        }else {
-            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
-        }
-        
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
-        [self.tableView.mj_header endRefreshing];
-        [self.tableView.mj_footer endRefreshing];
-        
-    }];
-}
+//- (void)getBackAddressData {
+//    [SVProgressHUD show];
+//    NSMutableDictionary * dict = @{}.mutableCopy;
+//    dict[@"id"] = self.model.ID;
+//    [zkRequestTool networkingPOST:orderBackaddress_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+//        [self.tableView.mj_header endRefreshing];
+//        [self.tableView.mj_footer endRefreshing];
+//        [SVProgressHUD dismiss];
+//        if ([responseObject[@"code"] intValue]== 200) {
+//
+//            self.addressModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
+//
+//        }else {
+//            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+//        }
+//
+//    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+//
+//        [self.tableView.mj_header endRefreshing];
+//        [self.tableView.mj_footer endRefreshing];
+//
+//    }];
+//}
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -101,11 +101,20 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         return 119;
+    }else {
+        
+        if (indexPath.row == 0) {
+            if (self.detailModel.address.length == 0) {
+                return 0;
+            }else {
+                return UITableViewAutomaticDimension;
+            }
+        }else if (indexPath.row == 1) {
+            return 115;
+        }else {
+            return UITableViewAutomaticDimension;
+        }
     }
-    if (indexPath.row == 1) {
-        return 115;
-    }
-    return UITableViewAutomaticDimension;
 }
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -117,12 +126,12 @@
         [[cell.leftBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
             @strongify(self);
             if ([cell.leftBt.titleLabel.text isEqualToString:@"撤销申请"]) {
-               [self cheHuiAction];
+                [self cheHuiAction];
             }
             
         }];
         [[cell.rightBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-                 @strongify(self);
+            @strongify(self);
             if ([cell.rightBt.titleLabel.text isEqualToString:@"填写物流单号"] || [cell.rightBt.titleLabel.text isEqualToString:@"修改物流单号"] ) {
                 
                 SWTTuiHuoKuaiDiDanHaoVC * vc =[[SWTTuiHuoKuaiDiDanHaoVC alloc] init];
@@ -132,30 +141,32 @@
             }
             
         }];
-        
+        cell.clipsToBounds = YES;
         return cell;
     }else {
         if (indexPath.row == 0) {
             SWTTuiHuoAddressCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTTuiHuoAddressCell" forIndexPath:indexPath];
             cell.leftOneLB.text = self.addressModel.address;
             cell.leftTwoLB.text = self.addressModel.mobile;
-               return cell;
+            return cell;
         }else if (indexPath.row == 1) {
             SWTTuiHuiOneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTTuiHuiOneCell" forIndexPath:indexPath];
             cell.lineV.hidden = YES;
             cell.model = self.model;
-               return cell;
+            cell.clipsToBounds = YES;
+            return cell;
         }else {
             SWTTuiHuoDesCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTTuiHuoDesCell" forIndexPath:indexPath];
             cell.reasonStr = self.detailModel.reason;
             cell.picArr = [self.detailModel.imgs componentsSeparatedByString:@","];
             cell.contextStr = self.detailModel.text;
-               return cell;
+            cell.clipsToBounds = YES;
+            return cell;
         }
     }
     
     
-   
+    
 }
 
 
@@ -173,7 +184,7 @@
     [zkRequestTool networkingPOST:orderUndo_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
-  
+        
         if ([responseObject[@"code"] intValue]== 200) {
             [SVProgressHUD showSuccessWithStatus:@"撤回成功"];
             [LTSCEventBus sendEvent:@"sucess" data:nil];

@@ -27,7 +27,6 @@
         self.shopNameBt.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         
         self.leftimgV = [[UIImageView alloc] init];
-        self.leftimgV.image = [UIImage imageNamed:@"369"];
         [self addSubview:self.leftimgV];
         
         self.leftimgV.layer.cornerRadius = 3;
@@ -61,6 +60,7 @@
         self.rightImgV = [[UIImageView alloc] init];
         self.rightImgV.image = [UIImage imageNamed:@"cpjl_yzp"];
         [self addSubview:self.rightImgV];
+      
         
         [self.shopNameBt mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self).offset(15);
@@ -73,6 +73,14 @@
             make.left.equalTo(self).offset(15);
             make.height.width.equalTo(@85);
         }];
+        
+        [self.rightImgV mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.leftimgV).offset(5);
+            make.width.equalTo(@40);
+            make.height.equalTo(@35);
+            make.right.equalTo(self).offset(-20);
+        }];
+        
         
         [self.leftOneLB mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.leftimgV.mas_right).offset(5);

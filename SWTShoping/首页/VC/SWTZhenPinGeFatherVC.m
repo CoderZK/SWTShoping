@@ -141,7 +141,7 @@
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             
-            self.dataArray =[SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            self.dataArray =[SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"][@"list"]];
             [self reloadData];
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];

@@ -17,6 +17,8 @@
 @property(nonatomic , strong)IQTextView *TV;;
 @property(nonatomic , strong)UIView *headV;
 @property(nonatomic , strong)NSMutableArray *picArr;
+@property(nonatomic , strong)NSArray *picStrArr;
+@property(nonatomic , assign)NSInteger  selectIndex;
 @end
 
 @implementation SWTFanKuiTVC
@@ -25,6 +27,40 @@
     [super viewDidLoad];
     self.picArr = @[].mutableCopy;
     self.navigationItem.title = @"反馈";
+    self.view.backgroundColor = BackgroundColor;
+    
+    UIButton * footBt  = [[UIButton alloc] init];
+    [self.view addSubview:footBt];
+    footBt.titleLabel.font = kFont(14);
+    [footBt setTitle:@"提姣" forState:UIControlStateNormal];
+    [footBt setBackgroundImage:[UIImage imageNamed:@"rbg"] forState:UIControlStateNormal];
+    footBt.layer.cornerRadius = 20;
+    footBt.clipsToBounds = YES;
+    [footBt mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@40);
+        make.left.equalTo(self.view).offset(30);
+        make.right.equalTo(self.view).offset(-30);
+        if (sstatusHeight > 20) {
+            make.bottom.equalTo(self.view).offset(-34);
+        }else {
+            make.bottom.equalTo(self.view);
+        }
+        
+    }];
+    @weakify(self);
+    [[footBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        @strongify(self);
+        
+        [self tijiaoAction];
+        
+        
+    }];
+    
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.right.equalTo(self.view);
+        make.bottom.equalTo(footBt.mas_top);
+    }];
+    
     
     self.headV.backgroundColor = BackgroundColor;
     self.headV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
@@ -39,7 +75,7 @@
     [self.whiteViewOne mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.equalTo(self.headV).offset(10);
         make.right.equalTo(self.headV).offset(-10);
-        make.height.equalTo(@160);
+        make.height.equalTo(@200);
     }];
     
     UILabel * lb = [[UILabel alloc] init];
@@ -52,9 +88,10 @@
         make.height.equalTo(@20);
     }];
 
-    NSArray * arr = @[@"阿共建全偶偶",@"我佛教群殴王嘉尔",@"且闻鸡起舞i"];
+    NSArray * arr = @[@"性能体验 卡顿, 闪退, 白屏",@"功能异常 功能无法使用等问题",@"产品建议",@"其他问题"];
     for (int i  = 0 ; i < arr.count; i++) {
         SWTFanKuiSelectView * sview  =[[SWTFanKuiSelectView alloc] init];
+        sview.leftImgV.image = [UIImage imageNamed:@"goun"];
         sview.tag = 100+i;
         [self.whiteViewOne addSubview:sview];
         sview.titleLB.text = arr[i];
@@ -65,6 +102,9 @@
             make.right.equalTo(self.whiteViewOne).offset(-5);
           
         }];
+        
+        [sview.button addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
+        
     }
 
 
@@ -108,7 +148,6 @@
     self.TV.placeholder = @"填写问题描述";
     self.TV.backgroundColor = [UIColor clearColor];
     self.TV.font = kFont(14);
-    @weakify(self);
     [[[self.TV rac_textSignal] filter:^BOOL(NSString * _Nullable value) {
        
         return YES;
@@ -153,6 +192,7 @@
         make.right.equalTo(self.headV).offset(-10);
         make.top.equalTo(self.whiteViewTwo.mas_bottom).offset(10);
         make.height.equalTo(@(hh + 20));
+        make.bottom.equalTo(self.headV).offset(-15);
     }];
 
     UILabel * lb3 = [[UILabel alloc] init];
@@ -192,7 +232,47 @@
     
 }
 
+- (void)clickAction:(UIButton *)button {
+    
+    SWTFanKuiSelectView * vv  = (SWTFanKuiSelectView *)button.superview;
+    
+    for (int i = 0; i < 4 ;i++) {
+        
+        
+        SWTFanKuiSelectView * vvN = [self.whiteViewOne viewWithTag:100+i];
 
+            if (vv.tag == vvN.tag) {
+                vvN.leftImgV.image = [UIImage imageNamed:@"gou"];
+                self.selectIndex = i+1;
+            }else {
+                vvN.leftImgV.image = [UIImage imageNamed:@"goun"];
+            }
+
+        
+        
+    }
+    
+    
+    
+}
+
+- (void)tijiaoAction {
+    if (self.selectIndex <1 ) {
+        [SVProgressHUD showErrorWithStatus:@"选择反馈类型"];
+        return;
+    }
+    if (self.TV.text.length == 0) {
+        [SVProgressHUD showErrorWithStatus:@"请输入问题和建议"];
+        return;
+    }
+    if (self.picArr.count == 0) {
+        [SVProgressHUD showErrorWithStatus:@"请选择照片"];
+        return;
+    }
+
+    [self updateImage];
+    
+}
 
 
 - (void)addPict {
@@ -326,5 +406,58 @@
     }
 }
 
+
+- (void)updateImage {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"type"] = @"comment";
+    dict[@"userid"] = [zkSignleTool shareTool].session_uid;
+    [zkRequestTool NetWorkingUpLoad:uploadfiles_SWT images:self.picArr name:@"files" parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        if ([responseObject[@"code"] intValue] == 200) {
+            self.picStrArr = responseObject[@"data"];
+            [self tijiaoTwoAction];
+        }else {
+            [self showAlertWithKey:responseObject[@"code"] message:responseObject[@"msg"] ];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
+    
+    
+}
+
+- (void)tijiaoTwoAction {
+    
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"content"] = self.TV.text;
+    dict[@"userid"] = [zkSignleTool shareTool].session_uid;
+    dict[@"imgs"] = [self.picStrArr componentsJoinedByString:@","];
+    dict[@"state"] = @"0";
+    dict[@"type"] = @(self.selectIndex);
+    [zkRequestTool networkingPOST:helpCommit_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+
+       
+        if ([responseObject[@"code"] intValue]== 200) {
+            [SVProgressHUD showSuccessWithStatus:@"反馈成功!"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+     
+        
+    }];
+
+    
+    
+}
 
 @end

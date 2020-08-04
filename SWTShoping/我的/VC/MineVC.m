@@ -28,6 +28,7 @@
 #import "SWTLoginOneVC.h"
 #import "SWTMineZiLiaoVC.h"
 #import "SWTChengZhangShowView.h"
+#import "SWTMineKeFuTVC.h"
 @interface MineVC ()<XPCollectionViewWaterfallFlowLayoutDataSource,UICollectionViewDelegate,UICollectionViewDataSource>
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 @property(nonatomic , strong)UICollectionView *collectionView;
@@ -303,7 +304,9 @@
                     vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
                 }else if (index == 4) {
-                    SWTSendMinePingLunTVC* vc =[[SWTSendMinePingLunTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                    
+                    
+                    SWTMineKeFuTVC* vc =[[SWTMineKeFuTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
                     vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
                 }else if (index == 5) {

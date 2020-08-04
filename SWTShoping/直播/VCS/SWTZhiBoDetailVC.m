@@ -13,12 +13,15 @@
 #import "SWTZhiBoChuJiaBottomView.h"
 #import "SWTHeMaiDianPuShowVIew.h"
 #import "SWTZhiBoJingPaiShowView.h"
+#import "SWTHuoDeShowView.h"
+#import "SWTPeopleChuJiaVIew.h"
 @interface SWTZhiBoDetailVC ()<V2TIMAdvancedMsgListener>
 @property(nonatomic , strong)SWTZhiBoHedView *headV;
 @property(nonatomic , strong)SWTZhiBoBottomView *bottomV;
 @property(nonatomic , strong)SWTZhiBoChuJiaBottomView *chuJiaBottomV;
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *DataArr;
 @property(nonatomic , strong)NSString *groupId;
+@property(nonatomic , strong)SWTHuoDeShowView *huoDeShowView;
 
 
 @end
@@ -49,6 +52,12 @@
     [self getGoodsListData];
     
     [self creaeteAVRoom];
+    
+//    self.huoDeShowView = [[SWTHuoDeShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+//    [self.huoDeShowView show];
+    
+    SWTPeopleChuJiaVIew * chuajiaV  = [[SWTPeopleChuJiaVIew alloc] initWithFrame:CGRectMake(0, 150, 180, 70)];
+    [self.view addSubview:chuajiaV];
     
 }
 

@@ -88,6 +88,9 @@
 #define registerStep2_SWT URLOne@"register/step2"
 
 #pragma mark ---- 帮助信息模   -----
+///** 提交帮助 */
+#define helpCommit_SWT URLOne@"help/commit"
+
 ///** 帮助模块 */
 #define helpTop_SWT URLOne@"help/top"
 ///** 帮助模块的子列表 */
@@ -106,6 +109,13 @@
 
 /** 获参拍记录 */
 #define userAuctionlog_SWT URLOne@"user/auctionlog"
+/** 咨询详情 */
+#define userConsult_SWT URLOne@"user/consult"
+/** 热门咨询列表 */
+#define userConsultlist_SWT URLOne@"user/consultlist"
+
+
+
 /** 修改基本信息 */
 #define userEdit_SWT URLOne@"user/edit"
 

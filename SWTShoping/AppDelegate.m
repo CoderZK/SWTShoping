@@ -23,6 +23,8 @@
 #define QQAppKey @"h97lgfazyRUzXJKy"
 #define TXIMAPPID 1400404340
 
+
+//苹果账号 shanghaixunshun@163.com 密码 Ma730620
 @interface AppDelegate ()<V2TIMSDKListener>
 
 @end

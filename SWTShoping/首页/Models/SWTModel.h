@@ -223,7 +223,7 @@ NS_ASSUME_NONNULL_BEGIN
 ////@property(nonatomic,assign)CGFloat latitude;
 ////@property(nonatomic,assign)CGFloat longitude;
 //
-//@property(nonatomic,assign)CGFloat  HHHHHH;
+@property(nonatomic,assign)CGFloat  HHHHHH;
 //获取标签
 - (NSArray *)getTypeLBArr;
 

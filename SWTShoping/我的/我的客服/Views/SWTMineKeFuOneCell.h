@@ -11,7 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTMineKeFuOneCell : UITableViewCell
-
+@property(nonatomic , strong)UIButton *headBt;
+@property(nonatomic , strong)UIImageView *imgV;
+@property(nonatomic , strong)UILabel *titleLB;
 @end
 
 NS_ASSUME_NONNULL_END

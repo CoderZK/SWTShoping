@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTPeopleChuJiaVIew : UIView
-
+@property(nonatomic , strong)UILabel *nameLB,*moneyLB;
 @end
 
 NS_ASSUME_NONNULL_END

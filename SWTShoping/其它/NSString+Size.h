@@ -9,8 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface NSString (Size)
-- (NSString *)getPriceStr;
-- (NSString *)getPriceAllStr;
+
 // 字典转json字符串方法
 +(NSString *)convertToJsonDataWithDict:(id)dict;
 
@@ -117,6 +116,6 @@
 
 + (NSDate *)getLaterDateFromDate:(NSDate *)date withYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day;
 
-
-
+- (NSString *)getPriceStr;
+- (NSString *)getPriceAllStr;
 @end
