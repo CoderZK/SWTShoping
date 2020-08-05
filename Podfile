@@ -23,7 +23,7 @@ pod 'WechatOpenSDK'
 pod 'TYPagerController'
 
 #use_modular_headers!
-#pod 'TXIMSDK_TUIKit_iOS'
-pod 'TXIMSDK_iOS'
+pod 'TXIMSDK_TUIKit_iOS'
+#pod 'TXIMSDK_iOS'
 
 end

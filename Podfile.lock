@@ -16,10 +16,12 @@ PODS:
     - AFNetworking/NSURLSession
   - AlipaySDK-iOS (15.7.4)
   - IQKeyboardManager (5.0.8)
+  - ISVImageScrollView (0.2.0)
   - Masonry (1.1.0)
   - MBProgressHUD (1.2.0)
   - MJExtension (3.0.13)
   - MJRefresh (3.1.15.3)
+  - MMLayout (0.2.0)
   - ReactiveObjC (3.1.1)
   - SDCycleScrollView (1.75):
     - SDWebImage (>= 4.0.0)
@@ -28,7 +30,15 @@ PODS:
   - SDWebImage/Core (4.3.2)
   - SVProgressHUD (2.2.5)
   - SwipeBack (1.1.1)
+  - Toast (4.0.0)
   - TXIMSDK_iOS (4.8.10)
+  - TXIMSDK_TUIKit_iOS (4.6.58):
+    - ISVImageScrollView
+    - MMLayout (= 0.2.0)
+    - ReactiveObjC
+    - SDWebImage
+    - Toast
+    - TXIMSDK_iOS
   - TYPagerController (2.1.2)
   - UMCCommon (2.1.4)
   - UMCCommonLog (1.0.0)
@@ -57,7 +67,7 @@ DEPENDENCIES:
   - SDWebImage
   - SVProgressHUD
   - SwipeBack
-  - TXIMSDK_iOS
+  - TXIMSDK_TUIKit_iOS
   - TYPagerController
   - UMCCommon
   - UMCCommonLog
@@ -71,16 +81,20 @@ SPEC REPOS:
     - AFNetworking
     - AlipaySDK-iOS
     - IQKeyboardManager
+    - ISVImageScrollView
     - Masonry
     - MBProgressHUD
     - MJExtension
     - MJRefresh
+    - MMLayout
     - ReactiveObjC
     - SDCycleScrollView
     - SDWebImage
     - SVProgressHUD
     - SwipeBack
+    - Toast
     - TXIMSDK_iOS
+    - TXIMSDK_TUIKit_iOS
     - TYPagerController
     - UMCCommon
     - UMCCommonLog
@@ -92,16 +106,20 @@ SPEC CHECKSUMS:
   AFNetworking: 8ac6017b94ea105479f7776e5288e48ae9c59bb4
   AlipaySDK-iOS: 8659cdb4403de7e5f26ad8b699864a9cbe53384c
   IQKeyboardManager: 266cb7b1d11f94a3e71229d77f960f9a1b538e5b
+  ISVImageScrollView: c33365cb383b8b2365d0519d184ab11bae3eba44
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
   MJRefresh: b48380ae2b927b46c4ef000de9adb8dc748e1df7
+  MMLayout: 3fb59d58eeb8656c64e61d550fb0088e10666c11
   ReactiveObjC: 011caa393aa0383245f2dcf9bf02e86b80b36040
   SDCycleScrollView: 884b88f0266dd4708a0e1934975c69cb971707b1
   SDWebImage: 29bd3c0bc1f01e5eb59720847c64ad4c4ca1af5d
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwipeBack: d6759601b40da1f4161033feb30ab475d7d04322
+  Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   TXIMSDK_iOS: 17de2fef786f78843687cc7bd9592759edd2ec0b
+  TXIMSDK_TUIKit_iOS: 07d410f70bd3601506d1b0f219174fc1eed76ef9
   TYPagerController: 262556ecef99986d26ed77fb1288a198ed42f4af
   UMCCommon: b0703b0053323f598e01670ea702b8eb1e66e611
   UMCCommonLog: 05a2d5de21858e3d870551562cff405c1366d244
@@ -109,6 +127,6 @@ SPEC CHECKSUMS:
   UMCShare: a250203b34a56cde25cc4c28335449b542f0255d
   WechatOpenSDK: 6a4d1436c15b3b5fe2a0bd383f3046010186da44
 
-PODFILE CHECKSUM: 5e068e5b80f063dd4abe8c061eba6ac9b3384981
+PODFILE CHECKSUM: 1b1edfe0024378fb7052a85205489d7fddec98ff
 
 COCOAPODS: 1.7.2
