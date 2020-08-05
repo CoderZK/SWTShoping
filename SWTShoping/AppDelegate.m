@@ -66,6 +66,10 @@
     
     [self initTengXunIM];
     
+    if (ISLOGIN) {
+        [self loginIM];
+    }
+    
     return YES;
 }
 
@@ -78,6 +82,16 @@
     // 4. 初始化 SDK 并设置 V2TIMSDKListener 的监听对象。
     // initSDK 后 SDK 会自动连接网络，网络连接状态可以在 V2TIMSDKListener 回调里面监听。
     [[V2TIMManager sharedInstance] initSDK:TXIMAPPID config:config listener:self];
+}
+
+- (void)loginIM {
+    
+    
+    [[V2TIMManager sharedInstance] login:[zkSignleTool shareTool].session_uid userSig:[zkSignleTool shareTool].userSig succ:^{
+        NSLog(@"%@",@"登录腾讯成功");
+    } fail:^(int code, NSString *desc) {
+        NSLog(@"%@",@"登录腾旭失败");
+    }];
 }
 
 - (void)onConnecting {
