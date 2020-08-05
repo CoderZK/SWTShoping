@@ -76,7 +76,9 @@
     }];
     
     [[self.naView.rightBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        
+        TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:@"17"];
+        TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
+        [self.navigationController pushViewController:vc animated:YES];
     }];
     [self.view addSubview:self.naView];
     self.tableView.backgroundColor = [UIColor clearColor];

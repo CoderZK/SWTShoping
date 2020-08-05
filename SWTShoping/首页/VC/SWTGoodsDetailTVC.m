@@ -106,7 +106,9 @@
     }];
     
     [[self.naView.rightBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        
+        TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:@"17"];
+        TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
+        [self.navigationController pushViewController:vc animated:YES];
     }];
     [self.view addSubview:self.naView];
     
@@ -131,8 +133,12 @@
             vc.shopId = self.dataModel.merchid;
             [self.navigationController pushViewController:vc animated:YES];
         }else if (x.intValue == 101) {
-            
             //点击私信
+            
+            TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:@"17"];
+            TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
+            [self.navigationController pushViewController:vc animated:YES];
+            
         }else if (x.intValue == 102) {
             if (self.isYiKouJia) {
                 SWTGouMaiShowView * gouMaiV  = [[SWTGouMaiShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];

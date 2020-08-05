@@ -10,11 +10,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="68" id="KGk-i7-Jjw" customClass="SWTMessageOneCell">
-            <rect key="frame" x="0.0" y="0.0" width="356" height="68"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="92" id="KGk-i7-Jjw" customClass="SWTMessageOneCell">
+            <rect key="frame" x="0.0" y="0.0" width="413" height="92"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="356" height="68"/>
+                <rect key="frame" x="0.0" y="0.0" width="413" height="92"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="369" translatesAutoresizingMaskIntoConstraints="NO" id="Zc4-C9-GDA">
@@ -25,7 +25,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="系统消息" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w5i-7p-Okd">
-                        <rect key="frame" x="50" y="10" width="296" height="17"/>
+                        <rect key="frame" x="50" y="10" width="353" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="B8h-iA-u8h"/>
                         </constraints>
@@ -34,7 +34,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2020-07-02" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V1V-5g-uZ5">
-                        <rect key="frame" x="276" y="30" width="70" height="15"/>
+                        <rect key="frame" x="333" y="30" width="70" height="15"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="31" id="43e-a0-FHz"/>
                         </constraints>
@@ -73,7 +73,7 @@
                 <outlet property="nameLB" destination="w5i-7p-Okd" id="w8i-0j-BGY"/>
                 <outlet property="timeLB" destination="V1V-5g-uZ5" id="mjk-Bu-L5i"/>
             </connections>
-            <point key="canvasLocation" x="155.07246376811597" y="107.8125"/>
+            <point key="canvasLocation" x="41.304347826086961" y="12.723214285714285"/>
         </tableViewCell>
     </objects>
     <resources>

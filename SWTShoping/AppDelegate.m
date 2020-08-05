@@ -61,6 +61,8 @@
         
     }
     
+     [[TUIKit sharedInstance] setupWithAppId:TXIMAPPID];
+    
     
     [self initTengXunIM];
     

@@ -27,6 +27,26 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.dataArray = @[@"",@""].mutableCopy;
     [self getData];
+    
+    UIButton * button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
+    button.titleLabel.font = kFont(13);
+    [button setTitle:@"人工客服" forState:UIControlStateNormal];
+    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    [button setTitleColor:CharacterColor50 forState:UIControlStateNormal];
+    @weakify(self);
+    [[button rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        @strongify(self);
+        
+        
+        TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:@"17"];
+        TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
+        [self.navigationController pushViewController:vc animated:YES];
+        
+        
+    }];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    
 }
 
 - (void)getData {
@@ -95,7 +115,7 @@
     }else {
         SWTMineKeFuOneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTMineKeFuOneCell" forIndexPath:indexPath];
         if (indexPath.row == 0) {
-            cell.titleLB.text = @"您好, 请问有什么可以帮助到您? 如果为解决问题,可以输入\"人工客服\"";
+            cell.titleLB.text = @"您好, 请问有什么可以帮助到您? 如果为解决问题,可以点击\"人工客服\"";
         }else {
             cell.titleLB.text = self.dataArray[indexPath.row];
         }

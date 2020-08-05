@@ -116,9 +116,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *imgs;
 @property(nonatomic,strong)NSString *reason;
 @property(nonatomic,strong)NSString *text;
-//@property(nonatomic,strong)NSString *orderNo;
-//@property(nonatomic,strong)NSString *doctorId;
-//@property(nonatomic,strong)NSString *check_info;
+@property(nonatomic,strong)NSString *sendid;
+@property(nonatomic,strong)NSString *site_name;
+@property(nonatomic,strong)NSString *logo;
 //@property(nonatomic,strong)NSString *doctor_advice;
 //@property(nonatomic,strong)NSString *projectName;
 //@property(nonatomic,strong)NSString *bmi;

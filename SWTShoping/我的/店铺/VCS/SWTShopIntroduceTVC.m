@@ -33,6 +33,30 @@
     
 }
 
+- (void)getData {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"merchid"] = self.ID;
+    dict[@"type"] = @(self.type + 1);
+    [zkRequestTool networkingPOST:merchImpression_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     if (self.type == 0) {
         return 3;

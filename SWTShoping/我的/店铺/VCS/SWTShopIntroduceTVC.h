@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTShopIntroduceTVC : BaseTableViewController
+@property(nonatomic , strong)NSString *ID;
 
 @end
 

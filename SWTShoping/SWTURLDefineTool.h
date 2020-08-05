@@ -86,6 +86,9 @@
 
 /**注册第二部*/
 #define registerStep2_SWT URLOne@"register/step2"
+/**店铺印象*/
+#define merchImpression_SWT URLOne@"merch/impression"
+
 
 #pragma mark ---- 帮助信息模   -----
 ///** 提交帮助 */

@@ -204,6 +204,9 @@
 //       }
 }
 
-
+- (void)setModel:(SWTModel *)model {
+    _model = model;
+    
+}
 
 @end
