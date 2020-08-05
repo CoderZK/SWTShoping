@@ -369,7 +369,7 @@
     _model = model;
     
     [self.headBt sd_setBackgroundImageWithURL:[model.avatar getPicURL] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
-    self.shopNameLB.text = model.nickname;
+    self.shopNameLB.text = model.store_name;
     
     self.typeOneBt.hidden = self.typeTwoBt.hidden = YES;
     NSArray * arr = [model getTypeLBArr];

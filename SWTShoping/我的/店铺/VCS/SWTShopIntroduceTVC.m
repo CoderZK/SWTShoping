@@ -14,6 +14,7 @@
 @interface SWTShopIntroduceTVC ()
 @property(nonatomic , strong)SWTShopIntorduceHeadView *headV;
 @property(nonatomic , assign)NSInteger  type;
+@property(nonatomic , strong)SWTModel *dataModel;
 @end
 
 @implementation SWTShopIntroduceTVC
@@ -30,6 +31,7 @@
      [self.tableView registerNib:[UINib nibWithNibName:@"SWTShopIntroduceThreeCell" bundle:nil] forCellReuseIdentifier:@"SWTShopIntroduceThreeCell"];
     
     self.tableView.estimatedRowHeight = 40;
+    [self getData];
     
 }
 
@@ -44,7 +46,9 @@
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             
-            
+            self.dataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
+            self.headV.model = self.dataModel;
+            [self.tableView reloadData];
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }
@@ -80,12 +84,16 @@
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         SWTShopIntroduceCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTShopIntroduceCell" forIndexPath:indexPath];
+        cell.scoreLB.text =  [NSString stringWithFormat:@"%@分",self.dataModel.score];
         return cell;
     }else if (indexPath.section == 1) {
         SWTShopIntroduceTwoCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTShopIntroduceTwoCell" forIndexPath:indexPath];
         return cell;
     }else {
         SWTShopIntroduceThreeCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTShopIntroduceThreeCell" forIndexPath:indexPath];
+        cell.timeLB.text = self.dataModel.createtime;
+        cell.addressLB.text = self.dataModel.refund_address;
+        cell.desLB.text = self.dataModel.des;
         return cell;
     }
     

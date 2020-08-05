@@ -206,6 +206,21 @@
 
 - (void)setModel:(SWTModel *)model {
     _model = model;
+    [self.headImgV sd_setImageWithURL:[model.avatar getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+    self.shopNameLB.text = model.name;
+    NSArray * arr  =[model getTypeLBArr];
+    self.baoZhengJinBt.hidden = self.gaunFangBt.hidden = YES;
+    if (arr.count > 0) {
+        self.gaunFangBt.hidden = NO;
+        [self.gaunFangBt setTitle:arr[0] forState:UIControlStateNormal];
+        
+    }
+    
+    if (arr.count > 1) {
+        self.baoZhengJinBt.hidden = NO;
+        [self.baoZhengJinBt setTitle:arr[1] forState:UIControlStateNormal];
+    }
+    
     
 }
 

@@ -162,6 +162,7 @@
         if (x.intValue == 100) {
             SWTShopIntroduceTVC * vc =[[SWTShopIntroduceTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
             vc.hidesBottomBarWhenPushed = YES;
+            vc.ID = self.dataModel.ID;
             [self.navigationController pushViewController:vc animated:YES];
         }else if (x.intValue == 101) {
             //点击关注

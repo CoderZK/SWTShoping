@@ -119,8 +119,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *sendid;
 @property(nonatomic,strong)NSString *site_name;
 @property(nonatomic,strong)NSString *logo;
-//@property(nonatomic,strong)NSString *doctor_advice;
-//@property(nonatomic,strong)NSString *projectName;
+@property(nonatomic,strong)NSString *score;
+@property(nonatomic,strong)NSString *refund_address;
 //@property(nonatomic,strong)NSString *bmi;
 //@property(nonatomic,strong)NSString *patientName;
 //@property(nonatomic,strong)NSString *projectId;
