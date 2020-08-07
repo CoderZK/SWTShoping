@@ -14,6 +14,7 @@
 @property(nonatomic , strong)UITableView *tableView;
 @property(nonatomic , strong)UIButton *headBt,*dianPuBt;
 @property(nonatomic , strong)UILabel *shopNameLB,*typeLB;
+@property(nonatomic , strong)UIButton *leftBtBt,*rightBt;
 @end
 
 
@@ -29,15 +30,15 @@
         [self addSubview:button];
         
         
-       
         
-        self.whiteV = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenH, ScreenW, 380)];
+        
+        self.whiteV = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenH, ScreenW, 420)];
         self.whiteV.backgroundColor = WhiteColor;
         [self addSubview:self.whiteV];
         CAShapeLayer *shapeLayer = [CAShapeLayer layer];
-            shapeLayer.path = [UIBezierPath bezierPathWithRoundedRect:self.whiteV.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(5, 5)].CGPath;
-            self.whiteV.layer.mask = shapeLayer;
-
+        shapeLayer.path = [UIBezierPath bezierPathWithRoundedRect:self.whiteV.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(5, 5)].CGPath;
+        self.whiteV.layer.mask = shapeLayer;
+        
         
         self.redV = [[UIView alloc] init];
         self.redV.backgroundColor = RedBackColor;
@@ -69,7 +70,33 @@
         self.dianPuBt.clipsToBounds = YES;
         [self.dianPuBt setTitle:@"店铺" forState:UIControlStateNormal];
         self.dianPuBt.titleLabel.font = kFont(14);
+        self.dianPuBt.tag = 99;
+        [self.dianPuBt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.redV addSubview:self.dianPuBt];
+        
+        
+        self.leftBtBt = [[UIButton alloc] init];
+        [self.leftBtBt setTitleColor:CharacterColor50 forState:UIControlStateNormal];
+        [self.leftBtBt setTitleColor:RedColor forState:UIControlStateSelected];
+        self.leftBtBt.selected = YES;
+        self.leftBtBt.titleLabel.font = kFont(15);
+        [self.whiteV addSubview:self.leftBtBt];
+        [self.leftBtBt setTitle:@"竞拍" forState:UIControlStateNormal];
+        self.leftBtBt.tag = 100;
+        [self.leftBtBt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
+        
+        
+        
+        
+        self.rightBt = [[UIButton alloc] init];
+        [self.rightBt setTitleColor:CharacterColor50 forState:UIControlStateNormal];
+        [self.rightBt setTitleColor:RedColor forState:UIControlStateSelected];
+        self.rightBt.selected = NO;
+        self.rightBt.titleLabel.font = kFont(15);
+        [self.whiteV addSubview:self.rightBt];
+        [self.rightBt setTitle:@"一口价" forState:UIControlStateNormal];
+        self.rightBt.tag = 101;
+        [self.rightBt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
         
         self.tableView   = [[UITableView alloc] init];
         self.tableView.autoresizingMask  =  UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
@@ -79,7 +106,7 @@
         [self.whiteV addSubview:_tableView];
         
         [self.tableView registerNib:[UINib nibWithNibName:@"SWTZhiBoJingPaiShowCell" bundle:nil] forCellReuseIdentifier:@"cell"];
-
+        
         
         [self.redV mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.right.left.equalTo(self.whiteV);
@@ -110,12 +137,24 @@
             make.width.equalTo(@70);
         }];
         
+        [self.leftBtBt mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.whiteV);
+            make.top.equalTo(self.redV.mas_bottom).offset(10);
+            make.height.equalTo(@40);
+            make.width.equalTo(@(ScreenW /2));
+        }];
         
-  
+        [self.rightBt mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(self.whiteV);
+            make.top.equalTo(self.leftBtBt);
+            make.height.equalTo(@40);
+            make.width.equalTo(@(ScreenW /2));
+        }];
+        
         
         [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self.whiteV);
-            make.top.equalTo(self.redV.mas_bottom);
+            make.top.equalTo(self.leftBtBt.mas_bottom);
             if (sstatusHeight > 20) {
                 make.bottom.equalTo(self.whiteV).offset(-34);
             }else {
@@ -130,12 +169,24 @@
     return self;
 }
 
+- (void)clickAction:(UIButton *)button  {
+     if (button.tag == 100) {
+        self.leftBtBt.selected = YES;
+        self.rightBt.selected = NO;
+    }else if (button.tag == 101){
+        self.leftBtBt.selected = NO;
+        self.rightBt.selected = YES;
+    }
+    if (self.delegateSignal) {
+        [self.delegateSignal sendNext:@(button.tag)];
+    }
+}
 
 - (void)show {
     [[UIApplication sharedApplication].keyWindow addSubview:self];
     
     [UIView animateWithDuration:0.2 animations:^{
-        self.whiteV.mj_y = ScreenH - 380;
+        self.whiteV.mj_y = ScreenH - 420;
         self.backgroundColor =[UIColor colorWithWhite:0 alpha:0.6];
     }];
 }
@@ -149,16 +200,20 @@
         [self removeFromSuperview];
     }];
 }
-
+- (void)setDataArray:(NSMutableArray<SWTModel *> *)dataArray {
+    _dataArray = dataArray;
+    [self.tableView reloadData];
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return self.dataArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 95;
 }
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SWTZhiBoJingPaiShowCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    cell.model= self.dataArray[indexPath.row];
     return cell;
 }
 
@@ -170,6 +225,11 @@
     
 }
 
+- (void)setDataModel:(SWTModel *)dataModel {
+    _dataModel = dataModel;
+    [self.headBt sd_setBackgroundImageWithURL:[dataModel.avatar getPicURL] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"369"]];
+    self.shopNameLB.text = dataModel.name;
+}
 
 
 @end

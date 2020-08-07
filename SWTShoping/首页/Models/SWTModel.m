@@ -33,6 +33,11 @@
     self.youHuiQuanList =  [SWTModel mj_objectArrayWithKeyValuesArray:[lmCouponsList mj_JSONObject]];
 }
 
+- (void)setCommentlist:(NSMutableArray<SWTModel *> *)commentlist {
+    
+    _commentlist = [SWTModel mj_objectArrayWithKeyValuesArray:commentlist];
+    
+}
 
 - (void)setAuctionlist:(NSMutableArray<SWTModel *> *)auctionlist {
     _auctionlist = [SWTModel mj_objectArrayWithKeyValuesArray:auctionlist];

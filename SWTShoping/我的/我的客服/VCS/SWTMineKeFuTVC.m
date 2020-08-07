@@ -38,7 +38,7 @@
         @strongify(self);
         
         
-        TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:@"17"];
+        TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:@"1"];
         TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
         [self.navigationController pushViewController:vc animated:YES];
         

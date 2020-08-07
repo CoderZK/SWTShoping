@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *subtitle;
 @property(nonatomic,strong)NSString *goodssn;
 @property(nonatomic,strong)NSString *content; //
+@property(nonatomic,strong)NSString *comment; //
 @property(nonatomic,strong)NSString *unit;
 @property(nonatomic,strong)NSString *type;
 @property(nonatomic,strong)NSString *productprice;
@@ -121,9 +122,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *logo;
 @property(nonatomic,strong)NSString *score;
 @property(nonatomic,strong)NSString *refund_address;
-//@property(nonatomic,strong)NSString *bmi;
-//@property(nonatomic,strong)NSString *patientName;
-//@property(nonatomic,strong)NSString *projectId;
+@property(nonatomic,strong)NSString *imid;
+@property(nonatomic,strong)NSString *headimg;
+@property(nonatomic,strong)NSString *finishtime;
 //@property(nonatomic,strong)NSString *appiontmentId;
 //@property(nonatomic,strong)NSString *video_image;
 //@property(nonatomic,strong)NSString *IDcard;
@@ -155,7 +156,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *youHuiQuanList;
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *lideshowlist;
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *auctionlist;
-//@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *province_important_departmentList;
+@property(nonatomic,strong)NSMutableArray<SWTModel *> *commentlist;
 //@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *city_important_departmentList;
 //@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *recommendDoctorList;
 //@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *doctorList;

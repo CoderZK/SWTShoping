@@ -199,9 +199,9 @@
         self.redView.centerX = self.rightBt.centerX;
     }
     
-//    if (self.delegateSignal) {
-//        [self.delegateSignal sendNext:@(button.tag)];
-//       }
+    if (self.delegateSignal) {
+        [self.delegateSignal sendNext:@(button.tag)];
+       }
 }
 
 - (void)setModel:(SWTModel *)model {

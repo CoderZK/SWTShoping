@@ -246,6 +246,8 @@
 		6674244324B4CBCF007A6A56 /* SWTVideoDetailOneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6674244124B4CBCF007A6A56 /* SWTVideoDetailOneCell.m */; };
 		6674244424B4CBCF007A6A56 /* SWTVideoDetailOneCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6674244224B4CBCF007A6A56 /* SWTVideoDetailOneCell.xib */; };
 		6674B24C24C09D3B0051A46C /* SWTShaiXuanRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6674B24B24C09D3B0051A46C /* SWTShaiXuanRightView.m */; };
+		6675B38324DD4A42002D3671 /* SWTPayVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6675B38124DD4A42002D3671 /* SWTPayVC.m */; };
+		6675B38424DD4A42002D3671 /* SWTPayVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6675B38224DD4A42002D3671 /* SWTPayVC.xib */; };
 		6678B7E124B0AE2B00EA3A56 /* SWTGoodsDetailTwoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6678B7DF24B0AE2B00EA3A56 /* SWTGoodsDetailTwoCell.m */; };
 		6678B7E224B0AE2B00EA3A56 /* SWTGoodsDetailTwoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6678B7E024B0AE2B00EA3A56 /* SWTGoodsDetailTwoCell.xib */; };
 		6678B7E624B0B49500EA3A56 /* SWTGoodsDetailThreeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6678B7E424B0B49500EA3A56 /* SWTGoodsDetailThreeCell.m */; };
@@ -728,6 +730,9 @@
 		6674244224B4CBCF007A6A56 /* SWTVideoDetailOneCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTVideoDetailOneCell.xib; sourceTree = "<group>"; };
 		6674B24A24C09D3B0051A46C /* SWTShaiXuanRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTShaiXuanRightView.h; sourceTree = "<group>"; };
 		6674B24B24C09D3B0051A46C /* SWTShaiXuanRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTShaiXuanRightView.m; sourceTree = "<group>"; };
+		6675B38024DD4A42002D3671 /* SWTPayVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTPayVC.h; sourceTree = "<group>"; };
+		6675B38124DD4A42002D3671 /* SWTPayVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTPayVC.m; sourceTree = "<group>"; };
+		6675B38224DD4A42002D3671 /* SWTPayVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTPayVC.xib; sourceTree = "<group>"; };
 		6678B7DE24B0AE2B00EA3A56 /* SWTGoodsDetailTwoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTGoodsDetailTwoCell.h; sourceTree = "<group>"; };
 		6678B7DF24B0AE2B00EA3A56 /* SWTGoodsDetailTwoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTGoodsDetailTwoCell.m; sourceTree = "<group>"; };
 		6678B7E024B0AE2B00EA3A56 /* SWTGoodsDetailTwoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTGoodsDetailTwoCell.xib; sourceTree = "<group>"; };
@@ -1759,6 +1764,9 @@
 				666D4AEE24CACBD800300957 /* SWTTuiHuoKuaiDiDanHaoVC.xib */,
 				666BCBC024D123BD00746579 /* SWTWuLiuTVC.h */,
 				666BCBC124D123BD00746579 /* SWTWuLiuTVC.m */,
+				6675B38024DD4A42002D3671 /* SWTPayVC.h */,
+				6675B38124DD4A42002D3671 /* SWTPayVC.m */,
+				6675B38224DD4A42002D3671 /* SWTPayVC.xib */,
 			);
 			path = VCS;
 			sourceTree = "<group>";
@@ -2027,6 +2035,7 @@
 				337F3E6620E9FE5300C5526A /* LaunchScreen.storyboard in Resources */,
 				666325D824AE2626009D77AF /* SWTMessageOneCell.xib in Resources */,
 				666F691724BCA8F200592DC4 /* SWTMienAddressCell.xib in Resources */,
+				6675B38424DD4A42002D3671 /* SWTPayVC.xib in Resources */,
 				6660683724C2D33F004ABAB6 /* SWTVideoMyFavCell.xib in Resources */,
 				337F3E6320E9FE5300C5526A /* Assets.xcassets in Resources */,
 				66732CD424B8B57400452F21 /* SWTMinePingLunListCell.xib in Resources */,
@@ -2235,6 +2244,7 @@
 				337F3E5B20E9FE3B00C5526A /* AppDelegate.m in Sources */,
 				66689F2524B4176A00C49A2E /* SWTMineYouHuiQuanCell.m in Sources */,
 				6670E03F24BFDF5200662F5D /* SWTXiYieVC.m in Sources */,
+				6675B38324DD4A42002D3671 /* SWTPayVC.m in Sources */,
 				666F692224BCAE4200592DC4 /* SWTEditAddressTVC.m in Sources */,
 				6670823424BC3F6B00A44820 /* SWTHeMaiSubVC.m in Sources */,
 				666A39FA24B74B3C00318075 /* MXImagePreviewController.m in Sources */,
@@ -2502,6 +2512,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 66YPJF76HN;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2539,6 +2550,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 66YPJF76HN;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

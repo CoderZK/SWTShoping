@@ -65,7 +65,8 @@
         self.shareBt =[[UIButton alloc] init];
         self.shareBt.titleLabel.numberOfLines = 2;
         self.shareBt.titleLabel.font = kFont(12);
-        self.shareBt.backgroundColor = [UIColor redColor];
+//        self.shareBt.backgroundColor = [UIColor redColor];
+        [self.shareBt setBackgroundImage:[UIImage imageNamed:@"share"] forState:UIControlStateNormal];
         [self addSubview:self.shareBt];
         self.shareBt.tag = 102;
         [self.shareBt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -73,10 +74,11 @@
         self.collectBt =[[UIButton alloc] init];
         self.collectBt.titleLabel.numberOfLines = 2;
         self.collectBt.titleLabel.font = kFont(12);
-        self.collectBt.backgroundColor = [UIColor redColor];
+//        self.collectBt.backgroundColor = [UIColor redColor];
         [self addSubview:self.collectBt];
         self.collectBt.tag = 103;
         [self.collectBt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
+        [self.collectBt setBackgroundImage:[UIImage imageNamed:@"collectN"] forState:UIControlStateNormal];
         
         self.numberLB = [[UILabel alloc] init];
         self.numberLB.layer.cornerRadius = 6;

@@ -44,6 +44,7 @@
         [zkSignleTool shareTool].session_uid = nil;
         self.tabBarController.selectedIndex = 0;
         [self.navigationController popToRootViewControllerAnimated:YES];
+        [[V2TIMManager sharedInstance] logout:nil fail:nil];
         
         
     }];

@@ -169,10 +169,20 @@
 #define login_SWT URLOne@"login"
 
 #pragma mark ---- 直播功能 -----
+
+
+/**直播间详细信息 */
+#define liveDetail_SWT URLOne@"live/detail"
 /**获取所有顶级分类  */
 #define liveTopcategory_SWT URLOne@"live/topcategory"
 /** 直播列表  */
 #define liveList_SWT URLOne@"live/list"
+
+/** 获取直播拍卖商品  */
+#define liveLivegoodlist_SWT URLOne@"live/livegoodlist"
+/** 获取最新价格  */
+#define liveNowgoodprice_SWT URLOne@"live/nowgoodprice"
+
 
 
 #pragma mark ---- 视频信息接口 -----
@@ -196,8 +206,6 @@
 #define orderBackaddress_SWT URLOne@"order/backaddress"
 /** 退货详情 */
 #define orderBackdetail_SWT URLOne@"order/backdetail"
-
-
 /** 物流信息填写 */
 #define orderBackexpress_SWT URLOne@"order/backexpress"
 /** 发表评论接口*/
@@ -238,7 +246,7 @@
 
 
 #pragma mark ---- 合买信息接口  -----
-/** 上传多文件 */
+/**  */
 #define shareGoodlist_SWT URLOne@"share/goodlist"
 /** 直播列表 */
 #define shareList_SWT URLOne@"share/list"

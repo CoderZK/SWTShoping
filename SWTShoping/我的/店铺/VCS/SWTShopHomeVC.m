@@ -196,7 +196,7 @@
     }];
     
     [[self.naView.rightBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:@"17"];
+        TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:self.dataModel.imid];
         TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
         [self.navigationController pushViewController:vc animated:YES];
     }];

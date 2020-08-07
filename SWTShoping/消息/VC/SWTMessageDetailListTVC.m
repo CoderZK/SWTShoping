@@ -40,7 +40,7 @@
     
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    //    dict[@"receiveid"] = [zkSignleTool shareTool].session_uid;
+    dict[@"receiveid"] = [zkSignleTool shareTool].session_uid;
     dict[@"sendid"] = self.sendid;;
     [zkRequestTool networkingPOST:pushmsgDetail_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];

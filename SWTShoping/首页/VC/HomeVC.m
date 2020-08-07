@@ -292,6 +292,7 @@
             }else {
                 SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
                 vc.hidesBottomBarWhenPushed = YES;
+                vc.model = self.hotArr[x.intValue];
                 [self.navigationController pushViewController:vc animated:YES];
             }
             

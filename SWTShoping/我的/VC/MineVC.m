@@ -35,6 +35,7 @@
 @property(nonatomic , strong)UIImageView *imagV;
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *likeArr;
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *leverArr;
+@property(nonatomic , strong)SWTModel *userDataModel;
 @end
 
 @implementation MineVC
@@ -111,7 +112,7 @@
         if ([responseObject[@"code"] intValue]== 200) {
             
             [zkSignleTool shareTool].nickname = responseObject[@"data"][@"nickname"];
-            
+            self.userDataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
             
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
@@ -230,18 +231,14 @@
         if (indexPath.row == 0) {
             //104 头像 105 编辑 106 问题 107 关注 100 - 103 我的竞拍...
             SWTMineOneCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTMineOneCell" forIndexPath:indexPath];
+            cell.model = self.userDataModel;
             Weak(weakSelf);
             cell.mineOneCellBlock = ^(NSInteger index) {
                 if (index == 0) {
-                    
-                    
                     SWTCanPaiFarterVC * vc =[[SWTCanPaiFarterVC alloc] init];
                     vc.hidesBottomBarWhenPushed = YES;
                     [weakSelf.navigationController pushViewController:vc animated:YES];
-                    
-                    
-                    
-                    
+
                     
                     //                    SWTMinePingLunListTVC * vc =[[SWTMinePingLunListTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
                     //                    vc.hidesBottomBarWhenPushed = YES;

@@ -79,11 +79,10 @@
         @strongify(self);
         [self.navigationController popViewControllerAnimated:YES];
     }];
-    
+    [self.naView.rightBt setTitle:@"" forState:UIControlStateNormal];
+    [self.naView.rightBt setImage:[UIImage imageNamed:@"dxy1"] forState:UIControlStateNormal];
     [[self.naView.rightBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:@"17"];
-        TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
-        [self.navigationController pushViewController:vc animated:YES];
+       //分享
     }];
     [self.view addSubview:self.naView];
     

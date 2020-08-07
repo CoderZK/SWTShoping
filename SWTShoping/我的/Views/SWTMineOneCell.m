@@ -59,6 +59,12 @@
     self.clipsToBounds  = YES;
 }
 
+- (void)setModel:(SWTModel *)model {
+    _model = model;
+    [self.headBt sd_setBackgroundImageWithURL:[model.mobile getPicURL] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"369"]];
+    self.nameLB.text = model.nickname;
+    
+}
 
 - (IBAction)clickAction:(UIButton *)button {
     if (self.mineOneCellBlock != nil) {

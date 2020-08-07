@@ -11,7 +11,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTZhiBoJingPaiShowCell : UITableViewCell
-
+@property (weak, nonatomic) IBOutlet UILabel *titleLB;
+@property (weak, nonatomic) IBOutlet UILabel *jiaJiaLB;
+@property (weak, nonatomic) IBOutlet UIImageView *imgV;
+@property (weak, nonatomic) IBOutlet UILabel *moneyLB;
+@property (weak, nonatomic) IBOutlet UIButton *shuaXinAction;
+@property(nonatomic , strong)SWTModel *model;
 @end
 
 NS_ASSUME_NONNULL_END

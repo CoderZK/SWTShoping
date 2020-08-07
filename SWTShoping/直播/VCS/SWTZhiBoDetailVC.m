@@ -19,10 +19,12 @@
 @property(nonatomic , strong)SWTZhiBoHedView *headV;
 @property(nonatomic , strong)SWTZhiBoBottomView *bottomV;
 @property(nonatomic , strong)SWTZhiBoChuJiaBottomView *chuJiaBottomV;
-@property(nonatomic , strong)NSMutableArray<SWTModel *> *DataArr;
+@property(nonatomic , strong)NSMutableArray<SWTModel *> *heMaiArr;
 @property(nonatomic , strong)NSString *groupId;
 @property(nonatomic , strong)SWTHuoDeShowView *huoDeShowView;
-
+@property(nonatomic , strong)NSMutableArray<SWTModel *> *zhiBoArr;
+@property(nonatomic , strong)SWTModel *dataModel;
+@property(nonatomic , strong)SWTZhiBoJingPaiShowView *jingPaiV;
 
 @end
 
@@ -53,11 +55,15 @@
     
     [self creaeteAVRoom];
     
-//    self.huoDeShowView = [[SWTHuoDeShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
-//    [self.huoDeShowView show];
+    //    self.huoDeShowView = [[SWTHuoDeShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+    //    [self.huoDeShowView show];
     
     SWTPeopleChuJiaVIew * chuajiaV  = [[SWTPeopleChuJiaVIew alloc] initWithFrame:CGRectMake(0, 150, 180, 70)];
     [self.view addSubview:chuajiaV];
+    self.zhiBoArr = @[].mutableCopy;
+    self.heMaiArr = @[].mutableCopy;
+    [self getLiveData];
+    [self getLivegoodListDataWithType:0];
     
 }
 
@@ -100,14 +106,39 @@
         }
     }];
     
-     self.bottomV.delegateSignal = [[RACSubject alloc] init];
+    self.bottomV.delegateSignal = [[RACSubject alloc] init];
     @weakify(self);
     [ self.bottomV.delegateSignal subscribeNext:^(NSNumber * x) {
         @strongify(self);
         if (x.intValue == 0) {
-            //点击购物车
-            self.bottomV.hidden = YES;
-            self.chuJiaBottomV.hidden = NO;
+           //变化底部状态栏
+//            self.bottomV.hidden = YES;
+//            self.chuJiaBottomV.hidden = NO;
+            
+             //点击购物车
+            if (self.isHeMai) {
+                //合买
+                
+            }else {
+                //直播
+                SWTZhiBoJingPaiShowView *  jingPaiV  =[[SWTZhiBoJingPaiShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+                jingPaiV.delegateSignal = [[RACSubject alloc] init];
+                self.jingPaiV = jingPaiV;
+                @weakify(self);
+                [jingPaiV.delegateSignal subscribeNext:^(NSNumber * x) {
+                    @strongify(self);
+                    if (x.intValue == 99){
+                        //店铺
+                    }else  {
+                        [self getLivegoodListDataWithType:x.intValue - 100];
+                    }
+                    
+                    
+                }];
+                jingPaiV.dataModel = self.dataModel;
+                jingPaiV.dataArray = self.zhiBoArr;
+                [jingPaiV show];
+            }
             
             
         }else if (x.intValue == 1) {
@@ -123,8 +154,7 @@
             [dingzhiV show];
         }else if (x.intValue == 3){
             //收藏
-            SWTZhiBoJingPaiShowView *  jingPaiV  =[[SWTZhiBoJingPaiShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
-            [jingPaiV show];
+            
         }else if (x.intValue == 100) {
             //点击发送按钮
             [self sendMessage];
@@ -133,6 +163,58 @@
         
     }];
 }
+
+- (void)getLiveData {
+    
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"liveid"] = self.model.ID;
+    [zkRequestTool networkingPOST:liveDetail_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+      
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            self.dataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+       
+        
+    }];
+
+    
+}
+
+//获取直播中的镜片列表
+- (void)getLivegoodListDataWithType:(NSInteger)type {
+    
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+//    dict[@"liveid"] = self.model.ID;
+    dict[@"liveid"] = @"15";
+    dict[@"type"] = @(type);
+    [zkRequestTool networkingPOST:liveLivegoodlist_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+  
+        
+        if ([responseObject[@"code"] intValue]== 200) {
+            [SVProgressHUD dismiss];
+            self.zhiBoArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+
+        
+    }];
+
+    
+}
+
 
 - (void)addChuJiaBottomV {
     
@@ -158,10 +240,11 @@
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"liveid"] = self.model.ID;
     [zkRequestTool networkingPOST:shareGoodlist_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
-    
+        
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             
+            self.zhiBoArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
             
             
             
@@ -171,24 +254,29 @@
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
- 
+        
         
     }];
+    
+    
+}
 
+- (void)setModel:(SWTModel *)model {
+    _model = model;
     
 }
 
 //创建直播室
 - (void)creaeteAVRoom {
     V2TIMManager * manager = [V2TIMManager sharedInstance];
-    [manager joinGroup:@"ceshiroom" msg:@"333" succ:^{
-       NSLog(@"%@",@"进入直播间成功");
-        self.groupId = @"ceshiroom";
+    [manager joinGroup:@"@TGS#aG55HCUGH" msg:@"333" succ:^{
+        NSLog(@"%@",@"进入直播间成功");
+        self.groupId = @"@TGS#aG55HCUGH";
     } fail:^(int code, NSString *desc) {
-         NSLog(@"%@",@"进入直播间失败");
+        NSLog(@"%@",@"进入直播间失败");
     }];
     
-
+    
     
     
 }
@@ -197,8 +285,7 @@
     
     V2TIMMessage * msg = [[V2TIMManager sharedInstance] createTextMessage:self.bottomV.TF.text];
     
-    
-    [[V2TIMManager sharedInstance] sendMessage:msg receiver:nil groupID:self.groupId priority:(V2TIM_PRIORITY_DEFAULT) onlineUserOnly:YES offlinePushInfo:nil progress:^(uint32_t progress) {
+    [[V2TIMManager sharedInstance] sendMessage:msg receiver:nil groupID:self.groupId priority:(V2TIM_PRIORITY_DEFAULT) onlineUserOnly:NO offlinePushInfo:nil progress:^(uint32_t progress) {
         
     } succ:^{
         NSLog(@"%@",@"发送成功");

@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 //104 头像 105 编辑 106 问题 107 关注 100 - 103 我的竞拍...
 @property(nonatomic , copy)void(^mineOneCellBlock)(NSInteger index);
 @property(nonatomic , strong)UIButton *guanZhuBt;
+@property(nonatomic , strong)SWTModel *model;
 @end
 
 NS_ASSUME_NONNULL_END
