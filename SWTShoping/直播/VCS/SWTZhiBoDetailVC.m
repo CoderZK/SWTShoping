@@ -15,16 +15,21 @@
 #import "SWTZhiBoJingPaiShowView.h"
 #import "SWTHuoDeShowView.h"
 #import "SWTPeopleChuJiaVIew.h"
+#import "SWTHeMaiMineDingZhiShowView.h"
 @interface SWTZhiBoDetailVC ()<V2TIMAdvancedMsgListener>
 @property(nonatomic , strong)SWTZhiBoHedView *headV;
 @property(nonatomic , strong)SWTZhiBoBottomView *bottomV;
 @property(nonatomic , strong)SWTZhiBoChuJiaBottomView *chuJiaBottomV;
-@property(nonatomic , strong)NSMutableArray<SWTModel *> *heMaiArr;
+
 @property(nonatomic , strong)NSString *groupId;
 @property(nonatomic , strong)SWTHuoDeShowView *huoDeShowView;
+@property(nonatomic , strong)NSMutableArray<SWTModel *> *heMaiArr; // 直播接合买列表
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *zhiBoArr;
+@property(nonatomic , strong)NSMutableArray<SWTModel *> *mineHeMaiArr; //我的合买
 @property(nonatomic , strong)SWTModel *dataModel;
 @property(nonatomic , strong)SWTZhiBoJingPaiShowView *jingPaiV;
+@property(nonatomic , strong)SWTHeMaiDianPuShowVIew *heMaiView;
+@property(nonatomic , strong)SWTHeMaiMineDingZhiShowView *dingZHiView;
 
 @end
 
@@ -51,7 +56,7 @@
     [self addBottomV];
     [self addChuJiaBottomV];
     self.chuJiaBottomV.hidden = YES;
-    [self getGoodsListData];
+ 
     
     [self creaeteAVRoom];
     
@@ -62,8 +67,18 @@
     [self.view addSubview:chuajiaV];
     self.zhiBoArr = @[].mutableCopy;
     self.heMaiArr = @[].mutableCopy;
-    [self getLiveData];
-    [self getLivegoodListDataWithType:0];
+    self.mineHeMaiArr = @[].mutableCopy;
+    [self getLiveData];//获取合买商品列表
+    if (self.isHeMai) {
+        [self getMineHeMaiDingZhiListWithType:0];//获取我的合买列表
+        [self getGoodsListData]; //店铺合买列表
+    }else {
+       [self getLivegoodListDataWithType:0]; //获取竞拍和一口价列表
+    }
+    
+   
+    
+    
     
 }
 
@@ -111,13 +126,32 @@
     [ self.bottomV.delegateSignal subscribeNext:^(NSNumber * x) {
         @strongify(self);
         if (x.intValue == 0) {
-           //变化底部状态栏
-//            self.bottomV.hidden = YES;
-//            self.chuJiaBottomV.hidden = NO;
+            //变化底部状态栏
+            //            self.bottomV.hidden = YES;
+            //            self.chuJiaBottomV.hidden = NO;
             
-             //点击购物车
+            //点击购物车
             if (self.isHeMai) {
                 //合买
+                SWTHeMaiDianPuShowVIew *  heMaiV  =[[SWTHeMaiDianPuShowVIew alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+                self.heMaiView = heMaiV;
+                heMaiV.dataArray = self.heMaiArr;
+                self.heMaiView.delegateSignal = [[RACSubject alloc] init];
+                @weakify(self);
+                [self.heMaiView.delegateSignal subscribeNext:^(NSNumber * x) {
+                    @strongify(self);
+                    [self.heMaiView dismiss];
+                    SWTModel * model  = self.heMaiArr[x.intValue-200];
+                    //合买提交订单
+                    SWTMineHeMaiTiJiaoOrderTVC * vc =[[SWTMineHeMaiTiJiaoOrderTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    vc.model = model;
+                    [self.navigationController pushViewController:vc animated:YES];
+                    
+                    
+                }];
+                [heMaiV show];
+                
                 
             }else {
                 //直播
@@ -129,8 +163,18 @@
                     @strongify(self);
                     if (x.intValue == 99){
                         //店铺
-                    }else  {
+                        [self.jingPaiV dismiss];
+                    }else  if (x.intValue < 102){
                         [self getLivegoodListDataWithType:x.intValue - 100];
+                    }else {
+                        [self.jingPaiV dismiss];
+                        SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                        vc.hidesBottomBarWhenPushed = YES;
+                        if (x.intValue - 200 < self.zhiBoArr.count) {
+                            vc.goodID = self.zhiBoArr[x.intValue - 200].ID;
+                        }
+                        [self.navigationController pushViewController:vc animated:YES];
+                        
                     }
                     
                     
@@ -142,16 +186,26 @@
             
             
         }else if (x.intValue == 1) {
-            //合买定制
-            SWTMineHeMaiTiJiaoOrderTVC * vc =[[SWTMineHeMaiTiJiaoOrderTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
-            
+            //我的合买
+            SWTHeMaiMineDingZhiShowView *  dingZhiV  =[[SWTHeMaiMineDingZhiShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+            dingZhiV.delegateSignal = [[RACSubject alloc] init];
+            self.dingZHiView = dingZhiV;
+            self.dingZHiView.dataArray = self.mineHeMaiArr;
+            @weakify(self);
+            [dingZhiV.delegateSignal subscribeNext:^(NSNumber * x) {
+                @strongify(self);
+                if (x.intValue < 102) {
+                     [self getMineHeMaiDingZhiListWithType:x.intValue - 100];
+                }else {
+                    
+                }
+               
+            }];
+            [dingZhiV show];
             
         }else if (x.intValue == 2) {
             //分享
-            SWTHeMaiDianPuShowVIew *  dingzhiV  =[[SWTHeMaiDianPuShowVIew alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
-            [dingzhiV show];
+            
         }else if (x.intValue == 3){
             //收藏
             
@@ -163,58 +217,90 @@
         
     }];
 }
-
+//获取直播详情
 - (void)getLiveData {
-    
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    dict[@"liveid"] = self.model.ID;
+    //    dict[@"liveid"] = self.model.ID;
+    dict[@"liveid"] = @"15";
     [zkRequestTool networkingPOST:liveDetail_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
-      
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             self.dataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
-            
-        }else {
-            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
+    
+    
+}
+//我的合买
+- (void)getMineHeMaiDingZhiListWithType:(NSInteger)type {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    //    dict[@"liveid"] = self.model.ID;
+    dict[@"userid"] = [zkSignleTool shareTool].session_uid;
+    dict[@"status"] = @(type+1);
+    [zkRequestTool networkingPOST:shareMyshare_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            self.mineHeMaiArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            self.dingZHiView.dataArray = self.mineHeMaiArr;
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
-       
+        
         
     }];
-
     
 }
 
-//获取直播中的镜片列表
+//获取直播中的竞拍列表
 - (void)getLivegoodListDataWithType:(NSInteger)type {
-    
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-//    dict[@"liveid"] = self.model.ID;
+    //    dict[@"liveid"] = self.model.ID;
     dict[@"liveid"] = @"15";
     dict[@"type"] = @(type);
     [zkRequestTool networkingPOST:liveLivegoodlist_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
-  
-        
+        [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
-            [SVProgressHUD dismiss];
             self.zhiBoArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
-        }else {
-            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+            self.jingPaiV.dataArray = self.zhiBoArr;
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
-
+        
         
     }];
-
+    
     
 }
-
+//获取合买列表
+- (void)getHeMaiList {
+    
+    [SVProgressHUD show];
+       NSMutableDictionary * dict = @{}.mutableCopy;
+       //    dict[@"liveid"] = self.model.ID;
+       dict[@"liveid"] = @"15";
+       [zkRequestTool networkingPOST:shareGoodlist_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+           [SVProgressHUD dismiss];
+           if ([responseObject[@"code"] intValue]== 200) {
+ 
+               self.heMaiArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+               self.heMaiView.dataArray = self.heMaiArr;
+           }
+           
+       } failure:^(NSURLSessionDataTask *task, NSError *error) {
+           
+           
+           
+       }];
+    
+    
+}
 
 - (void)addChuJiaBottomV {
     
@@ -238,18 +324,14 @@
     
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    dict[@"liveid"] = self.model.ID;
+//    dict[@"liveid"] = self.model.ID;
+    dict[@"liveid"] = @"15";
     [zkRequestTool networkingPOST:shareGoodlist_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             
-            self.zhiBoArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
-            
-            
-            
-        }else {
-            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+            self.heMaiArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];            
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -315,5 +397,55 @@
 - (void)dismiss {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+
+//收藏操作
+
+//关注操作
+- (void)gaunZhuAction {
+    
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"followid"] = @"-1";
+    if (self.dataModel.followid.length > 0) {
+        dict[@"favid"] = self.dataModel.followid;
+    }
+    dict[@"id"] = self.dataModel.ID;
+    dict[@"type"] = @"1";
+    dict[@"operation"] = [self.dataModel.isfollow isEqualToString:@"no"] ? @"ADD":@"DELETE";
+    dict[@"userid"] =[zkSignleTool shareTool].session_uid;
+    [zkRequestTool networkingPOST:userFollowOperate_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            if ([self.dataModel.isfollow isEqualToString:@"no"]) {
+                [SVProgressHUD showSuccessWithStatus:@"关注店铺成功"];
+                self.dataModel.isfollow = @"yes";
+            }else {
+                [SVProgressHUD showSuccessWithStatus:@"取消关注店铺"];
+                self.dataModel.isfollow = @"no";
+            }
+            if ([self.dataModel.isfollow isEqualToString:@"no"]) {
+               
+            }else {
+               
+            }
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        
+        
+    }];
+    
+    
+    
+    
+}
+
+
+
 
 @end

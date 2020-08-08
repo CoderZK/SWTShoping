@@ -13,6 +13,8 @@
 @property(nonatomic , strong)UITableView *tableView;
 @property(nonatomic , strong)UIButton *leftBtBt,*rightBt;
 
+@property(nonatomic , assign)NSInteger  type;
+
 
 @end
 
@@ -22,6 +24,8 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        
+
         
         UIButton *button = [[UIButton alloc] initWithFrame:[UIScreen mainScreen].bounds];
         [button addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
@@ -57,7 +61,7 @@
         self.leftBtBt.selected = YES;
         self.leftBtBt.titleLabel.font = kFont(15);
         [self.whiteV addSubview:self.leftBtBt];
-        [self.leftBtBt setTitle:@"合买中 (5)" forState:UIControlStateNormal];
+        [self.leftBtBt setTitle:@"合买中" forState:UIControlStateNormal];
         self.leftBtBt.tag = 100;
         [self.leftBtBt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -70,7 +74,7 @@
         self.rightBt.selected = NO;
         self.rightBt.titleLabel.font = kFont(15);
         [self.whiteV addSubview:self.rightBt];
-        [self.rightBt setTitle:@"待完成 (9)" forState:UIControlStateNormal];
+        [self.rightBt setTitle:@"待完成" forState:UIControlStateNormal];
         self.rightBt.tag = 101;
         [self.rightBt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -142,6 +146,10 @@
         self.leftBtBt.selected = NO;
         self.rightBt.selected = YES;
     }
+    self.type = button.tag-100;
+    if (self.delegateSignal) {
+        [self.delegateSignal sendNext:@(button.tag)];
+    }
 }
 
 - (void)show {
@@ -165,25 +173,46 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return self.dataArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 95;
 }
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SWTHeMaiDianPuOneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    SWTModel * model = self.dataArray[indexPath.row];
+    [cell.imgV sd_setImageWithURL:[model.img getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+    cell.titleLB.text = model.goodname;
+    cell.jiaJiaLB.text =  [NSString stringWithFormat:@"￥%@",model.goodprice];
+    cell.numberLB.text =  [NSString stringWithFormat:@"%@/%@",model.goodnum,model.lot_no];
+    cell.rightBt.hidden = YES;
+    [cell.timeBt setTitle: @"已完成" forState:UIControlStateNormal];
+    cell.rightBt.tag = indexPath.row;
+    [cell.rightBt addTarget:self action:@selector(action:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 
+- (void)action:(UIButton *)button {
+    if (self.delegateSignal) {
+        [self.delegateSignal sendNext:@(button.tag)];
+    }
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    
+    if (self.delegateSignal) {
+        [self.delegateSignal sendNext:@(indexPath.row + 200)];
+       }
     
 }
 
-
-
+- (void)setDataArray:(NSMutableArray<SWTModel *> *)dataArray {
+    _dataArray = dataArray;
+    
+    [self.tableView reloadData];
+    
+    
+}
 
 @end

@@ -97,6 +97,7 @@
                 <outlet property="imgV" destination="k7X-NS-ShK" id="9Ng-Ge-qoT"/>
                 <outlet property="jiaJiaLB" destination="hLN-Hz-oqC" id="8hs-Sr-pbJ"/>
                 <outlet property="moneyLB" destination="Aq1-zy-QO2" id="xnh-ef-mzQ"/>
+                <outlet property="rightBt" destination="qqb-a8-rHS" id="5uq-Lc-sv1"/>
                 <outlet property="shuaXinAction" destination="Xu9-UU-Qo8" id="vyB-Lp-Sya"/>
                 <outlet property="titleLB" destination="VT0-rd-71N" id="ZKS-Rk-dwv"/>
             </connections>

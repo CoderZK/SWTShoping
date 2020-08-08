@@ -29,6 +29,7 @@
 #import "SWTMineZiLiaoVC.h"
 #import "SWTChengZhangShowView.h"
 #import "SWTMineKeFuTVC.h"
+#import "SWTMineHeMaiOrderFatherVC.h"
 @interface MineVC ()<XPCollectionViewWaterfallFlowLayoutDataSource,UICollectionViewDelegate,UICollectionViewDataSource>
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 @property(nonatomic , strong)UICollectionView *collectionView;
@@ -297,9 +298,14 @@
                     vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
                 }else if (index == 3) {
-                    SWTMineYouHuiQuanTVC * vc =[[SWTMineYouHuiQuanTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                    
+                    SWTMineHeMaiOrderFatherVC * vc =[[SWTMineHeMaiOrderFatherVC alloc] init];
                     vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
+                    
+//                    SWTMineYouHuiQuanTVC * vc =[[SWTMineYouHuiQuanTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+//                    vc.hidesBottomBarWhenPushed = YES;
+//                    [self.navigationController pushViewController:vc animated:YES];
                 }else if (index == 4) {
                     
                     
@@ -385,7 +391,19 @@
         }
         return 180;
     }else {
-        return 150 + arc4random() % 100;
+        CGFloat imgH  =   (ScreenW - 30)/2 * 3/4;
+        SWTModel * model = self.likeArr[indexPath.row];
+        if ([model.showtype isEqualToString:@"live"]) {
+            
+            return  (ScreenW - 30)/2;
+        }else {
+            NSArray * arr = [model getTypeLBArr];
+            if (arr.count == 0) {
+                return imgH + 39;
+            }else {
+                return imgH + 59;
+            }
+        }
     }
 }
 

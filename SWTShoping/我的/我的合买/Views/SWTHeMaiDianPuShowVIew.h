@@ -13,6 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SWTHeMaiDianPuShowVIew : UIView
 - (void)show;
 - (void)dismiss;
+@property(nonatomic , strong)NSMutableArray<SWTModel *> *dataArray;
+@property(nonatomic , strong)SWTModel *dataModel;
+@property(nonatomic , strong)RACSubject *delegateSignal;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -246,17 +246,27 @@
 
 
 #pragma mark ---- 合买信息接口  -----
-/**  */
+
+
+
+/** 合买商品列表 */
 #define shareGoodlist_SWT URLOne@"share/goodlist"
 /** 直播列表 */
 #define shareList_SWT URLOne@"share/list"
+/** 我的合买 */
+#define shareMyshare_SWT URLOne@"share/myshare"
+/** 订单详情 */
+#define shareOrderdetail_SWT URLOne@"share/orderdetail"
 /** 支付设置订单状态 */
 #define sharePay_SWT URLOne@"share/pay"
 /** 提交合买订单 */
 #define shareSubmit_SWT URLOne@"share/submit"
+/** 合买定制 */
+#define shareSharelist_SWT URLOne@"share/sharelist"
+
+
 /** 获取所有顶级分类 */
 #define shareTopcategory_SWT URLOne@"share/topcategory"
-
 
 
 #pragma mark ---- 消息接口  -----

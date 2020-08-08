@@ -152,23 +152,47 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return self.dataArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 95;
 }
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SWTHeMaiDianPuOneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    SWTModel * model = self.dataArray[indexPath.row];
+    [cell.imgV sd_setImageWithURL:[model.img getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+       cell.titleLB.text = model.name;
+        cell.jiaJiaLB.text =  [NSString stringWithFormat:@"￥%@",model.price];
+    [cell.timeBt setTitle: [NSString stringWithFormat:@"%@    %@",[model.starttime substringToIndex:10],[model.endtime substringToIndex:10]] forState:UIControlStateNormal];
+    cell.rightBt.userInteractionEnabled = NO;
     return cell;
 }
 
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+    if (self.delegateSignal) {
+        [self.delegateSignal sendNext:@(indexPath.row + 200)];
+       }
     
     
 }
 
+- (void)setDataArray:(NSMutableArray<SWTModel *> *)dataArray {
+    _dataArray = dataArray;
+    
+    [self.tableView reloadData];
+    
+    
+}
+
+- (void)setDataModel:(SWTModel *)dataModel {
+    _dataModel = dataModel;
+    [self.headBt sd_setBackgroundImageWithURL:[dataModel.avatar getPicURL] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"369"]];
+    self.shopNameLB.text = dataModel.name;
+    
+    
+    
+    
+}
 
 @end

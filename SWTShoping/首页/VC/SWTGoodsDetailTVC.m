@@ -41,6 +41,9 @@
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    
+    [self getData];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -72,7 +75,7 @@
     
     self.page = 1;
     self.dataArray = @[].mutableCopy;
-    [self getData];
+
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         self.page = 1;
         [self getData];
@@ -480,13 +483,8 @@
     
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    dict[@"favid"] = @"-1";
-    if (self.dataModel.favid.length > 0) {
-        dict[@"favid"] = self.dataModel.favid;
-    }
     dict[@"id"] = self.goodID;
     dict[@"type"] = @"0";
-    dict[@"operation"] = [self.dataModel.isfav isEqualToString:@"no"] ? @"ADD":@"DELETE";
     dict[@"userid"] =[zkSignleTool shareTool].session_uid;
     [zkRequestTool networkingPOST:userFavOperate_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         
@@ -521,16 +519,10 @@
     if (!ISLOGIN) {
         [self gotoLoginVC];
     }
-    
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    dict[@"followid"] = @"-1";
-    if (self.dataModel.followid.length > 0) {
-        dict[@"favid"] = self.dataModel.followid;
-    }
     dict[@"id"] = self.dataModel.merch_id;
     dict[@"type"] = @"1";
-    dict[@"operation"] = [self.dataModel.isfollow isEqualToString:@"no"] ? @"ADD":@"DELETE";
     dict[@"userid"] =[zkSignleTool shareTool].session_uid;
     [zkRequestTool networkingPOST:userFollowOperate_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         

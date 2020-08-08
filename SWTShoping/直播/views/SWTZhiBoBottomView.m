@@ -152,7 +152,7 @@
 - (void)setIsHeMai:(BOOL)isHeMai {
     _isHeMai = isHeMai;
     
-    if (isHeMai) {
+    if (!isHeMai) {
 //        self.heMaibt.hidden = YES;
         [self.heMaibt mas_updateConstraints:^(MASConstraintMaker *make) {
             make.width.equalTo(@0);

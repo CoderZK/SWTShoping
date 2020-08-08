@@ -125,9 +125,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *imid;
 @property(nonatomic,strong)NSString *headimg;
 @property(nonatomic,strong)NSString *finishtime;
-//@property(nonatomic,strong)NSString *appiontmentId;
-//@property(nonatomic,strong)NSString *video_image;
-//@property(nonatomic,strong)NSString *IDcard;
+@property(nonatomic,strong)NSString *starttime;
+@property(nonatomic,strong)NSString *endtime;
+@property(nonatomic,strong)NSString *lot_no;
 //@property(nonatomic,strong)NSString *baseId;
 //@property(nonatomic,strong)NSString *videoImage;
 ////@property(nonatomic,strong)NSString *checkInfo;

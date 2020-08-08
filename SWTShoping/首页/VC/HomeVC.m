@@ -238,6 +238,7 @@
             
             SWTHeMaiFatherVC * vc =[[SWTHeMaiFatherVC alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
+            vc.isHeMai = NO;
             [self.navigationController pushViewController:vc animated:YES];
         }else if (index == 1) {
             SWTZhenPinGeFatherVC * vc =[[SWTZhenPinGeFatherVC alloc] init];
@@ -331,6 +332,7 @@
     if ([model.showtype isEqualToString:@"live"]) {
         SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
+        vc.isHeMai = YES;
         vc.model = model;
         [self.navigationController pushViewController:vc animated:YES];
     }else {
@@ -371,7 +373,20 @@
     if (indexPath.section == 0) {
         return 160;
     }else {
-        return 150 + arc4random() % 100;
+        
+        CGFloat imgH  =   (ScreenW - 30)/2 * 3/4;
+        SWTModel * model = self.recommendArr[indexPath.row];
+        if ([model.showtype isEqualToString:@"live"]) {
+            
+            return  (ScreenW - 30)/2;
+        }else {
+            NSArray * arr = [model getTypeLBArr];
+            if (arr.count == 0) {
+                return imgH + 39;
+            }else {
+                return imgH + 59;
+            }
+        }
     }
 }
 

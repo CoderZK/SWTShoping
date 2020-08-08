@@ -189,7 +189,7 @@
     if (indexPath.section == 0) {
         return 160;
     }else {
-        return 150 + arc4random() % 100;
+        return (ScreenW - 30)/2.0;
     }
 }
 

@@ -13,9 +13,11 @@
 #import "SWTHeMaiMineDingZhiShowView.h"
 #import "SWTHeMaiDianPuShowVIew.h"
 #import "SWTHeMaiMineDingZhiShowView.h"
+#import "SWTMineAddressTVC.h"
 @interface SWTMineHeMaiTiJiaoOrderTVC ()
 @property(nonatomic , strong)UIView *bottomV;
 @property(nonatomic , strong)UIButton *leftBt,*rightBt,*gouBt;
+@property(nonatomic , strong)SWTModel *addressModel;
 @end
 
 @implementation SWTMineHeMaiTiJiaoOrderTVC
@@ -31,6 +33,7 @@
     self.tableView.backgroundColor = BackgroundColor;
     
     [self initBottomView];
+    [self getData];
     
 }
 
@@ -60,7 +63,7 @@
     UIButton * leftBt  =[[UIButton alloc] init];
     [leftBt setTitleColor:RedColor forState:UIControlStateNormal];
     leftBt.titleLabel.font = kFont(15);
-    [leftBt setTitle:@"678" forState:UIControlStateNormal];
+    [leftBt setTitle: [NSString stringWithFormat:@"￥%@",self.model.price] forState:UIControlStateNormal];
     self.leftBt = leftBt;
     [whiteV addSubview:leftBt];
     [self.leftBt mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -133,6 +136,12 @@
         button.selected = !button.selected;
     }else if (button.tag == 100) {
         //提交订单
+        
+        if (self.gouBt.selected == NO) {
+            [SVProgressHUD showErrorWithStatus:@"请勾选买卖协议"];
+            return;
+        }
+        [self tiJiaoDingDanAction];
     }else if (button.tag == 101) {
         //合买协议
         
@@ -140,8 +149,80 @@
     
 }
 
+
+- (void)getData {
+    
+    
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"page"] = @(1);
+    dict[@"pagesize"] = @(2);
+    [zkRequestTool networkingPOST: [NSString stringWithFormat:@"%@/%@",addressList_SWT,[zkSignleTool shareTool].session_uid] parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([[NSString stringWithFormat:@"%@",responseObject[@"code"]] integerValue] == 200) {
+            NSArray<SWTModel *>*arr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            if (arr.count > 0) {
+                if (arr[0].is_default) {
+                    self.addressModel = arr[0];
+                    [self.tableView reloadData];
+                }
+            }
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+    }];
+    
+    
+    
+}
+
+//提交订单
+
+- (void)tiJiaoDingDanAction {
+    
+    if (self.addressModel == nil) {
+        [SVProgressHUD showErrorWithStatus:@"请选择收货地址"];
+        return;
+    }
+    
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"addressid"] = self.addressModel.ID;
+    dict[@"goodid"] = @"12";
+    dict[@"merchid"] = @"27";
+    dict[@"num"] = @"1";
+    dict[@"price"] = self.model.price;
+    dict[@"userid"] = [zkSignleTool shareTool].session_uid;
+    [zkRequestTool networkingPOST:shareSubmit_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+
+    
+    
+    
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return 5;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
@@ -152,6 +233,11 @@
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         SWTLaoYouOneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+        cell.leftOneLB.text = self.model.name;
+        cell.leftTwoLb.text = @"x1";
+        cell.moneyLB.text =  [NSString stringWithFormat:@"￥%@",self.model.price.getPriceStr];
+        cell.rightImgV.hidden = YES;
+        [cell.leftimgV sd_setImageWithURL:[self.model.img getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
            return cell;
     }else {
        SWTHeMaiTwoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SWTHeMaiTwoCell" forIndexPath:indexPath];
@@ -166,6 +252,18 @@
             cell.rightLB.textColor = CharacterColor50;
             
         }else if (indexPath.row == 2) {
+            cell.leftTwoLB.hidden = YES;
+            cell.leftOneLB.text = @"地址";
+            if (self.addressModel == nil) {
+                cell.rightLB.text = @"请选择地址";
+            }else {
+                cell.rightLB.text = self.addressModel.address_info;
+            }
+            
+            cell.rightLB.textColor = CharacterColor50;
+            
+            
+        } else if (indexPath.row == 3) {
             cell.leftBt.hidden =  cell.swithBt.hidden = NO;
             cell.rightLB.hidden = YES;
             
@@ -180,7 +278,7 @@
                 
             }];
             
-        }else if (indexPath.row == 3) {
+        }else if (indexPath.row == 4) {
             cell.leftOneLB.text = @"私人定制费";
             cell.leftTwoLB.text = @"(贷款金额5%)";
             cell.rightLB.text = @"250";
@@ -198,9 +296,17 @@
     if (indexPath.row == 1) {
         SWTHeMaiDianPuShowVIew *  dingzhiV  =[[SWTHeMaiDianPuShowVIew alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
         [dingzhiV show];
-    }else {
-        SWTHeMaiMineDingZhiShowView *  dingzhiV  =[[SWTHeMaiMineDingZhiShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
-        [dingzhiV show];
+    }else if (indexPath.row == 2) {
+        SWTMineAddressTVC * vc =[[SWTMineAddressTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+               vc.hidesBottomBarWhenPushed = YES;
+        
+               Weak(weakSelf);
+               vc.sendAddressModelBlock = ^(SWTModel * _Nonnull model) {
+                   weakSelf.addressModel = model;
+                   [weakSelf.tableView reloadData];
+               };
+               [self.navigationController pushViewController:vc animated:YES];
+        
     }
     
 }

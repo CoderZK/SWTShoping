@@ -143,7 +143,7 @@
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout itemWidth:(CGFloat)width heightForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return 150 + arc4random() % 100;
+    return (ScreenW -30)/2;
     
 }
 

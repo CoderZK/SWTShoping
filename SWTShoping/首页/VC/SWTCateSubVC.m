@@ -313,7 +313,19 @@
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout itemWidth:(CGFloat)width heightForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 150 + arc4random() % 100;
+      CGFloat imgH  =   (ScreenW - 30)/2 * 3/4;
+          SWTModel * model = self.dataArray[indexPath.row];
+          if ([model.showtype isEqualToString:@"live"]) {
+              
+              return  (ScreenW - 30)/2;
+          }else {
+              NSArray * arr = [model getTypeLBArr];
+              if (arr.count == 0) {
+                  return imgH + 39;
+              }else {
+                  return imgH + 59;
+              }
+          }
     
 }
 

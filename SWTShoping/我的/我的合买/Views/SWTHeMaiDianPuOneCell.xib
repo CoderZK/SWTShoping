@@ -93,10 +93,9 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="789" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZsM-xJ-UeI">
-                        <rect key="frame" x="80" y="64" width="33" height="16"/>
+                        <rect key="frame" x="80" y="64" width="24" height="16"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="AfH-3H-a6N"/>
-                            <constraint firstAttribute="width" constant="33" id="CIj-ya-eS6"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.99215686270000003" green="0.20392156859999999" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -125,6 +124,16 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="imgV" destination="R3H-z1-6l7" id="itM-v6-xmK"/>
+                <outlet property="jiaJiaLB" destination="ZsM-xJ-UeI" id="57t-Th-Txh"/>
+                <outlet property="numberLB" destination="zJe-ee-IAh" id="WMI-3M-LIu"/>
+                <outlet property="rightBt" destination="eCS-MX-bCX" id="biN-JF-jct"/>
+                <outlet property="timeBt" destination="VlG-TE-L9a" id="i9P-8B-iQy"/>
+                <outlet property="titleLB" destination="Diy-lm-1Bc" id="5V1-cr-R6d"/>
+                <outlet property="typeOneLB" destination="uff-mn-dQe" id="bFu-al-DOx"/>
+                <outlet property="typeTwoLB" destination="3gQ-x0-mSD" id="pey-Ti-zfp"/>
+            </connections>
             <point key="canvasLocation" x="110.14492753623189" y="61.272321428571423"/>
         </tableViewCell>
     </objects>

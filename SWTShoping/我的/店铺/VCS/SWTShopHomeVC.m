@@ -166,7 +166,7 @@
             [self.navigationController pushViewController:vc animated:YES];
         }else if (x.intValue == 101) {
             //点击关注
-            
+            [self gaunZhuAction];
         }else if (x.intValue == 102) {
             //竞拍
             self.type  = 0;
@@ -256,7 +256,19 @@
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout itemWidth:(CGFloat)width heightForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 150 + arc4random() % 100;
+    CGFloat imgH  =   (ScreenW - 30)/2 * 3/4;
+    SWTModel * model = self.dataArray[indexPath.row];
+    if ([model.showtype isEqualToString:@"live"]) {
+        
+        return  (ScreenW - 30)/2;
+    }else {
+        NSArray * arr = [model getTypeLBArr];
+        if (arr.count == 0) {
+            return imgH + 39;
+        }else {
+            return imgH + 59;
+        }
+    }
     
 }
 
@@ -278,13 +290,8 @@
     
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    dict[@"followid"] = @"-1";
-    if (self.dataModel.followid.length > 0) {
-        dict[@"favid"] = self.dataModel.followid;
-    }
     dict[@"id"] = self.dataModel.ID;
     dict[@"type"] = @"1";
-    dict[@"operation"] = [self.dataModel.isfollow isEqualToString:@"no"] ? @"ADD":@"DELETE";
     dict[@"userid"] =[zkSignleTool shareTool].session_uid;
     [zkRequestTool networkingPOST:userFollowOperate_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         
@@ -336,4 +343,8 @@
     }
     
 }
+
+
+
+
 @end

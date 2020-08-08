@@ -15,6 +15,7 @@
 @property(nonatomic , strong)UIButton *headBt,*dianPuBt;
 @property(nonatomic , strong)UILabel *shopNameLB,*typeLB;
 @property(nonatomic , strong)UIButton *leftBtBt,*rightBt;
+@property(nonatomic , assign)NSInteger  type;
 @end
 
 
@@ -173,9 +174,11 @@
      if (button.tag == 100) {
         self.leftBtBt.selected = YES;
         self.rightBt.selected = NO;
+         self.type = 0;
     }else if (button.tag == 101){
         self.leftBtBt.selected = NO;
         self.rightBt.selected = YES;
+        self.type = 1;
     }
     if (self.delegateSignal) {
         [self.delegateSignal sendNext:@(button.tag)];
@@ -214,6 +217,12 @@
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SWTZhiBoJingPaiShowCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     cell.model= self.dataArray[indexPath.row];
+    if (self.type == 0) {
+        [cell.rightBt setTitle:@"出个价" forState:UIControlStateNormal];
+    }else {
+        [cell.rightBt setTitle:@"购买" forState:UIControlStateNormal];
+    }
+    cell.rightBt.userInteractionEnabled = NO;
     return cell;
 }
 
@@ -221,7 +230,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    
+    if (self.delegateSignal) {
+           [self.delegateSignal sendNext:@(indexPath.row + 200)];
+       }
     
 }
 
