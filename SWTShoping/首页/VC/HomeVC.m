@@ -331,6 +331,7 @@
     if ([model.showtype isEqualToString:@"live"]) {
         SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
+        vc.model = model;
         [self.navigationController pushViewController:vc animated:YES];
     }else {
         SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
