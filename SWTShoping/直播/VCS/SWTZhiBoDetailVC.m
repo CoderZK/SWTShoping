@@ -16,8 +16,9 @@
 #import "SWTHuoDeShowView.h"
 #import "SWTPeopleChuJiaVIew.h"
 #import "SWTHeMaiMineDingZhiShowView.h"
+#import "SWTAVChatRoomView.h"
 @interface SWTZhiBoDetailVC ()<V2TIMAdvancedMsgListener>
-@property(nonatomic , strong)SWTZhiBoHedView *headV;
+@property(nonatomic , strong)SWTZhiBoHedView *headV; // 头视图
 @property(nonatomic , strong)SWTZhiBoBottomView *bottomV;
 @property(nonatomic , strong)SWTZhiBoChuJiaBottomView *chuJiaBottomV;
 
@@ -30,7 +31,8 @@
 @property(nonatomic , strong)SWTZhiBoJingPaiShowView *jingPaiV;
 @property(nonatomic , strong)SWTHeMaiDianPuShowVIew *heMaiView;
 @property(nonatomic , strong)SWTHeMaiMineDingZhiShowView *dingZHiView;
-
+@property(nonatomic , strong)SWTAVChatRoomView *avChatRoomView;
+@property(nonatomic , strong)NSMutableArray<SWTModel *> *AVCharRoomArr;
 @end
 
 @implementation SWTZhiBoDetailVC
@@ -55,8 +57,9 @@
     [self addHeadV];
     [self addBottomV];
     [self addChuJiaBottomV];
+    [self initChatRoomV];
     self.chuJiaBottomV.hidden = YES;
- 
+    
     
     [self creaeteAVRoom];
     
@@ -68,15 +71,16 @@
     self.zhiBoArr = @[].mutableCopy;
     self.heMaiArr = @[].mutableCopy;
     self.mineHeMaiArr = @[].mutableCopy;
+    self.AVCharRoomArr = @[].mutableCopy;
     [self getLiveData];//获取合买商品列表
     if (self.isHeMai) {
         [self getMineHeMaiDingZhiListWithType:0];//获取我的合买列表
         [self getGoodsListData]; //店铺合买列表
     }else {
-       [self getLivegoodListDataWithType:0]; //获取竞拍和一口价列表
+        [self getLivegoodListDataWithType:0]; //获取竞拍和一口价列表
     }
     
-   
+    
     
     
     
@@ -104,6 +108,9 @@
         make.top.equalTo(self.view).offset(sstatusHeight + 5);
         make.right.equalTo(self.view).offset(-45);
         make.height.equalTo(@45);
+    }];
+    [[self.headV.guanzhuBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        [self gaunZhuActionwithType:0];
     }];
 }
 
@@ -195,11 +202,11 @@
             [dingZhiV.delegateSignal subscribeNext:^(NSNumber * x) {
                 @strongify(self);
                 if (x.intValue < 102) {
-                     [self getMineHeMaiDingZhiListWithType:x.intValue - 100];
+                    [self getMineHeMaiDingZhiListWithType:x.intValue - 100];
                 }else {
                     
                 }
-               
+                
             }];
             [dingZhiV show];
             
@@ -208,7 +215,7 @@
             
         }else if (x.intValue == 3){
             //收藏
-            
+            [self gaunZhuActionwithType:1];
         }else if (x.intValue == 100) {
             //点击发送按钮
             [self sendMessage];
@@ -223,10 +230,12 @@
     NSMutableDictionary * dict = @{}.mutableCopy;
     //    dict[@"liveid"] = self.model.ID;
     dict[@"liveid"] = @"15";
+    dict[@"userid"] = [zkSignleTool shareTool].session_uid;
     [zkRequestTool networkingPOST:liveDetail_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             self.dataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
+            self.headV.model = self.dataModel;
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
@@ -282,22 +291,22 @@
 - (void)getHeMaiList {
     
     [SVProgressHUD show];
-       NSMutableDictionary * dict = @{}.mutableCopy;
-       //    dict[@"liveid"] = self.model.ID;
-       dict[@"liveid"] = @"15";
-       [zkRequestTool networkingPOST:shareGoodlist_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
-           [SVProgressHUD dismiss];
-           if ([responseObject[@"code"] intValue]== 200) {
- 
-               self.heMaiArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
-               self.heMaiView.dataArray = self.heMaiArr;
-           }
-           
-       } failure:^(NSURLSessionDataTask *task, NSError *error) {
-           
-           
-           
-       }];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    //    dict[@"liveid"] = self.model.ID;
+    dict[@"liveid"] = @"15";
+    [zkRequestTool networkingPOST:shareGoodlist_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            self.heMaiArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            self.heMaiView.dataArray = self.heMaiArr;
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        
+        
+    }];
     
     
 }
@@ -324,14 +333,14 @@
     
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-//    dict[@"liveid"] = self.model.ID;
+    //    dict[@"liveid"] = self.model.ID;
     dict[@"liveid"] = @"15";
     [zkRequestTool networkingPOST:shareGoodlist_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             
-            self.heMaiArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];            
+            self.heMaiArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -371,6 +380,16 @@
         
     } succ:^{
         NSLog(@"%@",@"发送成功");
+        
+        SWTModel * model = [[SWTModel alloc] init];
+        model.avatar = @"123456789";
+        model.content = self.bottomV.TF.text;
+        model.nickname = [zkSignleTool shareTool].nickname;
+        model.growth_value = [zkSignleTool shareTool].growth_value;
+        [self.AVCharRoomArr addObject:model];
+        self.avChatRoomView.dataArr = self.AVCharRoomArr;
+        
+        
     } fail:^(int code, NSString *desc) {
         NSLog(@"%@",@"发送失败");
     }];
@@ -381,6 +400,12 @@
 /// 收到新消息
 - (void)onRecvNewMessage:(V2TIMMessage *)msg{
     NSLog(@"message === \n %@",msg);
+    SWTModel * model = [[SWTModel alloc] init];
+    model.avatar = msg.faceURL;
+    model.content = msg.textElem.text;
+    model.nickname = msg.nickName;
+    [self.AVCharRoomArr addObject:model];
+    self.avChatRoomView.dataArr = self.AVCharRoomArr;
 }
 
 /// 收到消息已读回执（仅单聊有效）
@@ -402,34 +427,47 @@
 //收藏操作
 
 //关注操作
-- (void)gaunZhuAction {
+- (void)gaunZhuActionwithType:(NSInteger)type {
     
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    dict[@"followid"] = @"-1";
-    if (self.dataModel.followid.length > 0) {
-        dict[@"favid"] = self.dataModel.followid;
+    
+    dict[@"type"] = @(type);
+    if (type == 0) {
+        dict[@"id"] = self.dataModel.merchid;
+    }else {
+        dict[@"id"] = self.dataModel.liveid;
     }
-    dict[@"id"] = self.dataModel.ID;
-    dict[@"type"] = @"1";
-    dict[@"operation"] = [self.dataModel.isfollow isEqualToString:@"no"] ? @"ADD":@"DELETE";
     dict[@"userid"] =[zkSignleTool shareTool].session_uid;
     [zkRequestTool networkingPOST:userFollowOperate_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
-            if ([self.dataModel.isfollow isEqualToString:@"no"]) {
-                [SVProgressHUD showSuccessWithStatus:@"关注店铺成功"];
-                self.dataModel.isfollow = @"yes";
-            }else {
-                [SVProgressHUD showSuccessWithStatus:@"取消关注店铺"];
-                self.dataModel.isfollow = @"no";
-            }
-            if ([self.dataModel.isfollow isEqualToString:@"no"]) {
+            if (type == 0) {
+                if ([self.dataModel.merchisfollow isEqualToString:@"no"]) {
+                    [SVProgressHUD showSuccessWithStatus:@"关注店铺成功"];
+                    self.dataModel.merchisfollow = @"yes";
+                }else {
+                    [SVProgressHUD showSuccessWithStatus:@"取消关注店铺"];
+                    self.dataModel.merchisfollow = @"no";
+                }
+                self.headV.model = self.dataModel;
+            }else  {
+                if ([self.dataModel.liveisfollow isEqualToString:@"no"]) {
+                    [SVProgressHUD showSuccessWithStatus:@"关注直播成功"];
+                    self.dataModel.liveisfollow = @"yes";
+                     [self.bottomV.collectBt setBackgroundImage:[UIImage imageNamed:@"collectY"] forState:UIControlStateNormal];
+                    
+                }else {
+                    [SVProgressHUD showSuccessWithStatus:@"取消关注直播"];
+                    self.dataModel.liveisfollow = @"no";
+                     [self.bottomV.collectBt setBackgroundImage:[UIImage imageNamed:@"collectN"] forState:UIControlStateNormal];
+                }
+             
                
-            }else {
-               
+                
             }
+            
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }
@@ -445,6 +483,18 @@
     
 }
 
+
+- (void)initChatRoomV {
+    
+    self.avChatRoomView = [[SWTAVChatRoomView alloc] init];
+    [self.view addSubview:self.avChatRoomView];
+    [self.avChatRoomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.bottom.equalTo(self.bottomV.mas_top).offset(-30);
+        make.height.equalTo(@(ScreenH/2.0));
+    }];
+    
+}
 
 
 

@@ -9,10 +9,7 @@
 #import "SWTZhiBoHedView.h"
 
 @interface SWTZhiBoHedView()
-@property(nonatomic , strong)UIButton *headBt,*guanzhuBt;
-@property(nonatomic , strong)UILabel *nameLB,*fanAndSeeLB;
-@property(nonatomic , strong)UIView *shopV;
-@property(nonatomic , strong)UILabel *shopNameLB,*shopIdLB;
+
 @end
 
 @implementation SWTZhiBoHedView
@@ -41,8 +38,8 @@
         
         self.guanzhuBt  = [[UIButton alloc] init];
         self.guanzhuBt.titleLabel.font = kFont(13);
-        [self.guanzhuBt setTitle:@"+关注" forState:UIControlStateNormal];
-        [self.guanzhuBt setBackgroundImage:[UIImage imageNamed:@"bg_href"] forState:UIControlStateNormal];
+//        [self.guanzhuBt setTitle:@"+关注" forState:UIControlStateNormal];
+//        [self.guanzhuBt setBackgroundImage:[UIImage imageNamed:@"bg_href"] forState:UIControlStateNormal];
         self.guanzhuBt.layer.cornerRadius = 9;
         self.guanzhuBt.clipsToBounds = YES;
         [self addSubview:self.guanzhuBt];
@@ -98,8 +95,8 @@
         [self.guanzhuBt mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.nameLB.mas_right).offset(15);
             make.centerY.equalTo(self.nameLB);
-            make.height.equalTo(@18);
-            make.width.equalTo(@65);
+            make.height.equalTo(@16);
+            make.width.equalTo(@42);
             
         }];
         
@@ -127,7 +124,34 @@
     return self;
 }
 
-
+- (void)setModel:(SWTModel *)model {
+    _model = model;
+    self.nameLB.text = model.name;
+    [self.headBt sd_setBackgroundImageWithURL:[model.avatar getPicURL] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"369"]];
+     if ([model.merchisfollow isEqualToString:@"no"]) {
+           [self.guanzhuBt setBackgroundImage:[UIImage imageNamed:@"Focus"] forState:UIControlStateNormal];
+       }else {
+          [self.guanzhuBt setBackgroundImage:[UIImage imageNamed:@"dyx24"] forState:UIControlStateNormal];
+       }
+    
+    self.shopNameLB.text = model.livename;
+    self.shopIdLB.text =  [NSString stringWithFormat:@"ID:%@",model.liveid];
+    NSString * str = @"";
+    if (model.focusnum.intValue > 10000) {
+        str =  [NSString stringWithFormat:@"%0.2f万",model.focusnum.floatValue];
+    }else{
+        str = model.focusnum;
+    }
+    
+    NSString * str1 = @"";
+       if (model.watchnum.intValue > 10000) {
+           str1 =  [NSString stringWithFormat:@"%0.2f万",model.watchnum.floatValue];
+       }else{
+           str1 = model.watchnum;
+       }
+    
+    self.fanAndSeeLB.text =  [NSString stringWithFormat:@"粉丝:%@  %@人观看",str,str1];
+}
 
 
 @end

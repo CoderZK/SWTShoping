@@ -163,6 +163,7 @@
     [cell.imgV sd_setImageWithURL:[model.img getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
        cell.titleLB.text = model.name;
         cell.jiaJiaLB.text =  [NSString stringWithFormat:@"￥%@",model.price];
+    cell.numberLB.text =  [NSString stringWithFormat:@"%@/%@",model.isbuynum,model.num];
     [cell.timeBt setTitle: [NSString stringWithFormat:@"%@    %@",[model.starttime substringToIndex:10],[model.endtime substringToIndex:10]] forState:UIControlStateNormal];
     cell.rightBt.userInteractionEnabled = NO;
     return cell;

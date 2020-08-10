@@ -160,6 +160,16 @@
 		666C70EC24B61210002C11E1 /* SWTFanKuiThreeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666C70EA24B61210002C11E1 /* SWTFanKuiThreeCell.m */; };
 		666C70ED24B61210002C11E1 /* SWTFanKuiThreeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 666C70EB24B61210002C11E1 /* SWTFanKuiThreeCell.xib */; };
 		666C70F024B614C2002C11E1 /* SWTFanKuiSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 666C70EF24B614C2002C11E1 /* SWTFanKuiSelectView.m */; };
+		666D392C24E0EF0B0023776B /* SWTZhiBoMessageTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 666D392B24E0EF0B0023776B /* SWTZhiBoMessageTVC.m */; };
+		666D392F24E0F0C60023776B /* SWTAVChatRoomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 666D392E24E0F0C60023776B /* SWTAVChatRoomView.m */; };
+		666D393224E0F3EA0023776B /* SWTAVChatRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666D393124E0F3EA0023776B /* SWTAVChatRoomCell.m */; };
+		666D394424E136F40023776B /* WeiChatOtherManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 666D394324E136F40023776B /* WeiChatOtherManager.m */; };
+		666D395A24E1386E0023776B /* libPaymentControl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 666D394824E1386E0023776B /* libPaymentControl.a */; };
+		666D395B24E1386E0023776B /* libUMSPosPayOnly.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 666D395124E1386E0023776B /* libUMSPosPayOnly.a */; };
+		666D395C24E1386E0023776B /* PosPay_Resource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 666D395224E1386E0023776B /* PosPay_Resource.bundle */; };
+		666D395D24E1386E0023776B /* UMSSecKeyboardLibResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 666D395324E1386E0023776B /* UMSSecKeyboardLibResource.bundle */; };
+		666D395E24E1386E0023776B /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 666D395724E1386E0023776B /* README.txt */; };
+		666D395F24E1386E0023776B /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 666D395924E1386E0023776B /* libWeChatSDK.a */; };
 		666D4AD324CAB40700300957 /* SWTTuiHuiOneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666D4AD224CAB40700300957 /* SWTTuiHuiOneCell.m */; };
 		666D4AD624CAB43600300957 /* SWTTuiHuoOneTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 666D4AD524CAB43600300957 /* SWTTuiHuoOneTVC.m */; };
 		666D4AD924CABC9300300957 /* SWTTiJiaoTuiHuoTwoTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 666D4AD824CABC9300300957 /* SWTTiJiaoTuiHuoTwoTVC.m */; };
@@ -584,6 +594,30 @@
 		666C70EB24B61210002C11E1 /* SWTFanKuiThreeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTFanKuiThreeCell.xib; sourceTree = "<group>"; };
 		666C70EE24B614C2002C11E1 /* SWTFanKuiSelectView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTFanKuiSelectView.h; sourceTree = "<group>"; };
 		666C70EF24B614C2002C11E1 /* SWTFanKuiSelectView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTFanKuiSelectView.m; sourceTree = "<group>"; };
+		666D392A24E0EF0B0023776B /* SWTZhiBoMessageTVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTZhiBoMessageTVC.h; sourceTree = "<group>"; };
+		666D392B24E0EF0B0023776B /* SWTZhiBoMessageTVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTZhiBoMessageTVC.m; sourceTree = "<group>"; };
+		666D392D24E0F0C60023776B /* SWTAVChatRoomView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTAVChatRoomView.h; sourceTree = "<group>"; };
+		666D392E24E0F0C60023776B /* SWTAVChatRoomView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTAVChatRoomView.m; sourceTree = "<group>"; };
+		666D393024E0F3EA0023776B /* SWTAVChatRoomCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTAVChatRoomCell.h; sourceTree = "<group>"; };
+		666D393124E0F3EA0023776B /* SWTAVChatRoomCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTAVChatRoomCell.m; sourceTree = "<group>"; };
+		666D394224E136F40023776B /* WeiChatOtherManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiChatOtherManager.h; sourceTree = "<group>"; };
+		666D394324E136F40023776B /* WeiChatOtherManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiChatOtherManager.m; sourceTree = "<group>"; };
+		666D394724E1386E0023776B /* UPPaymentControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPPaymentControl.h; sourceTree = "<group>"; };
+		666D394824E1386E0023776B /* libPaymentControl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPaymentControl.a; sourceTree = "<group>"; };
+		666D394B24E1386E0023776B /* UMSPPPayUnifyPayPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSPPPayUnifyPayPlugin.h; sourceTree = "<group>"; };
+		666D394C24E1386E0023776B /* UMSPPPayFastPay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSPPPayFastPay.h; sourceTree = "<group>"; };
+		666D394D24E1386E0023776B /* UMSPPPayOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSPPPayOrder.h; sourceTree = "<group>"; };
+		666D394E24E1386E0023776B /* UMSPPPayVersionsInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSPPPayVersionsInfo.h; sourceTree = "<group>"; };
+		666D394F24E1386E0023776B /* UMSPPPayPluginSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSPPPayPluginSettings.h; sourceTree = "<group>"; };
+		666D395024E1386E0023776B /* UMSPPPayPosPay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSPPPayPosPay.h; sourceTree = "<group>"; };
+		666D395124E1386E0023776B /* libUMSPosPayOnly.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMSPosPayOnly.a; sourceTree = "<group>"; };
+		666D395224E1386E0023776B /* PosPay_Resource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = PosPay_Resource.bundle; sourceTree = "<group>"; };
+		666D395324E1386E0023776B /* UMSSecKeyboardLibResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UMSSecKeyboardLibResource.bundle; sourceTree = "<group>"; };
+		666D395524E1386E0023776B /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		666D395624E1386E0023776B /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		666D395724E1386E0023776B /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		666D395824E1386E0023776B /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
+		666D395924E1386E0023776B /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		666D4AD124CAB40700300957 /* SWTTuiHuiOneCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTTuiHuiOneCell.h; sourceTree = "<group>"; };
 		666D4AD224CAB40700300957 /* SWTTuiHuiOneCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTTuiHuiOneCell.m; sourceTree = "<group>"; };
 		666D4AD424CAB43600300957 /* SWTTuiHuoOneTVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTTuiHuoOneTVC.h; sourceTree = "<group>"; };
@@ -819,12 +853,15 @@
 				33DC822B20EA1C4600D1C283 /* Foundation.framework in Frameworks */,
 				33DC822920EA1BEC00D1C283 /* libsqlite3.0.tbd in Frameworks */,
 				33DC822720EA182500D1C283 /* CoreMotion.framework in Frameworks */,
+				666D395F24E1386E0023776B /* libWeChatSDK.a in Frameworks */,
 				33DC822520EA181900D1C283 /* CoreGraphics.framework in Frameworks */,
 				33DC822320EA180B00D1C283 /* SystemConfiguration.framework in Frameworks */,
 				33DC822120EA180100D1C283 /* libz.1.1.3.tbd in Frameworks */,
+				666D395A24E1386E0023776B /* libPaymentControl.a in Frameworks */,
 				33DC821D20EA17E900D1C283 /* UserNotifications.framework in Frameworks */,
 				337F3EBE20EA136800C5526A /* CoreFoundation.framework in Frameworks */,
 				AE1A7CF29DF9D6E7166E507C /* libPods-SWTShoping.a in Frameworks */,
+				666D395B24E1386E0023776B /* libUMSPosPayOnly.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -871,6 +908,7 @@
 		337F3E5820E9FE3B00C5526A /* SWTShoping */ = {
 			isa = PBXGroup;
 			children = (
+				666D393324E1361C0023776B /* 支付SDK */,
 				337F3E8D20E9FF3500C5526A /* 首页 */,
 				337F3E8B20E9FF3400C5526A /* 消息 */,
 				66732D1124BB060900452F21 /* 直播 */,
@@ -1577,6 +1615,71 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		666D393324E1361C0023776B /* 支付SDK */ = {
+			isa = PBXGroup;
+			children = (
+				666D394524E1386E0023776B /* ThirdPartyPaySDK */,
+				666D394224E136F40023776B /* WeiChatOtherManager.h */,
+				666D394324E136F40023776B /* WeiChatOtherManager.m */,
+			);
+			path = "支付SDK";
+			sourceTree = "<group>";
+		};
+		666D394524E1386E0023776B /* ThirdPartyPaySDK */ = {
+			isa = PBXGroup;
+			children = (
+				666D394624E1386E0023776B /* UPPaymentControl */,
+				666D394924E1386E0023776B /* UMSPosPayOnly */,
+				666D395424E1386E0023776B /* WeChat */,
+			);
+			path = ThirdPartyPaySDK;
+			sourceTree = "<group>";
+		};
+		666D394624E1386E0023776B /* UPPaymentControl */ = {
+			isa = PBXGroup;
+			children = (
+				666D394724E1386E0023776B /* UPPaymentControl.h */,
+				666D394824E1386E0023776B /* libPaymentControl.a */,
+			);
+			path = UPPaymentControl;
+			sourceTree = "<group>";
+		};
+		666D394924E1386E0023776B /* UMSPosPayOnly */ = {
+			isa = PBXGroup;
+			children = (
+				666D394A24E1386E0023776B /* include */,
+				666D395124E1386E0023776B /* libUMSPosPayOnly.a */,
+				666D395224E1386E0023776B /* PosPay_Resource.bundle */,
+				666D395324E1386E0023776B /* UMSSecKeyboardLibResource.bundle */,
+			);
+			path = UMSPosPayOnly;
+			sourceTree = "<group>";
+		};
+		666D394A24E1386E0023776B /* include */ = {
+			isa = PBXGroup;
+			children = (
+				666D394B24E1386E0023776B /* UMSPPPayUnifyPayPlugin.h */,
+				666D394C24E1386E0023776B /* UMSPPPayFastPay.h */,
+				666D394D24E1386E0023776B /* UMSPPPayOrder.h */,
+				666D394E24E1386E0023776B /* UMSPPPayVersionsInfo.h */,
+				666D394F24E1386E0023776B /* UMSPPPayPluginSettings.h */,
+				666D395024E1386E0023776B /* UMSPPPayPosPay.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		666D395424E1386E0023776B /* WeChat */ = {
+			isa = PBXGroup;
+			children = (
+				666D395524E1386E0023776B /* WXApi.h */,
+				666D395624E1386E0023776B /* WXApiObject.h */,
+				666D395724E1386E0023776B /* README.txt */,
+				666D395824E1386E0023776B /* WechatAuthSDK.h */,
+				666D395924E1386E0023776B /* libWeChatSDK.a */,
+			);
+			path = WeChat;
+			sourceTree = "<group>";
+		};
 		666F690224BCA48A00592DC4 /* 我的地址 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1733,6 +1836,10 @@
 				666C485024D9BC1400DB6D8D /* SWTHuoDeShowView.m */,
 				666C485224D9C4DA00DB6D8D /* SWTPeopleChuJiaVIew.h */,
 				666C485324D9C4DA00DB6D8D /* SWTPeopleChuJiaVIew.m */,
+				666D392D24E0F0C60023776B /* SWTAVChatRoomView.h */,
+				666D392E24E0F0C60023776B /* SWTAVChatRoomView.m */,
+				666D393024E0F3EA0023776B /* SWTAVChatRoomCell.h */,
+				666D393124E0F3EA0023776B /* SWTAVChatRoomCell.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -1742,6 +1849,8 @@
 			children = (
 				66732D1424BB067E00452F21 /* SWTZhiBoDetailVC.h */,
 				66732D1524BB067E00452F21 /* SWTZhiBoDetailVC.m */,
+				666D392A24E0EF0B0023776B /* SWTZhiBoMessageTVC.h */,
+				666D392B24E0EF0B0023776B /* SWTZhiBoMessageTVC.m */,
 			);
 			path = VCS;
 			sourceTree = "<group>";
@@ -2015,6 +2124,7 @@
 				666A39F624B74B3C00318075 /* mx_pic_selected_yes@2x.png in Resources */,
 				66732CD924B93EB600452F21 /* SWTPingJiaOneCell.xib in Resources */,
 				666BFDC624BDFB3800719972 /* SWTEditPasswordVC.xib in Resources */,
+				666D395D24E1386E0023776B /* UMSSecKeyboardLibResource.bundle in Resources */,
 				666C70E324B611E5002C11E1 /* SWTFanKuiOneNeiCell.xib in Resources */,
 				6660683224C2D327004ABAB6 /* SWTVideoDesOneCell.xib in Resources */,
 				6678B7E224B0AE2B00EA3A56 /* SWTGoodsDetailTwoCell.xib in Resources */,
@@ -2026,6 +2136,7 @@
 				666BCBC724D1240A00746579 /* SWTWuLiuOneCell.xib in Resources */,
 				667D505D24C48C5900A59726 /* SWTShopIntroduceCell.xib in Resources */,
 				66732CEC24BAA1EF00452F21 /* SWTLoginTwoVC.xib in Resources */,
+				666D395E24E1386E0023776B /* README.txt in Resources */,
 				666BCBF824C56C3700FFAC91 /* SWTYiKouJiaGoodDetailCell.xib in Resources */,
 				6678B7E724B0B49500EA3A56 /* SWTGoodsDetailThreeCell.xib in Resources */,
 				6669F5C624AB7BBE0013675E /* SWTMineOneCell.xib in Resources */,
@@ -2040,6 +2151,7 @@
 				6669F5C124AB68850013675E /* SWTHomeCollectionThreeCell.xib in Resources */,
 				66C8F7A024AB1E0B008C7A3A /* noneNet@3x.png in Resources */,
 				666F691F24BCAC9600592DC4 /* SWTMineTwoAddCell.xib in Resources */,
+				666D395C24E1386E0023776B /* PosPay_Resource.bundle in Resources */,
 				66689F2D24B4184600C49A2E /* SWTMineYouHuiQuanNeiCell.xib in Resources */,
 				337F3EB920EA050000C5526A /* Podfile in Resources */,
 				667D506A24C499DF00A59726 /* SWTShopIntroduceThreeCell.xib in Resources */,
@@ -2233,6 +2345,7 @@
 				6669F5DF24AB997A0013675E /* SWTMineAttentionShopTVC.m in Sources */,
 				666D4AEA24CAC66D00300957 /* SWTTuiHuoThreeCell.m in Sources */,
 				667A44D424B23415006C9072 /* SWTLaoYouTwoCell.m in Sources */,
+				666D393224E0F3EA0023776B /* SWTAVChatRoomCell.m in Sources */,
 				66732CFD24BAB7DE00452F21 /* SWTMineHeMaiTiJiaoOrderTVC.m in Sources */,
 				667181E824D2568E00C6DAD8 /* SWTZhiBoChuJiaBottomView.m in Sources */,
 				666A3A2324B75E9A00318075 /* SWTDianPuInfoView.m in Sources */,
@@ -2274,6 +2387,7 @@
 				66C8F7A324AB1E0B008C7A3A /* LTSCEventBus.m in Sources */,
 				666BCBC224D123BD00746579 /* SWTWuLiuTVC.m in Sources */,
 				666A3A2624B76F2F00318075 /* SWTDianPuInfoTwoView.m in Sources */,
+				666D394424E136F40023776B /* WeiChatOtherManager.m in Sources */,
 				66732D0124BAB99E00452F21 /* SWTHeMaiTwoCell.m in Sources */,
 				666A39F724B74B3C00318075 /* MXImagePreviewCell.m in Sources */,
 				667181EC24D268B000C6DAD8 /* SWTTuiHuoTypeCell.m in Sources */,
@@ -2286,6 +2400,7 @@
 				666325C924AE139A009D77AF /* SWTMineGuanZHuDinaPuCell.m in Sources */,
 				666A3A1124B74D1500318075 /* zkLunBoCell.m in Sources */,
 				667A44C224B217AF006C9072 /* SWTGouMaiShowView.m in Sources */,
+				666D392F24E0F0C60023776B /* SWTAVChatRoomView.m in Sources */,
 				6669F5D324AB7FEC0013675E /* SWTMineHomeButton.m in Sources */,
 				666A3A2024B75E7000318075 /* SWTLaoYouDianPuInfoTwoTVC.m in Sources */,
 				66689F2C24B4184600C49A2E /* SWTMineYouHuiQuanNeiCell.m in Sources */,
@@ -2354,6 +2469,7 @@
 				66689F1E24B40D2700C49A2E /* SWTMineWalletCell.m in Sources */,
 				335010EF20EE05C100F8486B /* UIButton+Badge.m in Sources */,
 				337F3EAF20EA014600C5526A /* BaseViewController+PublicMethod.m in Sources */,
+				666D392C24E0EF0B0023776B /* SWTZhiBoMessageTVC.m in Sources */,
 				667D505824C4804400A59726 /* SWTShopIntroduceTVC.m in Sources */,
 				666D4AD924CABC9300300957 /* SWTTiJiaoTuiHuoTwoTVC.m in Sources */,
 				6670696324B554A700AB0826 /* SWTZhenPinGeSubTVC.m in Sources */,
@@ -2548,6 +2664,10 @@
 					"$(PROJECT_DIR)/SWTShoping/3rd/BaiduNavi_iOSSDK_v2.0.7_Lib",
 					"$(PROJECT_DIR)/SWTShoping/3rd",
 					"$(PROJECT_DIR)/SWTShoping/3rd/UMessage_Sdk_1.3.0",
+					"$(PROJECT_DIR)/SWTShoping/支付SDK/UMSPosPayOnly",
+					"$(PROJECT_DIR)/SWTShoping/支付SDK/ThirdPartyPaySDK/UPPaymentControl",
+					"$(PROJECT_DIR)/SWTShoping/支付SDK/ThirdPartyPaySDK/UMSPosPayOnly",
+					"$(PROJECT_DIR)/SWTShoping/支付SDK/ThirdPartyPaySDK/WeChat",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zk.SWTShoping;
 				PRODUCT_NAME = "商城测试";
@@ -2586,6 +2706,10 @@
 					"$(PROJECT_DIR)/SWTShoping/3rd/BaiduNavi_iOSSDK_v2.0.7_Lib",
 					"$(PROJECT_DIR)/SWTShoping/3rd",
 					"$(PROJECT_DIR)/SWTShoping/3rd/UMessage_Sdk_1.3.0",
+					"$(PROJECT_DIR)/SWTShoping/支付SDK/UMSPosPayOnly",
+					"$(PROJECT_DIR)/SWTShoping/支付SDK/ThirdPartyPaySDK/UPPaymentControl",
+					"$(PROJECT_DIR)/SWTShoping/支付SDK/ThirdPartyPaySDK/UMSPosPayOnly",
+					"$(PROJECT_DIR)/SWTShoping/支付SDK/ThirdPartyPaySDK/WeChat",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zk.SWTShoping;
 				PRODUCT_NAME = "商城测试";

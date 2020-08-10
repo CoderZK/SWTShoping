@@ -11,6 +11,7 @@
 #import "SWTTongYongOneCell.h"
 #import "SWTChooseAddcell.h"
 #import "SWTMineAddressTVC.h"
+#import "SWTPayVC.h"
 @interface SWTTiJiaoOrderTVC ()
 @property(nonatomic , strong)NSArray *arrOne;
 @property(nonatomic , strong)NSArray *arrTwo;
@@ -184,10 +185,18 @@
         [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];
         if ([[NSString stringWithFormat:@"%@",responseObject[@"code"]] integerValue] == 200) {
-            [SVProgressHUD showSuccessWithStatus:@"提交订单成功"];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self.navigationController popViewControllerAnimated:YES];
-            });
+//            [SVProgressHUD showSuccessWithStatus:@"提交订单成功"];
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                [self.navigationController popViewControllerAnimated:YES];
+//            });
+            
+            SWTPayVC * vc =[[SWTPayVC alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            vc.orderID = responseObject[@"data"];
+            vc.priceStr = [NSString stringWithFormat:@"%0.2f",self.model.price.doubleValue * self.numStr.doubleValue - self.zheKouMoney];
+            [self.navigationController pushViewController:vc animated:YES];
+            
+            
         }else if ([[NSString stringWithFormat:@"%@",responseObject[@"code"]] integerValue] == 401) {
             // 优惠券失效
             [SVProgressHUD showErrorWithStatus:responseObject[@"msg"]];
@@ -230,11 +239,14 @@
         if (indexPath.row == 0) {
             SWTChooseAddcell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTChooseAddcell" forIndexPath:indexPath];
             cell.model = self.addressModel;
+    
             return cell;
         }else {
             SWTLaoYouOneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTLaoYouOneCell" forIndexPath:indexPath];
             cell.model = self.model;
             cell.leftTwoLb.text = self.timeStr;
+            cell.rightImgV.hidden = YES;
+            [cell.leftimgV sd_setImageWithURL:[self.model.goodimg getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
             return cell;
         }
         

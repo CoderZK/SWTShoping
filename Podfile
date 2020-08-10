@@ -18,8 +18,8 @@ pod 'UMCCommonLog'
 pod 'UMCShare/Social/ReducedWeChat'
 pod 'UMCShare/Social/ReducedQQ'
 pod 'UMCPush'
-pod 'AlipaySDK-iOS'
-pod 'WechatOpenSDK'
+#pod 'AlipaySDK-iOS'
+#pod 'WechatOpenSDK'
 pod 'TYPagerController'
 
 #use_modular_headers!

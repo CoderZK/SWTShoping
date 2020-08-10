@@ -11,10 +11,10 @@
 
 @interface SWTZhiBoBottomView()<UITextFieldDelegate>
 
-@property(nonatomic , strong)UIButton *gouWuBt ,*shareBt,*collectBt,*heMaibt;
+
 
 @property(nonatomic , strong)UIView *lineV;
-@property(nonatomic , strong)UILabel *numberLB;
+
 
 @end
 
@@ -57,7 +57,8 @@
         self.heMaibt =[[UIButton alloc] init];
         self.heMaibt.titleLabel.numberOfLines = 2;
         self.heMaibt.titleLabel.font = kFont(12);
-        self.heMaibt.backgroundColor = [UIColor redColor];
+//        self.heMaibt.backgroundColor = [UIColor redColor];
+        [self.heMaibt setBackgroundImage:[UIImage imageNamed:@"dyx36"] forState:UIControlStateNormal];
         [self addSubview:self.heMaibt];
         self.heMaibt.tag = 101;
         [self.heMaibt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -66,7 +67,7 @@
         self.shareBt.titleLabel.numberOfLines = 2;
         self.shareBt.titleLabel.font = kFont(12);
 //        self.shareBt.backgroundColor = [UIColor redColor];
-        [self.shareBt setBackgroundImage:[UIImage imageNamed:@"share"] forState:UIControlStateNormal];
+        [self.shareBt setBackgroundImage:[UIImage imageNamed:@"dyx35"] forState:UIControlStateNormal];
         [self addSubview:self.shareBt];
         self.shareBt.tag = 102;
         [self.shareBt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];

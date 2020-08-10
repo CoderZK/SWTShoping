@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic , strong)RACSubject *delegateSignal;
 @property(nonatomic,assign)BOOL isHeMai;
 @property(nonatomic , strong)UITextField *TF;
+@property(nonatomic , strong)UIButton *gouWuBt ,*shareBt,*collectBt,*heMaibt;
+@property(nonatomic , strong)UILabel *numberLB;
 @end
 
 NS_ASSUME_NONNULL_END

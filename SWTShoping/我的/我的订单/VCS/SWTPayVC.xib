@@ -57,7 +57,6 @@
                 </label>
                 <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XbH-ip-uDB">
                     <rect key="frame" x="15" y="139" width="384" height="40"/>
-                    <state key="normal" title="Button"/>
                     <connections>
                         <action selector="clickAction:" destination="-1" eventType="touchUpInside" id="V96-P8-Td0"/>
                     </connections>
@@ -87,7 +86,6 @@
                 </label>
                 <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C85-mi-UfH">
                     <rect key="frame" x="15" y="199" width="384" height="40"/>
-                    <state key="normal" title="Button"/>
                     <connections>
                         <action selector="clickAction:" destination="-1" eventType="touchUpInside" id="dg2-nY-rwr"/>
                     </connections>
@@ -117,7 +115,6 @@
                 </label>
                 <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F4h-Oo-iD6">
                     <rect key="frame" x="15" y="259" width="384" height="40"/>
-                    <state key="normal" title="Button"/>
                     <connections>
                         <action selector="clickAction:" destination="-1" eventType="touchUpInside" id="y9D-EU-aKi"/>
                     </connections>
@@ -128,7 +125,7 @@
                         <constraint firstAttribute="height" constant="40" id="orY-l3-Ba1"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <state key="normal" title="Button" backgroundImage="dyx45"/>
+                    <state key="normal" title="支付" backgroundImage="dyx45"/>
                     <connections>
                         <action selector="clickAction:" destination="-1" eventType="touchUpInside" id="wDr-5h-XdY"/>
                     </connections>

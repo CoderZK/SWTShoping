@@ -54,6 +54,15 @@ static zkSignleTool * tool = nil;
        [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (void)setGrowth_value:(NSString *)growth_value {
+    [[NSUserDefaults standardUserDefaults] setObject:growth_value forKey:@"growth_value"];
+       [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (NSString *)growth_value {
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"growth_value"];
+}
+
 - (NSString *)nickname {
      return [[NSUserDefaults standardUserDefaults] objectForKey:@"nickname"];
 }

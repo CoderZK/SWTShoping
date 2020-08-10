@@ -128,11 +128,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *starttime;
 @property(nonatomic,strong)NSString *endtime;
 @property(nonatomic,strong)NSString *lot_no;
-//@property(nonatomic,strong)NSString *baseId;
-//@property(nonatomic,strong)NSString *videoImage;
-////@property(nonatomic,strong)NSString *checkInfo;
-////@property(nonatomic,strong)NSString *medicine;
-////@property(nonatomic,strong)NSString *name;
+@property(nonatomic,strong)NSString *liveid;
+@property(nonatomic,strong)NSString *liveisfollow;
+@property(nonatomic,strong)NSString *merchisfollow;
+@property(nonatomic,strong)NSString *isbuynum;
+@property(nonatomic,strong)NSString *num;
 ////@property(nonatomic,strong)NSString *readCnt;
 ////@property(nonatomic,strong)NSString *publishTime;
 ////转化成模型

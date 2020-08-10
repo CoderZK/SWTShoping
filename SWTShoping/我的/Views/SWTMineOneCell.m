@@ -63,7 +63,8 @@
     _model = model;
     [self.headBt sd_setBackgroundImageWithURL:[model.mobile getPicURL] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"369"]];
     self.nameLB.text = model.nickname;
-    
+//    [self.vipBt setTitle:model.growth_value forState:UIControlStateNormal];
+    self.czLB.text = model.growth_value;
 }
 
 - (IBAction)clickAction:(UIButton *)button {

@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTPayVC : BaseViewController
-
+@property(nonatomic , strong)NSString *orderID,*priceStr;
 @end
 
 NS_ASSUME_NONNULL_END

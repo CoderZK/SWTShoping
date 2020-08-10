@@ -7,9 +7,9 @@
 //
 
 #import "AppDelegate.h"
-#import <AlipaySDK/AlipaySDK.h>
+//#import <AlipaySDK/AlipaySDK.h>
 #import <UserNotifications/UserNotifications.h>
-#import <WXApi.h>
+//#import <WXApi.h>
 #import "TabBarController.h"
 #import "LYGuideViewController.h"
 
@@ -24,6 +24,8 @@
 #define TXIMAPPID 1400404340
 
 
+
+
 //苹果账号 shanghaixunshun@163.com 密码 Ma730620
 @interface AppDelegate ()<V2TIMSDKListener>
 
@@ -34,6 +36,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    
+    [UMSPPPayPluginSettings sharedInstance].umspEnviroment = UMSP_TEST;
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.rootViewController = [self instantiateRootVC];
@@ -345,69 +350,120 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    NSString *string =[url absoluteString];
+    if ([string hasPrefix:@"unifyPayDemo://"])
+    {
+        return [UMSPPPayUnifyPayPlugin cloudPayHandleOpenURL:url];
+    }
+    return  [UMSPPPayUnifyPayPlugin handleOpenURL:url otherDelegate:[WeiChatOtherManager shareManager]];
+}
 
-#pragma mark -支付宝 微信支付
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation
-{
-    //跳转到支付宝支付的情况
-    if ([url.host isEqualToString:@"safepay"]) {
-        //跳转支付宝钱包进行支付，处理支付结果
-        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-            //发送一个通知
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"ZFBPAY" object:resultDic];
-            NSLog(@"result ======================== %@",resultDic);
-        }];
-    } else if ([url.absoluteString hasPrefix:@"wx013aad9217dedd99://pay"] ) {
-        //微信
-        [WXApi handleOpenURL:url delegate:self];
-        
-    }else {//友盟
-        [[UMSocialManager defaultManager] handleOpenURL:url];
-    }
-    return YES;
+         annotation:(id)annotation {
     
-}
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    //跳转到支付宝支付的情况
-    if ([url.host isEqualToString:@"safepay"]) {
-        //跳转支付宝钱包进行支付，处理支付结果
-        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-            //发送一个通知,告诉支付界面要做什么
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"ZFBPAY" object:resultDic];
-            NSLog(@"result ======================== %@",resultDic);
-        }];
-    } else if ([url.absoluteString hasPrefix:@"wx013aad9217dedd99://pay"] ) {
-        
-        [WXApi handleOpenURL:url delegate:self];
-        
-        
-    }else {
-        [[UMSocialManager defaultManager] handleOpenURL:url];
+    NSString *string =[url absoluteString];
+    if ([string hasPrefix:@"unifyPayDemo://"])
+    {
+        return [UMSPPPayUnifyPayPlugin cloudPayHandleOpenURL:url];
     }
     
-    return YES;
+    return [UMSPPPayUnifyPayPlugin handleOpenURL:url otherDelegate:[WeiChatOtherManager shareManager]];
 }
-- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
-    //跳转到支付宝支付的情况
-    if ([url.host isEqualToString:@"safepay"]) {
-        //跳转支付宝钱包进行支付，处理支付结果
-        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-            //发送一个通知
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"ZFBPAY" object:resultDic];
-            
-            NSLog(@"result ======================== %@",resultDic);
-        }];
-    } else if ([url.absoluteString hasPrefix:@"wx013aad9217dedd99://pay"] ) {
-        [WXApi handleOpenURL:url delegate:self];
-        
-    }else {
-        [[UMSocialManager defaultManager] handleOpenURL:url options:options];
+
+
+- (BOOL)application:(UIApplication *)app
+            openURL:(NSURL *)url
+            options:(NSDictionary<NSString *,id> *)options{
+    
+    NSString *string =[url absoluteString];
+    if ([string hasPrefix:@"unifyPayDemo://"])
+    {
+        return [UMSPPPayUnifyPayPlugin cloudPayHandleOpenURL:url];
     }
-    return YES;
+    
+    return [UMSPPPayUnifyPayPlugin handleOpenURL:url otherDelegate:[WeiChatOtherManager shareManager]];
+};
+
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler  API_AVAILABLE(ios(8.0)){
+    if (@available(iOS 8.0, *)) {
+        return [UMSPPPayUnifyPayPlugin handleOpenUniversalLink:userActivity otherDelegate:[WeiChatOtherManager shareManager]];
+    } else {
+        // Fallback on earlier versions
+        return YES;
+    }
+    
 }
+
+
+#pragma mark -支付宝 微信支付
+//- (BOOL)application:(UIApplication *)application
+//            openURL:(NSURL *)url
+//  sourceApplication:(NSString *)sourceApplication
+//         annotation:(id)annotation
+//{
+//    //跳转到支付宝支付的情况
+//    if ([url.host isEqualToString:@"safepay"]) {
+//        //跳转支付宝钱包进行支付，处理支付结果
+//        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+//            //发送一个通知
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"ZFBPAY" object:resultDic];
+//            NSLog(@"result ======================== %@",resultDic);
+//        }];
+//    } else if ([url.absoluteString hasPrefix:@"wx013aad9217dedd99://pay"] ) {
+//        //微信
+//        [WXApi handleOpenURL:url delegate:self];
+//
+//    }else {//友盟
+//        [[UMSocialManager defaultManager] handleOpenURL:url];
+//    }
+    
+//     [[UMSocialManager defaultManager] handleOpenURL:url];
+//    return YES;
+//
+//}
+//- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+//    //跳转到支付宝支付的情况
+//    if ([url.host isEqualToString:@"safepay"]) {
+//        //跳转支付宝钱包进行支付，处理支付结果
+//        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+//            //发送一个通知,告诉支付界面要做什么
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"ZFBPAY" object:resultDic];
+//            NSLog(@"result ======================== %@",resultDic);
+//        }];
+//    } else if ([url.absoluteString hasPrefix:@"wx013aad9217dedd99://pay"] ) {
+//
+//        [WXApi handleOpenURL:url delegate:self];
+//
+//
+//    }else {
+//        [[UMSocialManager defaultManager] handleOpenURL:url];
+//    }
+//     [[UMSocialManager defaultManager] handleOpenURL:url];
+//    return YES;
+//}
+//- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
+//    //跳转到支付宝支付的情况
+//    if ([url.host isEqualToString:@"safepay"]) {
+//        //跳转支付宝钱包进行支付，处理支付结果
+//        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+//            //发送一个通知
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"ZFBPAY" object:resultDic];
+//            
+//            NSLog(@"result ======================== %@",resultDic);
+//        }];
+//    } else if ([url.absoluteString hasPrefix:@"wx013aad9217dedd99://pay"] ) {
+//        [WXApi handleOpenURL:url delegate:self];
+//        
+//    }else {
+//        [[UMSocialManager defaultManager] handleOpenURL:url options:options];
+//    }
+//     [[UMSocialManager defaultManager] handleOpenURL:url options:options];
+//    return YES;
+//}
 //微信支付结果
 - (void)onResp:(BaseResp *)resp {
     //发送一个通知

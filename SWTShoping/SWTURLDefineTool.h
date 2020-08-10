@@ -292,6 +292,13 @@
 #define indexRecommend_SWT URLOne@"index/recommend"
 
 
+#pragma mark ---- 支付模块 -----
+/**下单请求模块 */
+#define payOrder_SWT URLOne@"pay/order"
+/** 账单查询 */
+#define payOrderQuery_SWT URLOne@"pay/orderQuery"
+///**  */
+#define payOrdersuccess_SWT URLOne@"pay/ordersuccess"
 
 
 

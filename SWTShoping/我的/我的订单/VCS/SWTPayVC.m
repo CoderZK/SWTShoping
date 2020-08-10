@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *moneyLB;
 @property (weak, nonatomic) IBOutlet UIButton *payBt;
 @property(nonatomic , assign)NSInteger  payType; // 100,101,102
+@property(nonatomic , strong)NSString *payDataJsonStr;
 @end
 
 @implementation SWTPayVC
@@ -22,39 +23,110 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.navigationItem.title = @"支付";
+    
+    self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",self.priceStr];
+    [self.payBt setTitle:[NSString stringWithFormat:@"支付￥%@",self.priceStr] forState:UIControlStateNormal];
+    
 }
 - (IBAction)clickAction:(UIButton *)sender {
     
     if (sender.tag == 100) {
         self.imgV1.image = [UIImage imageNamed:@"dyx43"];
         self.imgV2.image = [UIImage imageNamed:@"dyx44"];
-        self.imgV2.image = [UIImage imageNamed:@"dyx44"];
+        self.imgV3.image = [UIImage imageNamed:@"dyx44"];
         self.payType = sender.tag;
     }else if (sender.tag == 101) {
         self.imgV1.image = [UIImage imageNamed:@"dyx44"];
         self.imgV2.image = [UIImage imageNamed:@"dyx43"];
-        self.imgV2.image = [UIImage imageNamed:@"dyx44"];
+        self.imgV3.image = [UIImage imageNamed:@"dyx44"];
         self.payType = sender.tag;
     }else if (sender.tag == 102) {
         self.imgV1.image = [UIImage imageNamed:@"dyx44"];
         self.imgV2.image = [UIImage imageNamed:@"dyx44"];
-        self.imgV2.image = [UIImage imageNamed:@"dyx43"];
+        self.imgV3.image = [UIImage imageNamed:@"dyx43"];
         self.payType = sender.tag;
     }else if (sender.tag == 103) {
+//        [self payAction];
+        [self getOrderWityType:self.payType];
+    }
+    
+    
+     
+}
+
+//获取支付信息
+- (void)getOrderWityType:(NSUInteger)type {
+    
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"merOrderId"] = self.orderID;
+    dict[@"totalAmount"] =  @( [[NSString stringWithFormat:@"%lf",self.priceStr.doubleValue * 100] intValue]);
+    if (self.payType == 100) {
+        dict[@"type"] = @"wx.unifiedOrder";
+    }else if (self.payType == 101) {
+        dict[@"type"] = @"trade.precreate";
+    }else {
+        dict[@"type"] = @"uac.appOrder";
+    }
+    [zkRequestTool networkingPOST:payOrder_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+
+        [SVProgressHUD dismiss];
+        
+        
+        NSDictionary * dict = [responseObject[@"returninfo"] mj_JSONObject];
+        
+        if (dict != nil && [dict.allKeys containsObject:@"respStr"]) {
+            NSDictionary * dict2 = [dict[@"respStr"] mj_JSONObject];
+            if ( dict2 != nil && [dict2.allKeys containsObject:@"appPayRequest"]) {
+                
+                self.payDataJsonStr = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:dict2[@"appPayRequest"] options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
+                [self payAction];
+            }
+        }
+        
+//        if ([responseObject[@"code"] intValue]== 200) {
+//
+//
+//
+//
+//        }else {
+//            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+//        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        
+        
+    }];
+
+    
+}
+
+
+
+
+- (void)payAction {
+    
+    if (self.payType == 100) {
+        
+    }else if (self.payType == 101) {
+        
+//        NSDictionary * dictionary = @{@"qrCode": @"https://qr.alipay.com/bax09163hdue268uttgh005b"};
+//
+//        NSString *payDataJsonStr = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
+        
+        [UMSPPPayUnifyPayPlugin payWithPayChannel:CHANNEL_ALIPAY payData:self.payDataJsonStr callbackBlock:^(NSString *resultCode, NSString *resultInfo) {
+            if ([resultCode isEqualToString:@"1003"]) {
+                
+            }
+        }];
+    }else {
         
     }
     
     
+    
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

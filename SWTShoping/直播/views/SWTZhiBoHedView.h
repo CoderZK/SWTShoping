@@ -11,6 +11,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTZhiBoHedView : UIView
+@property(nonatomic , strong)UIButton *headBt,*guanzhuBt;
+@property(nonatomic , strong)UILabel *nameLB,*fanAndSeeLB;
+@property(nonatomic , strong)UIView *shopV;
+@property(nonatomic , strong)UILabel *shopNameLB,*shopIdLB;
+
+@property(nonatomic , strong)SWTModel *model;
 
 @end
 
