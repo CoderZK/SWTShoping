@@ -21,13 +21,24 @@
     self.navigationItem.title = @"消息";
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTMessageOneCell" bundle:nil] forCellReuseIdentifier:@"cell"];
-
+    
     self.dataArray = @[].mutableCopy;
     [self getData];
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self getData];
     }];
-
+    
+    Weak(weakSelf);
+    self.noneView.clickBlock = ^{
+        
+        
+        [weakSelf getData];
+    };
+    
+    
+    [LTSCEventBus registerEvent:@"diss" block:^(id data) {
+        weakSelf.tabBarController.selectedIndex  = 0;
+    }];
     
 }
 
@@ -40,7 +51,7 @@
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"receiveid"] = [zkSignleTool shareTool].session_uid;
-//    dict[@"receiveid"] = @"1";
+    //    dict[@"receiveid"] = @"1";
     [zkRequestTool networkingPOST:pushmsgList_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
@@ -49,6 +60,11 @@
             
             
             self.dataArray = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            if (self.dataArray.count == 0) {
+                [self.noneView showNoneDataViewAt:self.view img:[UIImage imageNamed:@"dyx47"] tips:@"暂无数据"];
+            }else {
+                [self.noneView  dismiss];
+            }
             [self.tableView reloadData];
             
         }else {
@@ -66,14 +82,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataArray.count;
-//    return 10;
+    //    return 10;
 }
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SWTMessageOneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     // cell.nameLB.text = @"fgkodkgfeoprkgkp";
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     SWTModel * model = self.dataArray[indexPath.row];
-     cell.timeLB.text = model.createtime;
+    cell.timeLB.text = model.createtime;
     cell.contentLB.text = model.content;
     if (model.type.intValue == 2) {
         cell.nameLB.text = @"系统消息";

@@ -66,6 +66,16 @@
     [cell.headImgV sd_setImageWithURL:[model.avatar getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
     cell.nameLB.text = model.nickname;
     cell.contentLB.text = model.content;
+    
+    if (model.type.intValue == 0) {
+        //正常聊天
+        cell.nameLB.textColor = YellowColor;
+        cell.backV.backgroundColor = [UIColor clearColor];
+    }else {
+        cell.nameLB.textColor = WhiteColor;
+        cell.backV.backgroundColor = RedColor;
+    }
+    
     return cell;
 }
 

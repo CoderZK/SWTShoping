@@ -41,6 +41,11 @@
     self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self getData];
     }];
+    Weak(weakSelf);
+    self.noneView.clickBlock = ^{
+        
+        [weakSelf getData];
+    };
     
     
     
@@ -57,6 +62,11 @@
         if ([responseObject[@"code"] intValue]== 200) {
             
             self.dataArray = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            if (self.dataArray.count == 0) {
+                [self.noneView showNoneDataViewAt:self.view img:[UIImage imageNamed:@"dyx47"] tips:@"暂无数据"];
+            }else {
+                [self.noneView  dismiss];
+            }
             [self.collectionView reloadData];
             
         }else {

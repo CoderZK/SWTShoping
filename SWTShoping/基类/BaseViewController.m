@@ -7,7 +7,7 @@
 //
 
 #import "BaseViewController.h"
-#import "SWTLoginOneVC.h"
+#import "SWTLoginTwoVC.h"
 typedef void (^Nav)(UIButton *);
 typedef void (^Nav2)();
 
@@ -163,7 +163,7 @@ typedef void (^Nav2)();
 
 - (void)gotoLoginVC {
     
-    SWTLoginOneVC * vc =[[SWTLoginOneVC alloc] init];
+    SWTLoginTwoVC * vc =[[SWTLoginTwoVC alloc] init];
     BaseNavigationController * navc =[[BaseNavigationController alloc] initWithRootViewController:vc];;
     [self presentViewController:navc animated:YES completion:nil];
     

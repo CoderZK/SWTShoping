@@ -379,7 +379,10 @@
     
     V2TIMMessage * msg = [[V2TIMManager sharedInstance] createTextMessage:self.bottomV.TF.text];
     
-    [[V2TIMManager sharedInstance] sendMessage:msg receiver:nil groupID:self.groupId priority:(V2TIM_PRIORITY_DEFAULT) onlineUserOnly:NO offlinePushInfo:nil progress:^(uint32_t progress) {
+    V2TIMMessage * cusMsg = [[V2TIMManager sharedInstance] createCustomMessage:[@[@0,self.bottomV.TF.text] mj_JSONData]];
+  
+    
+    [[V2TIMManager sharedInstance] sendMessage:cusMsg receiver:nil groupID:self.groupId priority:(V2TIM_PRIORITY_DEFAULT) onlineUserOnly:NO offlinePushInfo:nil progress:^(uint32_t progress) {
         
     } succ:^{
         NSLog(@"%@",@"发送成功");
@@ -388,6 +391,7 @@
         model.avatar = @"123456789";
         model.content = self.bottomV.TF.text;
         model.nickname = [zkSignleTool shareTool].nickname;
+        model.type = @"0";
         model.growth_value = [zkSignleTool shareTool].growth_value;
         [self.AVCharRoomArr addObject:model];
         self.avChatRoomView.dataArr = self.AVCharRoomArr;
@@ -405,8 +409,19 @@
     NSLog(@"message === \n %@",msg);
     SWTModel * model = [[SWTModel alloc] init];
     model.avatar = msg.faceURL;
-    model.content = msg.textElem.text;
+    NSData * data  = msg.customElem.data;
+    NSArray * arr = [data mj_JSONObject];
     model.nickname = msg.nickName;
+    if (arr.count > 0) {
+        if ( [[NSString stringWithFormat:@"%@",arr[0]] isEqualToString:@"0"]) {
+            model.type = @"0";
+        }else {
+            model.type = @"1";
+        }
+        if (arr.count > 1 ) {
+            model.content = arr[1];
+        }
+    }
     [self.AVCharRoomArr addObject:model];
     self.avChatRoomView.dataArr = self.AVCharRoomArr;
     

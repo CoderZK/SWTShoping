@@ -75,6 +75,7 @@
 #import "UMSPPPayPluginSettings.h"
 #import "WeiChatOtherManager.h"
 
+#import "SWTPayVC.h"
 
 
 #define iOS11Later ([UIDevice currentDevice].systemVersion.floatValue >= 11.0f)

@@ -36,7 +36,7 @@
         self.sdView.pageControlDotSize = CGSizeMake(3, 3);
         self.sdView.currentPageDotColor = [UIColor orangeColor];
         self.sdView.pageDotColor = WhiteColor;
-        self.sdView.imageURLStringsGroup = @[@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1593448860435&di=a67c99cb53194ed3a46b4440eb9b4a6f&imgtype=0&src=http%3A%2F%2Fa3.att.hudong.com%2F14%2F75%2F01300000164186121366756803686.jpg",@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1593448860434&di=db4599d36d08cc02085266fac51d8518&imgtype=0&src=http%3A%2F%2Fa0.att.hudong.com%2F56%2F12%2F01300000164151121576126282411.jpg",@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1593448860434&di=24fd23062bf7fecdf5d4068abdded977&imgtype=0&src=http%3A%2F%2Fa0.att.hudong.com%2F64%2F76%2F20300001349415131407760417677.jpg"];
+        self.sdView.imageURLStringsGroup = @[];
   
         [self addSubview:self.sdView];
         

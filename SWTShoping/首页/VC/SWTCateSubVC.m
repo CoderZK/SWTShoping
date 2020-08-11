@@ -57,6 +57,13 @@
     self.caiZhiArr = @[].mutableCopy;
     [self getCaiZhiData];
     
+    Weak(weakSelf);
+    self.noneView.clickBlock = ^{
+        
+        weakSelf.page = 1;
+        [weakSelf getData];
+    };
+    
 }
 
 - (void)getScondCaterData {
@@ -203,7 +210,11 @@
                 [self.dataArray removeAllObjects];
             }
             [self.dataArray addObjectsFromArray:arr];
-            
+            if (self.dataArray.count == 0) {
+                [self.noneView showNoneDataViewAt:self.view img:[UIImage imageNamed:@"dyx47"] tips:@"暂无数据"];
+            }else {
+                [self.noneView  dismiss];
+            }
             [self.collectionView reloadData];
             
         }else {
@@ -313,19 +324,19 @@
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout itemWidth:(CGFloat)width heightForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-      CGFloat imgH  =   (ScreenW - 30)/2 * 3/4;
-          SWTModel * model = self.dataArray[indexPath.row];
-          if ([model.showtype isEqualToString:@"live"]) {
-              
-              return  (ScreenW - 30)/2;
-          }else {
-              NSArray * arr = [model getTypeLBArr];
-              if (arr.count == 0) {
-                  return imgH + 39;
-              }else {
-                  return imgH + 59;
-              }
-          }
+    CGFloat imgH  =   (ScreenW - 30)/2 * 3/4;
+    SWTModel * model = self.dataArray[indexPath.row];
+    if ([model.showtype isEqualToString:@"live"]) {
+        
+        return  (ScreenW - 30)/2;
+    }else {
+        NSArray * arr = [model getTypeLBArr];
+        if (arr.count == 0) {
+            return imgH + 39;
+        }else {
+            return imgH + 59;
+        }
+    }
     
 }
 

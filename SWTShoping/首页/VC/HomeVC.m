@@ -120,7 +120,7 @@
                 [picArr addObject:model.pic];
                 
             }
-            //            self.headView.sdView.imageURLStringsGroup = picArr;
+            self.headView.sdView.imageURLStringsGroup = picArr;
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }
@@ -415,16 +415,21 @@
     CGPoint point = scrollView.contentOffset;
     CGFloat HH = 130 ;
     
+    
+   CGFloat yy = -(sstatusHeight + 44 + 10 + (ScreenW - 30) / 345 * 150 +110 + 88*2);
+    
     CGFloat offsetY = point.y;
     
-    CGFloat alpha = (offsetY + 64) / HH > 1.0f ? 1 : ((offsetY + 64)/ HH);
+    NSLog(@"\n===%lf",offsetY);
     
-    if (point.y <= -64) {
+    CGFloat alpha = (offsetY - yy) / 44 > 1.0f ? 1 : ((offsetY-yy)/ 44);
+    
+    if (point.y <= yy) {
         
         [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
         //去掉透明后导航栏下边的黑边
         [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
-    }else {
+    }else  {
         
         UIImage * img = [PublicFuntionTool  imageWithColor:[[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_1"]] colorWithAlphaComponent:alpha]];
         

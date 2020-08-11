@@ -21,25 +21,31 @@
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTTongYongTwoCell" bundle:nil] forCellReuseIdentifier:@"cell"];
     
-//    @weakify(self);
-//    [LTSCEventBus registerEvent:@"helpsub" block:^(NSDictionary * dict) {
-//       @strongify(self);
-//        if ([dict.allKeys containsObject:@"ID"]) {
-//            self.ID = dict[@"ID"];
-//        }
-//        if ([dict.allKeys containsObject:@"type"]) {
-//            if ([dict[@"type"] intValue] == self.type) {
-//                [self getData];
-//            }
-//        }
-//
-//
-//
-//    }];
+    //    @weakify(self);
+    //    [LTSCEventBus registerEvent:@"helpsub" block:^(NSDictionary * dict) {
+    //       @strongify(self);
+    //        if ([dict.allKeys containsObject:@"ID"]) {
+    //            self.ID = dict[@"ID"];
+    //        }
+    //        if ([dict.allKeys containsObject:@"type"]) {
+    //            if ([dict[@"type"] intValue] == self.type) {
+    //                [self getData];
+    //            }
+    //        }
+    //
+    //
+    //
+    //    }];
     
     self.tableView.backgroundColor = BackgroundColor;
     
-     [self getData];
+    [self getData];
+    Weak(weakSelf);
+    self.noneView.clickBlock = ^{
+        
+        
+        [weakSelf getData];
+    };
     
 }
 
@@ -52,6 +58,11 @@
         if ([responseObject[@"code"] intValue]== 200) {
             
             self.dataArray = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            if (self.dataArray.count == 0) {
+                [self.noneView showNoneDataViewAt:self.view img:[UIImage imageNamed:@"dyx47"] tips:@"暂无数据"];
+            }else {
+                [self.noneView  dismiss];
+            }
             [self.tableView reloadData];
             
         }else {
@@ -98,7 +109,7 @@
         if ([responseObject[@"code"] intValue]== 200) {
             
             SWTModel * mm = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
-
+            
             SWTXiYieVC * vc =[[SWTXiYieVC alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
             vc.titleStr = mm.title;
@@ -120,13 +131,13 @@
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

@@ -30,7 +30,7 @@
     [self initBaseTableView];
     
     
-    _noneLabel = [[UILabel alloc] init];
+       _noneLabel = [[UILabel alloc] init];
        _noneLabel.text = @"没有数据!";
        _noneLabel.hidden = YES;
        _noneLabel.textColor = CharacterColor70;

@@ -241,7 +241,7 @@
     self.leftOneLB.text = model.goodname;
     [self.leftimgV sd_setImageWithURL:[model.thumb getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
     //     [self.leftHeadImgV sd_setImageWithURL:[model.avatar getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
-    
+    self.numberAndMoneyLB.text =  [NSString stringWithFormat:@"￥%@\nx%@",model.goodprice,model.goodnum];
     self.leftTwoLb.text =model.spec;
     self.leftThreeLB.hidden = YES;
     //0未支付1待发货2待收货3待评价4已完成5已关闭-1交易失败 -2 全部

@@ -49,6 +49,10 @@
     }
     self.view.backgroundColor = BackgroundColor;
    
+    Weak(weakSelf);
+    [LTSCEventBus registerEvent:@"diss" block:^(id data) {
+        weakSelf.tabBarController.selectedIndex  = 0;
+    }];
     
     
        [self addTabPageView];

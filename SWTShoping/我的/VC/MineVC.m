@@ -99,6 +99,10 @@
     }
     self.leverArr = @[].mutableCopy;
     [self getVipListData];
+    Weak(weakSelf);
+    [LTSCEventBus registerEvent:@"diss" block:^(id data) {
+        weakSelf.tabBarController.selectedIndex  = 0;
+    }];
     
 }
 

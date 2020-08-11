@@ -11,6 +11,7 @@
 #import "SWTHomeCollectionTwoCell.h"
 #import "SWTHomeCollectionThreeCell.h"
 @interface SWTGoodsDetailTableViewContentCollCell()<UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource>
+@property(nonatomic , strong)UILabel *lb;
 
 @end
 
@@ -52,6 +53,7 @@
         lb.font  = kFont(14);
         lb.textColor = CharacterColor50;
         lb.text = @"店铺精选";
+        self.lb = lb;
         [headV addSubview:lb];
         
         
@@ -97,6 +99,11 @@
     [self.collectionView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(self.collectionView.collectionViewLayout.collectionViewContentSize.height + 40);
     }];
+    if (dataArray.count == 0) {
+        self.lb.hidden = YES;
+    }else {
+        self.lb.hidden = NO;
+    }
 }
 
 

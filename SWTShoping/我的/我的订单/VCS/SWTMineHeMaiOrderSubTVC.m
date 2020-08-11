@@ -18,18 +18,25 @@
     [super viewDidLoad];
     
     [self.tableView registerClass:[SWTMineHeMaiOrderCell class] forCellReuseIdentifier:@"cell"];
-     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-     self.tableView.rowHeight = UITableViewAutomaticDimension;
-     self.tableView.estimatedRowHeight = 40;
-
-
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = 40;
+    
+    
     self.dataArray = @[].mutableCopy;
     [self getData];
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
- 
+        
         [self getData];
     }];
-
+    
+    Weak(weakSelf);
+    self.noneView.clickBlock = ^{
+        
+        
+        [weakSelf getData];
+    };
+    
     
 }
 
@@ -47,6 +54,11 @@
         [self.tableView.mj_footer endRefreshing];
         if ([responseObject[@"code"] intValue]== 200) {
             self.dataArray = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            if (self.dataArray.count == 0) {
+                [self.noneView showNoneDataViewAt:self.view img:[UIImage imageNamed:@"dyx47"] tips:@"暂无数据"];
+            }else {
+                [self.noneView  dismiss];
+            }
             [self.tableView reloadData];
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];

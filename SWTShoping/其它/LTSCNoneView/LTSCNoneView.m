@@ -72,6 +72,7 @@
 - (UIImageView *)imgView {
     if (!_imgView) {
         _imgView = [UIImageView new];
+        _imgView.image = [UIImage imageNamed:@"dyx47"];
     }
     return _imgView;
 }
@@ -88,7 +89,7 @@
 - (void)showNoneNetViewAt:(UIView *)view {
     if (view) {
         self.imgView.image = [UIImage imageNamed:@"noneNet"];
-        self.label.text = @"网络错误,请刷新重试";
+        self.label.text = @"暂无数据";
         [self dismiss];
         [view addSubview:self];
         [self mas_makeConstraints:^(MASConstraintMaker *make) {

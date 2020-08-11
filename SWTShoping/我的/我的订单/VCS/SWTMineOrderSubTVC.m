@@ -41,15 +41,22 @@
     }];
     
     
-       @weakify(self);
-       [LTSCEventBus registerEvent:@"sucess" block:^(id data) {
-           @strongify(self);
-           
-           self.page = 1;
-           [self getData];
-           
-           
-       }];
+    @weakify(self);
+    [LTSCEventBus registerEvent:@"sucess" block:^(id data) {
+        @strongify(self);
+        
+        self.page = 1;
+        [self getData];
+        
+        
+    }];
+    
+    Weak(weakSelf);
+    self.noneView.clickBlock = ^{
+        
+        weakSelf.page = 1;
+        [weakSelf getData];
+    };
     
 }
 
@@ -73,7 +80,11 @@
                 [self.dataArray removeAllObjects];
             }
             [self.dataArray addObjectsFromArray:arr];
-            
+            if (self.dataArray.count == 0) {
+                [self.noneView showNoneDataViewAt:self.view img:[UIImage imageNamed:@"dyx47"] tips:@"暂无数据"];
+            }else {
+                [self.noneView  dismiss];
+            }
             [self.tableView reloadData];
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
@@ -112,18 +123,27 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    
+    SWTModel * model = self.dataArray[indexPath.row];
     if (self.type == 6){
         SWTTiJiaoTuiHuoTwoTVC * vc =[[SWTTiJiaoTuiHuoTwoTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
         vc.hidesBottomBarWhenPushed = YES;
         vc.model = self.dataArray[indexPath.row];
         [self.navigationController pushViewController:vc animated:YES];
     }
+    //    if (model.status.intValue == 0) {
+    //        //未付款
+    //        SWTPayVC * vc =[[SWTPayVC alloc] init];
+    //        vc.hidesBottomBarWhenPushed = YES;
+    //        vc.orderID = responseObject[@"data"];
+    //        vc.priceStr = [NSString stringWithFormat:@"%0.2f",self.model.price.doubleValue * self.numStr.doubleValue - self.zheKouMoney];
+    //        [self.navigationController pushViewController:vc animated:YES];
+    //        
+    //        
+    //    }
     
-    
-//    SWTTuiHuoOneTVC * vc =[[SWTTuiHuoOneTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-//    vc.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:vc animated:YES];
+    //    SWTTuiHuoOneTVC * vc =[[SWTTuiHuoOneTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+    //    vc.hidesBottomBarWhenPushed = YES;
+    //    [self.navigationController pushViewController:vc animated:YES];
     
 }
 
@@ -138,7 +158,7 @@
         //
         [self actionModel:model withOrderID:nil withUrlStr:@"1234" withtype:-11];
     }else if (model.status.intValue == 2) {
-         [self actionModel:model withOrderID:nil withUrlStr:orderDelivery_SWT withtype:-2];
+        [self actionModel:model withOrderID:nil withUrlStr:orderDelivery_SWT withtype:-2];
     }else if (model.status.intValue == 3) {
         
         SWTSendMinePingLunTVC* vc =[[SWTSendMinePingLunTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
@@ -149,7 +169,7 @@
     }else if (model.status.intValue == 4) {
         [self actionModel:model withOrderID:nil withUrlStr:@"1234" withtype:-4];
     }else if (model.status.intValue == 5) {
-       [self actionModel:model withOrderID:nil withUrlStr:@"1234" withtype:-5];
+        [self actionModel:model withOrderID:nil withUrlStr:@"1234" withtype:-5];
     }else if (model.status.intValue == 6) {
         SWTTiJiaoTuiHuoTwoTVC * vc =[[SWTTiJiaoTuiHuoTwoTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
         vc.hidesBottomBarWhenPushed = YES;
@@ -192,13 +212,13 @@
 
 - (void)editOrderAddressOneWithModel:(SWTModel *)orderModel {
     
-          SWTMineAddressTVC * vc =[[SWTMineAddressTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-          vc.hidesBottomBarWhenPushed = YES;
-          Weak(weakSelf);
-          vc.sendAddressModelBlock = ^(SWTModel * _Nonnull model) {
-              [weakSelf actionModel:orderModel withOrderID:model.ID withUrlStr:orderEditaddress_SWT withtype:0];
-          };
-          [self.navigationController pushViewController:vc animated:YES];
+    SWTMineAddressTVC * vc =[[SWTMineAddressTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+    vc.hidesBottomBarWhenPushed = YES;
+    Weak(weakSelf);
+    vc.sendAddressModelBlock = ^(SWTModel * _Nonnull model) {
+        [weakSelf actionModel:orderModel withOrderID:model.ID withUrlStr:orderEditaddress_SWT withtype:0];
+    };
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)actionModel:(SWTModel *)model withOrderID:(NSString *)addressID withUrlStr:(NSString *)urlStr withtype:(NSInteger )type{
@@ -215,11 +235,11 @@
             
             [LTSCEventBus sendEvent:@"sucess" data:nil];
             if (type == -20) {
-               [SVProgressHUD showSuccessWithStatus:@"付款成功"];
+                [SVProgressHUD showSuccessWithStatus:@"付款成功"];
             }else if (type == 0){
-              [SVProgressHUD showSuccessWithStatus:@"修改收货地址成功"];
+                [SVProgressHUD showSuccessWithStatus:@"修改收货地址成功"];
             }else if (type == 1) {
-              [SVProgressHUD showSuccessWithStatus:@"催发货成功"];
+                [SVProgressHUD showSuccessWithStatus:@"催发货成功"];
             }
             
             
@@ -234,7 +254,7 @@
         [self.tableView.mj_footer endRefreshing];
         
     }];
-
+    
     
 }
 

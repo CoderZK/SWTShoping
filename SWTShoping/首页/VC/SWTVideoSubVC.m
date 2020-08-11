@@ -56,6 +56,12 @@
         self.page++;
         [self getData];
     }];
+    Weak(weakSelf);
+    self.noneView.clickBlock = ^{
+        
+        weakSelf.page = 1;
+        [weakSelf getData];
+      };
     
 }
 
@@ -76,7 +82,11 @@
                 [self.dataArray removeAllObjects];
             }
             [self.dataArray addObjectsFromArray:arr];
-            
+            if (self.dataArray.count == 0) {
+                [self.noneView showNoneDataViewAt:self.view img:[UIImage imageNamed:@"dyx47"] tips:@"暂无数据"];
+            }else {
+                [self.noneView  dismiss];
+            }
             [self.collectionView reloadData];
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];

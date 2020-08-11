@@ -18,6 +18,16 @@
 
 @implementation SWTLoginTwoVC
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"登录";
@@ -33,6 +43,10 @@
     
 }
 
+- (IBAction)back:(id)sender {
+    [LTSCEventBus sendEvent:@"diss" data:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 - (void)loginAction  {
     
