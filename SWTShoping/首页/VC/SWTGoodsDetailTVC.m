@@ -138,7 +138,7 @@
         }else if (x.intValue == 101) {
             //点击私信
             
-            TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:@"17"];
+            TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:self.dataModel.imid];
             TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
             [self.navigationController pushViewController:vc animated:YES];
             

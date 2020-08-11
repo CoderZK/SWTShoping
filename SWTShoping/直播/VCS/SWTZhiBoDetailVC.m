@@ -17,7 +17,7 @@
 #import "SWTPeopleChuJiaVIew.h"
 #import "SWTHeMaiMineDingZhiShowView.h"
 #import "SWTAVChatRoomView.h"
-@interface SWTZhiBoDetailVC ()<V2TIMAdvancedMsgListener>
+@interface SWTZhiBoDetailVC ()<V2TIMAdvancedMsgListener,V2TIMGroupListener>
 @property(nonatomic , strong)SWTZhiBoHedView *headV; // 头视图
 @property(nonatomic , strong)SWTZhiBoBottomView *bottomV;
 @property(nonatomic , strong)SWTZhiBoChuJiaBottomView *chuJiaBottomV;
@@ -374,6 +374,9 @@
 //发送消息
 - (void)sendMessage {
     
+    
+    [[V2TIMManager sharedInstance] setGroupListener:self];
+    
     V2TIMMessage * msg = [[V2TIMManager sharedInstance] createTextMessage:self.bottomV.TF.text];
     
     [[V2TIMManager sharedInstance] sendMessage:msg receiver:nil groupID:self.groupId priority:(V2TIM_PRIORITY_DEFAULT) onlineUserOnly:NO offlinePushInfo:nil progress:^(uint32_t progress) {
@@ -406,6 +409,15 @@
     model.nickname = msg.nickName;
     [self.AVCharRoomArr addObject:model];
     self.avChatRoomView.dataArr = self.AVCharRoomArr;
+    
+}
+
+//有新成员进入到群里面
+- (void)onMemberEnter:(NSString *)groupID memberList:(NSArray<V2TIMGroupMemberInfo *>*)memberList {
+    
+    
+    
+    
 }
 
 /// 收到消息已读回执（仅单聊有效）

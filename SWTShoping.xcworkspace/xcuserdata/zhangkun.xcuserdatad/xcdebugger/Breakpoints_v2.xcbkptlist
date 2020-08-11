@@ -26,8 +26,8 @@
             filePath = "SWTShoping/&#x76f4;&#x64ad;/VCS/SWTZhiBoDetailVC.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "402"
-            endingLineNumber = "402"
+            startingLineNumber = "405"
+            endingLineNumber = "405"
             landmarkName = "-onRecvNewMessage:"
             landmarkType = "7">
          </BreakpointContent>
@@ -42,8 +42,8 @@
             filePath = "SWTShoping/&#x76f4;&#x64ad;/VCS/SWTZhiBoDetailVC.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "382"
-            endingLineNumber = "382"
+            startingLineNumber = "385"
+            endingLineNumber = "385"
             landmarkName = "-sendMessage"
             landmarkType = "7">
          </BreakpointContent>
@@ -58,8 +58,8 @@
             filePath = "SWTShoping/&#x76f4;&#x64ad;/VCS/SWTZhiBoDetailVC.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "394"
-            endingLineNumber = "394"
+            startingLineNumber = "397"
+            endingLineNumber = "397"
             landmarkName = "-sendMessage"
             landmarkType = "7">
          </BreakpointContent>
