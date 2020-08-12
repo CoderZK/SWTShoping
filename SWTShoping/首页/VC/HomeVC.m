@@ -195,7 +195,7 @@
     }];
     self.navigationItem.titleView = searchTitleView;
     
-    UIButton * submitBtn = [[UIButton alloc] initWithFrame:CGRectMake(15, 200, 60, 44)];
+    UIButton * submitBtn = [[UIButton alloc] initWithFrame:CGRectMake(15, 200, 56, 19)];
     //    submitBtn.layer.cornerRadius = 22;
     //    submitBtn.layer.masksToBounds = YES;
     // [submitBtn setTitle:@"搜索" forState:UIControlStateNormal];
@@ -205,7 +205,8 @@
     //    [submitBtn setImage:[UIImage imageNamed:@"jkgl1"] forState:UIControlStateNormal];
     submitBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [submitBtn setTitleColor:WhiteColor forState:UIControlStateNormal];
-    [submitBtn setTitle:@"滴雨轩" forState:UIControlStateNormal];
+//    [submitBtn setTitle:@"滴雨轩" forState:UIControlStateNormal];
+    [submitBtn setBackgroundImage:[UIImage imageNamed:@"logo"] forState:UIControlStateNormal];
     
     //    [submitBtn addTarget:self action:@selector(submitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:submitBtn];

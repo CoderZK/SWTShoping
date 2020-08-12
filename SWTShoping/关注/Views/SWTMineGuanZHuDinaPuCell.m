@@ -86,13 +86,13 @@
     [self.headBt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
 
     self.nameLb =[[UILabel alloc] init];
-    self.nameLb.font = kFont(13);
+    self.nameLb.font = kFont(15);
     self.nameLb.text = @"货物优选";
     self.nameLb.textColor = CharacterColor50;
     
     self.renZhengBt =[[UIButton alloc] init];
     [self.renZhengBt setTitle:@" 官方" forState:UIControlStateNormal];
-    self.renZhengBt.titleLabel.font = kFont(10);
+    self.renZhengBt.titleLabel.font = kFont(12);
     [self.renZhengBt setImage:[UIImage imageNamed:@"kkrenzheng"] forState:UIControlStateNormal];
     [self.renZhengBt setTitleColor:CharacterColor102 forState:UIControlStateNormal];
     

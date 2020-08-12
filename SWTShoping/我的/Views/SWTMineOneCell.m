@@ -61,10 +61,10 @@
 
 - (void)setModel:(SWTModel *)model {
     _model = model;
-    [self.headBt sd_setBackgroundImageWithURL:[model.mobile getPicURL] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"369"]];
+    [self.headBt sd_setBackgroundImageWithURL:[model.headimg getPicURL] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"369"]];
     self.nameLB.text = model.nickname;
-//    [self.vipBt setTitle:model.growth_value forState:UIControlStateNormal];
-    self.czLB.text = model.growth_value;
+    [self.vipBt setTitle:model.levelcode forState:UIControlStateNormal];
+    self.czLB.text =  [NSString stringWithFormat:@"成长值: %@",model.growth_value];
 }
 
 - (IBAction)clickAction:(UIButton *)button {

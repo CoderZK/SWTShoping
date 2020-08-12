@@ -57,12 +57,12 @@
 
 - (void)setVideoStr:(NSString *)videoStr {
     _videoStr = videoStr;
-    
-    NSString *webVideoPath = [@"https://vedio.hkymr.com/2020032720464113343034051783.MP4" stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet  URLQueryAllowedCharacterSet]];
-           NSURL *webVideoUrl = [NSURL URLWithString:webVideoPath];
+//    @"https://vedio.hkymr.com/2020032720464113343034051783.MP4"
+    NSString *webVideoPath = [videoStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet  URLQueryAllowedCharacterSet]];
+    NSURL *webVideoUrl = [NSURL URLWithString:webVideoPath];
 
     self.avPlayer = [[AVPlayer alloc] initWithURL:webVideoUrl];
-    
+    self.playVC.player = self.avPlayer;
 }
 
 @end

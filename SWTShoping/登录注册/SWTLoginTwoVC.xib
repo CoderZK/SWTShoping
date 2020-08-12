@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SWTLoginTwoVC">
             <connections>
+                <outlet property="LB" destination="K1I-6b-CT2" id="jfy-0H-pZ4"/>
                 <outlet property="loginBt" destination="BSL-x0-wF3" id="y3t-1Z-cRr"/>
                 <outlet property="passwordTF" destination="LoA-il-7JD" id="3ao-bp-NW2"/>
                 <outlet property="phoneTF" destination="ecN-Vs-cTP" id="nsb-Rj-Wqb"/>
@@ -143,6 +144,16 @@
                         <action selector="back:" destination="-1" eventType="touchUpInside" id="0cO-sQ-hDV"/>
                     </connections>
                 </button>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K1I-6b-CT2">
+                    <rect key="frame" x="0.0" y="690" width="414" height="152"/>
+                    <color key="backgroundColor" red="0.99215686270000003" green="0.20392156859999999" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="152" id="Zdy-yi-Sxg"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
@@ -158,9 +169,11 @@
                 <constraint firstItem="BSL-x0-wF3" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="15" id="CFi-fh-vLy"/>
                 <constraint firstItem="CjJ-Uo-XDV" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="15" id="HPH-hT-nDg"/>
                 <constraint firstItem="qcp-pM-gzZ" firstAttribute="leading" secondItem="xCm-XK-s5W" secondAttribute="trailing" constant="10" id="J4P-ak-dFb"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="K1I-6b-CT2" secondAttribute="trailing" id="JDD-S1-tlt"/>
                 <constraint firstItem="q22-Kc-Q9B" firstAttribute="top" secondItem="ecN-Vs-cTP" secondAttribute="bottom" constant="5" id="OZV-zT-ube"/>
                 <constraint firstItem="f38-8d-jUX" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="15" id="Ocf-wG-Vf4"/>
                 <constraint firstItem="xCm-XK-s5W" firstAttribute="centerX" secondItem="Q5M-cg-NOt" secondAttribute="centerX" constant="-10" id="Oqn-El-tlD"/>
+                <constraint firstItem="K1I-6b-CT2" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="Plc-Qj-knm"/>
                 <constraint firstItem="gQM-Ox-w4d" firstAttribute="centerY" secondItem="qcp-pM-gzZ" secondAttribute="centerY" id="S0o-1a-ky7"/>
                 <constraint firstItem="CjJ-Uo-XDV" firstAttribute="top" secondItem="IUQ-nG-iNW" secondAttribute="bottom" constant="30" id="T7z-DM-sSx"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="CjJ-Uo-XDV" secondAttribute="trailing" constant="15" id="VgU-sx-uPW"/>
@@ -173,6 +186,7 @@
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="ecN-Vs-cTP" secondAttribute="trailing" constant="15" id="e5e-7V-SEv"/>
                 <constraint firstItem="xCm-XK-s5W" firstAttribute="top" secondItem="BSL-x0-wF3" secondAttribute="bottom" constant="15" id="fdm-9X-WZs"/>
                 <constraint firstItem="q22-Kc-Q9B" firstAttribute="trailing" secondItem="ecN-Vs-cTP" secondAttribute="trailing" id="ieF-Nj-UF1"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="K1I-6b-CT2" secondAttribute="bottom" constant="20" id="kW7-me-b7l"/>
                 <constraint firstItem="IUQ-nG-iNW" firstAttribute="top" secondItem="qcp-pM-gzZ" secondAttribute="bottom" constant="30" id="mw3-ou-6io"/>
                 <constraint firstItem="LoA-il-7JD" firstAttribute="top" secondItem="q22-Kc-Q9B" secondAttribute="bottom" constant="10" id="mw9-Un-E6q"/>
                 <constraint firstItem="KK8-QT-H53" firstAttribute="leading" secondItem="LoA-il-7JD" secondAttribute="leading" id="oCz-dy-HeV"/>

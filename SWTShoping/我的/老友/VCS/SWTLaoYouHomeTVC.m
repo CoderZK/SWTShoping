@@ -129,7 +129,13 @@
             if (self.dataDict == nil) {
                 return 0;
             }else {
-                NSString *htmlStr = [NSString stringWithFormat:@"<div style=\"font-size:14px\">%@</div>",self.dataDict[@"modelcontent1"]];
+                
+                
+                NSString *htmlStr = [NSString stringWithFormat:@"%@",self.dataDict[@"modelcontent1"]];
+            
+                if (htmlStr.length == 0 || [htmlStr isEqualToString:@"(null)"]) {
+                    return 0;
+                }
                 
                 //富文本，两种都可以
                 NSDictionary *options = @{ NSDocumentTypeDocumentAttribute : NSHTMLTextDocumentType, NSCharacterEncodingDocumentAttribute :@(NSUTF8StringEncoding) };
@@ -147,11 +153,11 @@
                 
                 
                 //设置文本的Font没有效果，默认12字号，这个只能服务器端控制吗？ 暂时没有找到方法修改字号
-                [attStr addAttribute:NSFontAttributeName value:para range:NSMakeRange(0, attStr.length)];
+//                [attStr addAttribute:NSFontAttributeName value:para range:NSMakeRange(0, attStr.length)];
                 //计算加载完成之后Label的frame
                 //              CGFloat hh =  [attStr boundingRectWithSize:CGSizeMake(ScreenW - 20 - 30 , MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading  context:nil].size.height;
                 
-                CGFloat  hh  = [htmlStr getHeigtWithFontSize:14 lineSpace:4 width:ScreenW - 50];
+                CGFloat  hh  = [attStr boundingRectWithSize:CGSizeMake(ScreenW - 50, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading  context:nil].size.height;
                 return hh+70;
             }
             

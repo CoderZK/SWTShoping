@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *passwordTF;
 @property (weak, nonatomic) IBOutlet UIButton *loginBt;
 @property (weak, nonatomic) IBOutlet UIButton *weiXinBt;
+@property (weak, nonatomic) IBOutlet UILabel *LB;
 
 @end
 
@@ -40,6 +41,45 @@
     self.phoneTF.text = self.phoneStr;
     
     
+  NSString * htmlStr =   @"<p style=\"text-align: left;\"><b>文玩艺术品电商平台，开直播，尽享百万流量文玩艺术品电商平台，开直播...</b></p><p><b>创始人...</b></p><p><b>等数亿投资... .</b></p><p></p><p></p>";
+    
+   
+            NSDictionary *options = @{ NSDocumentTypeDocumentAttribute : NSHTMLTextDocumentType, NSCharacterEncodingDocumentAttribute :@(NSUTF8StringEncoding) };
+            NSData *data = [htmlStr dataUsingEncoding:NSUTF8StringEncoding];
+    
+          //设置富文本
+          NSMutableAttributedString *attStr = [[NSMutableAttributedString alloc] initWithData:data options:options documentAttributes:nil error:nil];
+          //设置段落格式
+          NSMutableParagraphStyle *para = [[NSMutableParagraphStyle alloc] init];
+          para.lineSpacing = 4;
+          para.paragraphSpacing = 10;
+          [attStr addAttribute:NSParagraphStyleAttributeName value:para range:NSMakeRange(0, attStr.length)];
+    self.LB.numberOfLines = 0;
+    self.LB.attributedText = attStr;
+    
+
+    //或者
+    //    NSDictionary *option = @{NSDocumentTypeDocumentAttribute : NSHTMLTextDocumentType};
+    //    NSData *data = [htmlStr dataUsingEncoding:NSUnicodeStringEncoding];
+    //设置富文本
+
+    
+    
+    //设置文本的Font没有效果，默认12字号，这个只能服务器端控制吗？ 暂时没有找到方法修改字号
+//    [attStr addAttribute:NSFontAttributeName value:para range:NSMakeRange(0, attStr.length)];
+    //计算加载完成之后Label的frame
+//    CGFloat hh22 =  [attStr boundingRectWithSize:CGSizeMake(ScreenW , MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading  context:nil].size.height;
+    
+//    CGSize attSize = [attStr boundingRectWithSize:CGSizeMake(ScreenW, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size;
+    
+    CGFloat height = [attStr boundingRectWithSize:CGSizeMake(ScreenW, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading  context:nil].size.height;
+    
+
+    
+    CGFloat  hh  = [htmlStr getHeigtWithFontSize:14 lineSpace:4 width:ScreenW];
+
+    NSLog(@"%lf",hh);
+    NSLog(@"成功");
     
 }
 

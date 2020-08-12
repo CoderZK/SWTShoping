@@ -118,7 +118,7 @@
             
             [zkSignleTool shareTool].nickname = responseObject[@"data"][@"nickname"];
             self.userDataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
-            
+            [self.collectionView reloadData];
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }
@@ -215,7 +215,11 @@
 
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 2;
+    if (self.likeArr.count == 0) {
+        return 1;
+    }else {
+        return 2;
+    }
 }
 
 
@@ -357,10 +361,10 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
     
-    SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-    vc.hidesBottomBarWhenPushed = YES;
-    vc.goodID = self.likeArr[indexPath.row].goodid;
-    [self.navigationController pushViewController:vc animated:YES];
+//    SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+//    vc.hidesBottomBarWhenPushed = YES;
+//    vc.goodID = self.likeArr[indexPath.row].goodid;
+//    [self.navigationController pushViewController:vc animated:YES];
     
 }
 

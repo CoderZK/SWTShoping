@@ -133,8 +133,28 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *merchisfollow;
 @property(nonatomic,strong)NSString *isbuynum;
 @property(nonatomic,strong)NSString *num;
-////@property(nonatomic,strong)NSString *readCnt;
-////@property(nonatomic,strong)NSString *publishTime;
+@property(nonatomic,strong)NSString *levelcode;
+@property(nonatomic,strong)NSString *orderid;
+
+//@property(nonatomic,strong)NSString *sendid;
+//@property(nonatomic,strong)NSString *site_name;
+//@property(nonatomic,strong)NSString *logo;
+//@property(nonatomic,strong)NSString *score;
+//@property(nonatomic,strong)NSString *refund_address;
+//@property(nonatomic,strong)NSString *imid;
+//@property(nonatomic,strong)NSString *headimg;
+//@property(nonatomic,strong)NSString *finishtime;
+//@property(nonatomic,strong)NSString *starttime;
+//@property(nonatomic,strong)NSString *endtime;
+//@property(nonatomic,strong)NSString *lot_no;
+//@property(nonatomic,strong)NSString *liveid;
+//@property(nonatomic,strong)NSString *liveisfollow;
+//@property(nonatomic,strong)NSString *merchisfollow;
+//@property(nonatomic,strong)NSString *isbuynum;
+//@property(nonatomic,strong)NSString *num;
+//@property(nonatomic,strong)NSString *levelcode;
+//@property(nonatomic,strong)NSString *orderid;
+
 ////转化成模型
 //@property(nonatomic,strong)ALMessageModel *article;
 //@property(nonatomic,strong)ALMessageModel *info;

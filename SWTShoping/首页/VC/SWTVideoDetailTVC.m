@@ -108,7 +108,7 @@
             self.dataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
             
             self.headV.videoStr = self.dataModel.video;
-            
+            self.naView.titleLB.text = self.dataModel.name;;
             [self getMyFavData];
             
             [self.tableView reloadData];

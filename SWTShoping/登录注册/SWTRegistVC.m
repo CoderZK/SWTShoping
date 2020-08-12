@@ -9,6 +9,7 @@
 #import "SWTRegistVC.h"
 #import "LxmWebViewController.h"
 #import "SWTLoginTwoVC.h"
+#import "SWTXiYieVC.h"
 @interface SWTRegistVC ()
 @property (weak, nonatomic) IBOutlet UIButton *gouBt;
 @property (weak, nonatomic) IBOutlet UILabel *lb1;
@@ -45,12 +46,15 @@
     [self.codeBt setTitleColor:CharacterColor50 forState:UIControlStateNormal];
     
     
+    
     self.confirmBt.layer.cornerRadius =  22.5;
     self.confirmBt.clipsToBounds = YES;
     
     
     
 }
+
+
 
 - (IBAction)clickAction:(UIButton *)sender {
     
@@ -60,14 +64,24 @@
         sender.selected = !sender.selected;
     }else if (sender.tag == 102) {
         //协议
-        LxmWebViewController * vc =[[LxmWebViewController alloc] init];
-        vc.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:vc animated:YES];
+        
+//        SWTXiYieVC * vc =[[SWTXiYieVC alloc] init];
+//        vc.hidesBottomBarWhenPushed = YES;
+//        vc.type = 1;
+//        [self.navigationController pushViewController:vc animated:YES];
+        [self getDataWithType:1];
+
     }else if (sender.tag == 103) {
         //隐私
-        LxmWebViewController * vc =[[LxmWebViewController alloc] init];
-        vc.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:vc animated:YES];
+//        SWTXiYieVC * vc =[[SWTXiYieVC alloc] init];
+//        vc.hidesBottomBarWhenPushed = YES;
+//        vc.type = 2;
+//        [self.navigationController pushViewController:vc animated:YES];
+//        LxmWebViewController * vc =[[LxmWebViewController alloc] init];
+//        vc.hidesBottomBarWhenPushed = YES;
+//        [self.navigationController pushViewController:vc animated:YES];
+        
+        [self getDataWithType:2];
     }else if (sender.tag == 104) {
         //确定
         if (self.codeTF.text.length == 0) {
@@ -92,6 +106,40 @@
     }
     
 }
+- (void)getDataWithType:(NSInteger)type {
+    [SVProgressHUD show];
+    NSString * url  = agreement_SWT;
+    if (type == 2) {
+        url = privacypolicy_SWT;
+    }
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    [zkRequestTool networkingPOST:url parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+     
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            SWTModel * mm = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
+            LxmWebViewController * vc =[[LxmWebViewController alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            [vc loadHtmlStr:mm.comment withBaseUrl:nil];
+            if (type == 1) {
+                vc.navigationItem.title = @"用户协议";
+            }else {
+                 vc.navigationItem.title = @"隐私协议";
+            }
+            [self.navigationController pushViewController:vc animated:YES];
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        
+        
+    }];
+}
+
+
 
 - (void)registion {
     

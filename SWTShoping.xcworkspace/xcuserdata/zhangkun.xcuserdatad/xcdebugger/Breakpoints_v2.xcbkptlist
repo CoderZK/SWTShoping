@@ -7,7 +7,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
-            uuid = "B6EE5818-3B43-4409-A2D5-85DB69308F00"
+            uuid = "3C5A14A7-FBA9-44F9-9246-A3F80B15E460"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -19,128 +19,64 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "4325EFA7-8B10-46D9-A9A8-4FEAB01C99ED"
+            uuid = "A1A13507-F208-4752-9F11-6E74177B7580"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SWTShoping/&#x76f4;&#x64ad;/VCS/SWTZhiBoDetailVC.m"
+            filePath = "SWTShoping/&#x9996;&#x9875;/Views/SWTVideoDetailHeadView.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "409"
-            endingLineNumber = "409"
-            landmarkName = "-onRecvNewMessage:"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
+            landmarkName = "-setVideoStr:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "36CDF28C-559D-4524-878B-07321985EFB5"
+            uuid = "A3159D80-91DD-4B03-9B14-4CB0DACF9C2E"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SWTShoping/&#x76f4;&#x64ad;/VCS/SWTZhiBoDetailVC.m"
+            filePath = "SWTShoping/&#x9996;&#x9875;/Views/SWTVideoDetailHeadView.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "388"
-            endingLineNumber = "388"
-            landmarkName = "-sendMessage"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "-initWithFrame:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "FD3B55D7-C85F-4891-85FF-F9288FD574FC"
+            uuid = "E7931485-E833-4931-8DA4-1113E6640E41"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SWTShoping/&#x76f4;&#x64ad;/VCS/SWTZhiBoDetailVC.m"
+            filePath = "SWTShoping/&#x9996;&#x9875;/VC/SWTGoodsDetailTVC.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "401"
-            endingLineNumber = "401"
-            landmarkName = "-sendMessage"
+            startingLineNumber = "297"
+            endingLineNumber = "297"
+            landmarkName = "-tableView:heightForRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "624A5380-2EEE-4CDD-98E6-E20F47DEDF2C"
+            uuid = "6CDB1C48-4F8A-4EAC-A622-A34741CBB9A7"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SWTShoping/&#x6211;&#x7684;/&#x6211;&#x7684;&#x8ba2;&#x5355;/VCS/SWTPayVC.m"
+            filePath = "SWTShoping/&#x9996;&#x9875;/VC/SWTGoodsDetailTVC.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "120"
-            endingLineNumber = "120"
-            landmarkName = "-payAction"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "613AFF31-E4B4-4FA3-AF7B-FBA8712D95E4"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SWTShoping/&#x6211;&#x7684;/&#x6211;&#x7684;&#x8ba2;&#x5355;/VCS/SWTPayVC.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
-            landmarkName = "-getOrderWityType:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "028C7693-E57E-4E09-A13D-7B02D764D6DD"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SWTShoping/&#x6211;&#x7684;/&#x6211;&#x7684;&#x8ba2;&#x5355;/VCS/SWTPayVC.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
-            landmarkName = "-getOrderWityType:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "F2209D30-F9D3-4034-9AF7-3564268160A3"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SWTShoping/&#x9996;&#x9875;/VC/HomeVC.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
-            landmarkName = "-getData"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C5013951-4C68-4AFC-8E2A-D52A7E469F25"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SWTShoping/&#x9996;&#x9875;/VC/HomeVC.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "425"
-            endingLineNumber = "425"
-            landmarkName = "-scrollViewDidScroll:"
+            startingLineNumber = "300"
+            endingLineNumber = "300"
+            landmarkName = "-tableView:heightForRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

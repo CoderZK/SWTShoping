@@ -153,7 +153,13 @@
     SWTModel * model = self.dataArray[button.tag];
     if (model.status.intValue == 0) {
         //付款
-        [self actionModel:model withOrderID:nil withUrlStr:orderPay_SWT withtype:-20];
+        SWTPayVC * vc =[[SWTPayVC alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.orderID = model.orderid;
+        vc.priceStr = model.goodprice;
+        [self.navigationController pushViewController:vc animated:YES];
+        
+//        [self actionModel:model withOrderID:nil withUrlStr:orderPay_SWT withtype:-20];
     }else if (model.status.intValue == 1) {
         //
         [self actionModel:model withOrderID:nil withUrlStr:@"1234" withtype:-11];
