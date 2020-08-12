@@ -341,6 +341,7 @@
         
         SWTHomeCollectionThreeCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionThreeCell" forIndexPath:indexPath];
         cell.model = self.likeArr[indexPath.row];
+       
         return cell;
         
 //        if (indexPath.row == 0) {
@@ -360,11 +361,13 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
+    if (indexPath.section == 1) {
+        SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.goodID = self.likeArr[indexPath.row].goodid;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
     
-//    SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-//    vc.hidesBottomBarWhenPushed = YES;
-//    vc.goodID = self.likeArr[indexPath.row].goodid;
-//    [self.navigationController pushViewController:vc animated:YES];
     
 }
 

@@ -19,14 +19,15 @@
                [self addSubview:self.titleLB];
         
         self.leftBt  =[[UIButton alloc] init];
-        [self.leftBt setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+        [self.leftBt setBackgroundImage:[UIImage imageNamed:@"dyx10"] forState:UIControlStateNormal];
         [self addSubview:self.leftBt];
         self.leftBt.layer.cornerRadius = 5;
         self.leftBt.clipsToBounds = YES;
-        self.leftBt.backgroundColor = [UIColor redColor];
+//        self.leftBt.backgroundColor = [UIColor redColor];
         
         self.rigthImgV = [[UIImageView alloc] init];
-        self.rigthImgV.backgroundColor =[UIColor greenColor];
+        self.rigthImgV.contentMode  = UIViewContentModeScaleToFill;
+//        self.rigthImgV.backgroundColor =[UIColor greenColor];
         self.rigthImgV.layer.cornerRadius = 5;
         self.rigthImgV.clipsToBounds = YES;
         [self addSubview:self.rigthImgV];

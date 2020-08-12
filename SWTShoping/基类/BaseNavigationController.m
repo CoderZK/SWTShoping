@@ -68,8 +68,9 @@
         
         UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFixedSpace target:nil action:nil];
         negativeSpacer.width = -15;  //偏移距离  -向左偏移, +向右偏移
-        viewController.navigationItem.leftBarButtonItems = @[negativeSpacer, [[UIBarButtonItem alloc] initWithCustomView:button]];
- 
+//        viewController.navigationItem.leftBarButtonItems = @[negativeSpacer, [[UIBarButtonItem alloc] initWithCustomView:button]];
+        
+        viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     }
     //此句话写在下面可以在外边修改按钮样式,如果系在上面,则会先执行调用viewdidload
     //则不能在外边修改.

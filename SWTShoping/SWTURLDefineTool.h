@@ -229,6 +229,8 @@
 
 /** 提醒发货接口 */
 #define pushmsgRemindsend_SWT URLOne@"pushmsg/remindsend"
+/** 订单详情 */
+#define orderDetail_SWT URLOne@"order/detail"
 
 
 #pragma mark ---- 通用模块 -----
@@ -300,7 +302,8 @@
 ///**  */
 #define payOrdersuccess_SWT URLOne@"pay/ordersuccess"
 
-
+///** 订单查询支付状态 */
+#define payOrderquery_SWT URLOne@"pay/orderquery"
 
 
 

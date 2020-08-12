@@ -37,8 +37,17 @@
     }];
     [self reloadData];
     
+    UIButton * backBt  =[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 30)];
+       [backBt setImage:[UIImage imageNamed:@"bback"] forState:UIControlStateNormal];
+    [backBt setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+       [backBt addTarget:self action:@selector(goback:) forControlEvents:UIControlEventTouchUpInside];
+       self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backBt];
+    
 }
 
+- (void)goback:(UIButton *)button {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 
 - (void)addTabPageView {
     TYTabPagerBar *tabBar = [[TYTabPagerBar alloc] init];

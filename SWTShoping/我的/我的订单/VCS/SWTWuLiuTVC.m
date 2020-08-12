@@ -39,7 +39,7 @@
 - (void)getData {
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    dict[@"id"] = @"31";
+    dict[@"id"] = self.ID;
     [zkRequestTool networkingPOST:expressg_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];

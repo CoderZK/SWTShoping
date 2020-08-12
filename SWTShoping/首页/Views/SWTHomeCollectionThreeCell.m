@@ -42,7 +42,7 @@
     }
     NSString * price =  [NSString stringWithFormat:@"￥%@",[model.goodprice getPriceStr]];;
     self.moneyLB.text = price;
-//    self.numberLB.text = model
+    self.numberLB.text = model.bidsnum;
     
 }
 

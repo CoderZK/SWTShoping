@@ -7,7 +7,7 @@
 //
 
 #import "SWTPayVC.h"
-
+#import "SWTPaySucessVC.h"
 @interface SWTPayVC ()
 @property (weak, nonatomic) IBOutlet UIImageView *imgV1;
 @property (weak, nonatomic) IBOutlet UIImageView *imgV2;
@@ -20,6 +20,11 @@
 
 @implementation SWTPayVC
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getOrderStatus];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -29,6 +34,35 @@
     [self.payBt setTitle:[NSString stringWithFormat:@"支付￥%@",self.priceStr] forState:UIControlStateNormal];
     
 }
+
+- (void)getOrderStatus {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"merOrderId"] = self.orderID;
+    [zkRequestTool networkingPOST:payOrderquery_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+       
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            if ([responseObject[@"data"][@"status"] isEqualToString:@"SUCCESS"]) {
+                //支付成功
+                
+            }
+            SWTPaySucessVC * vc =[[SWTPaySucessVC alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            vc.orderID = self.orderID;
+            vc.priceStr = self.priceStr;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+ 
+        
+    }];
+}
+
 - (IBAction)clickAction:(UIButton *)sender {
     
     if (sender.tag == 100) {
@@ -109,7 +143,13 @@
 - (void)payAction {
     
     if (self.payType == 100) {
-        
+        [UMSPPPayUnifyPayPlugin payWithPayChannel:CHANNEL_WEIXIN
+              payData:self.payDataJsonStr
+        callbackBlock:^(NSString *resultCode, NSString *resultInfo) {
+            
+            
+            
+        }];
     }else if (self.payType == 101) {
         
 //        NSDictionary * dictionary = @{@"qrCode": @"https://qr.alipay.com/bax09163hdue268uttgh005b"};
@@ -122,6 +162,14 @@
             }
         }];
     }else {
+        
+        [UMSPPPayUnifyPayPlugin cloudPayWithURLSchemes:@"unifyPayDemo" payData:self.payDataJsonStr
+        viewController:self
+         callbackBlock:^(NSString *resultCode, NSString *resultInfo) {
+            
+            
+            
+         }];
         
     }
     

@@ -197,6 +197,7 @@
     }else if (model.status.intValue == 2 || model.status.intValue == 3) {
         SWTWuLiuTVC * vc =[[SWTWuLiuTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
         vc.hidesBottomBarWhenPushed = YES;
+        vc.ID = model.ID;
         [self.navigationController pushViewController:vc animated:YES];
     }else if (model.status.intValue == 4) {
         

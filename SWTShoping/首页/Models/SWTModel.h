@@ -136,7 +136,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *levelcode;
 @property(nonatomic,strong)NSString *orderid;
 
-//@property(nonatomic,strong)NSString *sendid;
+@property(nonatomic,strong)NSString *realprice;
 //@property(nonatomic,strong)NSString *site_name;
 //@property(nonatomic,strong)NSString *logo;
 //@property(nonatomic,strong)NSString *score;

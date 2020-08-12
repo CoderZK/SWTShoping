@@ -45,7 +45,7 @@
         
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
-            self.dataArrayOne = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            self.dataArrayOne = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"][@"list"]];
             
             
         }else {
@@ -92,7 +92,7 @@
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             
-            self.dataArrayThree = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            self.dataArrayThree = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"][@"list"]];
             
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
@@ -162,21 +162,22 @@
     self.zhengV = [[SWTDianPuInfoTwoView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(lb.frame) + 10, ScreenW - 20, 50 + 100)];
     self.zhengV.titleLB.text = @"请上传省份证人像面";
     [self.headView addSubview:self.zhengV];
+    self.zhengV.rigthImgV.image = [UIImage imageNamed:@"dyx11"];
     self.zhengV.leftBt.tag = 0;
     [self.zhengV.leftBt addTarget:self action:@selector(chooseImageAction:) forControlEvents:UIControlEventTouchUpInside];
     
     self.fanV = [[SWTDianPuInfoTwoView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(self.zhengV.frame), ScreenW - 20, CGRectGetHeight(self.zhengV.frame))];
     self.fanV.titleLB.text = @"请上传省份证国徽面";
+    self.fanV.rigthImgV.image = [UIImage imageNamed:@"dyx12"];
     [self.headView addSubview:self.fanV];
     self.fanV.leftBt.tag = 1;
     [self.fanV.leftBt addTarget:self action:@selector(chooseImageAction:) forControlEvents:UIControlEventTouchUpInside];
     
     self.shouChiV = [[SWTDianPuInfoTwoView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(self.fanV.frame), ScreenW - 20, CGRectGetHeight(self.zhengV.frame))];
-    self.shouChiV.rigthImgV.image = [UIImage imageNamed:@"sfz_3"];
-    [self.shouChiV.leftBt setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+    self.shouChiV.rigthImgV.image = [UIImage imageNamed:@"dyx13"];
     self.shouChiV.titleLB.text = @"请上传手持身份照";
     [self.headView addSubview:self.shouChiV];
-    self.shouChiV.leftBt.tag = 1;
+    self.shouChiV.leftBt.tag = 2;
        [self.shouChiV.leftBt addTarget:self action:@selector(chooseImageAction:) forControlEvents:UIControlEventTouchUpInside];
     
     
@@ -320,7 +321,7 @@
             [self getData];
             return;
         }
-        self.selectIndex = 1;
+        self.selectIndex = 2;
         NSMutableArray * arr = @[].mutableCopy;
         for (SWTModel * model in self.dataArrayThree) {
             [arr addObject:model.name];
@@ -354,6 +355,7 @@
     
     self.imgSelect = button.tag;
     [self addPict];
+    
     
 }
 
@@ -428,11 +430,12 @@
 }
 
 - (void)updateImage {
+    self.shouChiV.userInteractionEnabled = self.zhengV.userInteractionEnabled = self.fanV.userInteractionEnabled = NO;
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"type"] = @"idcard";
     dict[@"userid"] = [zkSignleTool shareTool].session_uid;
     [zkRequestTool NetWorkingUpLoad:uploadfile_SWT images:@[self.image] name:@"file" parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
-        
+        self.shouChiV.userInteractionEnabled = self.zhengV.userInteractionEnabled = self.fanV.userInteractionEnabled = YES;
         if ([responseObject[@"code"] intValue] == 200) {
             if (self.imgSelect == 0) {
                 self.imgStr1 = responseObject[@"data"];
@@ -444,14 +447,14 @@
                 self.imgStr3 = responseObject[@"data"];
                 [self.shouChiV.leftBt sd_setBackgroundImageWithURL:[self.imgStr3 getPicURL] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
             }
-            [self.tableView reloadData];
+//            [self.tableView reloadData];
             
         }else {
             [self showAlertWithKey:responseObject[@"code"] message:responseObject[@"msg"] ];
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
+        self.shouChiV.userInteractionEnabled = self.zhengV.userInteractionEnabled = self.fanV.userInteractionEnabled = YES;
     }];
     
     
