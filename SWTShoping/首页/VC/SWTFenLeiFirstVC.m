@@ -71,10 +71,14 @@
         if ([responseObject[@"code"] intValue]== 200) {
             
             self.leftDataArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            SWTModel * model = [[SWTModel alloc] init];
+            model.ID = @"0";
+            model.name = @"推荐";
+            [self.leftDataArr insertObject:model atIndex:0];
             [self.leftV reloadData];
             if (self.selectFirstID.intValue == -1 && self.leftDataArr.count > 0) {
                 self.selectIndex = 0;
-                self.selectFirstID = self.leftDataArr[0].ID;
+                self.selectFirstID = @"0";
                 [self.leftV selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
                 [self getScondCaterData];
             }

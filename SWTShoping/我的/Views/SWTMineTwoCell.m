@@ -17,7 +17,7 @@
         self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(10, 15, 200, 17)];
         self.titleLB.textColor = CharacterColor50;
         self.titleLB.font = kFont(14);
-        self.titleLB.text = @"老友天地";
+        self.titleLB.text = @"我的订单";
         UIImageView *imgV  =[[UIImageView alloc] initWithFrame:CGRectMake(ScreenW - 21-20, 18, 11, 11)];
         imgV.image = [UIImage imageNamed:@"you"];
         

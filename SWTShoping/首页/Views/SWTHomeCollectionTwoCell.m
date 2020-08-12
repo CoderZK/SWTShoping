@@ -30,7 +30,7 @@
     
     [self.imgV sd_setImageWithURL:[model.img getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
     
-    self.nameLB.text = model.name;
+    self.nameLB.text = model.store_name;;
     NSString * str = @"";
     if (model.playnum.intValue > 10000) {
         str =  [NSString stringWithFormat:@"%0.1f万人在观看",model.playnum.floatValue/10000.0];
@@ -38,7 +38,7 @@
         str =  [NSString stringWithFormat:@"%@人在观看",model.playnum];
     }
     self.numberLB.text = str;
-    self.desLB.text = model.store_name;
+    self.desLB.text = model.name;
 }
 
 @end

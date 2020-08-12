@@ -17,7 +17,7 @@
         self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(10, 15, 200, 17)];
         self.titleLB.textColor = CharacterColor50;
         self.titleLB.font = kFont(14);
-        self.titleLB.text = @"我的订单";
+        self.titleLB.text = @"老友天地";
         [self addSubview:self.titleLB];
         CGFloat ww = 70;
         CGFloat space = (frame.size.width - 4* ww) / 8;
