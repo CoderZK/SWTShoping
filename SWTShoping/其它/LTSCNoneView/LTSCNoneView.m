@@ -104,9 +104,16 @@
         self.label.text = tips;
         [self dismiss];
         [view addSubview:self];
+//        [self mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.edges.equalTo(view);
+//        }];
+        
         [self mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(view);
+            make.centerY.equalTo(view);
+            make.left.right.equalTo(view);
+            make.height.equalTo(@300);
         }];
+        
     }
 }
 

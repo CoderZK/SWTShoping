@@ -145,8 +145,22 @@
             return cell;
         }else if (indexPath.row == 1) {
              SWTOrderDetailTwoCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTOrderDetailTwoCell" forIndexPath:indexPath];
-            //        cell.statusBt [setTitle: forState:UIControlStateNormal];
-            //        cell.timeLB.text =
+            NSDictionary * dict = [self.dataModel.expressinfo mj_JSONObject];
+            
+            if ( [[NSString stringWithFormat:@"%@",dict[@"message"]] isEqualToString:@"ok"]) {
+                NSArray * arr = [dict[@"data"] mj_JSONObject];
+                if (arr.count > 0) {
+                    [cell.statusBt setTitle:arr[0][@"context"] forState:UIControlStateNormal];
+                    cell.timeLB.text = arr[0][@"time"];
+                }else {
+                            [cell.statusBt setTitle:@"揽货中" forState:UIControlStateNormal];
+                    cell.timeLB.text = @"";
+                }
+            }else {
+                [cell.statusBt setTitle:@"处理中..." forState:UIControlStateNormal];
+                cell.timeLB.text = @"";
+            }
+            
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     return cell;
         }else {
@@ -182,7 +196,7 @@
                 cell.rightLB.textColor = RedLightColor ;
             }else if (indexPath.row == 1) {
                 cell.leftLB.text = @"商品总价:";
-                [NSString stringWithFormat:@"￥%@",self.dataModel.price];
+                cell.rightLB.text =  [NSString stringWithFormat:@"￥%@",self.dataModel.price];
             }else if (indexPath.row == 2) {
                 cell.leftLB.text =  @"运费";
                 cell.rightLB.text = @"￥0.00";

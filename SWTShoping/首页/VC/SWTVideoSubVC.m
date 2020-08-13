@@ -130,10 +130,21 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    SWTVideoDetailTVC * vc =[[SWTVideoDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-    vc.hidesBottomBarWhenPushed = YES;
-    vc.videoID = self.dataArray[indexPath.row].ID;
-    [self.navigationController pushViewController:vc animated:YES];
+    
+    SWTModel * model = self.dataArray[indexPath.row];
+    if ([model.showtype isEqualToString:@"live"]) {
+        SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.isHeMai = YES;
+        vc.model = model;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else {
+        SWTVideoDetailTVC * vc =[[SWTVideoDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+           vc.hidesBottomBarWhenPushed = YES;
+           vc.videoID = self.dataArray[indexPath.row].ID;
+           [self.navigationController pushViewController:vc animated:YES];
+    }
+   
     
 }
 

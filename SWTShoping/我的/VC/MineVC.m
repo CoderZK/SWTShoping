@@ -30,6 +30,7 @@
 #import "SWTChengZhangShowView.h"
 #import "SWTMineKeFuTVC.h"
 #import "SWTMineHeMaiOrderFatherVC.h"
+#import "SWTMJTabbarVC.h"
 @interface MineVC ()<XPCollectionViewWaterfallFlowLayoutDataSource,UICollectionViewDelegate,UICollectionViewDataSource>
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 @property(nonatomic , strong)UICollectionView *collectionView;
@@ -115,6 +116,10 @@
         [SVProgressHUD dismiss];
         [self.collectionView.mj_header endRefreshing];
         if ([responseObject[@"code"] intValue]== 200) {
+            
+            if ([responseObject[@"data"] length] ==0 ){
+                return;
+            }
             
             [zkSignleTool shareTool].nickname = responseObject[@"data"][@"nickname"];
             self.userDataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
@@ -338,9 +343,15 @@
                     vc.isLianXiUs = YES;
                     [self.navigationController pushViewController:vc animated:YES];
                 }else if (index == 7) {
-                    SWTLaoYouHomeTVC * vc =[[SWTLaoYouHomeTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-                    vc.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:vc animated:YES];
+//                    SWTLaoYouHomeTVC * vc =[[SWTLaoYouHomeTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+//                    vc.hidesBottomBarWhenPushed = YES;
+//                    [self.navigationController pushViewController:vc animated:YES];
+                    
+                    
+                    SWTMJTabbarVC * vc =[[SWTMJTabbarVC alloc] init];
+                    [self presentViewController:vc  animated:YES completion:nil];
+//                    vc.hidesBottomBarWhenPushed = YES;
+//                    [self.navigationController pushViewController:vc animated:YES];
                 }
             };
             return cell;

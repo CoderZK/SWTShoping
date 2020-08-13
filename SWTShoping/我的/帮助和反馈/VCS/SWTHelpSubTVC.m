@@ -102,7 +102,7 @@
 
 - (void)getContentDataWithID:(NSString *)ID {
     [SVProgressHUD show];
-    [zkRequestTool networkingPOST:helpList_SWT parameters:ID success:^(NSURLSessionDataTask *task, id responseObject) {
+    [zkRequestTool networkingPOST:helpDetail_SWT parameters:ID success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];

@@ -138,7 +138,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)NSString *realprice;
 @property(nonatomic,strong)NSString *coupons;
-//@property(nonatomic,strong)NSString *logo;
+@property(nonatomic,strong)NSString *expressinfo;
 //@property(nonatomic,strong)NSString *score;
 //@property(nonatomic,strong)NSString *refund_address;
 //@property(nonatomic,strong)NSString *imid;

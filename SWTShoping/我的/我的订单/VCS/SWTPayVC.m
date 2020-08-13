@@ -22,7 +22,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self getOrderStatus];
+    
 }
 
 - (void)viewDidLoad {
@@ -32,7 +32,10 @@
     
     self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",self.priceStr];
     [self.payBt setTitle:[NSString stringWithFormat:@"支付￥%@",self.priceStr] forState:UIControlStateNormal];
-    
+    Weak(weakSelf);
+    [LTSCEventBus registerEvent:@"foreground" block:^(id data) {
+        [weakSelf getOrderStatus];
+    }];
 }
 
 - (void)getOrderStatus {
