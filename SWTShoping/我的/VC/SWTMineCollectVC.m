@@ -8,14 +8,23 @@
 
 #import "SWTMineCollectVC.h"
 #import "SWTGuanZhuCollectionCell.h"
+#import "SWTHomeCollectionTwoCell.h"
+#import "SWTVideoDetailTVC.h"
 @interface SWTMineCollectVC ()<UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource>
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 @property(nonatomic , strong)UICollectionView *collectionView;
-@property(nonatomic , strong)NSMutableArray<SWTModel *> *dataArray;
+@property(nonatomic,assign)NSInteger page;
+@property(nonatomic,strong)NSMutableArray<SWTModel *> *dataArray;
 
 @end
 
 @implementation SWTMineCollectVC
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.page = 1;
+    [self getData];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -34,11 +43,16 @@
     [self.view addSubview:self.collectionView];
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"SWTGuanZhuCollectionCell" bundle:nil] forCellWithReuseIdentifier:@"SWTGuanZhuCollectionCell"];
+       [self.collectionView registerNib:[UINib nibWithNibName:@"SWTHomeCollectionTwoCell" bundle:nil] forCellWithReuseIdentifier:@"SWTHomeCollectionTwoCell"];
     
-    
+    self.page = 1;
     self.dataArray = @[].mutableCopy;
-    [self getData];
     self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        self.page = 1;
+        [self getData];
+    }];
+    self.collectionView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        self.page++;
         [self getData];
     }];
     Weak(weakSelf);
@@ -52,34 +66,46 @@
 }
 
 - (void)getData {
+    
+    
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    
-    [zkRequestTool networkingPOST: userFav_SWT parameters:[zkSignleTool shareTool].session_uid success:^(NSURLSessionDataTask *task, id responseObject) {
+    dict[@"page"] = @(self.page);
+    dict[@"pagesize"] = @(10);
+    dict[@"token"] = [zkSignleTool shareTool].session_token;
+    dict[@"type"] = @(self.type);
+    dict[@"userid"] = [zkSignleTool shareTool].session_uid;
+    [zkRequestTool networkingPOST: [NSString stringWithFormat:@"%@/%@",userFav_SWT,[zkSignleTool shareTool].session_uid] parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.collectionView.mj_header endRefreshing];
         [self.collectionView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];
-        if ([responseObject[@"code"] intValue]== 200) {
-            
-            self.dataArray = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
-            if (self.dataArray.count == 0) {
-                [self.noneView showNoneDataViewAt:self.view img:[UIImage imageNamed:@"dyx47"] tips:@"暂无数据"];
-            }else {
-                [self.noneView  dismiss];
+        if ([[NSString stringWithFormat:@"%@",responseObject[@"code"]] integerValue] == 200) {
+            NSArray<SWTModel *>*arr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            if (self.page == 1) {
+                [self.dataArray removeAllObjects];
             }
-            [self.collectionView reloadData];
             
+            [self.dataArray addObjectsFromArray:arr];
+            
+            if (self.dataArray.count == 0) {
+                           [self.noneView showNoneDataViewAt:self.view img:[UIImage imageNamed:@"dyx47"] tips:@"暂无数据"];
+                       }else {
+                           [self.noneView  dismiss];
+                       }
+            
+            [self.collectionView reloadData];
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }
-        
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
         [self.collectionView.mj_header endRefreshing];
         [self.collectionView.mj_footer endRefreshing];
-        
     }];
+    
+    
+    
 }
+
 
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -98,13 +124,19 @@
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
+    if (self.type == 1) {
+        SWTGuanZhuCollectionCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTGuanZhuCollectionCell" forIndexPath:indexPath];
+        self.dataArray[indexPath.row].goodprice = self.dataArray[indexPath.row].price;
+        self.dataArray[indexPath.row].goodimg = self.dataArray[indexPath.row].img;
+        cell.model = self.dataArray[indexPath.row];
+        cell.leftTopImgV.hidden = cell.zhiBoZhongLB.hidden = YES;
+        return cell;
+    }else {
+        SWTHomeCollectionTwoCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionTwoCell" forIndexPath:indexPath];
+        cell.model = self.dataArray[indexPath.row];
+        return cell;
+    }
     
-    SWTGuanZhuCollectionCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTGuanZhuCollectionCell" forIndexPath:indexPath];
-    self.dataArray[indexPath.row].goodprice = self.dataArray[indexPath.row].price;
-    self.dataArray[indexPath.row].goodimg = self.dataArray[indexPath.row].img;
-    cell.model = self.dataArray[indexPath.row];
-    cell.leftTopImgV.hidden = cell.zhiBoZhongLB.hidden = YES;
-    return cell;
     
 }
 
@@ -114,10 +146,18 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-    vc.hidesBottomBarWhenPushed = YES;
-    vc.goodID = self.dataArray[indexPath.row].ID;
-    [self.navigationController pushViewController:vc animated:YES];
+    if (self.type == 1) {
+        SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.goodID = self.dataArray[indexPath.row].ID;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else {
+        SWTVideoDetailTVC * vc =[[SWTVideoDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+           vc.hidesBottomBarWhenPushed = YES;
+           vc.videoID = self.dataArray[indexPath.row].ID;
+           [self.navigationController pushViewController:vc animated:YES];
+    }
+    
     
 }
 
@@ -129,6 +169,11 @@
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout itemWidth:(CGFloat)width heightForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (self.type == 2) {
+        return  (ScreenW - 30)/2;
+    }
+    
     return (ScreenW - 30)/2 + 64;
     
 }

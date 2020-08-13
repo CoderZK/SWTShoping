@@ -23,6 +23,11 @@
 
 @implementation SWTMineOrderDetailTVC
 
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getData];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"订单详情";
@@ -30,7 +35,8 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTOrderDetailTwoCell" bundle:nil] forCellReuseIdentifier:@"SWTOrderDetailTwoCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTOrderDetailFourCell" bundle:nil] forCellReuseIdentifier:@"SWTOrderDetailFourCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTOrderThreeCell" bundle:nil] forCellReuseIdentifier:@"SWTOrderThreeCell"];
-    [self.tableView registerNib:[UINib nibWithNibName:@"SWTMineOrderCell" bundle:nil] forCellReuseIdentifier:@"SWTMineOrderCell"];
+    [self.tableView registerClass:[SWTMineOrderCell class] forCellReuseIdentifier:@"SWTMineOrderCell"];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
        self.tableView.estimatedRowHeight = 40;
@@ -38,7 +44,7 @@
 - (void)getData {
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    dict[@"id"] = self.ID;
+    dict[@"orderno"] = self.ID;
     [zkRequestTool networkingPOST:orderDetail_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
@@ -61,6 +67,9 @@
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if (self.dataModel == nil) {
+        return 0;
+    }
     return 3;
 }
 
@@ -100,6 +109,16 @@
     }
    
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 10;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 10)];
+    view.backgroundColor = BackgroundColor;
+    return view;
+}
+
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
@@ -122,50 +141,61 @@
             }else  {
                 cell.titleLB.text = @"已完成";
             }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }else if (indexPath.row == 1) {
              SWTOrderDetailTwoCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTOrderDetailTwoCell" forIndexPath:indexPath];
             //        cell.statusBt [setTitle: forState:UIControlStateNormal];
             //        cell.timeLB.text =
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     return cell;
         }else {
             SWTOrderThreeCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTOrderThreeCell" forIndexPath:indexPath];
             [cell.nameBt setTitle: [NSString stringWithFormat:@"  %@",self.dataModel.name] forState:UIControlStateNormal];
             cell.phoneLB.text = self.dataModel.mobile;
             cell.addressLB.text = self.dataModel.address;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }
     }else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
             SWTMineOrderCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTMineOrderCell" forIndexPath:indexPath];
+            self.dataModel.goodprice = self.dataModel.price;
+            self.dataModel.goodnum = self.dataModel.num;
             cell.model = self.dataModel;
             [cell.rightTwoBt addTarget:self action:@selector(rightTwoAction:) forControlEvents:UIControlEventTouchUpInside];
             [cell.rightOneBt addTarget:self action:@selector(rightOneAction:) forControlEvents:UIControlEventTouchUpInside];
             [cell.rightThreeBt addTarget:self action:@selector(rightThreeAction:) forControlEvents:UIControlEventTouchUpInside];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }else {
            SWTOrderDetailFourCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTOrderDetailFourCell" forIndexPath:indexPath];
-            cell.rightLB.hidden = YES;
+            cell.rightLB.hidden = NO;
             cell.leftLB.textColor = CharacterColor102;
             cell.leftLB.font = kFont(13);
             cell.rightLB.textColor = CharacterColor102;
             if (indexPath.row == 4) {
                 cell.leftLB.textColor = CharacterColor50;
                 cell.leftLB.font =  kFont(15);
-                cell.leftLB.text = @"实付";
+                cell.leftLB.text = @"实付:";
                 cell.rightLB.text =  [NSString stringWithFormat:@"￥%@",self.dataModel.realprice];
+                cell.rightLB.textColor = RedLightColor ;
             }else if (indexPath.row == 1) {
                 cell.leftLB.text = @"商品总价:";
+                [NSString stringWithFormat:@"￥%@",self.dataModel.price];
             }else if (indexPath.row == 2) {
                 cell.leftLB.text =  @"运费";
                 cell.rightLB.text = @"￥0.00";
             }else if (indexPath.row == 3) {
                 cell.leftLB.text =  @"店铺优惠:";
+                cell.rightLB.text =  [NSString stringWithFormat:@"-￥%@",self.dataModel.coupons];
             }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }
     }else {
         SWTOrderDetailFourCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTOrderDetailFourCell" forIndexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.rightLB.hidden = YES;
         cell.leftLB.textColor = CharacterColor102;
         cell.leftLB.font = kFont(13);
@@ -174,7 +204,16 @@
             cell.leftLB.font = kFont(15);
             cell.leftLB.text = @"订单信息";
         }else if (indexPath.row == 1) {
-            cell.leftLB.text = @"支付方式:";
+            if (self.dataModel.paystatus.length == 0) {
+                cell.leftLB.text = @"支付方式: 未支付";
+            }else if (self.dataModel.paystatus.intValue == 0) {
+                cell.leftLB.text = @"支付方式: 微信支付";
+            }else if (self.dataModel.paystatus.intValue == 1) {
+                cell.leftLB.text = @"支付方式: 支付宝支付";
+            }else if (self.dataModel.paystatus.intValue == 2) {
+                cell.leftLB.text = @"支付方式: 云闪付支付";
+            }
+            
         }else if (indexPath.row == 2) {
             cell.leftLB.text =  [NSString stringWithFormat:@"订单编号: %@",self.dataModel.orderid];;
         }else if (indexPath.row == 3) {

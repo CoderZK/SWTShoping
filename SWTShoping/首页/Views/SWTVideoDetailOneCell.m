@@ -26,14 +26,22 @@
     self.nameLB.text = model.nickname;
 
     //级别
-    
+    [self.vipBt setTitle:model.levelcode forState:UIControlStateNormal];
     // 是否收藏
     
-    
+    if ([model.isfav isEqualToString:@"no"]) {
+        [self.collectBt setImage:[UIImage imageNamed:@"praise2"] forState:UIControlStateNormal];
+    }else {
+        [self.collectBt setImage:[UIImage imageNamed:@"praise1"] forState:UIControlStateNormal];
+    }
     
     
     
 }
+
+
+
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

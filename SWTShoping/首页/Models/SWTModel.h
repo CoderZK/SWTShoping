@@ -94,7 +94,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *useprice;//折扣总金额
 
 @property(nonatomic,strong)NSString *status;
-
+@property(nonatomic,strong)NSString *paystatus; // 0 微信, 1支付宝 2 云闪付
 
 
 @property(nonatomic,strong)NSString *merchscore;
@@ -137,7 +137,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *orderid;
 
 @property(nonatomic,strong)NSString *realprice;
-//@property(nonatomic,strong)NSString *site_name;
+@property(nonatomic,strong)NSString *coupons;
 //@property(nonatomic,strong)NSString *logo;
 //@property(nonatomic,strong)NSString *score;
 //@property(nonatomic,strong)NSString *refund_address;

@@ -114,9 +114,12 @@
 - (void)didClickGuanZhuDianPuView:(SWTMineGuanZHuDinaPuCell *)cell withIndex:(NSInteger)index isClickHead:(BOOL)isClickHead {
     if (isClickHead) {
         //点击的是头像或者进店
+        
+        NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
+        
         SWTShopHomeVC * vc =[[SWTShopHomeVC alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
-        vc.shopId = self.dataArray[index].ID;
+        vc.shopId = self.dataArray[indexPath.row].ID;
         [self.navigationController pushViewController:vc animated:YES];
         
         

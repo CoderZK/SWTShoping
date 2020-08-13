@@ -147,7 +147,10 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    
+    SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    vc.model = self.dataArray[indexPath.row];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 

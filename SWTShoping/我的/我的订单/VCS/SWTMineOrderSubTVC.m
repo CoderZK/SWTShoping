@@ -14,6 +14,7 @@
 #import "SWTSendMinePingLunTVC.h"
 #import "SWTWuLiuTVC.h"
 #import "SWTTiJiaoTuiHuoTwoTVC.h"
+#import "SWTMineOrderDetailTVC.h"
 @interface SWTMineOrderSubTVC ()
 @property(nonatomic,assign)NSInteger page;
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *dataArray;
@@ -128,6 +129,11 @@
         SWTTiJiaoTuiHuoTwoTVC * vc =[[SWTTiJiaoTuiHuoTwoTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
         vc.hidesBottomBarWhenPushed = YES;
         vc.model = self.dataArray[indexPath.row];
+        [self.navigationController pushViewController:vc animated:YES];
+    }else {
+        SWTMineOrderDetailTVC * vc =[[SWTMineOrderDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.ID = model.orderid;
         [self.navigationController pushViewController:vc animated:YES];
     }
     //    if (model.status.intValue == 0) {

@@ -101,7 +101,9 @@
 
 - (void)getTopData {
     [SVProgressHUD show];
-    [zkRequestTool networkingPOST:videoDetail_SWT parameters:self.videoID success:^(NSURLSessionDataTask *task, id responseObject) {
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"userid"] = [zkSignleTool shareTool].session_uid;
+    [zkRequestTool networkingPOST: [NSString stringWithFormat:@"%@/%@",videoDetail_SWT,self.videoID] parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
@@ -161,6 +163,9 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 2) {
+        if (self.myFavDataArr.count ==0) {
+            return 0.01;
+        }
         return 30;
     }else {
         return 0.01;
@@ -185,6 +190,8 @@
         SWTVideoDetailOneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         cell.backgroundColor = WhiteColor;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.model = self.dataModel;
+        [cell.collectBt addTarget:self action:@selector(collection:) forControlEvents:UIControlEventTouchUpInside];
         return cell;
     }else if (indexPath.section == 1) {
         SWTVideoDesOneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTVideoDesOneCell" forIndexPath:indexPath];
@@ -251,7 +258,45 @@
     
 }
 
-
+//收藏操作
+- (void)collection:(UIButton *)button {
+    
+    
+    if (!ISLOGIN) {
+        [self gotoLoginVC];
+    }
+    
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"id"] = self.videoID;
+    dict[@"type"] = @"1";
+    dict[@"userid"] =[zkSignleTool shareTool].session_uid;
+    [zkRequestTool networkingPOST:userFavOperate_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            if ([self.dataModel.isfav isEqualToString:@"no"]) {
+                [SVProgressHUD showSuccessWithStatus:@"收藏视频成功"];
+                self.dataModel.isfav = @"yes";
+            }else {
+                [SVProgressHUD showSuccessWithStatus:@"取消收藏视频成功"];
+                self.dataModel.isfav = @"no";
+            }
+            [self.tableView reloadData];
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        
+        
+    }];
+    
+    
+    
+    
+}
 
 
 

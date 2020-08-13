@@ -55,11 +55,15 @@
 }
 - (IBAction)lookOrder:(id)sender {
     
-    SWTMineOrderFartherVC * vc =[[SWTMineOrderFartherVC alloc] init];
-    vc.selectIndex = 0;
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
+//    SWTMineOrderFartherVC * vc =[[SWTMineOrderFartherVC alloc] init];
+//    vc.selectIndex = 0;
+//    vc.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:vc animated:YES];
     
+    SWTMineOrderDetailTVC * vc =[[SWTMineOrderDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+    vc.hidesBottomBarWhenPushed = YES;
+    vc.ID = self.orderID;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 /*

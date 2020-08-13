@@ -45,13 +45,13 @@
         if ([responseObject[@"code"] intValue]== 200) {
             if ([responseObject[@"data"][@"status"] isEqualToString:@"SUCCESS"]) {
                 //支付成功
-                
+                SWTPaySucessVC * vc =[[SWTPaySucessVC alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                vc.orderID = self.orderID;
+                vc.priceStr = self.priceStr;
+                [self.navigationController pushViewController:vc animated:YES];
             }
-            SWTPaySucessVC * vc =[[SWTPaySucessVC alloc] init];
-            vc.hidesBottomBarWhenPushed = YES;
-            vc.orderID = self.orderID;
-            vc.priceStr = self.priceStr;
-            [self.navigationController pushViewController:vc animated:YES];
+            
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }

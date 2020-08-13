@@ -27,7 +27,7 @@
     [self.imgV sd_setImageWithURL:[model.img getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
     
     self.contentLB.attributedText = [model.content getMutableAttributeStringWithFont:13 lineSpace:3 textColor:CharacterColor70];
-    
+    self.timeLB.text = model.createtime;
     
 }
 

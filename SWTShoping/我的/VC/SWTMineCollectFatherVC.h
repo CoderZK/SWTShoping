@@ -1,8 +1,8 @@
 //
-//  SWTMineCollectVC.h
+//  SWTMineCollectFatherVC.h
 //  SWTShoping
 //
-//  Created by kunzhang on 2020/7/5.
+//  Created by kunzhang on 2020/8/13.
 //  Copyright © 2020 kunzhang. All rights reserved.
 //
 
@@ -10,8 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SWTMineCollectVC : BaseViewController
-@property(nonatomic , assign)NSInteger  type;
+@interface SWTMineCollectFatherVC : BaseViewController
+
 @end
 
 NS_ASSUME_NONNULL_END

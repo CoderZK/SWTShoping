@@ -107,7 +107,8 @@
         @strongify(self);
         [self.navigationController popViewControllerAnimated:YES];
     }];
-    
+    [self.naView.rightBt setImage:[UIImage imageNamed:@"dyx1"] forState:UIControlStateNormal];
+    [self.naView.rightBt setTitle:@"" forState:UIControlStateNormal];
     [[self.naView.rightBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:self.dataModel.imid];
         TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
@@ -138,9 +139,9 @@
         }else if (x.intValue == 101) {
             //点击私信
             
-            TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:self.dataModel.imid];
-            TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
-            [self.navigationController pushViewController:vc animated:YES];
+//            TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:self.dataModel.imid];
+//            TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
+//            [self.navigationController pushViewController:vc animated:YES];
             
         }else if (x.intValue == 102) {
             if (self.isYiKouJia) {

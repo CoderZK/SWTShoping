@@ -65,6 +65,9 @@
     self.nameLB.text = model.nickname;
     [self.vipBt setTitle:model.levelcode forState:UIControlStateNormal];
     self.czLB.text =  [NSString stringWithFormat:@"成长值: %@",model.growth_value];
+    
+    [self.guanZhuBt setTitle: [NSString stringWithFormat:@"你关注的:%@ 正在直播",model.livename] forState:UIControlStateNormal];
+    
 }
 
 - (IBAction)clickAction:(UIButton *)button {

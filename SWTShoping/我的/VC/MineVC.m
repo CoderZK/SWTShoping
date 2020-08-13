@@ -15,7 +15,7 @@
 #import "SWTMineThreeCell.h"
 #import "SWTMineSectionHeadView.h"
 #import "SWTShopHomeVC.h"
-#import "SWTMineCollectVC.h"
+#import "SWTMineCollectFatherVC.h"
 #import "SWTLaoYouHomeTVC.h"
 #import "SWTCanPaiFarterVC.h"
 #import "SWTMineWalletTVC.h"
@@ -241,6 +241,7 @@
             //104 头像 105 编辑 106 问题 107 关注 100 - 103 我的竞拍...
             SWTMineOneCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTMineOneCell" forIndexPath:indexPath];
             cell.model = self.userDataModel;
+            cell.clipsToBounds = YES;
             Weak(weakSelf);
             cell.mineOneCellBlock = ^(NSInteger index) {
                 if (index == 0) {
@@ -276,6 +277,13 @@
                     [chengzhangV show];
                 }else if (index == 7) {
                     
+                    
+                    SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    self.userDataModel.ID = self.userDataModel.liveid;
+                    vc.model = self.userDataModel;
+                    [self.navigationController pushViewController:vc animated:YES];
+                    
                 }
             };
             return cell;
@@ -294,7 +302,7 @@
             Weak(weakSelf);
             cell.mineThreeCellBlock = ^(NSInteger index) {
                 if (index == 0) {
-                    SWTMineCollectVC * vc =[[SWTMineCollectVC alloc] init];
+                    SWTMineCollectFatherVC * vc =[[SWTMineCollectFatherVC alloc] init];
                     vc.hidesBottomBarWhenPushed = YES;
                     [weakSelf.navigationController pushViewController:vc animated:YES];
                 }else if (index == 1) {
@@ -396,6 +404,9 @@
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout itemWidth:(CGFloat)width heightForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
+            if (self.userDataModel.liveid.length == 0) {
+                return 150;
+            }
             return 200;
         }else if (indexPath.row == 1) {
             return 95;

@@ -171,6 +171,13 @@
                     if (x.intValue == 99){
                         //店铺
                         [self.jingPaiV dismiss];
+                        
+                        SWTShopHomeVC * vc =[[SWTShopHomeVC alloc] init];
+                        vc.hidesBottomBarWhenPushed = YES;
+                        vc.shopId = self.dataModel.merchid;
+                        [self.navigationController pushViewController:vc animated:YES];
+                        
+                        
                     }else  if (x.intValue < 102){
                         [self getLivegoodListDataWithType:x.intValue - 100];
                     }else {
@@ -271,7 +278,7 @@
     NSMutableDictionary * dict = @{}.mutableCopy;
     //    dict[@"liveid"] = self.model.ID;
     dict[@"liveid"] = @"15";
-    dict[@"type"] = @(type);
+    dict[@"type"] = @(1-type);
     [zkRequestTool networkingPOST:liveLivegoodlist_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
@@ -460,7 +467,7 @@
     NSMutableDictionary * dict = @{}.mutableCopy;
     
     dict[@"type"] = @(type);
-    if (type == 0) {
+    if (type == 1) {
         dict[@"id"] = self.dataModel.merchid;
     }else {
         dict[@"id"] = self.dataModel.liveid;
@@ -470,7 +477,7 @@
         
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
-            if (type == 0) {
+            if (type == 1) {
                 if ([self.dataModel.merchisfollow isEqualToString:@"no"]) {
                     [SVProgressHUD showSuccessWithStatus:@"关注店铺成功"];
                     self.dataModel.merchisfollow = @"yes";
