@@ -42,7 +42,7 @@
                             <constraint firstAttribute="width" constant="35" id="8UM-v0-GfQ"/>
                             <constraint firstAttribute="height" constant="35" id="HvT-Wj-TRl"/>
                         </constraints>
-                        <state key="normal" image="dyx4"/>
+                        <state key="normal" image="bbdyx4"/>
                         <connections>
                             <action selector="clickAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="0GO-Yo-eL6"/>
                         </connections>
@@ -53,7 +53,7 @@
                             <constraint firstAttribute="height" constant="35" id="GsB-Ui-FA0"/>
                             <constraint firstAttribute="width" constant="35" id="gfs-qq-Gj3"/>
                         </constraints>
-                        <state key="normal" image="dyx5"/>
+                        <state key="normal" image="bbdyx5"/>
                         <connections>
                             <action selector="clickAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="agg-al-c5c"/>
                         </connections>
@@ -68,14 +68,14 @@
                         <state key="normal" title="6" image="vip" backgroundImage="rbg"/>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hOa-A8-6dk">
-                        <rect key="frame" x="95" y="65" width="178.5" height="20"/>
+                        <rect key="frame" x="95" y="65" width="80" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="mmJ-qZ-Oir"/>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="moH-bZ-bbt"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        <state key="normal" title="店铺名片" image="dyx3"/>
+                        <state key="normal" title="店铺名片" image="bbdyx3"/>
                     </button>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="369" translatesAutoresizingMaskIntoConstraints="NO" id="Z0M-VI-INk">
                         <rect key="frame" x="15" y="15" width="70" height="70"/>
@@ -131,9 +131,9 @@
     </objects>
     <resources>
         <image name="369" width="324" height="322"/>
-        <image name="dyx3" width="124.5" height="1.5"/>
-        <image name="dyx4" width="124.5" height="1.5"/>
-        <image name="dyx5" width="23.5" height="19"/>
+        <image name="bbdyx3" width="11.5" height="11"/>
+        <image name="bbdyx4" width="19" height="19"/>
+        <image name="bbdyx5" width="19" height="19"/>
         <image name="rbg" width="63" height="20.5"/>
         <image name="vip" width="10" height="10"/>
     </resources>

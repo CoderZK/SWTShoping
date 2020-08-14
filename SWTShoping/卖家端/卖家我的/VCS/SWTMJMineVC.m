@@ -11,6 +11,7 @@
 #import "SWTMJMineTwoCell.h"
 #import "SWTMJMineThreeCell.h"
 #import "SWTShopSettingTVC.h"
+#import "SWTMJMineZhengRenMessage.h"
 @interface SWTMJMineVC ()
 @property(nonatomic , strong)NSArray *leftArr;
 @end
@@ -74,12 +75,15 @@
                 @strongify(self);
                 if (x.intValue == 100) {
                     //点击是编辑
-                    SWTShopSettingTVC * vc =[[SWTShopSettingTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                    SWTMJMineZhengRenMessage * vc =[[SWTMJMineZhengRenMessage alloc] init];
                     vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
-                    
                 }else if (x.intValue== 101) {
                     //点击的是设置
+                    SWTShopSettingTVC * vc =[[SWTShopSettingTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                                   vc.hidesBottomBarWhenPushed = YES;
+                                   [self.navigationController pushViewController:vc animated:YES];
+                                   
                 }
                 
                 

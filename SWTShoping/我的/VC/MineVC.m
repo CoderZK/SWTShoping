@@ -338,18 +338,22 @@
                     vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
                 }else if (index == 6) {
-                    SWTHelpOneTVC * vc =[[SWTHelpOneTVC alloc] init];
-                    vc.hidesBottomBarWhenPushed = YES;
-                    vc.isLianXiUs = YES;
-                    [self.navigationController pushViewController:vc animated:YES];
-                }else if (index == 7) {
-//                    SWTLaoYouHomeTVC * vc =[[SWTLaoYouHomeTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-//                    vc.hidesBottomBarWhenPushed = YES;
-//                    [self.navigationController pushViewController:vc animated:YES];
-                    
                     
                     SWTMJTabbarVC * vc =[[SWTMJTabbarVC alloc] init];
                     [self presentViewController:vc  animated:YES completion:nil];
+                    
+//                    SWTHelpOneTVC * vc =[[SWTHelpOneTVC alloc] init];
+//                    vc.hidesBottomBarWhenPushed = YES;
+//                    vc.isLianXiUs = YES;
+//                    [self.navigationController pushViewController:vc animated:YES];
+                }else if (index == 7) {
+                    SWTLaoYouHomeTVC * vc =[[SWTLaoYouHomeTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                    
+                    
+//                    SWTMJTabbarVC * vc =[[SWTMJTabbarVC alloc] init];
+//                    [self presentViewController:vc  animated:YES completion:nil];
 //                    vc.hidesBottomBarWhenPushed = YES;
 //                    [self.navigationController pushViewController:vc animated:YES];
                 }
