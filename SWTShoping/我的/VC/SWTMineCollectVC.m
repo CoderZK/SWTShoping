@@ -43,7 +43,7 @@
     [self.view addSubview:self.collectionView];
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"SWTGuanZhuCollectionCell" bundle:nil] forCellWithReuseIdentifier:@"SWTGuanZhuCollectionCell"];
-       [self.collectionView registerNib:[UINib nibWithNibName:@"SWTHomeCollectionTwoCell" bundle:nil] forCellWithReuseIdentifier:@"SWTHomeCollectionTwoCell"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"SWTHomeCollectionTwoCell" bundle:nil] forCellWithReuseIdentifier:@"SWTHomeCollectionTwoCell"];
     
     self.page = 1;
     self.dataArray = @[].mutableCopy;
@@ -88,10 +88,10 @@
             [self.dataArray addObjectsFromArray:arr];
             
             if (self.dataArray.count == 0) {
-                           [self.noneView showNoneDataViewAt:self.view img:[UIImage imageNamed:@"dyx47"] tips:@"暂无数据"];
-                       }else {
-                           [self.noneView  dismiss];
-                       }
+                [self.noneView showNoneDataViewAt:self.view img:[UIImage imageNamed:@"dyx47"] tips:@"暂无数据"];
+            }else {
+                [self.noneView  dismiss];
+            }
             
             [self.collectionView reloadData];
         }else {
@@ -153,9 +153,9 @@
         [self.navigationController pushViewController:vc animated:YES];
     }else {
         SWTVideoDetailTVC * vc =[[SWTVideoDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-           vc.hidesBottomBarWhenPushed = YES;
-           vc.videoID = self.dataArray[indexPath.row].ID;
-           [self.navigationController pushViewController:vc animated:YES];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.videoID = self.dataArray[indexPath.row].ID;
+        [self.navigationController pushViewController:vc animated:YES];
     }
     
     

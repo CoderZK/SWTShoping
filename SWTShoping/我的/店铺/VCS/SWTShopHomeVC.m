@@ -65,7 +65,7 @@
     dict[@"page"] = @(self.page);
     dict[@"id"] = self.shopId;
     dict[@"pagesize"] = @(10);
-    dict[@"type"] = @(self.type);
+    dict[@"type"] = @(1-self.type);
     [zkRequestTool networkingPOST: merchMerchgood_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.collectionView.mj_header endRefreshing];
         [self.collectionView.mj_footer endRefreshing];
@@ -240,6 +240,7 @@
     
     SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
+    vc.goodID = self.dataArray[indexPath.row].goodid;
     [self.navigationController pushViewController:vc animated:YES];
     
     

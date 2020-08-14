@@ -28,10 +28,16 @@
     self.page = 1;
     self.dataArray = @[].mutableCopy;
     [self getData];
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        self.page = 1;
-        [self getData];
+    
+    self.tableView.mj_header = [MJRefreshHeader headerWithRefreshingBlock:^{
+         self.page = 1;
+         [self getData];
     }];
+    
+//    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+//        self.page = 1;
+//        [self getData];
+//    }];
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         self.page++;
         [self getData];
@@ -43,7 +49,7 @@
         weakSelf.page = 1;
         [weakSelf getData];
       };
-    
+    [self getTopImgStr];
 }
 
 - (void)getTopImgStr  {
@@ -55,7 +61,7 @@
         [SVProgressHUD dismiss];
         
         if ([responseObject[@"code"] intValue]== 200) {
-            [self.imgV sd_setImageWithURL:[ [NSString stringWithFormat:@"%@",responseObject[@"data"]] getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+            [self.imgV sd_setImageWithURL:[ [NSString stringWithFormat:@"%@",responseObject[@"data"][@"pic"]] getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }

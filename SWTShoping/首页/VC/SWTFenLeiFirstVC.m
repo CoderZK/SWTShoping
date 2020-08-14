@@ -48,7 +48,7 @@
         
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
-            [self.headImgV sd_setImageWithURL:[ [NSString stringWithFormat:@"%@",responseObject[@"data"]] getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+            [self.headImgV sd_setImageWithURL:[ [NSString stringWithFormat:@"%@",responseObject[@"data"][@"pic"]] getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
             
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];

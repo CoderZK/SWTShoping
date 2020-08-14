@@ -44,6 +44,11 @@
     self.moneyLB.text = price;
     self.numberLB.text = model.bidsnum;
     
+    self.layer.cornerRadius = 3;
+    self.clipsToBounds = YES;
+    
+    
+    
 }
 
 @end

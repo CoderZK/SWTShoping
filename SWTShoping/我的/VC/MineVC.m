@@ -49,6 +49,8 @@
     
     if (!ISLOGIN) {
         [self gotoLoginVC];
+    }else {
+       [self getData];
     }
     
 }
@@ -87,7 +89,7 @@
     [self.view addSubview:self.collectionView];
     
     
-    [self getData];
+    
     self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         
         [self getData];
@@ -117,10 +119,12 @@
         [self.collectionView.mj_header endRefreshing];
         if ([responseObject[@"code"] intValue]== 200) {
             
-            if ([responseObject[@"data"] length] ==0 ){
+            if ([responseObject[@"data"] isKindOfClass:[NSString class]] ){
                 return;
             }
-            
+            if ([responseObject[@"data"] isKindOfClass:[NSDictionary class]] &&  responseObject[@"data"] == nil){
+                return;
+            }
             [zkSignleTool shareTool].nickname = responseObject[@"data"][@"nickname"];
             self.userDataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
             [self.collectionView reloadData];

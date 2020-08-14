@@ -256,7 +256,6 @@
     dict[@"avatar"] = self.headImgStr;
     dict[@"gender"] = self.genderStr;
     dict[@"id"] = [zkSignleTool shareTool].session_uid;
-    dict[@"mobile"] = @"18221022803";
     dict[@"nickname"] = self.nickName;
     [zkRequestTool networkingPOST:userEdit_SWT  parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
@@ -264,7 +263,8 @@
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             
-            
+            [zkSignleTool shareTool].nickname = self.nickName;
+            [self.tableView reloadData];
             
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
