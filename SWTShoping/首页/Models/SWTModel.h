@@ -218,8 +218,8 @@ NS_ASSUME_NONNULL_BEGIN
 //@property(nonatomic,assign)NSInteger payWay; //支付渠道1在线支付2到店支付
 //
 // // 状态1支付未回调确认(线下未支付)2支付已确认未消费（线下已支付未消费）3已消费4取消预约进行退款中5退款成功',
-//@property(nonatomic,assign)NSInteger status;
-//@property(nonatomic,assign)NSInteger doctorAppointmentCnt;  // 问诊数量
+@property(nonatomic,assign)NSInteger auctiongoodnum;
+@property(nonatomic,assign)NSInteger pricegoodnum;  // 问诊数量
 //@property(nonatomic,assign)NSInteger projectAppointmentCnt;
 //@property(nonatomic,assign)NSInteger doctorConsultationCnt;
 //@property(nonatomic,assign)NSInteger appointment_cnt;

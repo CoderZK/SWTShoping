@@ -401,6 +401,8 @@
           [self.guanZhuBt setBackgroundImage:[UIImage imageNamed:@"dyx24"] forState:UIControlStateNormal];
        }
     
+    [self.lebftBt setTitle: [NSString stringWithFormat:@"竞拍(%ld)",(long)model.auctiongoodnum] forState:UIControlStateNormal];
+    [self.rightBt setTitle: [NSString stringWithFormat:@"一口价(%ld)",(long)model.pricegoodnum] forState:UIControlStateNormal];
 }
 
 
