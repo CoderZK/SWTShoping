@@ -12,6 +12,10 @@
 #import "SWTMJMineThreeCell.h"
 #import "SWTShopSettingTVC.h"
 #import "SWTMJMineZhengRenMessage.h"
+#import "SWTMJMineMoneyVC.h"
+#import "SWTMJMineOrderFatherVC.h"
+#import "SWTMJMineJingPaiFatherVC.h"
+#import "SWTMJMineBaoBiaoVC.h"
 @interface SWTMJMineVC ()
 @property(nonatomic , strong)NSArray *leftArr;
 @end
@@ -91,6 +95,22 @@
             return cell;
         }else {
             SWTMJMineTwoCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTMJMineTwoCell" forIndexPath:indexPath];
+            Weak(weakSelf);
+            cell.mineTwoCellBlock = ^(NSInteger index) {
+                if (index == 5) {
+                    //点击店铺报表
+                    SWTMJMineBaoBiaoVC * vc =[[SWTMJMineBaoBiaoVC alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else {
+                    
+                    SWTMJMineOrderFatherVC * vc =[[SWTMJMineOrderFatherVC alloc] init];
+                    vc.selectIndex = index;
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                    
+                }
+            };
             return cell;
         }
     }else {
@@ -106,6 +126,18 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    if (indexPath.section == 1) {
+        if (indexPath.row == 0) {
+            //总资产
+            SWTMJMineMoneyVC * vc =[[SWTMJMineMoneyVC alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else if (indexPath.row == 1) {
+            SWTMJMineJingPaiFatherVC * vc =[[SWTMJMineJingPaiFatherVC alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
     
     
 }

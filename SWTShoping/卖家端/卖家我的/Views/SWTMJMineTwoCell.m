@@ -35,12 +35,12 @@
         
         [self addSubview:imgV];
         [self addSubview:self.titleLB];
-        CGFloat ww = 50;
+        CGFloat ww = 60;
         CGFloat space = (ScreenW - 5* ww) / 6;
         NSArray * arr =  @[@"待付款",@"待发货",@"待收货",@"售后",@"店铺报表"];
         for (int i = 0 ; i < arr.count; i++) {
             
-            SWTMineHomeButton * bt  = [[SWTMineHomeButton alloc] initWithFrame:CGRectMake(space + (space + ww) * i, 42, ww, ww ) withImageWidth:22];
+            SWTMineHomeButton * bt  = [[SWTMineHomeButton alloc] initWithFrame:CGRectMake(space + (space + ww) * i, 42, ww,50) withImageWidth:22];
             bt.imgV.image = [UIImage imageNamed: [NSString stringWithFormat:@"mine%d",i+5]];
             bt.titleLB.text = arr[i];
             [self addSubview:bt];

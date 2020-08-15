@@ -121,6 +121,7 @@
 
 #define BlueColor [UIColor colorWithRed:63/255.0 green:136/255.0 blue:189/255.0 alpha:1]
 #define YellowColor [UIColor colorWithRed:236/255.0 green:214/255.0 blue:24/255.0 alpha:1]
+#define GreenColor [UIColor colorWithRed:34/255.0 green:192/255.0 blue:10/255.0 alpha:1]
 //tabbar的字体颜色
 #define TabberGreen [UIColor colorWithRed:160/255.0 green:23/255.0 blue:44/255.0 alpha:1]
 

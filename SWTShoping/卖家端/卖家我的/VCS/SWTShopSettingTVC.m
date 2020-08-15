@@ -9,9 +9,14 @@
 #import "SWTShopSettingTVC.h"
 #import "SWTMineShopSettingCell.h"
 #import "SWTMineShopSettingSectionV.h"
-@interface SWTShopSettingTVC ()
+#import "SWTMJJingPaiOrChuJiaSettingVC.h"
+#import "SWTMJMineFenSiTVC.h"
+#import "SWTMJDainPuBaoZhengJinVC.h"
+#import "SWTMJAddShouHuoDiZhiTVC.h"
+@interface SWTShopSettingTVC ()<UITextFieldDelegate>
 @property(nonatomic , strong)UIView *footV;
 @property(nonatomic , strong)NSArray *titleArr;
+@property(nonatomic , strong)NSString *nameStr,*phone;
 @end
 
 @implementation SWTShopSettingTVC
@@ -22,7 +27,7 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTMineShopSettingCell" bundle:nil] forCellReuseIdentifier:@"cell"];
     [self.tableView registerClass:[SWTMineShopSettingSectionV class] forHeaderFooterViewReuseIdentifier:@"head"];
     
-    self.titleArr = @[@[@"联系人",@"手机号码"],@[@"竞拍设置",@"买家出价条件",@"定金设置"],@[@"粉丝",@"黑名单"],@[@"固定[我的]为卖家中心"]];
+    self.titleArr = @[@[@"联系人",@"手机号码"],@[@"竞拍设置",@"买家出价条件",@"定金设置"],@[@"粉丝"],@[@"固定[我的]为卖家中心",@"店铺保证金",@"退货地址"]];
     [self initFootV];
 
 }
@@ -72,24 +77,53 @@
     cell.swithBt.hidden = YES;
     cell.leftwoLB.hidden = YES;
     cell.rightTF.hidden = NO;
-    if (indexPath.section == 1) {
-        if (indexPath.row == 2) {
+    cell.rightTF.userInteractionEnabled = NO;
+    if (indexPath.section == 0) {
+        cell.rightImgV.hidden = YES;
+        cell.rightTF.userInteractionEnabled = YES;
+        if (indexPath.row == 0) {
+            cell.rightTF.text = self.nameStr;
+        }else {
+            cell.rightTF.text = self.phone;
+        }
+        
+    }else if (indexPath.section == 1) {
+        cell.rightTF.placeholder = @"请选择";
+        if (indexPath.row == 0) {
+            
+        }else if (indexPath.row == 1) {
+            
+        } if (indexPath.row == 2) {
             cell.rightTF.hidden = YES;
             cell.swithBt.hidden = NO;
             cell.leftwoLB.hidden = NO;
             cell.leftwoLB.text = @"(订单金额 >= 2万可用)";
         }
+    }else if (indexPath.section == 2) {
+         cell.rightTF.placeholder = @"";
+                   
     }else if (indexPath.section == 3) {
-        cell.rightTF.hidden = YES;
-        cell.swithBt.hidden = NO;
+        cell.rightTF.userInteractionEnabled = NO;
+        cell.rightTF.placeholder = @"请选择";
+        if (indexPath.row == 0) {
+            cell.rightTF.hidden = YES;
+            cell.swithBt.hidden = NO;
+        }else if (indexPath.row == 1) {
+            
+        }else {
+            
+        }
+        
+       
     }
+    cell.rightTF.delegate = self;
     return cell;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     SWTMineShopSettingSectionV * headV  =[tableView dequeueReusableHeaderFooterViewWithIdentifier:@"head"];
     if (section == 0) {
-        
+        headV.titelLB.text = @"";
     } else if (section == 1) {
         headV.titelLB.text = @"竞拍设置";
     }else if (section == 2) {
@@ -102,11 +136,49 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+    [self.tableView endEditing:YES];
+    if(indexPath.section == 1) {
+        if (indexPath.row == 0) {
+            SWTMJJingPaiOrChuJiaSettingVC * vc =[[SWTMJJingPaiOrChuJiaSettingVC alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            vc.isBaoZhengJin = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else if (indexPath.row == 1) {
+            SWTMJJingPaiOrChuJiaSettingVC * vc =[[SWTMJJingPaiOrChuJiaSettingVC alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            vc.isBaoZhengJin = NO;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }else if (indexPath.section == 2) {
+        SWTMJMineFenSiTVC * vc =[[SWTMJMineFenSiTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else if (indexPath.section == 3 ) {
+        if (indexPath.row == 1) {
+            SWTMJDainPuBaoZhengJinVC * vc =[[SWTMJDainPuBaoZhengJinVC alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else if (indexPath.row == 2) {
+            SWTMJAddShouHuoDiZhiTVC * vc =[[SWTMJAddShouHuoDiZhiTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
     
     
 }
 
-
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    SWTMineShopSettingCell * cell = (SWTMineShopSettingCell *)textField.superview.superview;
+    
+    NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            self.nameStr = textField.text;
+        }else if (indexPath.row == 1){
+            self.phone = textField.text;
+        }
+    }
+}
 
 @end

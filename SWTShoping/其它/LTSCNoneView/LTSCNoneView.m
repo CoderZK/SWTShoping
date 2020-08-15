@@ -60,6 +60,7 @@
             make.height.equalTo(@44);
         }];
     }
+    self.backgroundColor = [UIColor clearColor];
     return self;
 }
 
