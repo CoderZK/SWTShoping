@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="SWTMJVideoCell">
+            <rect key="frame" x="0.0" y="0.0" width="231" height="207"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="231" height="207"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="369" translatesAutoresizingMaskIntoConstraints="NO" id="BqH-7T-TjN">
+                        <rect key="frame" x="0.0" y="0.0" width="231" height="207"/>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pJ4-GM-yUM">
+                        <rect key="frame" x="90.5" y="78.5" width="50" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="17b-I5-93R"/>
+                            <constraint firstAttribute="width" constant="50" id="95l-q3-efP"/>
+                        </constraints>
+                        <state key="normal" image="bofang"/>
+                    </button>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="BqH-7T-TjN" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="3Bk-4a-dOx"/>
+                <constraint firstAttribute="trailing" secondItem="BqH-7T-TjN" secondAttribute="trailing" id="RQq-9E-zXY"/>
+                <constraint firstItem="BqH-7T-TjN" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="kwZ-nn-fff"/>
+                <constraint firstAttribute="bottom" secondItem="BqH-7T-TjN" secondAttribute="bottom" id="q0h-Nf-MAW"/>
+                <constraint firstItem="pJ4-GM-yUM" firstAttribute="centerX" secondItem="BqH-7T-TjN" secondAttribute="centerX" id="wfJ-4A-vsc"/>
+                <constraint firstItem="pJ4-GM-yUM" firstAttribute="centerY" secondItem="BqH-7T-TjN" secondAttribute="centerY" id="z3g-iy-mCo"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
+            <size key="customSize" width="231" height="207"/>
+            <point key="canvasLocation" x="68.840579710144937" y="80.691964285714278"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="369" width="324" height="322"/>
+        <image name="bofang" width="32" height="32"/>
+    </resources>
+</document>

@@ -16,6 +16,7 @@
 #import "SWTMJMineOrderFatherVC.h"
 #import "SWTMJMineJingPaiFatherVC.h"
 #import "SWTMJMineBaoBiaoVC.h"
+#import "SWTMJMineVideoFatherVC.h"
 @interface SWTMJMineVC ()
 @property(nonatomic , strong)NSArray *leftArr;
 @end
@@ -134,6 +135,16 @@
             [self.navigationController pushViewController:vc animated:YES];
         }else if (indexPath.row == 1) {
             SWTMJMineJingPaiFatherVC * vc =[[SWTMJMineJingPaiFatherVC alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else if (indexPath.row == 2) {
+            
+        }else if (indexPath.row == 3) {
+            
+        }else if (indexPath.row == 4) {
+            
+        }else if (indexPath.row == 5) {
+            SWTMJMineVideoFatherVC * vc =[[SWTMJMineVideoFatherVC alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         }

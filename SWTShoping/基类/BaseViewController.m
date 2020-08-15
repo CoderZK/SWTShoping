@@ -120,6 +120,7 @@ typedef void (^Nav2)();
     _rightBtn2.titleLabel.font = [UIFont systemFontOfSize:14];
     [_rightBtn2 setImage :[UIImage imageNamed:imgName] forState : UIControlStateNormal]; //设置按钮正常状态图片
     [_rightBtn2 setImage :[UIImage imageNamed:imgName] forState : UIControlStateSelected ];//设置按钮选中图片
+    [_rightBtn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     UIBarButtonItem *rightBarButon2 = [[ UIBarButtonItem alloc ] initWithCustomView:_rightBtn2];
     if (([[[ UIDevice currentDevice ] systemVersion ] floatValue ]>= 7.0 ? 20 : 0 ))
     {
