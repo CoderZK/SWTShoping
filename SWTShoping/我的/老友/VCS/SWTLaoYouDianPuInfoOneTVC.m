@@ -42,7 +42,7 @@
     self.shopHeadPicV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 80)];
     [self.headView addSubview:self.shopHeadPicV];
     
-    UILabel * lb  =[[UILabel alloc] initWithFrame:CGRectMake(15, 30, 120, 20)];
+    UILabel * lb  =[[UILabel alloc] initWithFrame:CGRectMake(10, 30, 120, 20)];
     lb.text = @"店铺头像";
     lb.font = kFont(14);
     lb.textColor = CharacterColor50;

@@ -168,25 +168,42 @@
 - (void)clickNameAction:(UIButton *)button {
     
     button.selected = !button.selected;
-    if (self.isTitleArr) {
-
-        if (button.selected) {
-            self.selectDict[self.keyArr[button.tag - 100]] = @"1";
-        }else {
-            self.selectDict[self.keyArr[button.tag - 100]] = @"0";
-        }
-        
+    
+    if (self.isNOCanSelectAll) {
+            for (int i = 0 ; i < self.dataArray.count; i++) {
+                 UIButton * buttonNei = (UIButton *)[self.whiteView viewWithTag:i+100];
+                 if (buttonNei != button) {
+                     buttonNei.selected = NO;
+                 }else {
+                     buttonNei.selected = YES;
+                     if (self.selectBlock != nil) {
+                            self.selectBlock(button.tag-100);
+                        }
+                 }
+             }
     }else {
-        if (button.selected) {
-            [self.selectArr addObject:[self.dataArray[button.tag-100] ID]];
+        if (self.isTitleArr) {
+
+            if (button.selected) {
+                self.selectDict[self.keyArr[button.tag - 100]] = @"1";
+            }else {
+                self.selectDict[self.keyArr[button.tag - 100]] = @"0";
+            }
             
         }else {
-            [self.selectArr removeObject:[self.dataArray[button.tag-100] ID]];
+            if (button.selected) {
+                [self.selectArr addObject:[self.dataArray[button.tag-100] ID]];
+                
+            }else {
+                [self.selectArr removeObject:[self.dataArray[button.tag-100] ID]];
+            }
+        }
+        if (self.selectBlock != nil) {
+            self.selectBlock();
         }
     }
-    if (self.selectBlock != nil) {
-        self.selectBlock();
-    }
+    
+    
     
     //    if (self.isNOCanSelectAll) {
     //

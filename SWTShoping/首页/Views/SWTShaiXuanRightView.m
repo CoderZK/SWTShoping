@@ -147,7 +147,7 @@
         };
     };
     
-    UILabel * LB3  =[[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(self.fuwuView.frame) + 20, ww - 20, 20)];
+    UILabel * LB3  =[[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(self.fuwuView.frame) , ww - 20, 20)];
     LB3.text = @"材料";
     LB3.font = kFont(15);
     [self.whiteV addSubview:LB3];
