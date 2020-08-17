@@ -181,6 +181,7 @@
     
     // 复用SectionHeaderView,SectionHeaderView是xib创建的
     SWTHomeCollectionHeadView *headerView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeaderView" forIndexPath:indexPath];
+    headerView.titleLB.text = @"精彩合买定制";
     headerView.clipsToBounds = YES;
     return headerView;
     
@@ -217,6 +218,10 @@
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout referenceHeightForHeaderInSection:(NSInteger)section {
     if (section == 0) {
         return 0;
+    }else {
+        if (self.dataArray.count == 0) {
+            return 0;
+        }
     }
     return 40.0;
 }

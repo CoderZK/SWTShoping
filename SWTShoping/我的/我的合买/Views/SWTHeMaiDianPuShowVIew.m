@@ -69,6 +69,7 @@
         self.dianPuBt.clipsToBounds = YES;
         [self.dianPuBt setTitle:@"店铺" forState:UIControlStateNormal];
         self.dianPuBt.titleLabel.font = kFont(14);
+        [self.dianPuBt  addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.redV addSubview:self.dianPuBt];
         
         self.tableView   = [[UITableView alloc] init];
@@ -176,6 +177,13 @@
        }
     
     
+}
+
+- (void)clickAction:(UIButton *)button  {
+     
+    if (self.delegateSignal) {
+        [self.delegateSignal sendNext:@(100)];
+    }
 }
 
 - (void)setDataArray:(NSMutableArray<SWTModel *> *)dataArray {

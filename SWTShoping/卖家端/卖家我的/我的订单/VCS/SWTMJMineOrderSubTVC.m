@@ -8,6 +8,7 @@
 
 #import "SWTMJMineOrderSubTVC.h"
 #import "SWTMineOrderCell.h"
+#import "SWTMJFaHuoShowView.h"
 @interface SWTMJMineOrderSubTVC ()
 
 @end
@@ -35,7 +36,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    
+    SWTMJFaHuoShowView * showV  =[[SWTMJFaHuoShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+    [showV show];
     
 }
 

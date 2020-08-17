@@ -9,6 +9,8 @@
 #import "SWTMJMineChanPinKuTwoTVC.h"
 #import "SWTMineShopSettingSectionV.h"
 #import "SWTMJMineChanPinListTVC.h"
+#import "SWTAddMineChanPinKuTVC.h"
+#import "SWTMJMineChanPinKuOneCell.h"
 @interface SWTMJMineChanPinKuTwoTVC ()
 @property(nonatomic , strong)UIView *headView;
 @property(nonatomic , strong)UIButton *headBt;
@@ -25,6 +27,8 @@
     [self initHeadV];
     
      [self.tableView registerClass:[SWTMineShopSettingSectionV class] forHeaderFooterViewReuseIdentifier:@"head"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"SWTMJMineChanPinKuOneCell" bundle:nil] forCellReuseIdentifier:@"cell"];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
    
 }
 
@@ -41,13 +45,14 @@
     self.headBt.layer.cornerRadius = 30;
     self.headBt.clipsToBounds = YES;
     [self.headBt setBackgroundImage:[UIImage imageNamed:@"369"] forState:UIControlStateNormal];
-    [self.headBt addSubview:self.headView];
+    [self.headView addSubview:self.headBt];
     
     self.addBt = [[UIButton alloc] initWithFrame:CGRectMake(ScreenW - 100, CGRectGetMinY(self.headBt.frame) + 20, 85, 30)];
-    [self.addBt setTitle:@"添加产品" forState:UIControlStateNormal];
+    [self.addBt setTitle:@"添加产品>" forState:UIControlStateNormal];
     [self.addBt setTitleColor:WhiteColor forState:UIControlStateNormal];
     self.addBt.titleLabel.font = kFont(14);
-    [self.headBt addSubview:self.addBt];
+    [self.addBt addTarget:self action:@selector(addAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.headView addSubview:self.addBt];
     
     UIView * whV  =[[UIView alloc] initWithFrame:CGRectMake(20, 100, ScreenW - 40, 60)];
     whV.clipsToBounds = YES;
@@ -56,40 +61,40 @@
     [self.headView addSubview:whV];
     
     
-    self.numberOneLB = [[UILabel alloc] initWithFrame:CGRectMake(30, 10, (ScreenW - 40 - 70)/2, 20)];
+    self.numberOneLB = [[UILabel alloc] initWithFrame:CGRectMake(30, 10, ScreenW - 100, 20)];
     self.numberOneLB.font = kFont(14);
     self.numberOneLB.text = @"20";
     self.numberOneLB.textAlignment = NSTextAlignmentCenter;
     [whV addSubview:self.numberOneLB];
     
-    UILabel * lb1  = [[UILabel alloc] initWithFrame:CGRectMake(30, 35, (ScreenW - 40 - 70)/2, 20)];
+    UILabel * lb1  = [[UILabel alloc] initWithFrame:CGRectMake(30, 35, ScreenW - 100, 20)];
     lb1.font = kFont(14);
     lb1.textAlignment = NSTextAlignmentCenter;
-    lb1.text = @"产品库";
+    lb1.text = @"产品";
     [whV addSubview:lb1];
     
     
-    UIButton * button1 = [[UIButton alloc] initWithFrame:CGRectMake(30, 0, (ScreenW - 40 - 70)/2, 60)];
+    UIButton * button1 = [[UIButton alloc] initWithFrame:CGRectMake(30, 0, ScreenW - 100, 60)];
     [whV addSubview:button1];
     button1.tag = 100;
     [button1 addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
     
-    self.numberTwoLB = [[UILabel alloc] initWithFrame:CGRectMake((ScreenW - 40)/2 + 10, 10, (ScreenW - 40 - 70)/2, 20)];
-    self.numberTwoLB.font = kFont(14);
-    self.numberTwoLB.text = @"40";
-    self.numberTwoLB.textAlignment = NSTextAlignmentCenter;
-    [whV addSubview:self.numberTwoLB];
-    
-    UILabel * lb2  = [[UILabel alloc] initWithFrame:CGRectMake((ScreenW - 40)/2 + 10, 35, (ScreenW - 40 - 70)/2, 20)];
-    lb2.font = kFont(14);
-    lb2.textAlignment = NSTextAlignmentCenter;
-    lb2.text = @"产品库";
-    [whV addSubview:lb2];
-    
-    UIButton * button2 = [[UIButton alloc] initWithFrame:CGRectMake((ScreenW - 40)/2 + 10, 0, (ScreenW - 40 - 70)/2, 60)];
-       [whV addSubview:button2];
-       button2.tag = 101;
-       [button2 addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
+//    self.numberTwoLB = [[UILabel alloc] initWithFrame:CGRectMake((ScreenW - 40)/2 + 10, 10, (ScreenW - 40 - 70)/2, 20)];
+//    self.numberTwoLB.font = kFont(14);
+//    self.numberTwoLB.text = @"40";
+//    self.numberTwoLB.textAlignment = NSTextAlignmentCenter;
+//    [whV addSubview:self.numberTwoLB];
+//
+//    UILabel * lb2  = [[UILabel alloc] initWithFrame:CGRectMake((ScreenW - 40)/2 + 10, 35, (ScreenW - 40 - 70)/2, 20)];
+//    lb2.font = kFont(14);
+//    lb2.textAlignment = NSTextAlignmentCenter;
+//    lb2.text = @"产品库";
+//    [whV addSubview:lb2];
+//
+//    UIButton * button2 = [[UIButton alloc] initWithFrame:CGRectMake((ScreenW - 40)/2 + 10, 0, (ScreenW - 40 - 70)/2, 60)];
+//       [whV addSubview:button2];
+//       button2.tag = 101;
+//       [button2 addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
     
     self.tableView.tableHeaderView = self.headView;
     
@@ -99,13 +104,20 @@
     return 2;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 0;
+    return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 90;
+    return 74;
 }
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    SWTMJMineChanPinKuOneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    if (indexPath.section == 0) {
+        cell.left1.text = @"待发货";
+        cell.rigth1.text = @"待确认退款";
+    }else {
+        cell.left1.text = @"本月";
+        cell.rigth1.text = @"上月";
+    }
     return cell;
 }
 
@@ -141,5 +153,12 @@
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
+
+- (void)addAction:(UIButton *)button {
+    SWTAddMineChanPinKuTVC * vc =[[SWTAddMineChanPinKuTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 
 @end

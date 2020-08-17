@@ -142,11 +142,23 @@
                 //合买
                 SWTHeMaiDianPuShowVIew *  heMaiV  =[[SWTHeMaiDianPuShowVIew alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
                 self.heMaiView = heMaiV;
+                self.heMaiView.dataModel = self.dataModel;
                 heMaiV.dataArray = self.heMaiArr;
                 self.heMaiView.delegateSignal = [[RACSubject alloc] init];
                 @weakify(self);
                 [self.heMaiView.delegateSignal subscribeNext:^(NSNumber * x) {
                     @strongify(self);
+                    
+                    if (x.intValue < 200) {
+                        [self.heMaiView dismiss];
+                        
+                        SWTShopHomeVC * vc =[[SWTShopHomeVC alloc] init];
+                        vc.hidesBottomBarWhenPushed = YES;
+                        vc.shopId = self.dataModel.merchid;
+                        [self.navigationController pushViewController:vc animated:YES];
+                        return;
+                    }
+                    
                     [self.heMaiView dismiss];
                     SWTModel * model  = self.heMaiArr[x.intValue-200];
                     //合买提交订单
@@ -235,8 +247,7 @@
 - (void)getLiveData {
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    //    dict[@"liveid"] = self.model.ID;
-    dict[@"liveid"] = @"15";
+    dict[@"liveid"] = self.model.ID;
     dict[@"userid"] = [zkSignleTool shareTool].session_uid;
     [zkRequestTool networkingPOST:liveDetail_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [SVProgressHUD dismiss];
@@ -276,8 +287,7 @@
 - (void)getLivegoodListDataWithType:(NSInteger)type {
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    //    dict[@"liveid"] = self.model.ID;
-    dict[@"liveid"] = @"15";
+    dict[@"liveid"] = self.model.ID;
     dict[@"type"] = @(1-type);
     [zkRequestTool networkingPOST:liveLivegoodlist_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [SVProgressHUD dismiss];
@@ -299,8 +309,7 @@
     
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    //    dict[@"liveid"] = self.model.ID;
-    dict[@"liveid"] = @"15";
+    dict[@"liveid"] = self.model.ID;
     [zkRequestTool networkingPOST:shareGoodlist_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
@@ -340,8 +349,7 @@
     
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    //    dict[@"liveid"] = self.model.ID;
-    dict[@"liveid"] = @"15";
+    dict[@"liveid"] = self.model.ID;
     [zkRequestTool networkingPOST:shareGoodlist_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         
         [SVProgressHUD dismiss];
@@ -387,7 +395,7 @@
     V2TIMMessage * msg = [[V2TIMManager sharedInstance] createTextMessage:self.bottomV.TF.text];
     
     V2TIMMessage * cusMsg = [[V2TIMManager sharedInstance] createCustomMessage:[@[@0,self.bottomV.TF.text] mj_JSONData]];
-  
+    
     
     [[V2TIMManager sharedInstance] sendMessage:cusMsg receiver:nil groupID:self.groupId priority:(V2TIM_PRIORITY_DEFAULT) onlineUserOnly:NO offlinePushInfo:nil progress:^(uint32_t progress) {
         
@@ -490,15 +498,15 @@
                 if ([self.dataModel.liveisfollow isEqualToString:@"no"]) {
                     [SVProgressHUD showSuccessWithStatus:@"关注直播成功"];
                     self.dataModel.liveisfollow = @"yes";
-                     [self.bottomV.collectBt setBackgroundImage:[UIImage imageNamed:@"collectY"] forState:UIControlStateNormal];
+                    [self.bottomV.collectBt setBackgroundImage:[UIImage imageNamed:@"collectY"] forState:UIControlStateNormal];
                     
                 }else {
                     [SVProgressHUD showSuccessWithStatus:@"取消关注直播"];
                     self.dataModel.liveisfollow = @"no";
-                     [self.bottomV.collectBt setBackgroundImage:[UIImage imageNamed:@"collectN"] forState:UIControlStateNormal];
+                    [self.bottomV.collectBt setBackgroundImage:[UIImage imageNamed:@"collectN"] forState:UIControlStateNormal];
                 }
-             
-               
+                
+                
                 
             }
             

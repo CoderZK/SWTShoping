@@ -32,5 +32,53 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "92FC6C6D-FDA2-41AD-A8A3-0F15F561E924"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SWTShoping/&#x76f4;&#x64ad;/VCS/SWTZhiBoDetailVC.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
+            landmarkName = "-addBottomV"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "92FC6C6D-FDA2-41AD-A8A3-0F15F561E924 - 38da8a278bef5b3d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__30-[SWTZhiBoDetailVC addBottomV]_block_invoke_2"
+                  moduleName = "&#x6ef4;&#x96e8;&#x8f69;"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhangkun/Documents/SWT/SWTShoping/SWTShoping/%E7%9B%B4%E6%92%AD/VCS/SWTZhiBoDetailVC.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "164"
+                  endingLineNumber = "164"
+                  offsetFromSymbolStart = "1328">
+               </Location>
+               <Location
+                  uuid = "92FC6C6D-FDA2-41AD-A8A3-0F15F561E924 - 38da8a278bef5b3d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__30-[SWTZhiBoDetailVC addBottomV]_block_invoke_2"
+                  moduleName = "&#x6ef4;&#x96e8;&#x8f69;"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhangkun/Documents/SWT/SWTShoping/SWTShoping/%E7%9B%B4%E6%92%AD/VCS/SWTZhiBoDetailVC.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "164"
+                  endingLineNumber = "164"
+                  offsetFromSymbolStart = "1367">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
