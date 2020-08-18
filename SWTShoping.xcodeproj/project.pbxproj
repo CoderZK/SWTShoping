@@ -240,6 +240,7 @@
 		66700CC824EB5E9D00442C1D /* SWTAddYouHuiQuanCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66700CC624EB5E9D00442C1D /* SWTAddYouHuiQuanCell.xib */; };
 		66700CCB24EB60DE00442C1D /* SWTMJAddYouHuiQuanBt.m in Sources */ = {isa = PBXBuildFile; fileRef = 66700CCA24EB60DE00442C1D /* SWTMJAddYouHuiQuanBt.m */; };
 		66700CCF24EB6BC400442C1D /* SelectTimeV.m in Sources */ = {isa = PBXBuildFile; fileRef = 66700CCE24EB6BC400442C1D /* SelectTimeV.m */; };
+		66700CD224EBB14000442C1D /* LSTTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66700CD124EBB14000442C1D /* LSTTimer.m */; };
 		6670384324E65B1100A3DC18 /* SWTMJMineMoneyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6670384124E65B1100A3DC18 /* SWTMJMineMoneyVC.m */; };
 		6670384424E65B1100A3DC18 /* SWTMJMineMoneyVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6670384224E65B1100A3DC18 /* SWTMJMineMoneyVC.xib */; };
 		6670384724E65F5200A3DC18 /* SWTMJChongZhiView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6670384624E65F5200A3DC18 /* SWTMJChongZhiView.m */; };
@@ -827,6 +828,8 @@
 		66700CCA24EB60DE00442C1D /* SWTMJAddYouHuiQuanBt.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTMJAddYouHuiQuanBt.m; sourceTree = "<group>"; };
 		66700CCD24EB6BC300442C1D /* SelectTimeV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectTimeV.h; sourceTree = "<group>"; };
 		66700CCE24EB6BC400442C1D /* SelectTimeV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectTimeV.m; sourceTree = "<group>"; };
+		66700CD024EBB13F00442C1D /* LSTTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSTTimer.h; sourceTree = "<group>"; };
+		66700CD124EBB14000442C1D /* LSTTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSTTimer.m; sourceTree = "<group>"; };
 		6670384024E65B1100A3DC18 /* SWTMJMineMoneyVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTMJMineMoneyVC.h; sourceTree = "<group>"; };
 		6670384124E65B1100A3DC18 /* SWTMJMineMoneyVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTMJMineMoneyVC.m; sourceTree = "<group>"; };
 		6670384224E65B1100A3DC18 /* SWTMJMineMoneyVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTMJMineMoneyVC.xib; sourceTree = "<group>"; };
@@ -1298,6 +1301,8 @@
 		337F3EB120EA040400C5526A /* 其它 */ = {
 			isa = PBXGroup;
 			children = (
+				66700CD024EBB13F00442C1D /* LSTTimer.h */,
+				66700CD124EBB14000442C1D /* LSTTimer.m */,
 				66700CCD24EB6BC300442C1D /* SelectTimeV.h */,
 				66700CCE24EB6BC400442C1D /* SelectTimeV.m */,
 				6670E04224C02B2700662F5D /* ZKPickView */,
@@ -2984,6 +2989,7 @@
 				667A44C824B21959006C9072 /* SWTLaoYouOneCell.m in Sources */,
 				667A44CE24B22DB8006C9072 /* SWTLaoYouHomeTVC.m in Sources */,
 				666BCBC624D1240A00746579 /* SWTWuLiuOneCell.m in Sources */,
+				66700CD224EBB14000442C1D /* LSTTimer.m in Sources */,
 				335010E320EDFC9300F8486B /* zkSignleTool.m in Sources */,
 				66732D1924BB069C00452F21 /* SWTZhiBoHedView.m in Sources */,
 				66689F3724B4242100C49A2E /* SWTHelpOneTVC.m in Sources */,

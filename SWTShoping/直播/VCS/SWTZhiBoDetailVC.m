@@ -162,6 +162,12 @@
                     [self.heMaiView dismiss];
                     SWTModel * model  = self.heMaiArr[x.intValue-200];
                     //合买提交订单
+                    
+//                    if ([NSString pleaseInsertEndTime:model.endtime] <= 0) {
+//                        [SVProgressHUD showErrorWithStatus:@"已结束"];
+//                        return;
+//                    }
+                    
                     SWTMineHeMaiTiJiaoOrderTVC * vc =[[SWTMineHeMaiTiJiaoOrderTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
                     vc.hidesBottomBarWhenPushed = YES;
                     vc.model = model;

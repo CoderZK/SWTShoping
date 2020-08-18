@@ -39,6 +39,7 @@
             self.whiteV.layer.mask = shapeLayer;
 
         
+        
         self.redV = [[UIView alloc] init];
         self.redV.backgroundColor = RedBackColor;
         [self.whiteV addSubview:self.redV];
@@ -126,6 +127,11 @@
         }];
         
         
+        [LSTTimer addTimerForTime:7200 identifier:@"listTimer" handle:nil];
+           //配置通知发送和计时任务绑定 没有配置 就不会有通知发送
+           [LSTTimer setNotificationForName:@"ListChangeNF" identifier:@"listTimer" changeNFType:LSTTimerSecondChangeNFTypeMS];
+        
+        
     }
     
     return self;
@@ -143,6 +149,7 @@
 
 
 - (void)dismiss {
+     [LSTTimer removeAllTimer];
     [UIView animateWithDuration:0.2 animations:^{
         self.whiteV.mj_y = ScreenH;
         self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];;
@@ -165,13 +172,17 @@
        cell.titleLB.text = model.name;
         cell.jiaJiaLB.text =  [NSString stringWithFormat:@"￥%@",model.price];
     cell.numberLB.text =  [NSString stringWithFormat:@"%@/%@",model.isbuynum,model.num];
-    [cell.timeBt setTitle: [NSString stringWithFormat:@"%@    %@",[model.starttime substringToIndex:10],[model.endtime substringToIndex:10]] forState:UIControlStateNormal];
+//    [cell.timeBt setTitle: [NSString stringWithFormat:@"%@    %@",[model.starttime substringToIndex:10],[model.endtime substringToIndex:10]] forState:UIControlStateNormal];
+    cell.timeInterval = [NSString pleaseInsertEndTime:model.endtime] > 0 ?  [NSString pleaseInsertEndTime:model.endtime] : 0;;
     cell.rightBt.userInteractionEnabled = NO;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
+    
     if (self.delegateSignal) {
         [self.delegateSignal sendNext:@(indexPath.row + 200)];
        }

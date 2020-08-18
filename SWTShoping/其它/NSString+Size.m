@@ -781,11 +781,24 @@
 + (NSTimeInterval)pleaseInsertStarTime:(NSString *)starTime andInsertEndTime:(NSString *)endTime{
     
     NSDateFormatter* formater = [[NSDateFormatter alloc] init];
+    formater.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT+0800"];
     [formater setDateFormat:@"yyyy-MM-dd HH:mm:ss"];//根据自己的需求定义格式
     NSDate* startDate = [formater dateFromString:starTime];
     NSDate* endDate = [formater dateFromString:endTime];
     NSTimeInterval time = [endDate timeIntervalSinceDate:startDate];
     return time;
+}
+
++ (NSTimeInterval)pleaseInsertEndTime:(NSString *)endTime {
+    
+   NSDateFormatter* formater = [[NSDateFormatter alloc] init];
+    formater.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT+0800"];
+    [formater setDateFormat:@"yyyy-MM-dd HH:mm:ss"];//根据自己的需求定义格式
+
+    NSDate* endDate = [formater dateFromString:endTime];
+    NSTimeInterval time = [endDate timeIntervalSinceDate:[NSDate date]];
+    return time;
+    
 }
 
 //json 字符串转对象

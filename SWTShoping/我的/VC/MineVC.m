@@ -106,7 +106,8 @@
     [LTSCEventBus registerEvent:@"diss" block:^(id data) {
         weakSelf.tabBarController.selectedIndex  = 0;
     }];
-    
+
+      
 }
 
 
@@ -344,6 +345,7 @@
                 }else if (index == 6) {
                     
                     SWTMJTabbarVC * vc =[[SWTMJTabbarVC alloc] init];
+                    vc.selectedIndex = 3;
                     [self presentViewController:vc  animated:YES completion:nil];
                     
 //                    SWTHelpOneTVC * vc =[[SWTHelpOneTVC alloc] init];

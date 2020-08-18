@@ -20,7 +20,8 @@
 #import "SWTMJMineChanPinKuOneVC.h"
 #import "SWTMJMineChanPinKuTwoTVC.h"
 #import "SWTMJAddYouHuiQuanTVC.h"
-@interface SWTMJMineVC ()
+#import "SWTMJHomeVC.h"
+@interface SWTMJMineVC ()<UITabBarControllerDelegate>
 @property(nonatomic , strong)NSArray *leftArr;
 @end
 
@@ -37,6 +38,9 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [self setLeftNagate];
+    
+    
+    self.tabBarController.delegate = self;
 }
 
 - (void)setLeftNagate {
@@ -49,6 +53,7 @@
     [[leftBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         @strongify(self);
         [self dismissViewControllerAnimated:YES completion:nil];
+        [LTSCEventBus sendEvent:@"diss" data:nil];
     }];
     
     
@@ -160,7 +165,16 @@
     
 }
 
-
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+    BaseNavigationController * navc = (BaseNavigationController *)viewController;
+    
+    if ([navc.childViewControllers[0] isKindOfClass:[SWTMJHomeVC class]]) {
+        [LTSCEventBus sendEvent:@"diss" data:nil];
+        [self dismissViewControllerAnimated:NO completion:nil];
+        return NO;
+    }
+    return YES;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

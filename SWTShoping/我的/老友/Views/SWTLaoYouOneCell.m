@@ -122,6 +122,7 @@
             make.bottom.equalTo(self);
         }];
         
+          [self initSubViews];
     }
     return self;
 }
@@ -147,12 +148,36 @@
     [self.leftimgV sd_setImageWithURL:[model.thumb getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
 }
 
+- (void)setTimeInterval:(NSTimeInterval)timeInterval {
+    _timeInterval = timeInterval;
+}
+
+- (void)initSubViews {
+    
+    // 监听通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(timerChange) name:@"ListChangeNF" object:nil];
+    
+}
+
+
+- (void)timerChange {
+    NSInteger timeMS = [LSTTimer getTimeIntervalForIdentifier:@"listTimer"];
+    NSInteger resTimeMS = self.timeInterval*1000 -timeMS;
+    NSLog(@"%zd",timeMS);
+    [LSTTimer formatDateForTime:resTimeMS handle:^(NSString * _Nonnull day, NSString * _Nonnull hour, NSString * _Nonnull minute, NSString * _Nonnull second, NSString * _Nonnull ms) {
+        if (day.intValue + hour.intValue + minute.intValue + second.intValue == 0) {
+            self.leftThreeLB.text = @"已结束";
+        }else {
+            self.leftThreeLB.text =  [NSString stringWithFormat:@"付款剩余时间: %@天%@:%@:%@",day,hour,minute,second];
+  
+        }
+        
+    }];
+    
+}
+
 - (void)awakeFromNib {
     [super awakeFromNib];
-    
-    
-    
-    
     
 }
 

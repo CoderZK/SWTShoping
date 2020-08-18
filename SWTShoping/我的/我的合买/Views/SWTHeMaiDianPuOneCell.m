@@ -13,6 +13,9 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
+     [self initSubViews];
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -20,5 +23,35 @@
 
     // Configure the view for the selected state
 }
+
+//距离结束多少时多少秒
+- (void)setTimeInterval:(NSTimeInterval)timeInterval {
+    _timeInterval = timeInterval;
+}
+
+
+- (void)initSubViews {
+    
+    // 监听通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(timerChange) name:@"ListChangeNF" object:nil];
+    
+}
+
+
+- (void)timerChange {
+    NSInteger timeMS = [LSTTimer getTimeIntervalForIdentifier:@"listTimer"];
+    NSInteger resTimeMS = self.timeInterval*1000 -timeMS;
+    NSLog(@"%zd",timeMS);
+    [LSTTimer formatDateForTime:resTimeMS handle:^(NSString * _Nonnull day, NSString * _Nonnull hour, NSString * _Nonnull minute, NSString * _Nonnull second, NSString * _Nonnull ms) {
+        if (day.intValue + hour.intValue + minute.intValue + second.intValue == 0) {
+            [self.timeBt setTitle:@"已结束"forState:UIControlStateNormal];
+        }else {
+            [self.timeBt setTitle:[NSString stringWithFormat:@"%@天%@:%@:%@",day,hour,minute,second] forState:UIControlStateNormal];
+        }
+        
+    }];
+    
+}
+
 
 @end

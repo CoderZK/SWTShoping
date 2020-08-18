@@ -14,6 +14,7 @@
 #import "SWTHeMaiDianPuShowVIew.h"
 #import "SWTHeMaiMineDingZhiShowView.h"
 #import "SWTMineAddressTVC.h"
+#import "SWTMineHeMaiOrderFatherVC.h"
 @interface SWTMineHeMaiTiJiaoOrderTVC ()
 @property(nonatomic , strong)UIView *bottomV;
 @property(nonatomic , strong)UIButton *leftBt,*rightBt,*gouBt;
@@ -35,6 +36,14 @@
     [self initBottomView];
     [self getData];
     
+    [LSTTimer addTimerForTime:7200 identifier:@"listTimer" handle:nil];
+              //配置通知发送和计时任务绑定 没有配置 就不会有通知发送
+              [LSTTimer setNotificationForName:@"ListChangeNF" identifier:@"listTimer" changeNFType:LSTTimerSecondChangeNFTypeMS];
+    
+}
+
+- (void)dealloc {
+    [LSTTimer removeAllTimer];
 }
 
 - (void)initBottomView {
@@ -194,16 +203,20 @@
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"addressid"] = self.addressModel.ID;
-    dict[@"goodid"] = @"12";
-    dict[@"merchid"] = @"27";
+    dict[@"goodid"] = self.model.ID;
+    dict[@"merchid"] = self.model.merchid;
     dict[@"num"] = @"1";
     dict[@"price"] = self.model.price;
     dict[@"userid"] = [zkSignleTool shareTool].session_uid;
     [zkRequestTool networkingPOST:shareSubmit_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         
-        [SVProgressHUD dismiss];
+        
         if ([responseObject[@"code"] intValue]== 200) {
+          [SVProgressHUD showSuccessWithStatus:@"合买订单成功"];
+        
             
+            
+          
             
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
@@ -233,10 +246,13 @@
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         SWTLaoYouOneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+        cell.timeInterval = [NSString pleaseInsertEndTime:self.model.endtime] > 0 ? [NSString pleaseInsertEndTime:self.model.endtime]:0;
         cell.leftOneLB.text = self.model.name;
         cell.leftTwoLb.text = @"x1";
         cell.moneyLB.text =  [NSString stringWithFormat:@"￥%@",self.model.price.getPriceStr];
+        cell.moneyLB.textAlignment = NSTextAlignmentRight;
         cell.rightImgV.hidden = YES;
+        cell.leftThreeLB.textColor = CharacterColor102;
         [cell.leftimgV sd_setImageWithURL:[self.model.img getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
            return cell;
     }else {

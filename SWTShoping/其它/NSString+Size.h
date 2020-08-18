@@ -33,10 +33,12 @@
 - (NSURL *)getPicURL;
 
 /**
-获得两份时间之间的差
+获得两份时间之间的差 时间格式yyyy-MM-dd HH:mm:ss
 */
-
 + (NSTimeInterval)pleaseInsertStarTime:(NSString *)starTime andInsertEndTime:(NSString *)endTime;
+//结束时间距当前时间的时间差 yyyy-MM-dd HH:mm:ss
++ (NSTimeInterval)pleaseInsertEndTime:(NSString *)endTime;
+
 /**
 获得字符串的大小
 */

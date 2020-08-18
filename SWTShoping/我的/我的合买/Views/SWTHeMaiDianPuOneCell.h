@@ -19,6 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *typeOneLB;
 @property (weak, nonatomic) IBOutlet UIButton *rightBt;
 @property (weak, nonatomic) IBOutlet UILabel *typeTwoLB;
+
+@property (nonatomic, assign)NSTimeInterval timeInterval;
+
 @end
 
 NS_ASSUME_NONNULL_END

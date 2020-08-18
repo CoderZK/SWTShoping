@@ -22,6 +22,8 @@ pod 'UMCPush'
 #pod 'WechatOpenSDK'
 pod 'TYPagerController'
 
+#pod 'LSTTimer'
+
 #use_modular_headers!
 pod 'TXIMSDK_TUIKit_iOS'
 #pod 'TXIMSDK_iOS'

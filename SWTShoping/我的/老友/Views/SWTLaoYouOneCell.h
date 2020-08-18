@@ -20,6 +20,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic , strong)SWTModel *model;
 @property(nonatomic , assign)NSInteger  type;
 
+@property (nonatomic, assign) NSTimeInterval timeInterval;
+@property(nonatomic,assign)BOOL isShowTime;
+
+
 @end
 
 NS_ASSUME_NONNULL_END
