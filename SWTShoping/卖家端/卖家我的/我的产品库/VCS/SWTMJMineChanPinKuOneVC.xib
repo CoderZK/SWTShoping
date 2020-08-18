@@ -20,7 +20,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="369" translatesAutoresizingMaskIntoConstraints="NO" id="T96-yB-FnH">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bbdyx33" translatesAutoresizingMaskIntoConstraints="NO" id="T96-yB-FnH">
                     <rect key="frame" x="0.0" y="44" width="414" height="200"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="200" id="Drq-O3-BpX"/>
@@ -97,8 +97,8 @@
         </view>
     </objects>
     <resources>
-        <image name="369" width="324" height="322"/>
         <image name="bbdyx27" width="308" height="41.5"/>
+        <image name="bbdyx33" width="375" height="211.5"/>
         <image name="bbdyx34" width="18.5" height="18.5"/>
     </resources>
 </document>

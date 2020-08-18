@@ -19,6 +19,7 @@
 #import "SWTMJMineVideoFatherVC.h"
 #import "SWTMJMineChanPinKuOneVC.h"
 #import "SWTMJMineChanPinKuTwoTVC.h"
+#import "SWTMJAddYouHuiQuanTVC.h"
 @interface SWTMJMineVC ()
 @property(nonatomic , strong)NSArray *leftArr;
 @end
@@ -144,7 +145,9 @@
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         }else if (indexPath.row == 3) {
-            
+            SWTMJAddYouHuiQuanTVC * vc =[[SWTMJAddYouHuiQuanTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
         }else if (indexPath.row == 4) {
             
         }else if (indexPath.row == 5) {
