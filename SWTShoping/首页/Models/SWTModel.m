@@ -52,6 +52,7 @@
 }
 
 
+
 - (NSArray *)getTypeLBArr {
     NSMutableArray * titleArr = @[].mutableCopy;
     if (self.isauction) {

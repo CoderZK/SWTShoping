@@ -54,7 +54,7 @@
     dict[@"merchid"] = [zkSignleTool shareTool].selectShopID;
     dict[@"status"] = @(self.type);
     dict[@"token"] = [zkSignleTool shareTool].session_token;
-    [zkRequestTool networkingPOST:merchorderGet_order_list_merch_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+    [zkRequestTool networkingPOST:merchauctionGet_goods_list_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];
@@ -94,7 +94,30 @@
 }
 
 - (void)xiaJiaAction:(UIButton *)button {
-    
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"id"] = self.dataArray[button.tag].ID;
+    dict[@"type"] = @"2";
+    [zkRequestTool networkingPOST:merchauctionPull_goods_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            [SVProgressHUD showSuccessWithStatus:@"下架成功"];
+            [self.dataArray removeObjectAtIndex:button.tag];
+            [self.tableView reloadData];
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

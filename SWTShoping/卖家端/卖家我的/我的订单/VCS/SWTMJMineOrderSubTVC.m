@@ -88,16 +88,57 @@
 
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SWTMineOrderCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    cell.headImgV.layer.cornerRadius = 8.5;
+    cell.headImgV.clipsToBounds = YES;
+    cell.mjModel = self.dataArray[indexPath.row];
+    cell.rightOneBt.tag = indexPath.row;
+    cell.rightTwoBt.tag = indexPath.row;
+    [cell.rightOneBt addTarget:self action:@selector(rightOneAction:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.rightTwoBt addTarget:self action:@selector(rightTwoAction:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
+
+//
+- (void)rightOneAction:(UIButton *)button {
+    
+}
+
+- (void)rightTwoAction:(UIButton *)button {
+    
+    if ([button.titleLabel.text containsString:@"发货"]) {
+        [self faHuoActionWithModel:self.dataArray[button.tag]];
+    }else if ([button.titleLabel.text containsString:@"查看物流"]) {
+        
+    }else if ([button.titleLabel.text containsString:@"退款"]) {
+        //
+    }else if ([button.titleLabel.text containsString:@"同意买家退货"]) {
+        
+    }
+}
+
+//发货
+- (void)faHuoActionWithModel:(SWTModel *)model {
+    
+    SWTMJFaHuoShowView * showV  =[[SWTMJFaHuoShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+    showV.delegateSignal = [[RACSubject alloc] init];
+    @weakify(self);
+    [showV.delegateSignal subscribeNext:^(NSArray * x) {
+        @strongify(self);
+        
+        
+        
+    }];
+    [showV show];
+
+    
+}
+
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    SWTMJFaHuoShowView * showV  =[[SWTMJFaHuoShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
-    [showV show];
-    
+        
 }
 
 

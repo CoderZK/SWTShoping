@@ -178,10 +178,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *auctionlist;
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *commentlist;
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *merchlist;
-//@property(nonatomic,strong)NSMutableArray<SWTModel *> *recommendDoctorList;
-//@property(nonatomic,strong)NSMutableArray<SWTModel *> *doctorList;
-//@property(nonatomic,strong)NSMutableArray<SWTModel *> *institutionList;
-//@property(nonatomic,strong)NSMutableArray<SWTModel *> *doctorAppointment;
+
 //@property(nonatomic,strong)NSMutableArray<SWTModel *> *calenderSchedule;
 //@property(nonatomic,strong)NSMutableArray<SWTModel *> *articleList;
 //@property(nonatomic,strong)NSMutableArray<SWTModel *> *appoinmentHistory;

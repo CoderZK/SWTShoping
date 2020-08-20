@@ -82,7 +82,7 @@
         return;
     }
     if (self.delegateSignal) {
-        [self.delegateSignal sendNext:self.TF.text];
+        [self.delegateSignal sendNext:@[self.TF.text,self.TFTwo.text]];
     }
 }
 

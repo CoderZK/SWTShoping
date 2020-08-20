@@ -10,10 +10,14 @@
 
 @implementation SWTMineOrderCell
 
-
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        
+        
+        self.headImgV = [[UIImageView alloc] init];
+        [self addSubview:self.headImgV];
+        self.headImgV.image = [UIImage imageNamed:@"shop1-1"];
         
         //        self.leftHeadImgV = [[UIImageView alloc] init];
         //        self.leftHeadImgV.layer.cornerRadius = 15;
@@ -21,7 +25,7 @@
         //        [self addSubview:self.leftHeadImgV];
         //
         self.shopNameBt = [[UIButton alloc] init];
-        [self.shopNameBt setImage:[UIImage imageNamed:@"shop1-1"] forState:UIControlStateNormal];
+        //        [self.shopNameBt setImage:[UIImage imageNamed:@"shop1-1"] forState:UIControlStateNormal];
         self.shopNameBt.titleLabel.font = kFont(14);
         [self.shopNameBt setTitle:@"水玉堂" forState:UIControlStateNormal];
         [self addSubview:self.shopNameBt];
@@ -130,8 +134,14 @@
         //            make.left.equalTo(self).offset(15);
         //        }];
         
-        [self.shopNameBt mas_makeConstraints:^(MASConstraintMaker *make) {
+        [self.headImgV mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self).offset(15);
+            make.top.equalTo(self).offset(10);
+            make.height.width.equalTo(@17);
+        }];
+        
+        [self.shopNameBt mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.imageView.mas_right).offset(8);
             make.top.equalTo(self).offset(10);
             make.height.equalTo(@17);
         }];
@@ -328,4 +338,103 @@
         
     }
 }
+
+
+- (void)setMjModel:(SWTModel *)mjModel {
+    _mjModel = mjModel;
+    [self.imageView sd_setImageWithURL:mjModel.avatar.getPicURL placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+    [self.shopNameBt setTitle: [NSString stringWithFormat:@" %@",mjModel.nickname] forState:UIControlStateNormal];
+    self.leftOneLB.text = mjModel.title;
+    [self.leftimgV sd_setImageWithURL:[mjModel.thumb getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+    //     [self.leftHeadImgV sd_setImageWithURL:[model.avatar getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+    self.numberAndMoneyLB.text =  [NSString stringWithFormat:@"￥%@\nx%@",mjModel.goodprice,mjModel.goodnum];
+    self.leftTwoLb.text =mjModel.spec;
+    self.leftThreeLB.hidden = YES;
+    //0未支付1待发货2待收货3待评价4已完成5已关闭-1交易失败 -2 全部
+    self.rightTwoBt.hidden = self.rightOneBt.hidden = NO;
+    self.rightThreeBt.hidden = YES;
+    if (mjModel.status.intValue == -1) {
+        self.leftThreeLB.hidden = NO;
+        self.typeOneLB.hidden = self.typeTwoLB.hidden = YES;
+        self.leftThreeLB.hidden = NO;
+        self.leftThreeLB.text = mjModel.goodprice;
+        self.rightOneBt.hidden = self.rightTwoBt.hidden = YES;
+        [self.rightTwoBt setTitle:@" 钱款> " forState:UIControlStateNormal];
+    }else {
+        
+        self.typeOneLB.hidden = self.typeTwoLB.hidden = YES;
+        NSArray * arr = [mjModel getTypeLBArr];
+        if (arr.count > 0) {
+            self.typeOneLB.hidden = NO;
+            self.typeOneLB.text =  [NSString stringWithFormat:@" %@ ",arr[0]];
+        }
+        if (arr.count > 1) {
+            self.typeTwoLB.hidden = NO;
+            self.typeTwoLB.text =  [NSString stringWithFormat:@" %@ ",arr[1]];
+        }
+        
+        if (mjModel.status.intValue == 0) {
+            self.rightTwoBt.hidden = self.rightOneBt.hidden = self.rightThreeBt.hidden = YES;
+            self.statusLB.text = @"等待买家付款";
+            //            [self.rightOneBt setTitle:@" 改地址 " forState:UIControlStateNormal];
+            //            [self.rightTwoBt setTitle:@" 付款 " forState:UIControlStateNormal];
+        }else if (mjModel.status.intValue == 1) {
+            self.statusLB.text = @"待卖家发货";
+            [self.rightTwoBt setTitle:@" 发货 " forState:UIControlStateNormal];
+            self.rightOneBt.hidden = YES;
+            self.rightThreeBt.hidden = NO;
+            [self.rightThreeBt mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.right.equalTo(self.rightTwoBt.mas_left).offset(-15);
+            }];
+            
+            
+            
+            
+        }else if (mjModel.status.intValue == 2) {
+            self.statusLB.text = @" 待收货 ";
+            [self.rightTwoBt setTitle:@" 查看物流 " forState:UIControlStateNormal];
+            self.rightOneBt.hidden = YES;
+            self.rightThreeBt.hidden = YES;
+            [self.rightThreeBt mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.right.equalTo(self.rightTwoBt.mas_left).offset(-15);
+            }];
+            
+        }else if (mjModel.status.intValue == 3) {
+            self.statusLB.text = @" 待评价 ";
+            self.rightTwoBt.hidden = self.rightOneBt.hidden = self.rightThreeBt.hidden = YES;
+        }else if (mjModel.status.intValue == 4) {
+            self.statusLB.text = @" 已完成 ";
+            self.rightOneBt.hidden = self.rightTwoBt.hidden = self.rightThreeBt.hidden = YES;
+            
+        }else if (mjModel.status.intValue == 5) {
+            self.statusLB.text = @" 交易失败 ";
+            self.rightTwoBt.hidden = self.rightOneBt.hidden = self.rightThreeBt.hidden = YES;
+        }else if (mjModel.status.intValue == 6) {
+            self.statusLB.text = @" 售后 ";
+            self.rightOneBt.hidden =  YES;
+            if (mjModel.backstatus.intValue == -1) {
+                
+                [self.rightTwoBt setTitle:@" 失败 " forState:UIControlStateNormal];
+            }else if (mjModel.backstatus.intValue == 1) {
+                
+                [self.rightThreeBt setTitle:@" 同意买家退货 " forState:UIControlStateNormal];
+                
+            }else {
+                
+                [self.rightOneBt setTitle:@" 查看物流 " forState:UIControlStateNormal];
+                [self.rightTwoBt setTitle:@" 退款 " forState:UIControlStateNormal];
+                self.rightThreeBt.hidden = NO;
+                [self.rightThreeBt mas_updateConstraints:^(MASConstraintMaker *make) {
+                    make.right.equalTo(self.rightOneBt.mas_left).offset(-15);
+                }];
+                
+                
+            }
+            
+        }
+        
+        
+    }
+}
+
 @end
