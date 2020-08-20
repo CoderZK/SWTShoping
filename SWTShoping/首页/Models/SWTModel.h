@@ -139,13 +139,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *realprice;
 @property(nonatomic,strong)NSString *coupons;
 @property(nonatomic,strong)NSString *expressinfo;
-//@property(nonatomic,strong)NSString *score;
-//@property(nonatomic,strong)NSString *refund_address;
-//@property(nonatomic,strong)NSString *imid;
-//@property(nonatomic,strong)NSString *headimg;
-//@property(nonatomic,strong)NSString *finishtime;
-//@property(nonatomic,strong)NSString *starttime;
-//@property(nonatomic,strong)NSString *endtime;
+@property(nonatomic,strong)NSString *bg_image;
+@property(nonatomic,strong)NSString *idcard_front;
+@property(nonatomic,strong)NSString *idcard_back;
+@property(nonatomic,strong)NSString *idcard_hold;
+@property(nonatomic,strong)NSString *credit;
+@property(nonatomic,strong)NSString *curr_price;
+//@property(nonatomic,strong)NSString *rate;
 //@property(nonatomic,strong)NSString *lot_no;
 //@property(nonatomic,strong)NSString *liveid;
 //@property(nonatomic,strong)NSString *liveisfollow;
@@ -156,18 +156,18 @@ NS_ASSUME_NONNULL_BEGIN
 //@property(nonatomic,strong)NSString *orderid;
 
 ////转化成模型
-//@property(nonatomic,strong)ALMessageModel *article;
-//@property(nonatomic,strong)ALMessageModel *info;
-//@property(nonatomic,strong)ALMessageModel *projectDetail;
-//@property(nonatomic,strong)ALMessageModel *heartrate;
-//@property(nonatomic,strong)ALMessageModel *weightData;
-//@property(nonatomic,strong)ALMessageModel *bloodpressure;
-//@property(nonatomic,strong)ALMessageModel *stepnumberData;
-//@property(nonatomic,strong)ALMessageModel *menstrual;
-//@property(nonatomic,strong)ALMessageModel *userInfo;
-//@property(nonatomic,strong)ALMessageModel *healthdata;
-////@property(nonatomic,strong)ALMessageModel *stepnumberData;
-////@property(nonatomic,strong)ALMessageModel *menstrual;
+@property(nonatomic,strong)SWTModel *merchinfo;
+//@property(nonatomic,strong)SWTModel *rate;
+//@property(nonatomic,strong)SWTModel *projectDetail;
+//@property(nonatomic,strong)SWTModel *heartrate;
+//@property(nonatomic,strong)SWTModel *weightData;
+//@property(nonatomic,strong)SWTModel *bloodpressure;
+//@property(nonatomic,strong)SWTModel *stepnumberData;
+//@property(nonatomic,strong)SWTModel *menstrual;
+//@property(nonatomic,strong)SWTModel *userInfo;
+//@property(nonatomic,strong)SWTModel *healthdata;
+////@property(nonatomic,strong)SWTModel *stepnumberData;
+////@property(nonatomic,strong)SWTModel *menstrual;
 //
 //
 
@@ -177,20 +177,20 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *lideshowlist;
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *auctionlist;
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *commentlist;
-//@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *city_important_departmentList;
-//@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *recommendDoctorList;
-//@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *doctorList;
-//@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *institutionList;
-//@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *doctorAppointment;
-//@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *calenderSchedule;
-//@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *articleList;
-//@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *appoinmentHistory;
-//@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *doctors;
-//@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *doctorAppoints;
-//@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *weightNub;
-//@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *bloodpressureNub;
-//@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *heartrateNub;
-//@property(nonatomic,strong)NSMutableArray<ALMessageModel *> *stepNub;
+@property(nonatomic,strong)NSMutableArray<SWTModel *> *merchlist;
+//@property(nonatomic,strong)NSMutableArray<SWTModel *> *recommendDoctorList;
+//@property(nonatomic,strong)NSMutableArray<SWTModel *> *doctorList;
+//@property(nonatomic,strong)NSMutableArray<SWTModel *> *institutionList;
+//@property(nonatomic,strong)NSMutableArray<SWTModel *> *doctorAppointment;
+//@property(nonatomic,strong)NSMutableArray<SWTModel *> *calenderSchedule;
+//@property(nonatomic,strong)NSMutableArray<SWTModel *> *articleList;
+//@property(nonatomic,strong)NSMutableArray<SWTModel *> *appoinmentHistory;
+//@property(nonatomic,strong)NSMutableArray<SWTModel *> *doctors;
+//@property(nonatomic,strong)NSMutableArray<SWTModel *> *doctorAppoints;
+//@property(nonatomic,strong)NSMutableArray<SWTModel *> *weightNub;
+//@property(nonatomic,strong)NSMutableArray<SWTModel *> *bloodpressureNub;
+//@property(nonatomic,strong)NSMutableArray<SWTModel *> *heartrateNub;
+//@property(nonatomic,strong)NSMutableArray<SWTModel *> *stepNub;
 //
 //@property(nonatomic,strong)NSArray *times;
 //
@@ -202,16 +202,19 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,assign)BOOL refund ;//包退
 @property(nonatomic,assign)BOOL postage ;//包邮
 @property(nonatomic,assign)BOOL isquality ;//优选好点
-//@property(nonatomic,assign)BOOL isAppointment;
-//@property(nonatomic,assign)BOOL isCollection;
-//@property(nonatomic,assign)BOOL isSelf;
-//@property(nonatomic,assign)BOOL ifFromB;
-//@property(nonatomic,assign)BOOL is_default_patient;
-////@property(nonatomic,assign)BOOL isConsultation;
-////@property(nonatomic,assign)BOOL isAppointment;
-////@property(nonatomic,assign)BOOL isCollection;
-////@property(nonatomic,assign)BOOL isSelf;
-//
+@property(nonatomic,assign)BOOL isstep;
+@property(nonatomic,assign)BOOL isopen;
+@property(nonatomic,assign)BOOL islive;
+@property(nonatomic,assign)BOOL ischipped;
+@property(nonatomic,assign)BOOL level_open;
+@property(nonatomic,assign)BOOL refund_open;
+
+@property(nonatomic,assign)BOOL defaults_open;
+@property(nonatomic,assign)BOOL autodeduct;
+//@property(nonatomic,assign)BOOL ischipped;
+//@property(nonatomic,assign)BOOL level_open;
+//@property(nonatomic,assign)BOOL refund_open;
+
 ////
 ////
 ////@property(nonatomic,assign)NSInteger type;//1图片2视频3音频4其它文件
@@ -220,7 +223,7 @@ NS_ASSUME_NONNULL_BEGIN
 // // 状态1支付未回调确认(线下未支付)2支付已确认未消费（线下已支付未消费）3已消费4取消预约进行退款中5退款成功',
 @property(nonatomic,assign)NSInteger auctiongoodnum;
 @property(nonatomic,assign)NSInteger pricegoodnum;  // 问诊数量
-//@property(nonatomic,assign)NSInteger projectAppointmentCnt;
+@property(nonatomic,assign)NSInteger auction_status;//竞拍状态
 //@property(nonatomic,assign)NSInteger doctorConsultationCnt;
 //@property(nonatomic,assign)NSInteger appointment_cnt;
 //@property(nonatomic,assign)NSInteger restCnt;

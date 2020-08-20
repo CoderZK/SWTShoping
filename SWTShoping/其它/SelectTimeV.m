@@ -123,14 +123,14 @@
         cancelBtn.frame = CGRectMake(0, 0, aspectRatio(100), aspectRatio(40));
         [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
         leftBt = cancelBtn;
-        [cancelBtn setTitleColor:YellowColor forState:UIControlStateNormal];
+        [cancelBtn setTitleColor:RedColor forState:UIControlStateNormal];
         [cancelBtn.titleLabel setFont:regularFontWithSize(16)];
         [topV addSubview:cancelBtn];
         
         UIButton *yesBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         yesBtn.frame = CGRectMake(screenWidth - aspectRatio(100), 0, aspectRatio(100), aspectRatio(40));
         [yesBtn setTitle:@"确定" forState:UIControlStateNormal];
-        [yesBtn setTitleColor:YellowColor forState:UIControlStateNormal];
+        [yesBtn setTitleColor:RedColor forState:UIControlStateNormal];
         [yesBtn.titleLabel setFont:regularFontWithSize(16)];
         rightBt = yesBtn;
         [topV addSubview:yesBtn];

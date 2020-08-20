@@ -19,8 +19,14 @@
         //        self.leftHeadImgV.clipsToBounds = YES;
         //        [self addSubview:self.leftHeadImgV];
         //
+        
+        self.headImgV = [[UIImageView alloc] init];
+        self.headImgV.layer.cornerRadius = 8.5;
+        self.headImgV.clipsToBounds = YES;
+        [self addSubview:self.headImgV];
+        
         self.shopNameBt = [[UIButton alloc] init];
-        [self.shopNameBt setImage:[UIImage imageNamed:@"shop1-1"] forState:UIControlStateNormal];
+//        [self.shopNameBt setImage:[UIImage imageNamed:@"shop1-1"] forState:UIControlStateNormal];
         self.shopNameBt.titleLabel.font = kFont(14);
         [self.shopNameBt setTitle:@"水玉堂" forState:UIControlStateNormal];
         [self addSubview:self.shopNameBt];
@@ -152,8 +158,14 @@
         //            make.left.equalTo(self).offset(15);
         //        }];
         
-        [self.shopNameBt mas_makeConstraints:^(MASConstraintMaker *make) {
+        [self.headImgV mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self).offset(15);
+            make.top.equalTo(self).offset(10);
+            make.height.width.equalTo(@17);
+        }];
+        
+        [self.shopNameBt mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.imageView.mas_right).offset(8);
             make.top.equalTo(self).offset(10);
             make.height.equalTo(@17);
         }];
@@ -266,7 +278,25 @@
     return self;
 }
 
-
+- (void)setModel:(SWTModel *)model {
+    _model = model;
+    
+    [self.headImgV sd_setImageWithURL:[self.avatar getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+    [self.shopNameBt setTitle:self.name forState:UIControlStateNormal];
+    [self.leftimgV sd_setImageWithURL:[model.thumb getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+    self.leftOneLB.text = model.title;
+    if (model.auction_status == 0) {
+        self.statusLB.text = @"竞拍中";
+    }else if (model.auction_status == 1) {
+        self.statusLB.text = @"截拍";
+    }else if (model.auction_status == 2) {
+        self.statusLB.text = @"流拍";
+    }
+    
+    self.leftTwoLb.text =  [NSString stringWithFormat:@"￥%@",model.curr_price];
+    self.leftThreeLB.text = model.bidsnum;
+    
+}
 
 - (void)awakeFromNib {
     [super awakeFromNib];

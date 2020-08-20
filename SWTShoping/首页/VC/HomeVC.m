@@ -372,6 +372,9 @@
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout itemWidth:(CGFloat)width heightForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
+        if (self.hotArr.count == 0) {
+            return 0;
+        }
         return 160;
     }else {
         

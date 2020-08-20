@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTMJMineJingPaiFatherVC : BaseViewController
 @property(nonatomic , assign)NSInteger selectIndex;
-
+@property(nonatomic , strong)SWTModel *model;
 @end
 
 NS_ASSUME_NONNULL_END

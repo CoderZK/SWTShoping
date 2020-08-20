@@ -283,12 +283,32 @@
 
 - (void)chooseAction:(UIButton *)button {
     if (button.tag == 100) {
-        if (self.dataArrayOne.count == 0) {
+        
+        if (self.dataArrayTwo.count == 0) {
             [SVProgressHUD showErrorWithStatus:@"数据请求中,请稍后再试"];
             [self getData];
             return;
         }
         self.selectIndex = 0;
+        NSMutableArray * arr = @[].mutableCopy;
+        for (SWTModel * model in self.dataArrayTwo) {
+            [arr addObject:model.name];
+        }
+        zkPickView * pickV = [[zkPickView alloc] init];
+        pickV.arrayType = titleArray;
+        pickV.array = arr;
+        [pickV show];
+        pickV.delegate = self;
+        
+    }else if(button.tag == 101) {
+        
+        
+        if (self.dataArrayOne.count == 0) {
+            [SVProgressHUD showErrorWithStatus:@"数据请求中,请稍后再试"];
+            [self getData];
+            return;
+        }
+        self.selectIndex = 1;
         NSMutableArray * arr = @[].mutableCopy;
         for (SWTModel * model in self.dataArrayOne) {
             [arr addObject:model.name];
@@ -299,22 +319,6 @@
         [pickV show];
         pickV.delegate = self;
         
-    }else if(button.tag == 101) {
-        if (self.dataArrayTwo.count == 0) {
-            [SVProgressHUD showErrorWithStatus:@"数据请求中,请稍后再试"];
-            [self getData];
-            return;
-        }
-        self.selectIndex = 1;
-        NSMutableArray * arr = @[].mutableCopy;
-        for (SWTModel * model in self.dataArrayTwo) {
-            [arr addObject:model.name];
-        }
-        zkPickView * pickV = [[zkPickView alloc] init];
-        pickV.arrayType = titleArray;
-        pickV.array = arr;
-        [pickV show];
-        pickV.delegate = self;
     }else {
        if (self.dataArrayThree.count == 0) {
             [SVProgressHUD showErrorWithStatus:@"数据请求中,请稍后再试"];
@@ -338,11 +342,11 @@
 
 - (void)didSelectLeftIndex:(NSInteger)leftIndex centerIndex:(NSInteger)centerIndex rightIndex:(NSInteger)rightIndex {
     if (self.selectIndex == 0) {
-        self.str1 = self.dataArrayOne[leftIndex].ID;
-        self.shopTyepV.rightTF.text = self.dataArrayOne[leftIndex].name;
+        self.str1 = self.dataArrayTwo[leftIndex].ID;
+        self.shopTyepV.rightTF.text = self.dataArrayTwo[leftIndex].name;
     }else if (self.selectIndex == 1) {
-        self.str2 = self.dataArrayTwo[leftIndex].ID;
-        self.shopOwnerV.rightTF.text = self.dataArrayTwo[leftIndex].name;
+        self.str2 = self.dataArrayOne[leftIndex].ID;
+        self.shopOwnerV.rightTF.text = self.dataArrayOne[leftIndex].name;
     }else if (self.selectIndex == 2) {
         self.str3 = self.dataArrayThree[leftIndex].ID;
         self.shopLeiV.rightTF.text = self.dataArrayThree[leftIndex].name;

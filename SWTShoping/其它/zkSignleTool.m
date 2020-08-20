@@ -67,6 +67,24 @@ static zkSignleTool * tool = nil;
      return [[NSUserDefaults standardUserDefaults] objectForKey:@"nickname"];
 }
 
+- (void)setSelectShopID:(NSString *)selectShopID {
+    [[NSUserDefaults standardUserDefaults] setObject:selectShopID forKey:@"selectShopID"];
+          [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (NSString *)selectShopID {
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"selectShopID"];;
+}
+
+- (void)setSelectShopAvatar:(NSString *)selectShopAvatar {
+    [[NSUserDefaults standardUserDefaults] setObject:selectShopAvatar forKey:@"selectShopAvatar"];
+             [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (NSString *)selectShopAvatar {
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"selectShopAvatar"];;
+}
+
 -(void)setSession_token:(NSString *)session_token
 {
     

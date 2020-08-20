@@ -39,9 +39,19 @@
     
 }
 
+- (void)setMerchinfo:(SWTModel *)merchinfo {
+    _merchinfo = [SWTModel mj_objectWithKeyValues:merchinfo];
+}
+
 - (void)setAuctionlist:(NSMutableArray<SWTModel *> *)auctionlist {
     _auctionlist = [SWTModel mj_objectArrayWithKeyValuesArray:auctionlist];
 }
+
+- (void)setMerchlist:(NSMutableArray<SWTModel *> *)merchlist {
+    _merchlist = [SWTModel mj_objectArrayWithKeyValuesArray:merchlist];
+}
+
+
 - (NSArray *)getTypeLBArr {
     NSMutableArray * titleArr = @[].mutableCopy;
     if (self.isauction) {

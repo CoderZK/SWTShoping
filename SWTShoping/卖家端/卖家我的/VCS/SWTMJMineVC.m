@@ -21,11 +21,20 @@
 #import "SWTMJMineChanPinKuTwoTVC.h"
 #import "SWTMJAddYouHuiQuanTVC.h"
 #import "SWTMJHomeVC.h"
+#import "SWTMJZhiBoHomeTVC.h"
 @interface SWTMJMineVC ()<UITabBarControllerDelegate>
 @property(nonatomic , strong)NSArray *leftArr;
+@property(nonatomic , strong)SWTModel *dataModel;
+@property(nonatomic,assign)BOOL isOpenChanPinKu;
+@property(nonatomic , strong)NSString *jingPaiNumebr;
 @end
 
 @implementation SWTMJMineVC
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getData];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -39,7 +48,12 @@
     
     [self setLeftNagate];
     
+    [self getData];
     
+    self.tableView.mj_header = [MJRefreshHeader headerWithRefreshingBlock:^{
+        [self getData];
+    }];
+    [self merchCheckOpen];
     self.tabBarController.delegate = self;
 }
 
@@ -58,6 +72,89 @@
     
     
 }
+
+- (void)getData {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"id"] = [zkSignleTool shareTool].selectShopID;
+    [zkRequestTool networkingPOST:merchGet_merchinfo_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            self.dataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
+            self.dataModel.merchinfo.merch_id = [zkSignleTool shareTool].selectShopID;
+            [self.tableView reloadData];
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+}
+
+//获取是否开启产品库
+- (void)merchCheckOpen {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"id"] = [zkSignleTool shareTool].selectShopID;
+    [zkRequestTool networkingPOST:merchCheck_open_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            NSString * status =  [NSString stringWithFormat:@"%@",responseObject[@"data"][@"status"]];
+            if ([status isEqualToString:@"1"]) {
+                self.isOpenChanPinKu = NO;
+            }else {
+                self.isOpenChanPinKu = YES;
+            }
+            
+            
+        }else {
+            //            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+}
+
+- (void)getJingPaiNumber  {
+  
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"id"] = [zkSignleTool shareTool].selectShopID;
+    [zkRequestTool networkingPOST:merchCheck_open_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            self.jingPaiNumebr = responseObject[@"data"][@"num"];
+            [self.tableView reloadData];
+            
+            
+        }else {
+            //            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+}
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
@@ -94,13 +191,15 @@
                 }else if (x.intValue== 101) {
                     //点击的是设置
                     SWTShopSettingTVC * vc =[[SWTShopSettingTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-                                   vc.hidesBottomBarWhenPushed = YES;
-                                   [self.navigationController pushViewController:vc animated:YES];
-                                   
+                    vc.hidesBottomBarWhenPushed = YES;
+                    vc.dataModel = self.dataModel;
+                    [self.navigationController pushViewController:vc animated:YES];
+                    
                 }
                 
                 
             }];
+            cell.model = self.dataModel;
             return cell;
         }else {
             SWTMJMineTwoCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTMJMineTwoCell" forIndexPath:indexPath];
@@ -120,12 +219,20 @@
                     
                 }
             };
+            
             return cell;
         }
     }else {
         SWTMJMineThreeCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTMJMineThreeCell" forIndexPath:indexPath];
         cell.leftLB.text = self.leftArr[indexPath.row];
         cell.leftImgV.image = [UIImage imageNamed: [NSString stringWithFormat:@"bbdyx%d",11+indexPath.row]];
+        if (indexPath.row == 0) {
+            cell.rightLB.text =  [NSString stringWithFormat:@"%d元",self.dataModel.credit.intValue];
+        }else if (indexPath.row == 1) {
+            cell.rightLB.text =  [NSString stringWithFormat:@"竞拍中%d单",self.jingPaiNumebr.intValue];
+        }else {
+            cell.rightLB.text = @"";
+        }
         return cell;
     }
     
@@ -146,15 +253,27 @@
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         }else if (indexPath.row == 2) {
-            SWTMJMineChanPinKuOneVC * vc =[[SWTMJMineChanPinKuOneVC alloc] init];
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
+            if (self.isOpenChanPinKu) {
+                SWTMJMineChanPinKuTwoTVC * vc =[[SWTMJMineChanPinKuTwoTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                vc.hidesBottomBarWhenPushed = YES;
+                vc.member_id = self.dataModel.merchinfo.merch_id;
+                vc.avatar = self.dataModel.merchinfo.avatar;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else {
+                SWTMJMineChanPinKuOneVC * vc =[[SWTMJMineChanPinKuOneVC alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            
         }else if (indexPath.row == 3) {
             SWTMJAddYouHuiQuanTVC * vc =[[SWTMJAddYouHuiQuanTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
             vc.hidesBottomBarWhenPushed = YES;
+            vc.merch_id = self.dataModel.merchinfo.merch_id;
             [self.navigationController pushViewController:vc animated:YES];
         }else if (indexPath.row == 4) {
-            
+            SWTMJZhiBoHomeTVC * vc =[[SWTMJZhiBoHomeTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
         }else if (indexPath.row == 5) {
             SWTMJMineVideoFatherVC * vc =[[SWTMJMineVideoFatherVC alloc] init];
             vc.hidesBottomBarWhenPushed = YES;

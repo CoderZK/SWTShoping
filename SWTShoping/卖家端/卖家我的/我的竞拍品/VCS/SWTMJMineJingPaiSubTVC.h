@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTMJMineJingPaiSubTVC : BaseTableViewController
 @property(nonatomic , assign)NSInteger  type;
+@property(nonatomic , strong)SWTModel *model;
 @end
 
 NS_ASSUME_NONNULL_END

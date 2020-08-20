@@ -30,4 +30,11 @@
     // Configure the view for the selected state
 }
 
+
+- (void)setModel:(SWTModel *)model {
+    _model = model;
+    [self.imgV sd_setImageWithURL:[model.avatar getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+    [self.vipBt setTitle:model.levelcode forState:UIControlStateNormal];
+    self.nameLB.text = model.nickname;
+}
 @end

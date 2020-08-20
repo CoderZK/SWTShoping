@@ -31,7 +31,8 @@
 #import "SWTMineKeFuTVC.h"
 #import "SWTMineHeMaiOrderFatherVC.h"
 #import "SWTMJTabbarVC.h"
-@interface MineVC ()<XPCollectionViewWaterfallFlowLayoutDataSource,UICollectionViewDelegate,UICollectionViewDataSource>
+#import "SWTMineFourCell.h"
+@interface MineVC ()<XPCollectionViewWaterfallFlowLayoutDataSource,UICollectionViewDelegate,UICollectionViewDataSource,zkPickViewDelelgate>
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 @property(nonatomic , strong)UICollectionView *collectionView;
 @property(nonatomic , strong)UIImageView *imagV;
@@ -82,6 +83,7 @@
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"SWTHomeCollectionTwoCell" bundle:nil] forCellWithReuseIdentifier:@"SWTHomeCollectionTwoCell"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"SWTMineOneCell" bundle:nil] forCellWithReuseIdentifier:@"SWTMineOneCell"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"SWTMineFourCell" bundle:nil] forCellWithReuseIdentifier:@"SWTMineFourCell"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"SWTHomeCollectionThreeCell" bundle:nil] forCellWithReuseIdentifier:@"SWTHomeCollectionThreeCell"];
     
     [self.collectionView registerClass:[SWTMineSectionHeadView class]  forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeaderView"];
@@ -237,7 +239,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     if (section == 0) {
-        return 3;
+        return 4;
     }
     return self.likeArr.count;
     //    return self.dataArray.count;
@@ -307,7 +309,7 @@
                 [self.navigationController pushViewController:vc animated:YES];
             };
             return cell;
-        }else {
+        }else if (indexPath.row == 2){
             SWTMineThreeCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTMineThreeCell" forIndexPath:indexPath];
             Weak(weakSelf);
             cell.mineThreeCellBlock = ^(NSInteger index) {
@@ -344,14 +346,12 @@
                     [self.navigationController pushViewController:vc animated:YES];
                 }else if (index == 6) {
                     
-                    SWTMJTabbarVC * vc =[[SWTMJTabbarVC alloc] init];
-                    vc.selectedIndex = 3;
-                    [self presentViewController:vc  animated:YES completion:nil];
                     
-//                    SWTHelpOneTVC * vc =[[SWTHelpOneTVC alloc] init];
-//                    vc.hidesBottomBarWhenPushed = YES;
-//                    vc.isLianXiUs = YES;
-//                    [self.navigationController pushViewController:vc animated:YES];
+                    
+                    SWTHelpOneTVC * vc =[[SWTHelpOneTVC alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    vc.isLianXiUs = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
                 }else if (index == 7) {
                     SWTLaoYouHomeTVC * vc =[[SWTLaoYouHomeTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
                     vc.hidesBottomBarWhenPushed = YES;
@@ -364,6 +364,10 @@
 //                    [self.navigationController pushViewController:vc animated:YES];
                 }
             };
+            return cell;
+        }else  {
+             SWTMineFourCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTMineFourCell" forIndexPath:indexPath];
+            cell.backgroundColor = WhiteColor;
             return cell;
         }
     }else {
@@ -390,7 +394,23 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (indexPath.section == 1) {
+    if (indexPath.section == 0) {
+        if (indexPath.row == 3) {
+           
+            NSMutableArray * arr = @[].mutableCopy;
+            for (SWTModel * model in self.userDataModel.merchlist) {
+                       [arr addObject:model.store_name];
+                   }
+                   zkPickView * pickV = [[zkPickView alloc] init];
+                   pickV.arrayType = titleArray;
+                   pickV.array = arr;
+                   [pickV show];
+                   pickV.delegate = self;
+            
+            
+            
+        }
+    }else if (indexPath.section == 1) {
         SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
         vc.hidesBottomBarWhenPushed = YES;
         vc.goodID = self.likeArr[indexPath.row].goodid;
@@ -431,8 +451,15 @@
             return 200;
         }else if (indexPath.row == 1) {
             return 95;
+        }else if (indexPath.row == 2) {
+           return 180;
+        }else {
+            if (self.userDataModel.merchlist.count == 0) {
+                return 0;
+            }
+            return 50;
         }
-        return 180;
+        
     }else {
         CGFloat imgH  =   (ScreenW - 30)/2 * 3/4;
         SWTModel * model = self.likeArr[indexPath.row];
@@ -469,5 +496,13 @@
     return 30.0;
 }
 
+- (void)didSelectLeftIndex:(NSInteger)leftIndex centerIndex:(NSInteger)centerIndex rightIndex:(NSInteger)rightIndex {
+
+    SWTMJTabbarVC * vc =[[SWTMJTabbarVC alloc] init];
+    vc.selectedIndex = 3;
+    [zkSignleTool shareTool].selectShopID = self.userDataModel.merchlist[leftIndex].ID;
+    [self presentViewController:vc  animated:YES completion:nil];
+
+}
 
 @end

@@ -80,17 +80,17 @@
     cell.rightTF.userInteractionEnabled = NO;
     if (indexPath.section == 0) {
         cell.rightImgV.hidden = YES;
-        cell.rightTF.userInteractionEnabled = YES;
+        cell.rightTF.userInteractionEnabled = NO;
         if (indexPath.row == 0) {
-            cell.rightTF.text = self.nameStr;
+            cell.rightTF.text = self.dataModel.realname;
         }else {
-            cell.rightTF.text = self.phone;
+            cell.rightTF.text = self.dataModel.mobile;
         }
         
     }else if (indexPath.section == 1) {
         cell.rightTF.placeholder = @"请选择";
         if (indexPath.row == 0) {
-            
+            cell.rightTF.text  = self.dataModel.autodeduct ? @"已开启":@"未开启";
         }else if (indexPath.row == 1) {
             
         } if (indexPath.row == 2) {
@@ -100,11 +100,11 @@
             cell.leftwoLB.text = @"(订单金额 >= 2万可用)";
         }
     }else if (indexPath.section == 2) {
-         cell.rightTF.placeholder = @"";
+        cell.rightTF.placeholder = self.dataModel.focusnum;
                    
     }else if (indexPath.section == 3) {
         cell.rightTF.userInteractionEnabled = NO;
-        cell.rightTF.placeholder = @"请选择";
+        cell.rightTF.placeholder = @"";
         if (indexPath.row == 0) {
             cell.rightTF.hidden = YES;
             cell.swithBt.hidden = NO;
@@ -142,16 +142,29 @@
             SWTMJJingPaiOrChuJiaSettingVC * vc =[[SWTMJJingPaiOrChuJiaSettingVC alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
             vc.isBaoZhengJin = YES;
+            vc.model = self.dataModel;
+            Weak(weakSelf);
+            vc.autoBlock = ^(SWTModel * _Nonnull model) {
+                weakSelf.dataModel = model;
+                [weakSelf.tableView reloadData];
+            };
             [self.navigationController pushViewController:vc animated:YES];
         }else if (indexPath.row == 1) {
             SWTMJJingPaiOrChuJiaSettingVC * vc =[[SWTMJJingPaiOrChuJiaSettingVC alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
             vc.isBaoZhengJin = NO;
+            vc.model = self.dataModel;
+            Weak(weakSelf);
+            vc.autoBlock = ^(SWTModel * _Nonnull model) {
+                weakSelf.dataModel = model;
+                [weakSelf.tableView reloadData];
+            };
             [self.navigationController pushViewController:vc animated:YES];
         }
     }else if (indexPath.section == 2) {
         SWTMJMineFenSiTVC * vc =[[SWTMJMineFenSiTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
         vc.hidesBottomBarWhenPushed = YES;
+        vc.ID = self.dataModel.ID;
         [self.navigationController pushViewController:vc animated:YES];
     }else if (indexPath.section == 3 ) {
         if (indexPath.row == 1) {

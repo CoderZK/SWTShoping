@@ -22,8 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"卖家拍品管理";
-    self.navigationItem.title = @"我的订单";
-    self.titleArr = @[@"全部",@"待付款",@"待发货",@"待收货",@"售后"];
+    self.titleArr = @[@"竞拍中",@"已截拍",@"已流拍",@"已失败"];
     [self addTabPageView];
     [self addPagerController];
     
@@ -157,14 +156,7 @@
     //        vc.type = self.type;
     //        vc.shopId = self.shopId;
     //        vc.cateModel = model;
-    if(index == 0) {
-        vc.type = -2;
-    }else if (index + 1< self.titleArr.count){
-        vc.type = index-1;
-    }else {
-        vc.type = 6;
-    }
-    
+    vc.type = index+1;
     return vc;
     
 }

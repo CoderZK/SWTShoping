@@ -11,7 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTMJMineChanPinKuTwoTVC : BaseTableViewController
-
+@property(nonatomic , strong)NSString *member_id;
+@property(nonatomic , strong)NSString *avatar;
 @end
 
 NS_ASSUME_NONNULL_END

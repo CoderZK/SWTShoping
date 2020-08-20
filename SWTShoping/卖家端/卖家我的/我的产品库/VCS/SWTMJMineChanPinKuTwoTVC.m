@@ -29,7 +29,30 @@
      [self.tableView registerClass:[SWTMineShopSettingSectionV class] forHeaderFooterViewReuseIdentifier:@"head"];
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTMJMineChanPinKuOneCell" bundle:nil] forCellReuseIdentifier:@"cell"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self getData];
    
+}
+
+- (void)getData {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    [zkRequestTool networkingPOST:merchStatic_warehouse_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
 }
 
 - (void)initHeadV {
@@ -38,13 +61,13 @@
     self.headView.backgroundColor = [UIColor clearColor];
     
     UIImageView * imgV  =[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 130)];
-    imgV.image = [UIImage imageNamed:@"369"];
+    imgV.image = [UIImage imageNamed:@"minebg"];
     [self.headView addSubview:imgV];
     
     self.headBt  = [[UIButton alloc] initWithFrame:CGRectMake(30, 30, 60, 60)];
     self.headBt.layer.cornerRadius = 30;
     self.headBt.clipsToBounds = YES;
-    [self.headBt setBackgroundImage:[UIImage imageNamed:@"369"] forState:UIControlStateNormal];
+    [self.headBt sd_setBackgroundImageWithURL:[self.avatar getPicURL] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
     [self.headView addSubview:self.headBt];
     
     self.addBt = [[UIButton alloc] initWithFrame:CGRectMake(ScreenW - 100, CGRectGetMinY(self.headBt.frame) + 20, 85, 30)];

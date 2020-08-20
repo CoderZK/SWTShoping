@@ -16,11 +16,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic , strong)UILabel *leftOneLB,*leftTwoLb,*leftThreeLB,*typeOneLB,*typeTwoLB;
 @property(nonatomic , strong)UIImageView *rightImgV;
 @property(nonatomic , strong)UIButton *shopNameBt;//标题名字
+@property(nonatomic , strong)UIImageView *headImgV;
 
 @property(nonatomic , strong)UIButton *rightOneBt,*rightTwoBt,*rightThreeBt;
 @property(nonatomic , strong)UILabel *statusLB,*numberAndMoneyLB;
 
 @property(nonatomic , strong)UIButton *xieJiaBt;
+@property(nonatomic , strong)NSString *avatar,*name;
+
+@property(nonatomic , strong)SWTModel *model;
+
 
 @end
 

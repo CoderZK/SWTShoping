@@ -24,6 +24,7 @@
 @property(nonatomic,assign)CGFloat h1;
 @property(nonatomic,assign)CGFloat h2;
 @property(nonatomic , strong)NSString *userSig;
-
+@property(nonatomic , strong)NSString *selectShopID;
+@property(nonatomic , strong)NSString *selectShopAvatar;
 -(void)uploadDeviceToken;
 @end

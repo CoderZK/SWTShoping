@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTMJJingPaiOrChuJiaSettingVC : BaseViewController
 @property(nonatomic,assign)BOOL isBaoZhengJin;
+@property(nonatomic , strong)SWTModel *model;
+@property(nonatomic , copy)void(^autoBlock)(SWTModel *model);
 @end
 
 NS_ASSUME_NONNULL_END

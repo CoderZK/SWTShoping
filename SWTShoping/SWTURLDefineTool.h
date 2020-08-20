@@ -81,7 +81,8 @@
 #pragma mark ---- 商户信息接口  -----
 
 
-
+/**注册第二部*/
+#define registerStep1_SWT URLOne@"register/step1"
 /**注册第二部*/
 #define registerStep2_SWT URLOne@"register/step2"
 /**店铺印象*/
