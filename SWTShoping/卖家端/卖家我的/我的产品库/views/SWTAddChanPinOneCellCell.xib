@@ -23,8 +23,8 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xd3-tm-NGD">
-                        <rect key="frame" x="15" y="7" width="290" height="30"/>
+                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xd3-tm-NGD">
+                        <rect key="frame" x="15" y="4" width="290" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="lEI-Dz-03f"/>
                         </constraints>
@@ -34,25 +34,49 @@
                             <color key="titleColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                     </button>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bbdyx44" translatesAutoresizingMaskIntoConstraints="NO" id="p2w-eF-xIf">
+                        <rect key="frame" x="75" y="0.0" width="148" height="36"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="36" id="DUT-tN-sus"/>
+                            <constraint firstAttribute="width" constant="148" id="EQa-o8-uSG"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点击添加放入多个产品库" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y8w-Ul-2cu">
+                        <rect key="frame" x="75" y="0.0" width="148" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="148" id="Z1E-1h-KFd"/>
+                            <constraint firstAttribute="height" constant="25" id="npY-xo-veK"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="oDI-XS-GOg" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="8In-wn-bFm"/>
+                    <constraint firstAttribute="bottom" secondItem="Xd3-tm-NGD" secondAttribute="bottom" constant="10" id="SmV-ER-Cvy"/>
+                    <constraint firstItem="p2w-eF-xIf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Xr9-SJ-pO2"/>
+                    <constraint firstItem="Y8w-Ul-2cu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="75" id="Yp4-LD-B74"/>
                     <constraint firstAttribute="trailing" secondItem="oDI-XS-GOg" secondAttribute="trailing" constant="15" id="d19-i5-7UK"/>
                     <constraint firstItem="Xd3-tm-NGD" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="hLG-C7-0St"/>
-                    <constraint firstItem="Xd3-tm-NGD" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="mlh-Xu-ZpL"/>
+                    <constraint firstItem="p2w-eF-xIf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="75" id="ht4-Dm-bD1"/>
                     <constraint firstAttribute="trailing" secondItem="Xd3-tm-NGD" secondAttribute="trailing" constant="15" id="nc7-8q-Z4o"/>
+                    <constraint firstItem="Y8w-Ul-2cu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="t3x-ib-g3J"/>
                     <constraint firstItem="oDI-XS-GOg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="vM6-iM-lPT"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
                 <outlet property="addBt" destination="Xd3-tm-NGD" id="WvP-Qg-kdO"/>
+                <outlet property="desLB" destination="Y8w-Ul-2cu" id="GQy-U8-ejJ"/>
+                <outlet property="desimgV" destination="p2w-eF-xIf" id="muK-5r-SH6"/>
                 <outlet property="leftLB" destination="oDI-XS-GOg" id="vpj-da-OAM"/>
             </connections>
-            <point key="canvasLocation" x="132" y="110"/>
+            <point key="canvasLocation" x="131.8840579710145" y="109.82142857142857"/>
         </tableViewCell>
     </objects>
     <resources>
+        <image name="bbdyx44" width="148" height="35.5"/>
         <image name="bbdyx45" width="14" height="14"/>
     </resources>
 </document>

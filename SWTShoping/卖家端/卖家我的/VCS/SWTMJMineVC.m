@@ -187,12 +187,13 @@
                     //点击是编辑
                     SWTMJMineZhengRenMessage * vc =[[SWTMJMineZhengRenMessage alloc] init];
                     vc.hidesBottomBarWhenPushed = YES;
+                    vc.dataModel = self.dataModel.merchinfo;
                     [self.navigationController pushViewController:vc animated:YES];
                 }else if (x.intValue== 101) {
                     //点击的是设置
                     SWTShopSettingTVC * vc =[[SWTShopSettingTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
                     vc.hidesBottomBarWhenPushed = YES;
-                    vc.dataModel = self.dataModel;
+                    vc.dataModel = self.dataModel.merchinfo;
                     [self.navigationController pushViewController:vc animated:YES];
                     
                 }
@@ -293,6 +294,28 @@
         return NO;
     }
     return YES;
+}
+
+- (void)setDingJinAction {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    [zkRequestTool networkingPOST:merchUpd_merchinfo_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

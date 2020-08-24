@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *kuCunLB;
 @property (weak, nonatomic) IBOutlet UILabel *xiaoLiangLB;
 @property (weak, nonatomic) IBOutlet UILabel *chanPinKuLB;
+@property(nonatomic , strong)SWTModel  *model;
 
 @end
 

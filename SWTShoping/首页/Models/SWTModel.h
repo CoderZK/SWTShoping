@@ -145,14 +145,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *idcard_hold;
 @property(nonatomic,strong)NSString *credit;
 @property(nonatomic,strong)NSString *curr_price;
-//@property(nonatomic,strong)NSString *rate;
-//@property(nonatomic,strong)NSString *lot_no;
-//@property(nonatomic,strong)NSString *liveid;
-//@property(nonatomic,strong)NSString *liveisfollow;
-//@property(nonatomic,strong)NSString *merchisfollow;
-//@property(nonatomic,strong)NSString *isbuynum;
-//@property(nonatomic,strong)NSString *num;
-//@property(nonatomic,strong)NSString *levelcode;
+@property(nonatomic,strong)NSString *idcard;
+@property(nonatomic,strong)NSString *orderprice_curr;
+@property(nonatomic,strong)NSString *orderprice_last;
+@property(nonatomic,strong)NSString *orderpay;
+@property(nonatomic,strong)NSString *orderrefund;
+@property(nonatomic,strong)NSString *goodsnum;
+@property(nonatomic,strong)NSString *place;
+@property(nonatomic,strong)NSString *warehouse_str;
 //@property(nonatomic,strong)NSString *orderid;
 
 ////转化成模型
@@ -179,7 +179,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *commentlist;
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *merchlist;
 
-//@property(nonatomic,strong)NSMutableArray<SWTModel *> *calenderSchedule;
+@property(nonatomic,strong)NSMutableArray<SWTModel *> *children;
 //@property(nonatomic,strong)NSMutableArray<SWTModel *> *articleList;
 //@property(nonatomic,strong)NSMutableArray<SWTModel *> *appoinmentHistory;
 //@property(nonatomic,strong)NSMutableArray<SWTModel *> *doctors;
@@ -208,7 +208,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,assign)BOOL defaults_open;
 @property(nonatomic,assign)BOOL autodeduct;
-//@property(nonatomic,assign)BOOL ischipped;
+@property(nonatomic,assign)BOOL isSelect;
 //@property(nonatomic,assign)BOOL level_open;
 //@property(nonatomic,assign)BOOL refund_open;
 

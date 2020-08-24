@@ -13,6 +13,7 @@
 #import "SWTMJMineFenSiTVC.h"
 #import "SWTMJDainPuBaoZhengJinVC.h"
 #import "SWTMJAddShouHuoDiZhiTVC.h"
+#import "SWTMJDainPuLoGoCell.h"
 @interface SWTShopSettingTVC ()<UITextFieldDelegate>
 @property(nonatomic , strong)UIView *footV;
 @property(nonatomic , strong)NSArray *titleArr;
@@ -25,11 +26,12 @@
     [super viewDidLoad];
     self.navigationItem.title = @"店铺设置";
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTMineShopSettingCell" bundle:nil] forCellReuseIdentifier:@"cell"];
+    
     [self.tableView registerClass:[SWTMineShopSettingSectionV class] forHeaderFooterViewReuseIdentifier:@"head"];
     
-    self.titleArr = @[@[@"联系人",@"手机号码"],@[@"竞拍设置",@"买家出价条件",@"定金设置"],@[@"粉丝"],@[@"固定[我的]为卖家中心",@"店铺保证金",@"退货地址"]];
+    self.titleArr = @[@[@"联系人",@"手机号码"],@[@"竞拍设置",@"买家出价条件"],@[@"粉丝"],@[@"店铺保证金",@"退货地址"]];
     [self initFootV];
-
+    
 }
 
 
@@ -45,6 +47,14 @@
     [[button rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         @strongify(self);
         //点击退出登录
+        
+        [zkSignleTool shareTool].isLogin = NO;
+        [zkSignleTool shareTool].session_uid = nil;
+        self.tabBarController.selectedIndex = 0;
+        [self dismissViewControllerAnimated:YES completion:nil];
+        [LTSCEventBus sendEvent:@"diss" data:nil];
+        [[V2TIMManager sharedInstance] logout:nil fail:nil];
+        
         
     }];
     [self.footV addSubview:button];
@@ -101,7 +111,7 @@
         }
     }else if (indexPath.section == 2) {
         cell.rightTF.placeholder = self.dataModel.focusnum;
-                   
+        
     }else if (indexPath.section == 3) {
         cell.rightTF.userInteractionEnabled = NO;
         cell.rightTF.placeholder = @"";
@@ -114,7 +124,7 @@
             
         }
         
-       
+        
     }
     cell.rightTF.delegate = self;
     return cell;
@@ -167,11 +177,12 @@
         vc.ID = self.dataModel.ID;
         [self.navigationController pushViewController:vc animated:YES];
     }else if (indexPath.section == 3 ) {
-        if (indexPath.row == 1) {
+        if (indexPath.row == 0) {
             SWTMJDainPuBaoZhengJinVC * vc =[[SWTMJDainPuBaoZhengJinVC alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
-        }else if (indexPath.row == 2) {
+        }else if (indexPath.row == 1
+                  ) {
             SWTMJAddShouHuoDiZhiTVC * vc =[[SWTMJAddShouHuoDiZhiTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];

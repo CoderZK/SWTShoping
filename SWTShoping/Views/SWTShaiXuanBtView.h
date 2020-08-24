@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic , strong)NSMutableArray *selectArr;
 @property(nonatomic , strong)NSMutableDictionary *selectDict;
-@property(nonatomic,copy)void(^selectBlock)();
+@property(nonatomic,copy)void(^selectBlock)(NSInteger index);
 
 
 

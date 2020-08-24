@@ -9,20 +9,29 @@
 #import "SWTMJMineZhengRenMessage.h"
 #import "SWTMJRenZhengCell.h"
 #import "SWTMineShopSettingSectionV.h"
-@interface SWTMJMineZhengRenMessage ()
+#import "SWTMJDainPuLoGoCell.h"
+@interface SWTMJMineZhengRenMessage ()<UITextFieldDelegate>
 @property(nonatomic , strong)NSArray *leftTitleArr;
 @property(nonatomic , strong)UIView *footV;
+@property(nonatomic , strong)UIImage *image;
+@property(nonatomic , strong)NSString *headImgStr;
 @end
 
 @implementation SWTMJMineZhengRenMessage
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+   
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"店铺认证信息";
      [self.tableView registerNib:[UINib nibWithNibName:@"SWTMJRenZhengCell" bundle:nil] forCellReuseIdentifier:@"cell"];
+     [self.tableView registerNib:[UINib nibWithNibName:@"SWTMJDainPuLoGoCell" bundle:nil] forCellReuseIdentifier:@"SWTMJDainPuLoGoCell"];
        [self.tableView registerClass:[SWTMineShopSettingSectionV class] forHeaderFooterViewReuseIdentifier:@"head"];
     
-    self.leftTitleArr = @[@[@"实名认证",@"证件有效期"],@[@"姓名",@"电话",@"省份证",@"省份证照认证"],@[@"店铺名称",@"店铺简介",@"店铺LOGO"]];
+    self.leftTitleArr = @[@[@"实名认证",@"证件有效期"],@[@"姓名",@"电话",@"身份证",@"身份证照认证"],@[@"店铺名称",@"店铺简介",@"店铺LOGO"]];
     
     
     self.footV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 80)];
@@ -31,6 +40,11 @@
     button.titleLabel.font = kFont(14);
     [button setTitleColor:WhiteColor forState:UIControlStateNormal];
     [button setTitle:@"确认修改" forState:UIControlStateNormal];
+    @weakify(self);
+    [[button rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        @strongify(self);
+        [self editShopSetting];
+    }];
     [self.footV addSubview:button];
     self.tableView.tableFooterView = self.footV;
 }
@@ -43,6 +57,9 @@
     return [self.leftTitleArr[section] count];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 3 && indexPath.section == 2) {
+        return 120;
+    }
     return 50;
 }
 
@@ -69,17 +86,182 @@
     if ((indexPath.section == 1 && indexPath.row == 3)|| (indexPath.section == 2 && indexPath.row == 2)) {
         cell.rightImgV.hidden = NO;
     }
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            cell.TF.text = @"已认证";
+        }else {
+           
+        }
+    }else if (indexPath.section == 1){
+        cell.TF.userInteractionEnabled = NO;
+        if (indexPath.row == 0) {
+            cell.TF.text = self.dataModel.realname;
+            
+        }else if (indexPath.row == 1) {
+            cell.TF.text = self.dataModel.mobile;
+        }else if (indexPath.row == 2){
+            cell.TF.text = self.dataModel.idcard;
+        }else {
+            cell.TF.text = @"";
+        }
+    }else {
+        cell.TF.userInteractionEnabled = YES;
+        cell.TF.delegate = self;
+        if (indexPath.row == 0) {
+            cell.TF.text = self.dataModel.store_name;
+        }else if (indexPath.row == 1) {
+            cell.TF.text = self.dataModel.des;
+        }
+    }
     return cell;
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 1 && indexPath.row == 3){
+        NSArray * arr = @[self.dataModel.idcard_front,self.dataModel.idcard_back,self.dataModel.idcard_hold];
+        [[zkPhotoShowVC alloc] initWithArray:arr index:0];
+        
+    }
+    if (indexPath.section == 2 && indexPath.row == 2) {
+        [self addPict];
+    }
     
+}
+
+- (void)addPict {
+    [self.tableView endEditing:YES];
+    UIAlertController *ac = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        if ([self isCanUsePhotos]) {
+            
+            
+            [self showMXPhotoCameraAndNeedToEdit:YES completion:^(UIImage *image, UIImage *originImage, CGRect cutRect) {
+              
+                self.image = image;
+                [self updateImage];
+                
+            }];
+            
+        }else{
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相机" message:@"请在iPhone的""设置-隐私-相机""中允许访问相机" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+        
+    }];
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        if ([self isCanUsePicture]) {
+            [self showMXPickerWithMaximumPhotosAllow:1 completion:^(NSArray *assets) {
+                
+                for (ALAsset *asset in assets) {
+                    ALAssetRepresentation *assetRep = [asset defaultRepresentation];
+                    CGImageRef imgRef = [assetRep fullResolutionImage];
+                    UIImage *image = [[UIImage alloc] initWithCGImage:imgRef
+                                                                scale:assetRep.scale
+                                                          orientation:(UIImageOrientation)assetRep.orientation];
+                    
+                    if (!image) {
+                        image = [[UIImage alloc] initWithCGImage:[[asset defaultRepresentation] fullScreenImage]
+                                                           scale:assetRep.scale
+                                                     orientation:(UIImageOrientation)assetRep.orientation];
+                        
+                    }
+                    
+                    self.image = image;
+                    [self updateImage];
+                    
+                }
+                
+                
+                
+                
+            }];
+            
+        }else{
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }];
+    
+    
+    
+    UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [ac addAction:action1];
+    [ac addAction:action2];
+    [ac addAction:action3];
+    
+    [self.navigationController presentViewController:ac animated:YES completion:nil];
+    
+}
+
+- (void)updateImage {
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"type"] = @"head";
+    dict[@"userid"] = [zkSignleTool shareTool].selectShopID;
+    [zkRequestTool NetWorkingUpLoad:uploadfile_SWT images:@[self.image] name:@"file" parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        if ([responseObject[@"code"] intValue] == 200) {
+          
+            self.headImgStr = responseObject[@"data"];
+            
+            [self.tableView reloadData];
+            
+        }else {
+            [self showAlertWithKey:responseObject[@"code"] message:responseObject[@"msg"] ];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
     
     
 }
 
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    SWTMJRenZhengCell * cell  =(SWTMJRenZhengCell *)textField.superview.superview;
+    NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
+    if (indexPath.section == 2) {
+        if (indexPath.row == 0) {
+            self.dataModel.store_name = textField.text;
+        }else if (indexPath.row == 1){
+            self.dataModel.des = textField.text;
+        }
+        [self.tableView reloadData];
+    }
+}
+
+- (void)editShopSetting {
+    [self.tableView endEditing:YES];
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"id"] = [zkSignleTool shareTool].session_uid;
+    dict[@"avatar"] = self.headImgStr;
+    dict[@"store_name"] = self.dataModel.store_name;
+    dict[@"description"] = self.dataModel.des;
+    [zkRequestTool networkingPOST:merchUpd_merchinfo_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+
+    
+    
+}
 
 
 @end

@@ -160,14 +160,14 @@
     [self.headView addSubview:lb];
     
     self.zhengV = [[SWTDianPuInfoTwoView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(lb.frame) + 10, ScreenW - 20, 50 + 100)];
-    self.zhengV.titleLB.text = @"请上传省份证人像面";
+    self.zhengV.titleLB.text = @"请上传身份证人像面";
     [self.headView addSubview:self.zhengV];
     self.zhengV.rigthImgV.image = [UIImage imageNamed:@"dyx11"];
     self.zhengV.leftBt.tag = 0;
     [self.zhengV.leftBt addTarget:self action:@selector(chooseImageAction:) forControlEvents:UIControlEventTouchUpInside];
     
     self.fanV = [[SWTDianPuInfoTwoView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(self.zhengV.frame), ScreenW - 20, CGRectGetHeight(self.zhengV.frame))];
-    self.fanV.titleLB.text = @"请上传省份证国徽面";
+    self.fanV.titleLB.text = @"请上传身份证国徽面";
     self.fanV.rigthImgV.image = [UIImage imageNamed:@"dyx12"];
     [self.headView addSubview:self.fanV];
     self.fanV.leftBt.tag = 1;

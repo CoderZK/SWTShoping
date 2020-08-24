@@ -144,7 +144,7 @@
     if ([self.dataArray[indexPath.row] isKindOfClass:[UIImage class]]) {
         cell.imageView.image = self.dataArray[indexPath.row];
     }else{
-        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:  self.dataArray[indexPath.row]] placeholderImage:[UIImage imageNamed:@"zk_morenfang"]];
+        [cell.imageView sd_setImageWithURL:[NSURL URLWithString: [NSString stringWithFormat:@"%@",self.dataArray[indexPath.row]]] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
         
     }
 

@@ -16,15 +16,15 @@
     if (type == 0) {
         self.leftLB.font = kFont(14);
         self.leftLB.textColor = [UIColor blackColor];
-        self.addBt.hidden = YES;
+        self.addBt.hidden = self.desLB.hidden = self.desimgV.hidden =YES;
         self.leftLB.hidden = NO;
     }else if (type == 1) {
         self.leftLB.font = kFont(13);
         self.leftLB.textColor = CharacterColor102;
-        self.addBt.hidden = YES;
+        self.addBt.hidden = self.desLB.hidden = self.desimgV.hidden = YES;
         self.leftLB.hidden = NO;
     }else {
-        self.addBt.hidden = NO;
+        self.addBt.hidden =  self.desLB.hidden = self.desimgV.hidden = NO;
         self.leftLB.hidden = YES;
     }
 }

@@ -21,4 +21,17 @@
     // Configure the view for the selected state
 }
 
+- (void)setModel:(SWTModel *)model {
+    _model = model;
+    [self.imgV sd_setImageWithURL:[model.thumb getPicURL] placeholderImage:[UIImage imageNamed:@"369"]];
+    self.titleLB.text = model.title;
+    self.chanDiLB.text = model.place;
+    self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",model.productprice];;
+    self.guiGeLB.text = model.spec;
+    self.caiZhiLB.text = model.material;
+    self.kuCunLB.text = model.stock;
+    self.xiaoLiangLB.text = @"0";
+    self.caiZhiLB.text = model.warehouse_str;
+}
+
 @end

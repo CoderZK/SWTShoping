@@ -29,6 +29,7 @@
         self.nameV = [[SWTAddChnaPinTFV alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.leiBieV.frame), (ScreenW - 35)/2, 25)];
         self.nameV.isChoose = YES;
         self.nameV.leftLB.text = self.nameV.lestStr = @"品名: ";
+        self.nameV.delegateSignal = [[RACSubject alloc] init];
         [self.nameV.delegateSignal subscribeNext:^(NSNumber * x) {
             @strongify(self);
             if (self.delegateSignal) {
@@ -52,8 +53,22 @@
         self.caizhiV = [[SWTAddChnaPinTFV alloc] initWithFrame:CGRectMake(ScreenW/2+2.5, CGRectGetMinY(self.guiGeV.frame), (ScreenW - 35)/2, 25)];
         self.caizhiV.leftLB.text = self.caizhiV.lestStr =  @"材质: ";
         [self addSubview:self.caizhiV];
+        self.caizhiV.isChoose = YES;
+        self.caizhiV.delegateSignal = [[RACSubject alloc] init];
+        [self.caizhiV.delegateSignal subscribeNext:^(NSNumber * x) {
+            @strongify(self);
+            if (self.delegateSignal) {
+                [self.delegateSignal sendNext:@(102)];
+            }
+                   
+                   
+        }];
         
-        UIView * backV =[[UIView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.guiGeV.frame), ScreenW - 30, 0.5)];
+        self.weightV = [[SWTAddChnaPinTFV alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.caizhiV.frame) , (ScreenW - 35)/2, 25)];
+            self.weightV.leftLB.text = self.guiGeV.lestStr =  @"重量: ";
+            [self addSubview:self.weightV];
+        
+        UIView * backV =[[UIView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.weightV.frame), ScreenW - 30, 0.5)];
         backV.backgroundColor = lineBackColor;
         [self addSubview:backV];
         
@@ -94,7 +109,7 @@
     CGFloat space = 10;
     CGFloat leftM = 0;
     [self.picV.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    for (int i =0 ; i< self.picArr.count + 2; i++) {
+    for (int i =0 ; i< self.picArr.count + 1; i++) {
         
          UIButton * anNiuBt = [[UIButton alloc] initWithFrame:CGRectMake(leftM + (space+ ww) * i, 0, ww, ww)];
                anNiuBt.layer.cornerRadius = 3;
@@ -116,7 +131,7 @@
                    [deleteBt setImage:[UIImage imageNamed:@"48"] forState:UIControlStateNormal];
                    [anNiuBt addSubview:deleteBt];
                }else {
-                   [anNiuBt setBackgroundImage:[UIImage imageNamed:@"feedback_addpic"] forState:UIControlStateNormal];
+                   [anNiuBt setBackgroundImage:[UIImage imageNamed:@"bbdyx72"] forState:UIControlStateNormal];
                    
                    
                }
@@ -147,12 +162,13 @@
                 [self.delegateSignal sendNext:@(199)];
             }
             
-        }else if (anNiuBt.tag - 100  == self.picArr.count + 1) {
-            //添加视频
-            if (self.delegateSignal) {
-                [self.delegateSignal sendNext:@(198)];
-            }
         }
+//        else if (anNiuBt.tag - 100  == self.picArr.count + 1) {
+//            //添加视频
+//            if (self.delegateSignal) {
+//                [self.delegateSignal sendNext:@(198)];
+//            }
+//        }
     }
 }
 

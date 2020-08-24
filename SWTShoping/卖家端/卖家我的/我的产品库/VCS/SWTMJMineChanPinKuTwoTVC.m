@@ -11,11 +11,13 @@
 #import "SWTMJMineChanPinListTVC.h"
 #import "SWTAddMineChanPinKuTVC.h"
 #import "SWTMJMineChanPinKuOneCell.h"
+#import "SWTMJMineChanPinListTVC.h"
 @interface SWTMJMineChanPinKuTwoTVC ()
 @property(nonatomic , strong)UIView *headView;
 @property(nonatomic , strong)UIButton *headBt;
 @property(nonatomic , strong)UIButton *addBt;
 @property(nonatomic , strong)UILabel *numberOneLB,*numberTwoLB;
+@property(nonatomic , strong)SWTModel *dataModel;
 
 @end
 
@@ -42,7 +44,9 @@
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             
-            
+            self.dataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
+            [self.tableView reloadData];
+            self.numberOneLB.text = self.dataModel.goodsnum.length == 0? 0:self.dataModel.goodsnum;
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }
@@ -82,6 +86,7 @@
     whV.layer.cornerRadius = 5;
     whV.backgroundColor = WhiteColor;
     [self.headView addSubview:whV];
+
     
     
     self.numberOneLB = [[UILabel alloc] initWithFrame:CGRectMake(30, 10, ScreenW - 100, 20)];
@@ -96,6 +101,8 @@
     lb1.text = @"产品";
     [whV addSubview:lb1];
     
+    
+    self.numberOneLB.userInteractionEnabled = lb1.userInteractionEnabled = YES;
     
     UIButton * button1 = [[UIButton alloc] initWithFrame:CGRectMake(30, 0, ScreenW - 100, 60)];
     [whV addSubview:button1];
@@ -123,6 +130,8 @@
     
 }
 
+
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
 }
@@ -136,10 +145,14 @@
     SWTMJMineChanPinKuOneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     if (indexPath.section == 0) {
         cell.left1.text = @"待发货";
+        cell.left2.text = self.dataModel.orderpay.length == 0 ? @"0":self.dataModel.orderpay;
         cell.rigth1.text = @"待确认退款";
+        cell.right2.text = self.dataModel.orderrefund.length == 0?@"0":self.dataModel.orderrefund;
     }else {
         cell.left1.text = @"本月";
+        cell.left2.text = self.dataModel.orderprice_curr.length == 0 ? @"0":self.dataModel.orderprice_curr;
         cell.rigth1.text = @"上月";
+        cell.right2.text = self.dataModel.orderprice_last.length == 0?@"0":self.dataModel.orderprice_last;
     }
     return cell;
 }
@@ -167,14 +180,12 @@
 }
 
 - (void)clickAction:(UIButton *)button {
-    if (button.tag == 100) {
-        //点击产品库
-    }else {
+
         //点击产品
         SWTMJMineChanPinListTVC * vc =[[SWTMJMineChanPinListTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
-    }
+    
 }
 
 - (void)addAction:(UIButton *)button {

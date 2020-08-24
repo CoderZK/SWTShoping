@@ -141,7 +141,7 @@
     self.fuwuView.dataArray = arr;
     Weak(weakSelf);
     self.fuwuView.mj_h = self.fuwuView.hh;
-    self.fuwuView.selectBlock = ^{
+    self.fuwuView.selectBlock = ^(NSInteger index){
         if (weakSelf.shaiXuanBlock != nil) {
             weakSelf.shaiXuanBlock(leftTF.text, rightTF.text, weakSelf.caiLiaoView.selectArr, weakSelf.fuwuView.selectDict);
         };
@@ -156,7 +156,7 @@
     self.caiLiaoView.dataArray = self.caiZhiArr;
     self.caiLiaoView.mj_h = self.caiLiaoView.hh;
     [self.whiteV addSubview:self.caiLiaoView];
-    self.caiLiaoView.selectBlock = ^{
+    self.caiLiaoView.selectBlock = ^(NSInteger index){
          if (weakSelf.shaiXuanBlock != nil) {
              weakSelf.shaiXuanBlock(leftTF.text, rightTF.text, weakSelf.caiLiaoView.selectArr, weakSelf.fuwuView.selectDict);
          };

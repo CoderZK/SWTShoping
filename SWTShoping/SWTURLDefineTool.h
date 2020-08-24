@@ -359,7 +359,7 @@
 /** 获取商品库信息 */
 #define merchgoodsGet_warehouse_info_SWT URLOne@"merchgoods/get_warehouse_info"
 /** 获取商品分类 */
-#define erchgoodsGet_goods_cate_SWT URLOne@"erchgoods/get_goods_cate"
+#define merchgoodsGet_goods_cate_SWT URLOne@"merchgoods/get_goods_cate"
 /** 获取商品库 */
 #define merchgoodsGet_warehouse_list_SWT URLOne@"merchgoods/get_warehouse_list"
 /** 获取商品材质*/

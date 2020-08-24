@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SWTAddChanPinOneCellCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *leftLB;
 @property (weak, nonatomic) IBOutlet UIButton *addBt;
+@property (weak, nonatomic) IBOutlet UILabel *desLB;
+@property (weak, nonatomic) IBOutlet UIImageView *desimgV;
 @property(nonatomic , assign)NSInteger  type;
 @end
 

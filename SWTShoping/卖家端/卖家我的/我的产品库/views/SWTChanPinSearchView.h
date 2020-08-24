@@ -17,6 +17,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)dismiss;
 @property(nonatomic , strong)RACSubject *delegateSignal;
 @property(nonatomic , strong)NSArray *dataArray;
+@property(nonatomic , strong)NSString *chanPinKuID;
+@property(nonatomic , strong)NSMutableArray<SWTModel *> *canPinKuArr;
+@property(nonatomic , strong)NSMutableArray<SWTModel *> *canPinFenLeiArr;
+@property(nonatomic , strong)NSString *leiBieID,*feiLeiID,*timeType,*chanPinKuType;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -39,6 +39,10 @@
     
 }
 
+- (void)setChildren:(NSMutableArray<SWTModel *> *)children {
+    _children = [SWTModel mj_objectArrayWithKeyValuesArray:children];
+}
+
 - (void)setMerchinfo:(SWTModel *)merchinfo {
     _merchinfo = [SWTModel mj_objectWithKeyValues:merchinfo];
 }

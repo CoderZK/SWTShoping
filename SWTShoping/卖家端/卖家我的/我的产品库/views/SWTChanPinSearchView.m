@@ -12,7 +12,7 @@
 @property(nonatomic , strong)UITableView *tableView;
 @property(nonatomic , strong)UIView *headView;
 @property(nonatomic , strong)UIView *whiteV;
-
+@property(nonatomic , strong)UITextField *nameTF,*biaoHaoTF,*diJiaTF,*gaoJiaTF;
 
 @end
 
@@ -53,6 +53,7 @@
 }
 
 - (void)initHeadV {
+    self.leiBieID = self.chanPinKuID = self.timeType = self.feiLeiID = @"";
     [self.headView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     self.headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 120)];
     self.headView.clipsToBounds = YES;
@@ -62,19 +63,33 @@
     }  else  if (self.type == 1) {
         
         
+
         
-        NSArray * arr = @[@"全部",@"发布仓",@"后仓成品库",@"原来库"];
+        NSMutableArray * arrTwo = @[].mutableCopy;
+        for (SWTModel * mm  in self.canPinKuArr) {
+            [arrTwo addObject:mm.name];
+        }
+        
+        [arrTwo addObject:@"全部"];
         
         SWTShaiXuanBtView * cangKu  = [[SWTShaiXuanBtView alloc] initWithFrame:CGRectMake(10,  10 , ScreenW - 20 , 20)];
         [self.headView addSubview:cangKu];
         cangKu.isNOCanSelectAll = YES;
         cangKu.isTitleArr = YES;
-        cangKu.dataArray = arr;
+        cangKu.dataArray = arrTwo;
         Weak(weakSelf);
         cangKu.mj_h = cangKu.hh;
-        cangKu.selectBlock = ^{
-            
+        cangKu.selectBlock = ^(NSInteger index) {
+            if (index == self.canPinKuArr.count) {
+                self.chanPinKuID = @"";
+            }else {
+                self.chanPinKuID = self.canPinKuArr[index].ID;
+            }
+            if (self.delegateSignal) {
+                [self.delegateSignal sendNext:self.chanPinKuID];
+            }
         };
+    
         self.headView.mj_h = 300;
         self.tableView.tableHeaderView = self.headView;
         
@@ -94,8 +109,12 @@
         chanpinLeiBie.dataArray = arr;
         Weak(weakSelf);
         chanpinLeiBie.mj_h = chanpinLeiBie.hh;
-        chanpinLeiBie.selectBlock = ^{
-            
+        chanpinLeiBie.selectBlock = ^(NSInteger index){
+            if (index == 2) {
+                self.leiBieID = @"";
+            }else {
+                self.leiBieID =  [NSString stringWithFormat:@"%ld",index];
+            }
         };
         
         
@@ -104,17 +123,26 @@
         LB3.font = kFont(15);
         [self.headView addSubview:LB3];
         
-        NSArray * arr2 =@[@"紫砂",@"瓷器",@"翡翠",@"茶酒",@"瓷器",@"翡翠",@"茶酒",@"瓷器"] ;
+          NSMutableArray * arrThree = @[].mutableCopy;
+              for (SWTModel * mm  in self.canPinFenLeiArr) {
+                  [arrThree addObject:mm.name];
+              }
+              
+              [arrThree addObject:@"全部"];
         
         SWTShaiXuanBtView * chanpinFenLei  = [[SWTShaiXuanBtView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(LB3.frame) + 10 , ScreenW - 20 , 20)];
         [self.headView addSubview:chanpinFenLei];
         chanpinFenLei.isTitleArr = YES;
         chanpinFenLei.isNOCanSelectAll = YES;
-        chanpinFenLei.dataArray = arr2;
+        chanpinFenLei.dataArray = arrThree;
         
         chanpinFenLei.mj_h = chanpinFenLei.hh;
-        chanpinFenLei.selectBlock = ^{
-            
+        chanpinFenLei.selectBlock = ^(NSInteger index){
+            if (index == self.canPinFenLeiArr.count) {
+                self.feiLeiID = @"";
+            }else {
+                self.feiLeiID = self.canPinFenLeiArr[index].ID;
+            }
         };
         
         UIView * backV =[[UIView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(chanpinFenLei.frame), ScreenW - 30, 0.6)];
@@ -130,6 +158,7 @@
         UITextField * TF  = [[UITextField alloc] initWithFrame:CGRectMake(100, CGRectGetMaxY(backV.frame)+10, ScreenW - 120, 30)];
         TF.font = kFont(14);
         TF.placeholder = @"根据产品名搜索";
+        self.nameTF = TF;
         [self.headView addSubview:TF];
         
         
@@ -146,6 +175,7 @@
         UITextField * TF1  = [[UITextField alloc] initWithFrame:CGRectMake(100, CGRectGetMaxY(backV1.frame)+10, ScreenW - 120, 30)];
         TF1.font = kFont(14);
         TF1.placeholder = @"根据产品编号搜索";
+        self.biaoHaoTF = TF1;
         [self.headView addSubview:TF1];
         
         UIView * backV2 =[[UIView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(TF1.frame) + 10, ScreenW - 30, 0.6)];
@@ -169,16 +199,18 @@
         UITextField * TF2  = [[UITextField alloc] initWithFrame:CGRectMake((ScreenW )/2 - 30 - 150, CGRectGetMaxY(lb2.frame)+10, 150, 30)];
         TF2.font = kFont(14);
         TF2.placeholder = @"最低价";
+        self.diJiaTF = TF2;
         TF2.textAlignment = NSTextAlignmentRight;
         TF2.keyboardType = UIKeyboardTypeDecimalPad;
         [self.headView addSubview:TF2];
         
         UITextField * TF3  = [[UITextField alloc] initWithFrame:CGRectMake((ScreenW)/2 + 30 , CGRectGetMaxY(lb2.frame)+10, 150, 30)];
         TF3.font = kFont(14);
-        TF3.placeholder = @"最搞价";
+        TF3.placeholder = @"最高价";
         TF3.textAlignment = NSTextAlignmentLeft;
         TF3.keyboardType = UIKeyboardTypeDecimalPad;
         [self.headView addSubview:TF3];
+        self.gaoJiaTF = TF3;
         
         
         UILabel * LB4  =[[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(TF3.frame) + 10, ScreenW - 20, 20)];
@@ -195,8 +227,8 @@
         timeV.dataArray = arr3;
         
         timeV.mj_h = timeV.hh;
-        timeV.selectBlock = ^{
-            
+        timeV.selectBlock = ^(NSInteger index){
+            self.timeType =  [NSString stringWithFormat:@"%ld",index+1];
         };
         
         UIButton * chongzhiBt  =[[UIButton alloc] initWithFrame:CGRectMake(ScreenW / 2 - 20 - 70, CGRectGetMaxY(timeV.frame) + 15, 70, 30)];
@@ -222,7 +254,11 @@
         self.tableView.tableHeaderView = self.headView;
     }
     [self.tableView reloadData];
-    
+}
+
+- (void)setDataArray:(NSArray *)dataArray {
+    _dataArray = dataArray;
+    [self.tableView reloadData];
 }
 
 - (void)setType:(NSInteger)type {
@@ -233,7 +269,22 @@
 - (void)clickAction:(UIButton *)button {
     if (button.tag == 100) {
         self.type = 2;
+        self.leiBieID = self.chanPinKuID = self.timeType = self.feiLeiID = @"";
+        
+        
     }else {
+        
+        NSMutableDictionary  * dict = @{}.mutableCopy;
+        dict[@"type"] = self.leiBieID;
+        dict[@"category_id"] = self.feiLeiID;
+        dict[@"sn"] = self.biaoHaoTF.text;
+        dict[@"title"] = self.nameTF.text;
+        dict[@"price_start"] = self.diJiaTF.text;
+        dict[@"price_end"] = self.gaoJiaTF.text;
+        dict[@"date"] = self.timeType;
+        if (self.delegateSignal) {
+            [self.delegateSignal sendNext:dict];
+        }
         
     }
 }
@@ -269,6 +320,9 @@
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     cell.textLabel.text = self.dataArray[indexPath.row];
+    if (self.delegateSignal) {
+        [self.delegateSignal sendNext:@(indexPath.row)];
+    }
     return cell;
 }
 

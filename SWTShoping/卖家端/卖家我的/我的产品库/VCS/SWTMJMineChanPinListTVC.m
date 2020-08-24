@@ -13,10 +13,20 @@
 @interface SWTMJMineChanPinListTVC ()
 @property(nonatomic , strong)UIView *seacrchV;
 @property(nonatomic , strong)SWTMJSearchBt *leftBt,*centerBt,*rightBt;
-
+@property(nonatomic,assign)NSInteger page;
+@property(nonatomic,strong)NSMutableArray<SWTModel *> *dataArray;
+@property(nonatomic , strong)SWTChanPinSearchView *searhV;
+@property(nonatomic , strong)NSMutableArray<SWTModel *> *pingMingArr;
+@property(nonatomic , strong)NSMutableArray<SWTModel *>*caiZhiArr,*chanPinKuArr;
+@property(nonatomic , strong)NSMutableDictionary *dataDict;
 @end
 
 @implementation SWTMJMineChanPinListTVC
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.searhV dismiss];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -26,8 +36,111 @@
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTMJChanPinListCell" bundle:nil] forCellReuseIdentifier:@"cell"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.page = 1;
+    self.dataArray = @[].mutableCopy;
+    [self getData];
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        self.page = 1;
+        [self getData];
+    }];
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        self.page++;
+        [self getData];
+    }];
+    
+    self.pingMingArr = @[].mutableCopy;
+    [self getPingMingData];
+    self.chanPinKuArr = @[].mutableCopy;
+    [self getChanPinKuData];
+    self.dataDict = @{}.mutableCopy;
+
     
 }
+
+- (void)getPingMingData  {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    
+    [zkRequestTool networkingPOST:merchgoodsGet_goods_cate_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            self.pingMingArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"][@"list"]];
+        
+            
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+
+}
+
+
+
+- (void)getChanPinKuData  {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    [zkRequestTool networkingPOST:merchgoodsGet_warehouse_list_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            self.chanPinKuArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"][@"list"]];
+        
+            
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+
+}
+
+
+- (void)getData {
+    
+    
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"pageindex"] = @(self.page);
+    dict[@"pagesize"] = @(10);
+    dict[@"merchid"] = [zkSignleTool shareTool].selectShopID;
+    dict[@"token"] = [zkSignleTool shareTool].session_token;
+    [dict addEntriesFromDictionary:self.dataDict];
+    [zkRequestTool networkingPOST:merchgoodsGet_goods_list_merch_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([[NSString stringWithFormat:@"%@",responseObject[@"code"]] integerValue] == 200) {
+            NSArray<SWTModel *>*arr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"][@"list"]];
+            if (self.page == 1) {
+                [self.dataArray removeAllObjects];
+            }
+            [self.dataArray addObjectsFromArray:arr];
+            
+            [self.tableView reloadData];
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+    }];
+    
+    
+    
+}
+
 
 
 - (void)initHeadV  {
@@ -81,13 +194,14 @@
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return self.dataArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 100;
 }
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SWTMJChanPinListCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    cell.model = self.dataArray[indexPath.row];
     return cell;
 }
 
@@ -101,15 +215,37 @@
 
 
 - (void)clickAction:(UIButton *)button {
-    SWTChanPinSearchView *searchV  = [[SWTChanPinSearchView alloc] initWithFrame:CGRectMake(0,sstatusHeight + 50 + 44, ScreenW, ScreenH - (sstatusHeight + 50 + 44) )];
-    
-    searchV.type = button.tag -100;
+    self.searhV  = [[SWTChanPinSearchView alloc] initWithFrame:CGRectMake(0,sstatusHeight + 50 + 44, ScreenW, ScreenH - (sstatusHeight + 50 + 44) )];
+    self.searhV.canPinFenLeiArr = self.pingMingArr;
+    self.searhV.canPinKuArr = self.chanPinKuArr;
+    self.searhV.dataArray = @[@"入库时间升序",@"入库时间降序"];
     if (button.tag == 100) {
-        searchV.dataArray = @[@"升序",@"降序"];
+        
+    }else if (button.tag == 101) {
+        self.searhV.dataArray = @[];
+        
     }else {
-        searchV.dataArray = @[];
+        self.searhV.dataArray = @[];
+        
     }
-    [searchV show];
+    self.searhV.type = button.tag -100;
+    [self.searhV show];
+    self.searhV.delegateSignal = [[RACSubject alloc] init];
+    @weakify(self);
+    [self.searhV.delegateSignal subscribeNext:^(id  _Nullable x) {
+        @strongify(self);
+        if (self.searhV.type == 0) {
+             self.dataDict[@"sort"] = x;
+        }else if (self.searhV.type == 1) {
+            self.dataDict[@"warehouse"] = x;
+        }else {
+            self.dataDict = (NSMutableDictionary *)x;
+        }
+        
+        [self.searhV dismiss];
+        self.page = 1;
+        [self getData];
+    }];
 }
 
 @end

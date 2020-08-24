@@ -176,8 +176,9 @@
                      buttonNei.selected = NO;
                  }else {
                      buttonNei.selected = YES;
+                     
                      if (self.selectBlock != nil) {
-                            self.selectBlock(button.tag-100);
+                            self.selectBlock(i);
                         }
                  }
              }
@@ -199,7 +200,7 @@
             }
         }
         if (self.selectBlock != nil) {
-            self.selectBlock();
+            self.selectBlock(-1);
         }
     }
     

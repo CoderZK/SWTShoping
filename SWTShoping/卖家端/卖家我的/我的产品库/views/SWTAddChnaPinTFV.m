@@ -53,7 +53,7 @@
 - (void)setLestStr:(NSString *)lestStr {
     _lestStr = lestStr;
     [self.leftLB mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(@([lestStr getWidhtWithFontSize:14]+5));
+        make.width.equalTo(@([lestStr getWidhtWithFontSize:14]+10));
     }];
 }
 

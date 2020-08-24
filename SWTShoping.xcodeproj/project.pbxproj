@@ -241,6 +241,12 @@
 		66700CCB24EB60DE00442C1D /* SWTMJAddYouHuiQuanBt.m in Sources */ = {isa = PBXBuildFile; fileRef = 66700CCA24EB60DE00442C1D /* SWTMJAddYouHuiQuanBt.m */; };
 		66700CCF24EB6BC400442C1D /* SelectTimeV.m in Sources */ = {isa = PBXBuildFile; fileRef = 66700CCE24EB6BC400442C1D /* SelectTimeV.m */; };
 		66700CD224EBB14000442C1D /* LSTTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66700CD124EBB14000442C1D /* LSTTimer.m */; };
+		66700DC724F3FFD4008A0314 /* SWTMJAddCHanPinKuSHowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66700DC624F3FFD4008A0314 /* SWTMJAddCHanPinKuSHowView.m */; };
+		66700DCB24F401B0008A0314 /* SWTMJAddChanPinNeiCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66700DC924F401B0008A0314 /* SWTMJAddChanPinNeiCell.m */; };
+		66700DCC24F401B0008A0314 /* SWTMJAddChanPinNeiCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66700DCA24F401B0008A0314 /* SWTMJAddChanPinNeiCell.xib */; };
+		66700DCF24F413DF008A0314 /* SWTMJCangKuSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66700DCE24F413DF008A0314 /* SWTMJCangKuSelectView.m */; };
+		66700DD324F41559008A0314 /* SWTMJChanPinKuNeiCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66700DD124F41559008A0314 /* SWTMJChanPinKuNeiCell.m */; };
+		66700DD424F41559008A0314 /* SWTMJChanPinKuNeiCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66700DD224F41559008A0314 /* SWTMJChanPinKuNeiCell.xib */; };
 		6670384324E65B1100A3DC18 /* SWTMJMineMoneyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6670384124E65B1100A3DC18 /* SWTMJMineMoneyVC.m */; };
 		6670384424E65B1100A3DC18 /* SWTMJMineMoneyVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6670384224E65B1100A3DC18 /* SWTMJMineMoneyVC.xib */; };
 		6670384724E65F5200A3DC18 /* SWTMJChongZhiView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6670384624E65F5200A3DC18 /* SWTMJChongZhiView.m */; };
@@ -359,6 +365,8 @@
 		6678B7EB24B0C6BA00EA3A56 /* SWTGoodsDetailFourCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6678B7E924B0C6BA00EA3A56 /* SWTGoodsDetailFourCell.m */; };
 		6678B7F024B0C92A00EA3A56 /* SWTGoodsDetailNeiCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6678B7EE24B0C92A00EA3A56 /* SWTGoodsDetailNeiCell.m */; };
 		6678B7F124B0C92A00EA3A56 /* SWTGoodsDetailNeiCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6678B7EF24B0C92A00EA3A56 /* SWTGoodsDetailNeiCell.xib */; };
+		6679573B24F151EE0018741F /* SWTMJDainPuLoGoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6679573924F151EE0018741F /* SWTMJDainPuLoGoCell.m */; };
+		6679573C24F151EE0018741F /* SWTMJDainPuLoGoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6679573A24F151EE0018741F /* SWTMJDainPuLoGoCell.xib */; };
 		667A44B524B16271006C9072 /* SWTGoodsDetailFiveCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 667A44B324B16271006C9072 /* SWTGoodsDetailFiveCell.m */; };
 		667A44B624B16271006C9072 /* SWTGoodsDetailFiveCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 667A44B424B16271006C9072 /* SWTGoodsDetailFiveCell.xib */; };
 		667A44B924B1DC9E006C9072 /* SWTGoodSDetailBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 667A44B824B1DC9E006C9072 /* SWTGoodSDetailBottomView.m */; };
@@ -834,6 +842,16 @@
 		66700CCE24EB6BC400442C1D /* SelectTimeV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectTimeV.m; sourceTree = "<group>"; };
 		66700CD024EBB13F00442C1D /* LSTTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSTTimer.h; sourceTree = "<group>"; };
 		66700CD124EBB14000442C1D /* LSTTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSTTimer.m; sourceTree = "<group>"; };
+		66700DC524F3FFD3008A0314 /* SWTMJAddCHanPinKuSHowView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTMJAddCHanPinKuSHowView.h; sourceTree = "<group>"; };
+		66700DC624F3FFD4008A0314 /* SWTMJAddCHanPinKuSHowView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTMJAddCHanPinKuSHowView.m; sourceTree = "<group>"; };
+		66700DC824F401B0008A0314 /* SWTMJAddChanPinNeiCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTMJAddChanPinNeiCell.h; sourceTree = "<group>"; };
+		66700DC924F401B0008A0314 /* SWTMJAddChanPinNeiCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTMJAddChanPinNeiCell.m; sourceTree = "<group>"; };
+		66700DCA24F401B0008A0314 /* SWTMJAddChanPinNeiCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTMJAddChanPinNeiCell.xib; sourceTree = "<group>"; };
+		66700DCD24F413DF008A0314 /* SWTMJCangKuSelectView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTMJCangKuSelectView.h; sourceTree = "<group>"; };
+		66700DCE24F413DF008A0314 /* SWTMJCangKuSelectView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTMJCangKuSelectView.m; sourceTree = "<group>"; };
+		66700DD024F41559008A0314 /* SWTMJChanPinKuNeiCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTMJChanPinKuNeiCell.h; sourceTree = "<group>"; };
+		66700DD124F41559008A0314 /* SWTMJChanPinKuNeiCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTMJChanPinKuNeiCell.m; sourceTree = "<group>"; };
+		66700DD224F41559008A0314 /* SWTMJChanPinKuNeiCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTMJChanPinKuNeiCell.xib; sourceTree = "<group>"; };
 		6670384024E65B1100A3DC18 /* SWTMJMineMoneyVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTMJMineMoneyVC.h; sourceTree = "<group>"; };
 		6670384124E65B1100A3DC18 /* SWTMJMineMoneyVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTMJMineMoneyVC.m; sourceTree = "<group>"; };
 		6670384224E65B1100A3DC18 /* SWTMJMineMoneyVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTMJMineMoneyVC.xib; sourceTree = "<group>"; };
@@ -1036,6 +1054,9 @@
 		6678B7ED24B0C92A00EA3A56 /* SWTGoodsDetailNeiCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTGoodsDetailNeiCell.h; sourceTree = "<group>"; };
 		6678B7EE24B0C92A00EA3A56 /* SWTGoodsDetailNeiCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTGoodsDetailNeiCell.m; sourceTree = "<group>"; };
 		6678B7EF24B0C92A00EA3A56 /* SWTGoodsDetailNeiCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTGoodsDetailNeiCell.xib; sourceTree = "<group>"; };
+		6679573824F151EE0018741F /* SWTMJDainPuLoGoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTMJDainPuLoGoCell.h; sourceTree = "<group>"; };
+		6679573924F151EE0018741F /* SWTMJDainPuLoGoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTMJDainPuLoGoCell.m; sourceTree = "<group>"; };
+		6679573A24F151EE0018741F /* SWTMJDainPuLoGoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTMJDainPuLoGoCell.xib; sourceTree = "<group>"; };
 		667A44B224B16271006C9072 /* SWTGoodsDetailFiveCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTGoodsDetailFiveCell.h; sourceTree = "<group>"; };
 		667A44B324B16271006C9072 /* SWTGoodsDetailFiveCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTGoodsDetailFiveCell.m; sourceTree = "<group>"; };
 		667A44B424B16271006C9072 /* SWTGoodsDetailFiveCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTGoodsDetailFiveCell.xib; sourceTree = "<group>"; };
@@ -1312,6 +1333,7 @@
 		337F3EB120EA040400C5526A /* 其它 */ = {
 			isa = PBXGroup;
 			children = (
+				666A3A0124B74D1500318075 /* lunBoV */,
 				66700CD024EBB13F00442C1D /* LSTTimer.h */,
 				66700CD124EBB14000442C1D /* LSTTimer.m */,
 				66700CCD24EB6BC300442C1D /* SelectTimeV.h */,
@@ -1757,7 +1779,6 @@
 		666A3A0024B74D1500318075 /* zk_picShow */ = {
 			isa = PBXGroup;
 			children = (
-				666A3A0124B74D1500318075 /* lunBoV */,
 				666A3A0D24B74D1500318075 /* zkPhotoShowVC.m */,
 				666A3A0E24B74D1500318075 /* zkPhotoShowCell.m */,
 				666A3A0F24B74D1500318075 /* zkPhotoShowCell.h */,
@@ -1965,6 +1986,16 @@
 				666F814724EAE25300F338C1 /* SWTMJMineChanPinKuOneCell.h */,
 				666F814824EAE25300F338C1 /* SWTMJMineChanPinKuOneCell.m */,
 				666F814924EAE25300F338C1 /* SWTMJMineChanPinKuOneCell.xib */,
+				66700DC524F3FFD3008A0314 /* SWTMJAddCHanPinKuSHowView.h */,
+				66700DC624F3FFD4008A0314 /* SWTMJAddCHanPinKuSHowView.m */,
+				66700DC824F401B0008A0314 /* SWTMJAddChanPinNeiCell.h */,
+				66700DC924F401B0008A0314 /* SWTMJAddChanPinNeiCell.m */,
+				66700DCA24F401B0008A0314 /* SWTMJAddChanPinNeiCell.xib */,
+				66700DCD24F413DF008A0314 /* SWTMJCangKuSelectView.h */,
+				66700DCE24F413DF008A0314 /* SWTMJCangKuSelectView.m */,
+				66700DD024F41559008A0314 /* SWTMJChanPinKuNeiCell.h */,
+				66700DD124F41559008A0314 /* SWTMJChanPinKuNeiCell.m */,
+				66700DD224F41559008A0314 /* SWTMJChanPinKuNeiCell.xib */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -2266,6 +2297,9 @@
 				66700CC624EB5E9D00442C1D /* SWTAddYouHuiQuanCell.xib */,
 				66700CC924EB60DE00442C1D /* SWTMJAddYouHuiQuanBt.h */,
 				66700CCA24EB60DE00442C1D /* SWTMJAddYouHuiQuanBt.m */,
+				6679573824F151EE0018741F /* SWTMJDainPuLoGoCell.h */,
+				6679573924F151EE0018741F /* SWTMJDainPuLoGoCell.m */,
+				6679573A24F151EE0018741F /* SWTMJDainPuLoGoCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2827,6 +2861,7 @@
 				666A53FA24E9211300D75A08 /* SWTMJMineChanPinKuOneVC.xib in Resources */,
 				66C8F7A024AB1E0B008C7A3A /* noneNet@3x.png in Resources */,
 				666F691F24BCAC9600592DC4 /* SWTMineTwoAddCell.xib in Resources */,
+				66700DD424F41559008A0314 /* SWTMJChanPinKuNeiCell.xib in Resources */,
 				666D395C24E1386E0023776B /* PosPay_Resource.bundle in Resources */,
 				66689F2D24B4184600C49A2E /* SWTMineYouHuiQuanNeiCell.xib in Resources */,
 				666A539D24E7C10F00D75A08 /* SWTMJDainPuBaoZhengJinVC.xib in Resources */,
@@ -2835,6 +2870,7 @@
 				66732D1024BAF6EA00452F21 /* SWTHeMaiDianPuOneCell.xib in Resources */,
 				6670385424E6969E00A3DC18 /* SWTMJMineFenSiCell.xib in Resources */,
 				66C8F7A224AB1E0B008C7A3A /* noneNet@2x.png in Resources */,
+				66700DCC24F401B0008A0314 /* SWTMJAddChanPinNeiCell.xib in Resources */,
 				6673BA9424B368D500037A14 /* SWTHeMaiOneCell.xib in Resources */,
 				337F3EB020EA014600C5526A /* noneDataBg.png in Resources */,
 				337F3E6620E9FE5300C5526A /* LaunchScreen.storyboard in Resources */,
@@ -2853,6 +2889,7 @@
 				6670880424E5746F00EDA2C5 /* SWTMJMineOneCell.xib in Resources */,
 				666D4AE624CABFEE00300957 /* SWTTuiHuoDesCell.xib in Resources */,
 				666C70ED24B61210002C11E1 /* SWTFanKuiThreeCell.xib in Resources */,
+				6679573C24F151EE0018741F /* SWTMJDainPuLoGoCell.xib in Resources */,
 				66751D0C24E43FD000B40B58 /* SWTOrderThreeCell.xib in Resources */,
 				66700CC824EB5E9D00442C1D /* SWTAddYouHuiQuanCell.xib in Resources */,
 				6674244424B4CBCF007A6A56 /* SWTVideoDetailOneCell.xib in Resources */,
@@ -2962,6 +2999,7 @@
 				666F0D6724DE869700C826C5 /* SWTMineHeMaiOrderCell.m in Sources */,
 				6669F5CF24AB7C3C0013675E /* SWTMineThreeCell.m in Sources */,
 				667A44BF24B1EDF7006C9072 /* SWTGoodsDetailChuJiaView.m in Sources */,
+				6679573B24F151EE0018741F /* SWTMJDainPuLoGoCell.m in Sources */,
 				667A44DB24B23D1E006C9072 /* SWTLaoYouDesNeiOneCell.m in Sources */,
 				6669F5C524AB7BBE0013675E /* SWTMineOneCell.m in Sources */,
 				666325D724AE2626009D77AF /* SWTMessageOneCell.m in Sources */,
@@ -3059,6 +3097,7 @@
 				6669F5DF24AB997A0013675E /* SWTMineAttentionShopTVC.m in Sources */,
 				666D4AEA24CAC66D00300957 /* SWTTuiHuoThreeCell.m in Sources */,
 				667A44D424B23415006C9072 /* SWTLaoYouTwoCell.m in Sources */,
+				66700DCB24F401B0008A0314 /* SWTMJAddChanPinNeiCell.m in Sources */,
 				666D393224E0F3EA0023776B /* SWTAVChatRoomCell.m in Sources */,
 				66732CFD24BAB7DE00452F21 /* SWTMineHeMaiTiJiaoOrderTVC.m in Sources */,
 				6670880D24E5751700EDA2C5 /* SWTMJMineThreeCell.m in Sources */,
@@ -3090,6 +3129,7 @@
 				667087E824E5729200EDA2C5 /* SWTMJTabbarVC.m in Sources */,
 				666BB1C824B0005F00341CE8 /* SWTNavitageView.m in Sources */,
 				337F3EB420EA040400C5526A /* UIView+BSExtension.m in Sources */,
+				66700DC724F3FFD4008A0314 /* SWTMJAddCHanPinKuSHowView.m in Sources */,
 				33DC824F20EA224F00D1C283 /* HangQingVC.m in Sources */,
 				337F3E5B20E9FE3B00C5526A /* AppDelegate.m in Sources */,
 				6670881124E5751700EDA2C5 /* SWTMJMineTwoCell.m in Sources */,
@@ -3184,6 +3224,7 @@
 				33DC823320EA20D700D1C283 /* TabBarController.m in Sources */,
 				666F0D6324DE7B8100C826C5 /* SWTMineHeMaiOrderFatherVC.m in Sources */,
 				666658ED24AA3FA4006C17B4 /* XPCollectionViewWaterfallFlowLayout.m in Sources */,
+				66700DCF24F413DF008A0314 /* SWTMJCangKuSelectView.m in Sources */,
 				6673BA8D24B35A7E00037A14 /* SWTLaoYouKaiDianLiuChengCell.m in Sources */,
 				666BB1CB24B005EB00341CE8 /* SWTGoodsDetailTVC.m in Sources */,
 				666F814E24EAEA7600F338C1 /* SWTMJFaHuoShowView.m in Sources */,
@@ -3225,6 +3266,7 @@
 				666D392C24E0EF0B0023776B /* SWTZhiBoMessageTVC.m in Sources */,
 				667D505824C4804400A59726 /* SWTShopIntroduceTVC.m in Sources */,
 				666D4AD924CABC9300300957 /* SWTTiJiaoTuiHuoTwoTVC.m in Sources */,
+				66700DD324F41559008A0314 /* SWTMJChanPinKuNeiCell.m in Sources */,
 				6670696324B554A700AB0826 /* SWTZhenPinGeSubTVC.m in Sources */,
 				666A53B524E7D44D00D75A08 /* SWTMJMineOrderSubTVC.m in Sources */,
 				666C484D24D9AC6100DB6D8D /* SWTKeFuTwoNeiCell.m in Sources */,
