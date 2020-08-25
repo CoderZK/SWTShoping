@@ -141,7 +141,7 @@
         }];
         
         [self.shopNameBt mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.imageView.mas_right).offset(8);
+            make.left.equalTo(self.headImgV.mas_right).offset(8);
             make.top.equalTo(self).offset(10);
             make.height.equalTo(@17);
         }];
@@ -342,7 +342,7 @@
 
 - (void)setMjModel:(SWTModel *)mjModel {
     _mjModel = mjModel;
-    [self.imageView sd_setImageWithURL:mjModel.avatar.getPicURL placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+    [self.headImgV sd_setImageWithURL:mjModel.avatar.getPicURL placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
     [self.shopNameBt setTitle: [NSString stringWithFormat:@" %@",mjModel.nickname] forState:UIControlStateNormal];
     self.leftOneLB.text = mjModel.title;
     [self.leftimgV sd_setImageWithURL:[mjModel.thumb getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
@@ -382,19 +382,17 @@
             self.statusLB.text = @"待卖家发货";
             [self.rightTwoBt setTitle:@" 发货 " forState:UIControlStateNormal];
             self.rightOneBt.hidden = YES;
-            self.rightThreeBt.hidden = NO;
+            self.rightTwoBt.hidden = NO;
+            self.rightThreeBt.hidden = YES;
             [self.rightThreeBt mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.right.equalTo(self.rightTwoBt.mas_left).offset(-15);
             }];
-            
-            
-            
-            
         }else if (mjModel.status.intValue == 2) {
             self.statusLB.text = @" 待收货 ";
             [self.rightTwoBt setTitle:@" 查看物流 " forState:UIControlStateNormal];
             self.rightOneBt.hidden = YES;
             self.rightThreeBt.hidden = YES;
+            self.rightTwoBt.hidden = NO;
             [self.rightThreeBt mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.right.equalTo(self.rightTwoBt.mas_left).offset(-15);
             }];
@@ -413,17 +411,17 @@
             self.statusLB.text = @" 售后 ";
             self.rightOneBt.hidden =  YES;
             if (mjModel.backstatus.intValue == -1) {
-                
                 [self.rightTwoBt setTitle:@" 失败 " forState:UIControlStateNormal];
             }else if (mjModel.backstatus.intValue == 1) {
-                
+                self.rightOneBt.hidden =  NO;
+                [self.rightOneBt setTitle:@" 驳回退款 " forState:UIControlStateNormal];
                 [self.rightThreeBt setTitle:@" 同意买家退货 " forState:UIControlStateNormal];
                 
             }else {
-                
+                self.rightOneBt.hidden =  NO;
                 [self.rightOneBt setTitle:@" 查看物流 " forState:UIControlStateNormal];
                 [self.rightTwoBt setTitle:@" 退款 " forState:UIControlStateNormal];
-                self.rightThreeBt.hidden = NO;
+                self.rightThreeBt.hidden = YES;
                 [self.rightThreeBt mas_updateConstraints:^(MASConstraintMaker *make) {
                     make.right.equalTo(self.rightOneBt.mas_left).offset(-15);
                 }];

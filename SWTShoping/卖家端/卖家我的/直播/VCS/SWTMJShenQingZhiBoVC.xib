@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SWTMJShenQingZhiBoVC">
+            <connections>
+                <outlet property="titleLB" destination="iM1-Ks-vOR" id="33m-iX-pjF"/>
+                <outlet property="view" destination="nkc-rK-GJ2" id="ZUx-qw-cEn"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="nkc-rK-GJ2">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bbdyx33" translatesAutoresizingMaskIntoConstraints="NO" id="oFX-XT-hbq">
+                    <rect key="frame" x="0.0" y="44" width="414" height="200"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="200" id="nlj-gC-P4a"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="申请类别" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1BZ-fP-TDf">
+                    <rect key="frame" x="15" y="259" width="384" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="3uf-0V-QPL"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pvI-GZ-qBc">
+                    <rect key="frame" x="0.0" y="294" width="414" height="50"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="店铺已实名认证" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iM1-Ks-vOR">
+                            <rect key="frame" x="15" y="15" width="122" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bbdyx52" translatesAutoresizingMaskIntoConstraints="NO" id="MBP-7g-Aze">
+                            <rect key="frame" x="389" y="17.5" width="15" height="15"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="15" id="DaC-Pa-5L8"/>
+                                <constraint firstAttribute="height" constant="15" id="jEG-pr-76A"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <gestureRecognizers/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="MBP-7g-Aze" secondAttribute="trailing" constant="10" id="TM4-78-its"/>
+                        <constraint firstAttribute="height" constant="50" id="jgE-lf-ubZ"/>
+                        <constraint firstItem="MBP-7g-Aze" firstAttribute="centerY" secondItem="pvI-GZ-qBc" secondAttribute="centerY" id="l9e-Zr-phw"/>
+                    </constraints>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="jSu-yo-4Vj" appends="YES" id="aje-yk-Feq"/>
+                    </connections>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lJq-Wo-ZIH">
+                    <rect key="frame" x="30" y="364" width="354" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="Qu9-ZA-LLj"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="立即开通" backgroundImage="bbdyx27"/>
+                </button>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="6kx-1t-SBc" firstAttribute="trailing" secondItem="oFX-XT-hbq" secondAttribute="trailing" id="1Pv-Pt-yc7"/>
+                <constraint firstItem="pvI-GZ-qBc" firstAttribute="leading" secondItem="6kx-1t-SBc" secondAttribute="leading" id="2Ae-8c-106"/>
+                <constraint firstItem="lJq-Wo-ZIH" firstAttribute="top" secondItem="pvI-GZ-qBc" secondAttribute="bottom" constant="20" id="6Jl-jG-cpB"/>
+                <constraint firstItem="pvI-GZ-qBc" firstAttribute="top" secondItem="1BZ-fP-TDf" secondAttribute="bottom" constant="15" id="FUa-QA-5tR"/>
+                <constraint firstItem="1BZ-fP-TDf" firstAttribute="top" secondItem="oFX-XT-hbq" secondAttribute="bottom" constant="15" id="MOs-eX-V8S"/>
+                <constraint firstItem="6kx-1t-SBc" firstAttribute="trailing" secondItem="pvI-GZ-qBc" secondAttribute="trailing" id="R3e-J3-Hby"/>
+                <constraint firstItem="oFX-XT-hbq" firstAttribute="leading" secondItem="6kx-1t-SBc" secondAttribute="leading" id="cw2-g5-Jsf"/>
+                <constraint firstItem="6kx-1t-SBc" firstAttribute="trailing" secondItem="lJq-Wo-ZIH" secondAttribute="trailing" constant="30" id="dfQ-cz-vgt"/>
+                <constraint firstItem="oFX-XT-hbq" firstAttribute="top" secondItem="6kx-1t-SBc" secondAttribute="top" id="li4-uo-4rz"/>
+                <constraint firstItem="6kx-1t-SBc" firstAttribute="trailing" secondItem="1BZ-fP-TDf" secondAttribute="trailing" constant="15" id="mRj-PQ-67v"/>
+                <constraint firstItem="lJq-Wo-ZIH" firstAttribute="leading" secondItem="6kx-1t-SBc" secondAttribute="leading" constant="30" id="rjM-ZR-vaO"/>
+                <constraint firstItem="1BZ-fP-TDf" firstAttribute="leading" secondItem="6kx-1t-SBc" secondAttribute="leading" constant="15" id="zas-ES-8Bw"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="6kx-1t-SBc"/>
+            <point key="canvasLocation" x="131.8840579710145" y="107.8125"/>
+        </view>
+        <tapGestureRecognizer id="jSu-yo-4Vj">
+            <connections>
+                <action selector="tap:" destination="-1" id="m3s-2i-d2l"/>
+            </connections>
+        </tapGestureRecognizer>
+    </objects>
+    <resources>
+        <image name="bbdyx27" width="308" height="41.5"/>
+        <image name="bbdyx33" width="375" height="211.5"/>
+        <image name="bbdyx52" width="8" height="5.5"/>
+    </resources>
+</document>

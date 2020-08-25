@@ -71,7 +71,7 @@
                             <constraint firstAttribute="width" constant="70" id="EfX-8M-s7o"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="textColor" red="0.99215686270000003" green="0.20392156859999999" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u0Z-Zs-hj4">
@@ -208,7 +208,7 @@
                 <outlet property="titleLB" destination="ccm-FX-g6Y" id="nvk-1G-GTT"/>
                 <outlet property="xiaoLiangLB" destination="wgy-qj-trR" id="Zka-GU-c9k"/>
             </connections>
-            <point key="canvasLocation" x="179" y="54"/>
+            <point key="canvasLocation" x="-92" y="8"/>
         </tableViewCell>
     </objects>
     <resources>

@@ -32,7 +32,10 @@
         [self getData];
     }];
 
-    
+     Weak(weakSelf);
+       self.noneView.clickBlock = ^{
+           [weakSelf getData];
+       };
     
 }
 
@@ -51,6 +54,11 @@
                 arr = dict[@"data"];
             }
             self.dataArray = [SWTWuLiuModel mj_objectArrayWithKeyValuesArray:arr];
+            if (self.dataArray.count == 0) {
+                [self.noneView showNoneDataViewAt:self.view img:[UIImage imageNamed:@"dyx47"] tips:@"暂无数据"];
+            }else {
+                [self.noneView  dismiss];
+            }
             [self.tableView reloadData];
             
         }else {

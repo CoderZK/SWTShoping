@@ -21,7 +21,7 @@
             make.left.equalTo(self);
             make.centerY.equalTo(self);
             make.height.equalTo(@17);
-            make.width.equalTo(@30);
+            make.width.equalTo(@40);
             
         }];
         
@@ -53,7 +53,7 @@
 - (void)setLestStr:(NSString *)lestStr {
     _lestStr = lestStr;
     [self.leftLB mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(@([lestStr getWidhtWithFontSize:14]+10));
+        make.width.equalTo(@([lestStr getWidhtWithFontSize:14]+ 5));
     }];
 }
 

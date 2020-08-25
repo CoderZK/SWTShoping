@@ -97,14 +97,19 @@
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"id"] = self.dataArray[button.tag].ID;
-    dict[@"type"] = @"2";
+    dict[@"type"] = self.dataArray[button.tag].state.intValue == 0?@"1":@"2";
     [zkRequestTool networkingPOST:merchauctionPull_goods_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
-            [SVProgressHUD showSuccessWithStatus:@"下架成功"];
-            [self.dataArray removeObjectAtIndex:button.tag];
+            if (self.dataArray[button.tag].state.intValue == 0) {
+                [SVProgressHUD showSuccessWithStatus:@"上架成功"];
+                self.dataArray[button.tag].state =  @"1";
+            }else {
+                [SVProgressHUD showSuccessWithStatus:@"下架成功"];
+                self.dataArray[button.tag].state = @"0";
+            }
             [self.tableView reloadData];
             
         }else {
@@ -123,9 +128,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    SWTMineOrderDetailTVC * vc =[[SWTMineOrderDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
+//    SWTMineOrderDetailTVC * vc =[[SWTMineOrderDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+//    vc.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:vc animated:YES];
     
 }
 

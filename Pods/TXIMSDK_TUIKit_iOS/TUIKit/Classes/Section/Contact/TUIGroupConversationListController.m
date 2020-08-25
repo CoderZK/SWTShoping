@@ -25,10 +25,10 @@ static NSString *kConversationCell_ReuseId = @"TConversationCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onRefreshConversations:) name:TUIKitNotification_TIMRefreshListener object:nil];
-
-
+    
+    
     _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     [self.view addSubview:_tableView];
     _tableView.delegate = self;
@@ -39,15 +39,15 @@ static NSString *kConversationCell_ReuseId = @"TConversationCell";
     //cell无数据时，不显示间隔线
     UIView *v = [[UIView alloc] initWithFrame:CGRectZero];
     [_tableView setTableFooterView:v];
-
+    
     _tableView.separatorInset = UIEdgeInsetsMake(0, 58, 0, 0);
-
+    
     [_tableView registerClass:[TCommonContactCell class] forCellReuseIdentifier:kConversationCell_ReuseId];
-
-
+    
+    
     self.viewModel = [TUIGroupConversationListViewModel new];
     [self updateConversations];
-
+    
     @weakify(self)
     [RACObserve(self.viewModel, isLoadFinished) subscribeNext:^(id  _Nullable x) {
         @strongify(self)
@@ -127,7 +127,7 @@ static NSString *kConversationCell_ReuseId = @"TConversationCell";
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-
+    
 #define TEXT_TAG 1
     static NSString *headerViewId = @"ContactDrawerView";
     UITableViewHeaderFooterView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:headerViewId];
@@ -143,7 +143,7 @@ static NSString *kConversationCell_ReuseId = @"TConversationCell";
     }
     UILabel *label = [headerView viewWithTag:TEXT_TAG];
     label.text = self.viewModel.groupList[section];
-
+    
     return headerView;
 }
 
@@ -154,9 +154,9 @@ static NSString *kConversationCell_ReuseId = @"TConversationCell";
 
 - (void)didSelectConversation:(TCommonContactCell *)cell
 {
-
+    
     TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_GROUP receiver:cell.contactData.identifier];
-
+    
     TUIChatController *chat = [[TUIChatController alloc] initWithConversation:conv];
     chat.title = cell.contactData.title;
     [self.navigationController pushViewController:chat animated:YES];
@@ -173,7 +173,7 @@ static NSString *kConversationCell_ReuseId = @"TConversationCell";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
+    
 }
 
 - (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {

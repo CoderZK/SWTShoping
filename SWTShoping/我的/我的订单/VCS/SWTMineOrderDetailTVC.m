@@ -17,6 +17,7 @@
 #import "SWTTiJiaoTuiHuoTwoTVC.h"
 #import "SWTWuLiuTVC.h"
 #import "SWTTuiHuoOneTVC.h"
+#import "SWTMJFaHuoShowView.h"
 @interface SWTMineOrderDetailTVC ()
 @property(nonatomic , strong)SWTModel *dataModel;
 @end
@@ -176,7 +177,9 @@
             SWTMineOrderCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTMineOrderCell" forIndexPath:indexPath];
             self.dataModel.goodprice = self.dataModel.price;
             self.dataModel.goodnum = self.dataModel.num;
-            cell.model = self.dataModel;
+            self.dataModel.nickname = self.dataModel.store_name;
+            self.dataModel.title = self.dataModel.goodname;
+            cell.mjModel = self.dataModel;
             [cell.rightTwoBt addTarget:self action:@selector(rightTwoAction:) forControlEvents:UIControlEventTouchUpInside];
             [cell.rightOneBt addTarget:self action:@selector(rightOneAction:) forControlEvents:UIControlEventTouchUpInside];
             [cell.rightThreeBt addTarget:self action:@selector(rightThreeAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -243,39 +246,78 @@
 //0未支付1待发货2待收货3待评价4已完成5已关闭-1交易失败 -2 全部 6 售后
 - (void)rightTwoAction:(UIButton *)button {
     SWTModel * model = self.dataModel;
-    if (model.status.intValue == 0) {
-        //付款
-        SWTPayVC * vc =[[SWTPayVC alloc] init];
-        vc.hidesBottomBarWhenPushed = YES;
-        vc.orderID = model.orderid;
-        vc.priceStr = model.goodprice;
-        [self.navigationController pushViewController:vc animated:YES];
-        
-//        [self actionModel:model withOrderID:nil withUrlStr:orderPay_SWT withtype:-20];
-    }else if (model.status.intValue == 1) {
-        //
-        [self actionModel:model withOrderID:nil withUrlStr:@"1234" withtype:-11];
-    }else if (model.status.intValue == 2) {
-        [self actionModel:model withOrderID:nil withUrlStr:orderDelivery_SWT withtype:-2];
-    }else if (model.status.intValue == 3) {
-        
-        SWTSendMinePingLunTVC* vc =[[SWTSendMinePingLunTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-        vc.hidesBottomBarWhenPushed = YES;
-        vc.model = model;
-        [self.navigationController pushViewController:vc animated:YES];
-        
-    }else if (model.status.intValue == 4) {
-        [self actionModel:model withOrderID:nil withUrlStr:@"1234" withtype:-4];
-    }else if (model.status.intValue == 5) {
-        [self actionModel:model withOrderID:nil withUrlStr:@"1234" withtype:-5];
-    }else if (model.status.intValue == 6) {
-        SWTTiJiaoTuiHuoTwoTVC * vc =[[SWTTiJiaoTuiHuoTwoTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-        vc.hidesBottomBarWhenPushed = YES;
-        vc.model = model;
-        [self.navigationController pushViewController:vc animated:YES];
+    
+    
+    if  (self.isMj) {
+        if ([button.titleLabel.text containsString:@"发货"]) {
+            [self faHuoActionWithModel:self.dataModel];
+
+        }else if ([button.titleLabel.text containsString:@"查看物流"]) {
+            SWTWuLiuTVC * vc =[[SWTWuLiuTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+            vc.hidesBottomBarWhenPushed = YES;
+            vc.ID = model.ID;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else if ([button.titleLabel.text containsString:@"退款"]) {
+            //
+        }else if ([button.titleLabel.text containsString:@"同意买家退货"]) {
+            
+        }
+    }else {
+
+            if (model.status.intValue == 0) {
+                //付款
+                SWTPayVC * vc =[[SWTPayVC alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                vc.orderID = model.orderid;
+                vc.priceStr = model.goodprice;
+                [self.navigationController pushViewController:vc animated:YES];
+                
+        //        [self actionModel:model withOrderID:nil withUrlStr:orderPay_SWT withtype:-20];
+            }else if (model.status.intValue == 1) {
+                //
+                [self actionModel:model withOrderID:nil withUrlStr:@"1234" withtype:-11];
+            }else if (model.status.intValue == 2) {
+                [self actionModel:model withOrderID:nil withUrlStr:orderDelivery_SWT withtype:-2];
+            }else if (model.status.intValue == 3) {
+                
+                SWTSendMinePingLunTVC* vc =[[SWTSendMinePingLunTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                vc.hidesBottomBarWhenPushed = YES;
+                vc.model = model;
+                [self.navigationController pushViewController:vc animated:YES];
+                
+            }else if (model.status.intValue == 4) {
+                [self actionModel:model withOrderID:nil withUrlStr:@"1234" withtype:-4];
+            }else if (model.status.intValue == 5) {
+                [self actionModel:model withOrderID:nil withUrlStr:@"1234" withtype:-5];
+            }else if (model.status.intValue == 6) {
+                SWTTiJiaoTuiHuoTwoTVC * vc =[[SWTTiJiaoTuiHuoTwoTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                vc.hidesBottomBarWhenPushed = YES;
+                vc.model = model;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
     }
     
+    
+    
 }
+
+//发货
+- (void)faHuoActionWithModel:(SWTModel *)model {
+    
+    SWTMJFaHuoShowView * showV  =[[SWTMJFaHuoShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+    showV.delegateSignal = [[RACSubject alloc] init];
+    @weakify(self);
+    [showV.delegateSignal subscribeNext:^(NSArray * x) {
+        @strongify(self);
+        
+        
+        
+    }];
+    [showV show];
+    
+    
+}
+
 
 //左侧按钮
 - (void)rightOneAction:(UIButton *)button {

@@ -22,6 +22,8 @@
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *selectCangKuArr;
 @property(nonatomic , strong)NSMutableArray *picArr,*picStrArr;
 @property(nonatomic,assign)BOOL isBaoYou;
+@property(nonatomic , strong)SWTModel *dataModel;
+
 @end
 
 @implementation SWTAddMineChanPinKuTVC
@@ -60,6 +62,11 @@
     self.chanPinKuArr = @[].mutableCopy;
     [self getChanPinKuData];
     self.selectCangKuArr = @[].mutableCopy;
+    
+    if (self.isEdit) {
+        [self getGetGoodDetail];
+    }
+    
     
 }
 
@@ -154,7 +161,7 @@
         [SVProgressHUD showErrorWithStatus:@"请输入规格"];
         return;
     }
-    if (self.caiZHiID.length == 0) {
+    if (self.headV.caizhiV.TF.text.length == 0) {
          [SVProgressHUD showErrorWithStatus:@"请选择材质"];
         return;
     }
@@ -192,7 +199,7 @@
               [SVProgressHUD showErrorWithStatus:@"请输入底价"];
               return;;
           }
-    if (self.jiaJiaStr.length == 0) {
+    if (self.jiaJiaStr.length == 0 && self.typeStr.intValue == 1) {
         [SVProgressHUD showErrorWithStatus:@"请输入每次加价"];
         return;;
     }
@@ -224,12 +231,37 @@
     dict[@"thumbs"] = [self.picStrArr componentsJoinedByString:@","];
     dict[@"weight"] = self.headV.weightV.TF.text;
     dict[@"stepprice"] = self.jiaJiaStr;
-    [zkRequestTool networkingPOST:merchgoodsAdd_goods_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+    
+    NSString * urlstr  = merchgoodsAdd_goods_SWT;
+    if (self.isEdit) {
+        urlstr =  merchgoodsUpd_goods_SWT;
+        dict[@"id"] = self.ID;
+    }
+    [zkRequestTool networkingPOST:urlstr parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
-            [SVProgressHUD showSuccessWithStatus:@"添加商品成功"];
+            if (self.isEdit) {
+                [SVProgressHUD showSuccessWithStatus:@"商品编辑成功成功"];
+            }else {
+               [SVProgressHUD showSuccessWithStatus:@"添加商品成功"];
+            }
+            
+            
+            SWTModel * wmodel = [[SWTModel alloc] init];
+            wmodel.place = self.headV.addressV.TF.text;
+            wmodel.spec = self.headV.guiGeV.TF.text;
+            wmodel.material = self.headV.caizhiV.TF.text;
+            wmodel.stock = self.kuCunStr;
+            wmodel.warehouse_str = self.selectCangKuArr[0].name;
+            
+            if (self.addOrEditGoodSucessBlock != nil) {
+                self.addOrEditGoodSucessBlock(wmodel);
+            }
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
             
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
@@ -303,6 +335,7 @@
                 [self addPict];
             }else {
                 //删除图片
+                [self.picArr removeObjectAtIndex:x.intValue - 200];
             }
         }
         
@@ -332,6 +365,13 @@
     }
     if (indexPath.section == 2 && indexPath.row == 2) {
         return 0;
+    }
+    if (indexPath.section == 2 && indexPath.row == 1) {
+        if (self.typeStr.intValue == 0) {
+            return 0;
+        }else {
+            return 50;
+        }
     }
     return 50;
 }
@@ -395,6 +435,7 @@
             cell.leftLB.text = @"包邮";
             cell.swithBt.hidden = NO;
             cell.swithBt.on = self.isBaoYou;
+            cell.swithBt.userInteractionEnabled = NO;
         }
         cell.rightTF.delegate = self;
         cell.clipsToBounds = YES;
@@ -523,9 +564,9 @@
 
 - (void)didSelectLeftIndex:(NSInteger)leftIndex centerIndex:(NSInteger)centerIndex rightIndex:(NSInteger)rightIndex {
     if (self.selectIndex == 100) {
-        self.headV.leiBieV.TF.text = [@[@"一口价",@"竞拍"] objectAtIndex:leftIndex];
+        self.headV.leiBieV.TF.text = @[@"一口价",@"竞拍"][leftIndex];
         self.typeStr =  [NSString stringWithFormat:@"%ld",(long)leftIndex];
-
+        [self.tableView reloadData];
     }else if (self.selectIndex == 102) {
         self.caiZHiID = self.caiZhiArr[leftIndex].ID;
         self.headV.caizhiV.TF.text = self.caiZhiArr[leftIndex].name;
@@ -538,10 +579,25 @@
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"type"] = @"comment";
     dict[@"userid"] = [zkSignleTool shareTool].session_uid;
-    [zkRequestTool NetWorkingUpLoad:uploadfiles_SWT images:self.picArr name:@"files" parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+    
+    NSMutableArray * arrTwo = @[].mutableCopy;
+    NSMutableArray * arrOne = @[].mutableCopy;
+    for (int i = 0 ; i < self.picArr.count; i++) {
+        if ([self.picArr[i] isKindOfClass:[UIImage class]]) {
+            [arrOne addObject:self.picArr[i]];
+        }else {
+            [arrTwo addObject:self.picArr[i]];
+        }
+    }
+    
+    
+    [zkRequestTool NetWorkingUpLoad:uploadfiles_SWT images:arrOne name:@"files" parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         
         if ([responseObject[@"code"] intValue] == 200) {
-            self.picStrArr = responseObject[@"data"];
+            NSArray * arr  = responseObject[@"data"];
+            self.picStrArr = @[].mutableCopy;
+            [self.picStrArr addObjectsFromArray:arrTwo];
+            [self.picStrArr addObjectsFromArray:arr];
             [self tijaoTwoAction];
         }else {
             [self showAlertWithKey:responseObject[@"code"] message:responseObject[@"msg"] ];
@@ -551,6 +607,56 @@
         
     }];
     
+    
+}
+
+
+- (void)getGetGoodDetail {
+    
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"id"] = self.ID;
+    [zkRequestTool networkingPOST:merchgoodsGet_goods_detail_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            self.dataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
+            [self.tableView reloadData];
+            self.headV.leiBieV.TF.text =  @[@"一口价",@"竞拍"][self.dataModel.type.intValue];
+            self.typeStr = self.dataModel.type;
+            
+            self.headV.nameV.TF.text = @"123";
+            self.twoID = self.dataModel.category_id;
+            self.headV.addressV.TF.text = self.dataModel.place;
+            self.headV.guiGeV.TF.text = self.dataModel.spec;
+            self.headV.caizhiV.TF.text = self.dataModel.material;
+            self.headV.chanPinNameTF.text = self.dataModel.title;
+            self.headV.TV.text = self.dataModel.des;
+            self.bianHaoStr = self.dataModel.sn;
+            self.kuCunStr = self.dataModel.stock;
+            self.diJiaStr = self.dataModel.productprice;
+            self.jiaJiaStr = self.dataModel.stepprice;
+            self.isBaoYou = [self.dataModel.is_free_freight intValue];
+            self.headV.weightV.TF.text = self.dataModel.weight;
+            self.picArr = [self.dataModel.thumbs componentsSeparatedByString:@","].mutableCopy;
+            self.headV.picArr = self.picArr;
+            
+            [self.tableView reloadData];
+            
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+
     
 }
 

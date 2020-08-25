@@ -26,7 +26,7 @@
         self.imgView = imgView;
         self.searchTF = [[UITextField alloc] initWithFrame:CGRectMake(15, (frame.size.height - 34)/ 2, frame.size.width - 30, 34)];
         NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:@"请输入拍品" attributes:
-                                          @{NSForegroundColorAttributeName:WhiteColor,
+                                          @{NSForegroundColorAttributeName:[UIColor darkGrayColor],
                                             NSFontAttributeName:self.searchTF.font
                                           }];
         self.searchTF.attributedPlaceholder = attrString;

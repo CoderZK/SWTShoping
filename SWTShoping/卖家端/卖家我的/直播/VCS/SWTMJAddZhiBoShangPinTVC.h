@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTMJAddZhiBoShangPinTVC : BaseTableViewController
-
+@property(nonatomic , strong)NSString *liveid;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -237,7 +237,7 @@
     [self.tableView endEditing:YES];
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    dict[@"id"] = [zkSignleTool shareTool].session_uid;
+    dict[@"id"] = [zkSignleTool shareTool].selectShopID;
     dict[@"avatar"] = self.headImgStr;
     dict[@"store_name"] = self.dataModel.store_name;
     dict[@"description"] = self.dataModel.des;

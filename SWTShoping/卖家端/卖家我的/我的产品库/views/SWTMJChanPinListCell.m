@@ -31,7 +31,7 @@
     self.caiZhiLB.text = model.material;
     self.kuCunLB.text = model.stock;
     self.xiaoLiangLB.text = @"0";
-    self.caiZhiLB.text = model.warehouse_str;
+    self.chanPinKuLB.text = model.warehouse_str;
 }
 
 @end

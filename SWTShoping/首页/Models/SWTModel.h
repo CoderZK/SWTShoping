@@ -153,7 +153,20 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *goodsnum;
 @property(nonatomic,strong)NSString *place;
 @property(nonatomic,strong)NSString *warehouse_str;
-//@property(nonatomic,strong)NSString *orderid;
+@property(nonatomic,strong)NSString *sn;
+@property(nonatomic,strong)NSString *weight;
+//@property(nonatomic,strong)NSString *idcard;
+//@property(nonatomic,strong)NSString *orderprice_curr;
+//@property(nonatomic,strong)NSString *orderprice_last;
+//@property(nonatomic,strong)NSString *orderpay;
+//@property(nonatomic,strong)NSString *orderrefund;
+//@property(nonatomic,strong)NSString *goodsnum;
+//@property(nonatomic,strong)NSString *place;
+//@property(nonatomic,strong)NSString *warehouse_str;
+//@property(nonatomic,strong)NSString *sn;
+//@property(nonatomic,strong)NSString *weight;
+
+
 
 ////转化成模型
 @property(nonatomic,strong)SWTModel *merchinfo;

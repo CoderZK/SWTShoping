@@ -61,10 +61,7 @@
         self.headView.mj_h = 0;
         self.tableView.tableHeaderView = self.headView;
     }  else  if (self.type == 1) {
-        
-        
 
-        
         NSMutableArray * arrTwo = @[].mutableCopy;
         for (SWTModel * mm  in self.canPinKuArr) {
             [arrTwo addObject:mm.name];
@@ -258,7 +255,7 @@
 
 - (void)setDataArray:(NSArray *)dataArray {
     _dataArray = dataArray;
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
 }
 
 - (void)setType:(NSInteger)type {
@@ -320,9 +317,7 @@
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     cell.textLabel.text = self.dataArray[indexPath.row];
-    if (self.delegateSignal) {
-        [self.delegateSignal sendNext:@(indexPath.row)];
-    }
+    
     return cell;
 }
 
@@ -330,7 +325,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    
+    if (self.delegateSignal) {
+        [self.delegateSignal sendNext:@(indexPath.row)];
+    }
     
 }
 

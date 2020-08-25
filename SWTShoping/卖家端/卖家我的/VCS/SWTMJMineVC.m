@@ -55,6 +55,7 @@
     }];
     [self merchCheckOpen];
     self.tabBarController.delegate = self;
+    [self tongjiAction];
 }
 
 - (void)setLeftNagate {
@@ -173,6 +174,13 @@
         }
         return 95;
     }
+    if  (indexPath.row == 4) {
+        if (self.dataModel.merchinfo.type.intValue == 3) {
+            return 50;
+        }else {
+            return 0;
+        }
+    }
     return 50;
 }
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -201,6 +209,7 @@
                 
             }];
             cell.model = self.dataModel;
+            cell.clipsToBounds = YES;
             return cell;
         }else {
             SWTMJMineTwoCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTMJMineTwoCell" forIndexPath:indexPath];
@@ -220,7 +229,7 @@
                     
                 }
             };
-            
+            cell.clipsToBounds = YES;
             return cell;
         }
     }else {
@@ -228,15 +237,42 @@
         cell.leftLB.text = self.leftArr[indexPath.row];
         cell.leftImgV.image = [UIImage imageNamed: [NSString stringWithFormat:@"bbdyx%d",11+indexPath.row]];
         if (indexPath.row == 0) {
-            cell.rightLB.text =  [NSString stringWithFormat:@"%d元",self.dataModel.credit.intValue];
+            cell.rightLB.text =  [NSString stringWithFormat:@"%0.2f元",self.dataModel.credit.floatValue];
         }else if (indexPath.row == 1) {
             cell.rightLB.text =  [NSString stringWithFormat:@"竞拍中%d单",self.jingPaiNumebr.intValue];
         }else {
             cell.rightLB.text = @"";
         }
+        cell.clipsToBounds = YES;
         return cell;
     }
     
+}
+
+- (void)tongjiAction {
+
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"merchid"] = [zkSignleTool shareTool].selectShopID;
+    [zkRequestTool networkingPOST:merchauctionCount_auction_goods_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            self.jingPaiNumebr =  [NSString stringWithFormat:@"%@",responseObject[@"data"][@"num"]];
+            [self.tableView reloadData];
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+
 }
 
 
@@ -272,9 +308,18 @@
             vc.merch_id = self.dataModel.merchinfo.merch_id;
             [self.navigationController pushViewController:vc animated:YES];
         }else if (indexPath.row == 4) {
-            SWTMJZhiBoHomeTVC * vc =[[SWTMJZhiBoHomeTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
+            
+            if (self.dataModel.merchinfo.islive) {
+                //可以直播
+                SWTMJZhiBoHomeTVC * vc =[[SWTMJZhiBoHomeTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else {
+                //不可以直播,去生情
+                
+            }
+            
+            
         }else if (indexPath.row == 5) {
             SWTMJMineVideoFatherVC * vc =[[SWTMJMineVideoFatherVC alloc] init];
             vc.hidesBottomBarWhenPushed = YES;

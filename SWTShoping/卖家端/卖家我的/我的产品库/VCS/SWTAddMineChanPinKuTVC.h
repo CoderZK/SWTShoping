@@ -11,7 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTAddMineChanPinKuTVC : BaseTableViewController
-
+@property(nonatomic,assign)BOOL isEdit;
+@property(nonatomic , strong)NSString *ID;
+@property(nonatomic , copy)void(^addOrEditGoodSucessBlock)(SWTModel *model);
 @end
 
 NS_ASSUME_NONNULL_END

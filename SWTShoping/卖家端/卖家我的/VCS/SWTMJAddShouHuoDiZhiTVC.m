@@ -16,6 +16,7 @@
 @property(nonatomic , strong)UISwitch *switchBt;
 @property(nonatomic , strong)NSString *pStr,*cStr,*aStr,*addStr;
 @property(nonatomic , strong)NSMutableArray<zkPickModel *> *cityArr;
+@property(nonatomic , strong)SWTModel *dataModel;
 
 @end
 
@@ -203,5 +204,7 @@
         self.detailStr = textField.text;
     }
 }
+
+
 
 @end

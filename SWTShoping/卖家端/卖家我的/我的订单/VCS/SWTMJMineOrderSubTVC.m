@@ -9,6 +9,8 @@
 #import "SWTMJMineOrderSubTVC.h"
 #import "SWTMineOrderCell.h"
 #import "SWTMJFaHuoShowView.h"
+#import "SWTMineOrderDetailTVC.h"
+#import "SWTWuLiuTVC.h"
 @interface SWTMJMineOrderSubTVC ()
 @property(nonatomic,assign)NSInteger page;
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *dataArray;
@@ -35,13 +37,13 @@
         [self getData];
     }];
     
-     Weak(weakSelf);
-          self.noneView.clickBlock = ^{
-              
-              weakSelf.page = 1;
-              [weakSelf getData];
-          };
-       
+    Weak(weakSelf);
+    self.noneView.clickBlock = ^{
+        
+        weakSelf.page = 1;
+        [weakSelf getData];
+    };
+    
 }
 
 - (void)getData {
@@ -52,7 +54,7 @@
     dict[@"pageindex"] = @(self.page);
     dict[@"pagesize"] = @(10);
     dict[@"merchid"] = [zkSignleTool shareTool].selectShopID;
-    dict[@"type"] = @(self.type);
+    dict[@"type"] =self.type == 0 ?@"": @(self.type);
     dict[@"token"] = [zkSignleTool shareTool].session_token;
     [zkRequestTool networkingPOST:merchorderGet_order_list_merch_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
@@ -107,15 +109,51 @@
     
     if ([button.titleLabel.text containsString:@"发货"]) {
         [self faHuoActionWithModel:self.dataArray[button.tag]];
-    }else if ([button.titleLabel.text containsString:@"查看物流"]) {
         
+        
+        
+    }else if ([button.titleLabel.text containsString:@"查看物流"]) {
+        SWTWuLiuTVC * vc =[[SWTWuLiuTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.ID = self.dataArray[button.tag].ID;
+        [self.navigationController pushViewController:vc animated:YES];
     }else if ([button.titleLabel.text containsString:@"退款"]) {
         //
+        [self caozuoWithID:self.dataArray[button.tag].ID withType:3];
     }else if ([button.titleLabel.text containsString:@"同意买家退货"]) {
-        
+        [self caozuoWithID:self.dataArray[button.tag].ID withType:2];
+    }else if ([button.titleLabel.text containsString:@"驳回退款"]) {
+        [self caozuoWithID:self.dataArray[button.tag].ID withType:1];
     }
 }
 
+// 售后操作
+- (void)caozuoWithID:(NSString *)ID withType:(NSInteger)type {
+    
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"refundid"] = ID;
+    dict[@"opt"] = @(type);
+    [zkRequestTool networkingPOST:merchorderAudit_order_merch_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+
+    
+}
 //发货
 - (void)faHuoActionWithModel:(SWTModel *)model {
     
@@ -129,7 +167,7 @@
         
     }];
     [showV show];
-
+    
     
 }
 
@@ -138,7 +176,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-        
+    SWTMineOrderDetailTVC * vc =[[SWTMineOrderDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+    vc.hidesBottomBarWhenPushed = YES;
+    vc.ID = self.dataArray[indexPath.row].orderid;
+    [self.navigationController pushViewController:vc animated:YES];
+    
+    
+    
 }
 
 

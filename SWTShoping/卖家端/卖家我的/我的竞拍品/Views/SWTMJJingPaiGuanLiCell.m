@@ -90,7 +90,7 @@
         [self.xieJiaBt setTitle:@"下架" forState:UIControlStateNormal];
         self.xieJiaBt.titleLabel.font = kFont(14);
         
-        self.xieJiaBt.layer.borderColor = YellowColor.CGColor;
+        self.xieJiaBt.layer.borderColor = RedLightColor.CGColor;
         self.xieJiaBt.layer.borderWidth = 0.5;
         [self.xieJiaBt setTitleColor:RedLightColor forState:UIControlStateNormal];
         [self addSubview:self.xieJiaBt];
@@ -165,7 +165,7 @@
         }];
         
         [self.shopNameBt mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.imageView.mas_right).offset(8);
+            make.left.equalTo(self.headImgV.mas_right).offset(8);
             make.top.equalTo(self).offset(10);
             make.height.equalTo(@17);
         }];
@@ -202,24 +202,27 @@
             make.left.equalTo(self.leftimgV.mas_right).offset(5);
             make.top.equalTo(self.leftOneLB.mas_bottom).offset(7);
             make.height.equalTo(@17);
+            make.width.equalTo(@60);
         }];
         
         [self.leftTwoLb mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(LB1.mas_right).offset(5);
             make.right.equalTo(self).offset(-10);
-            make.top.equalTo(self.leftOneLB.mas_bottom).offset(7);
+            make.top.equalTo(LB1);
             make.height.equalTo(@17);
         }];
         
         [LB2 mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.leftimgV.mas_right).offset(5);
             make.top.equalTo(self.leftTwoLb.mas_bottom).offset(7);
+             make.width.equalTo(@60);
+            make.height.equalTo(@17);
         }];
         
         [self.leftThreeLB mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(LB2.mas_right).offset(5);
             make.right.equalTo(self).offset(-10);
-            make.top.equalTo(self.leftTwoLb.mas_bottom).offset(7);
+            make.top.equalTo(LB2);
             make.height.equalTo(@17);
         }];
         
@@ -293,8 +296,16 @@
         self.statusLB.text = @"流拍";
     }
     
+    if (model.state.intValue == 0) {
+        [self.xieJiaBt setTitle:@"上架" forState:UIControlStateNormal];
+    }else if (model.state.intValue == 1){
+        [self.xieJiaBt setTitle:@"下架" forState:UIControlStateNormal];
+    }
+    
     self.leftTwoLb.text =  [NSString stringWithFormat:@"￥%@",model.curr_price];
+    self.leftTwoLb.textAlignment = NSTextAlignmentLeft;
     self.leftThreeLB.text = model.bidsnum;
+    self.leftThreeLB.textAlignment = NSTextAlignmentLeft;
     
 }
 

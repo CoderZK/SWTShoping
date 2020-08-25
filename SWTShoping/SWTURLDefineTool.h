@@ -181,6 +181,25 @@
 #define liveLivegoodlist_SWT URLOne@"live/livegoodlist"
 /** 获取最新价格  */
 #define liveNowgoodprice_SWT URLOne@"live/nowgoodprice"
+/** 检查商户直播间状态 */
+#define merchliveCheck_room_SWT URLOne@"merchlive/check_room"
+
+/** 获取直播商品列表 */
+#define merchliveGet_live_goods_list_merch_SWT URLOne@"merchlive/get_live_goods_list_merch"
+/** 删除直播商品 */
+#define merchliveDel_live_goods_goods_list_merch_SWT URLOne@"merchlive/del_live_goods"
+
+/** 添加商品 */
+#define merchliveAdd_live_goods_SWT URLOne@"merchlive/add_live_goods"
+/** 删除商品 */
+#define merchliveDel_live_goods_SWT URLOne@"merchlive/del_live_goods"
+
+/** 统计竞品数量 */
+#define merchauctionCount_auction_goods_SWT URLOne@"merchauction/count_auction_goods"
+/** 获取直播分类 */
+#define merchliveGet_live_cate_SWT URLOne@"merchlive/get_live_cate"
+/** 申请直播 */
+#define merchliveAdd_room_apply_SWT URLOne@"merchlive/add_room_apply"
 
 
 
@@ -331,7 +350,7 @@
 /** 直播订单 */
 #define merchGet_live_order_list_SWT URLOne@"merch/get_live_order_list"
 /** 商品库页面信息 */
-#define merchStatic_warehouse_SWT URLOne@"merch/static_warehouse"
+#define merchgoodsGet_warehouse_info_SWT URLOne@"merchgoods/get_warehouse_info"
 
 #pragma mark ----- 商户端订单 -----
 

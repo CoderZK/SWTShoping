@@ -148,7 +148,7 @@
     
     SWTMJMineOrderSubTVC *vc = [[SWTMJMineOrderSubTVC alloc] init];
     
-    vc.type = index+1;
+    vc.type = index;
     return vc;
     
 }

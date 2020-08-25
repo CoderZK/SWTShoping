@@ -38,7 +38,8 @@
 - (void)getData {
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    [zkRequestTool networkingPOST:merchStatic_warehouse_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+    dict[@"merchid"] = [zkSignleTool shareTool].selectShopID;
+    [zkRequestTool networkingPOST:merchgoodsGet_warehouse_info_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];
@@ -46,7 +47,7 @@
             
             self.dataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
             [self.tableView reloadData];
-            self.numberOneLB.text = self.dataModel.goodsnum.length == 0? 0:self.dataModel.goodsnum;
+            self.numberOneLB.text = self.dataModel.goodsnum.length == 0? @"0":self.dataModel.goodsnum;
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }
@@ -191,6 +192,11 @@
 - (void)addAction:(UIButton *)button {
     SWTAddMineChanPinKuTVC * vc =[[SWTAddMineChanPinKuTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
     vc.hidesBottomBarWhenPushed = YES;
+    Weak(weakSelf);
+    vc.addOrEditGoodSucessBlock = ^(SWTModel * _Nonnull model) {
+        weakSelf.dataModel.goodsnum =  [NSString stringWithFormat:@"%d",self.dataModel.goodsnum.intValue+1];
+        weakSelf.numberOneLB.text = self.dataModel.goodsnum;
+    };
     [self.navigationController pushViewController:vc animated:YES];
 }
 

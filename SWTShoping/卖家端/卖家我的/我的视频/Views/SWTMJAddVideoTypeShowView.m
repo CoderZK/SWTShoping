@@ -8,6 +8,7 @@
 
 #import "SWTMJAddVideoTypeShowView.h"
 #import "SWTAddVideoTypeCell.h"
+#import "SWTMJAddZhiBoShangPinCell.h"
 @interface SWTMJAddVideoTypeShowView()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic , strong)UIView *whiteV;
 @property(nonatomic , strong)UITextField *TF;
@@ -18,6 +19,8 @@
 @property(nonatomic , strong)UITableView *tableView;
 @property(nonatomic , strong)UIView *footView;
 @property(nonatomic , strong)ALCSearchView *searchTitleView;
+@property(nonatomic , strong)NSMutableArray<SWTModel *> *searchArr;
+@property(nonatomic,assign)BOOL isSearch;
 @end
 
 @implementation SWTMJAddVideoTypeShowView
@@ -28,11 +31,11 @@
         UIButton *button = [[UIButton alloc] initWithFrame:[UIScreen mainScreen].bounds];
         [button addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:button];
- 
+        
         self.whiteV = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenH, ScreenW, 500)];
         self.whiteV.backgroundColor = WhiteColor;
         [self addSubview:self.whiteV];
-      
+        
         
         UILabel * lb  = [[UILabel alloc] initWithFrame:CGRectMake(15, 20, ScreenW - 40, 20)];
         lb.text = @"视频分类";
@@ -41,7 +44,7 @@
         [self.whiteV addSubview:lb];
         self.titleLB = lb;
         
-     
+        
         self.cancelBt = [[UIButton alloc] initWithFrame:CGRectMake(15, 50, 50, 40)];
         [self.cancelBt setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         self.cancelBt.tag = 100;
@@ -54,12 +57,13 @@
         self.confirmBt.tag = 101;
         [self.confirmBt setTitle:@"确定" forState:UIControlStateNormal];
         [self.confirmBt addTarget:self action:@selector(confirmAction) forControlEvents:UIControlEventTouchUpInside];
-       [self.whiteV addSubview:self.confirmBt];
+        [self.whiteV addSubview:self.confirmBt];
         
         self.tableView = [[UITableView alloc] init];
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         [self.tableView registerNib:[UINib nibWithNibName:@"SWTAddVideoTypeCell" bundle:nil] forCellReuseIdentifier:@"cell"];
+        [self.tableView registerNib:[UINib nibWithNibName:@"SWTMJAddZhiBoShangPinCell" bundle:nil] forCellReuseIdentifier:@"SWTMJAddZhiBoShangPinCell"];
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self.whiteV addSubview:self.tableView];
         [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -77,6 +81,7 @@
     
     self.searchTitleView = [[ALCSearchView alloc] initWithFrame:CGRectMake(15, 0, ScreenW - 30, 35)];
     self.searchTitleView.searchTF.delegate = self;
+
     
     self.searchTitleView.isPush = NO;
     self.searchTitleView.isBlack = YES;
@@ -93,11 +98,25 @@
         }
     }] subscribeNext:^(NSString * _Nullable x) {
         NSLog(@"======\n%@",x);
+        self.isSearch = YES;
+        self.searchArr = @[].mutableCopy;
+        for (SWTModel * mm  in self.dataArray) {
+            if ([mm.title containsString:x]) {
+                [self.searchArr addObject:mm];
+            }
+        }
+        [self.tableView reloadData];
+        
+        
     }];
     [self.headV addSubview:self.searchTitleView];
     
     self.tableView.tableHeaderView = self.headV;
     
+}
+- (void)setDataArray:(NSMutableArray *)dataArray {
+    _dataArray = dataArray;
+    [self.tableView reloadData];
 }
 
 - (void)setType:(NSInteger)type {
@@ -111,10 +130,14 @@
 }
 
 - (void)confirmAction{
-   
-    if (self.delegateSignal) {
-        [self.delegateSignal sendNext:self.TF.text];
+    if (self.type == 1) {
+        [self dismiss];
+    }else {
+        if (self.delegateSignal) {
+            [self.delegateSignal sendNext:self.TF.text];
+        }
     }
+    
 }
 
 - (void)show {
@@ -140,20 +163,49 @@
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    if (self.type == 1) {
+        if (self.isSearch) {
+            return self.searchArr.count;
+        }else {
+            return self.dataArray.count;
+        }
+    }
+    return self.dataArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.type == 1) {
+        return 90;
+    }
     return 40;
 }
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    SWTAddVideoTypeCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    return cell;
+    
+    if (self.type == 1) {
+        SWTMJAddZhiBoShangPinCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTMJAddZhiBoShangPinCell" forIndexPath:indexPath];
+        cell.model = self.dataArray[indexPath.row];
+        return cell;
+    }else {
+        SWTAddVideoTypeCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+        return cell;
+    }
+    
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    if (self.type == 1) {
+        if (self.delegateSignal) {
+            if (self.isSearch) {
+                [self.delegateSignal sendNext:self.searchArr[indexPath.row].ID];
+            }else {
+                SWTModel * model =self.dataArray[indexPath.row];
+                [self.delegateSignal sendNext:model.ID];
+            }
+            
+        }
+    }
     
     
 }
