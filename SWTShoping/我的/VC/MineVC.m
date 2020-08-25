@@ -399,7 +399,7 @@
            
             NSMutableArray * arr = @[].mutableCopy;
             for (SWTModel * model in self.userDataModel.merchlist) {
-                       [arr addObject:model.store_name];
+                [arr addObject: [NSString stringWithFormat:@"%@-%@",model.store_name,model.type]];
                    }
                    zkPickView * pickV = [[zkPickView alloc] init];
                    pickV.arrayType = titleArray;

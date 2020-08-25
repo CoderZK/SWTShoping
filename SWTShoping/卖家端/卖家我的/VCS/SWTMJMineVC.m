@@ -22,6 +22,7 @@
 #import "SWTMJAddYouHuiQuanTVC.h"
 #import "SWTMJHomeVC.h"
 #import "SWTMJZhiBoHomeTVC.h"
+#import "SWTMJShenQingZhiBoVC.h"
 @interface SWTMJMineVC ()<UITabBarControllerDelegate>
 @property(nonatomic , strong)NSArray *leftArr;
 @property(nonatomic , strong)SWTModel *dataModel;
@@ -175,7 +176,7 @@
         return 95;
     }
     if  (indexPath.row == 4) {
-        if (self.dataModel.merchinfo.type.intValue == 3) {
+        if (self.dataModel.merchinfo.islive) {
             return 50;
         }else {
             return 0;
@@ -309,15 +310,22 @@
             [self.navigationController pushViewController:vc animated:YES];
         }else if (indexPath.row == 4) {
             
-            if (self.dataModel.merchinfo.islive) {
-                //可以直播
-                SWTMJZhiBoHomeTVC * vc =[[SWTMJZhiBoHomeTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-                vc.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:vc animated:YES];
-            }else {
-                //不可以直播,去生情
-                
-            }
+            SWTMJShenQingZhiBoVC * vc =[[SWTMJShenQingZhiBoVC alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+            
+//            if (self.dataModel.merchinfo.islive) {
+//                //可以直播
+//                SWTMJZhiBoHomeTVC * vc =[[SWTMJZhiBoHomeTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+//                vc.hidesBottomBarWhenPushed = YES;
+//                [self.navigationController pushViewController:vc animated:YES];
+//            }else {
+//                //不可以直播,去生情
+//                SWTMJShenQingZhiBoVC * vc =[[SWTMJShenQingZhiBoVC alloc] init];
+//                vc.hidesBottomBarWhenPushed = YES;
+//                [self.navigationController pushViewController:vc animated:YES];
+//                
+//            }
             
             
         }else if (indexPath.row == 5) {

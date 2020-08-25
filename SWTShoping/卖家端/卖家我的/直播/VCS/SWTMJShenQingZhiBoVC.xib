@@ -37,9 +37,11 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pvI-GZ-qBc">
                     <rect key="frame" x="0.0" y="294" width="414" height="50"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="店铺已实名认证" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iM1-Ks-vOR">
-                            <rect key="frame" x="15" y="15" width="122" height="21"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iM1-Ks-vOR">
+                            <rect key="frame" x="15" y="16.5" width="384" height="17"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="17" id="2vs-vZ-kXw"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -55,9 +57,12 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <gestureRecognizers/>
                     <constraints>
+                        <constraint firstAttribute="trailing" secondItem="iM1-Ks-vOR" secondAttribute="trailing" constant="15" id="KYe-Gq-ds1"/>
                         <constraint firstAttribute="trailing" secondItem="MBP-7g-Aze" secondAttribute="trailing" constant="10" id="TM4-78-its"/>
+                        <constraint firstItem="iM1-Ks-vOR" firstAttribute="leading" secondItem="pvI-GZ-qBc" secondAttribute="leading" constant="15" id="cXT-ka-a0h"/>
                         <constraint firstAttribute="height" constant="50" id="jgE-lf-ubZ"/>
                         <constraint firstItem="MBP-7g-Aze" firstAttribute="centerY" secondItem="pvI-GZ-qBc" secondAttribute="centerY" id="l9e-Zr-phw"/>
+                        <constraint firstItem="iM1-Ks-vOR" firstAttribute="centerY" secondItem="pvI-GZ-qBc" secondAttribute="centerY" id="qI8-YQ-Ulg"/>
                     </constraints>
                     <connections>
                         <outletCollection property="gestureRecognizers" destination="jSu-yo-4Vj" appends="YES" id="aje-yk-Feq"/>
@@ -70,6 +75,9 @@
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="立即开通" backgroundImage="bbdyx27"/>
+                    <connections>
+                        <action selector="kaiTongAction:" destination="-1" eventType="touchUpInside" id="aEm-7q-FrD"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
