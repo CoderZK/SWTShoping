@@ -59,6 +59,7 @@
         self.headImgStr = self.dataModel.img;
         self.videoNameV.rightTF.text = self.dataModel.name;
         self.videoDesV.rightTF.text = self.dataModel.content;
+        [self.headPicBt sd_setBackgroundImageWithURL:self.headImgStr.getPicURL forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
         
     }
     
@@ -158,13 +159,13 @@
     self.videoNameV = [[SWTDianPuInfoView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.videoChooseV.frame), ScreenW, hh) withIsJianTou:NO withMaxNumber:15];
     self.videoNameV.leftLB.text = @"视频名称";
     self.videoNameV.rightTF.placeholder = @"请填写视频名称";
-    self.videoNameV.rightTF.textAlignment = NSTextAlignmentLeft;
+    self.videoNameV.rightTF.textAlignment = NSTextAlignmentRight;
     [self.headView addSubview:self.videoNameV];
     
     self.videoDesV = [[SWTDianPuInfoView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.videoNameV.frame), ScreenW, hh) withIsJianTou:NO withMaxNumber:40];
     self.videoDesV.leftLB.text = @"视频介绍";
     self.videoDesV.rightTF.placeholder = @"请填写视频介绍";
-    self.videoDesV.rightTF.textAlignment = NSTextAlignmentLeft;
+    self.videoDesV.rightTF.textAlignment = NSTextAlignmentRight;
     [self.headView addSubview:self.videoDesV];
     
     //    self.videoLableV = [[SWTDianPuInfoView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.videoDesV.frame), ScreenW, hh) withIsJianTou:NO withMaxNumber:40];
@@ -293,7 +294,7 @@
         url = merchvideoUpd_video_SWT;
         dict[@"id"] = self.dataModel.ID;
     }
-    dict[@"userid"] = [zkSignleTool shareTool].selectShopID;
+    dict[@"userid"] = [zkSignleTool shareTool].session_uid;
     dict[@"img"] = self.headImgStr;
     dict[@"video"] = self.videoStr;
     dict[@"name"] = self.videoNameV.rightTF.text;
@@ -316,6 +317,7 @@
                 }
             }else {
                 [SVProgressHUD showSuccessWithStatus:@"添加视频成功"];
+                [LTSCEventBus sendEvent:@"addvideo" data:nil];
             }
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.navigationController popViewControllerAnimated:YES];

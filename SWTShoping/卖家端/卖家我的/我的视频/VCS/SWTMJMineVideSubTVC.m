@@ -10,6 +10,7 @@
 #import "XPCollectionViewWaterfallFlowLayout.h"
 #import "SWTMJVideoCell.h"
 #import "SWTMJUploadVideoTVC.h"
+#import <AVKit/AVKit.h>
 @interface SWTMJMineVideSubTVC ()<UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource>
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 
@@ -17,6 +18,8 @@
 
 @property(nonatomic,assign)NSInteger page;
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *dataArray;
+@property(nonatomic , strong)AVPlayer *avPlayer;
+@property(nonatomic , strong)AVPlayerViewController *playVC;
 @end
 
 @implementation SWTMJMineVideSubTVC
@@ -32,7 +35,7 @@
     if (sstatusHeight > 20) {
         frame = CGRectMake(0, 0, ScreenW, ScreenH - sstatusHeight - 44 - 40 - 49 - 34);
     }
-
+    
     
     self.collectionView  = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:self.layout];;
     
@@ -49,7 +52,7 @@
         make.left.right.top.bottom.equalTo(self.view);
     }];
     
-
+    
     self.page = 1;
     self.dataArray = @[].mutableCopy;
     [self getData];
@@ -63,10 +66,10 @@
     }];
     Weak(weakSelf);
     self.noneView.clickBlock = ^{
-
+        
         weakSelf.page = 1;
         [weakSelf getData];
-      };
+    };
     
     [LTSCEventBus registerEvent:@"addvideo" block:^(id data) {
         weakSelf.page = 1;
@@ -83,14 +86,14 @@
     dict[@"pageindex"] = @(self.page);
     dict[@"pagesize"] = @(20);
     dict[@"category"] = self.ID;
-    dict[@"userid"] = [zkSignleTool shareTool].selectShopID;
-   
+    dict[@"userid"] = [zkSignleTool shareTool].session_uid;
+    
     [zkRequestTool networkingPOST:merchvideoGet_video_list_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.collectionView.mj_header endRefreshing];
         [self.collectionView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];
         if ([[NSString stringWithFormat:@"%@",responseObject[@"code"]] integerValue] == 200) {
-            NSArray<SWTModel *>*arr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            NSArray<SWTModel *>*arr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"][@"list"]];
             if (self.page == 1) {
                 [self.dataArray removeAllObjects];
             }
@@ -127,7 +130,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     
-//    return 9;
+    //    return 9;
     return self.dataArray.count;
 }
 
@@ -145,7 +148,20 @@
 
 
 - (void)playAction:(UIButton *)button {
-    [PublicFuntionTool presentVideoVCWithNSString:self.dataArray[button.tag].video isBenDiPath:NO];
+    //    [PublicFuntionTool presentVideoVCWithNSString:self.dataArray[button.tag].video isBenDiPath:NO];
+    //
+    NSString * video = self.dataArray[button.tag].video;
+    NSURL * url = [NSURL URLWithString:video];
+    
+    AVPlayer *avPlayer = [[AVPlayer alloc] initWithURL:url];
+    self.avPlayer = avPlayer;
+    self.playVC = [[AVPlayerViewController alloc] init];
+//    [self addChildViewController:self.playVC];
+    self.playVC.view.frame = CGRectMake(0, 0, ScreenW, 0);
+    self.playVC.player = avPlayer;
+    [self.avPlayer play];
+    
+    [self presentViewController:self.playVC animated:YES completion:nil];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -159,7 +175,7 @@
     };
     vc.dataModel = self.dataArray[indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];
-   
+    
     
 }
 

@@ -12,8 +12,6 @@
 static PublicFuntionTool * tool = nil;
 @interface PublicFuntionTool()<AVAudioPlayerDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 @property(nonatomic,strong)AVAudioPlayer *player;
-@property(nonatomic , strong)AVPlayerViewController *avPlayerVC;
-@property(nonatomic , strong)AVPlayer *avplayer;
 @property(nonatomic,strong)UIView *footV;
 
 @end
@@ -56,11 +54,11 @@ static PublicFuntionTool * tool = nil;
     }else {
         webVideoUrl = [NSURL URLWithString:webVideoPath];
     }
-    [self shareTool].avplayer = [[AVPlayer alloc] initWithURL:webVideoUrl];
+    AVPlayer *avPlayer = [[AVPlayer alloc] initWithURL:webVideoUrl];
     //步骤3：使用AVPlayer创建AVPlayerViewController，并跳转播放界面
-    [self shareTool].avPlayerVC =[[AVPlayerViewController alloc] init];
-    [self shareTool].avPlayerVC.player = [self shareTool].avplayer;
-    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:[self shareTool].avPlayerVC animated:YES completion:nil];
+    AVPlayerViewController *avPlayerVC =[[AVPlayerViewController alloc] init];
+    avPlayerVC.player = avPlayer;
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:avPlayerVC animated:YES completion:nil];
     
 }
 

@@ -67,7 +67,9 @@
     // self.window.rootViewController = self;
 
     [[UIApplication sharedApplication].keyWindow.rootViewController addChildViewController:self];
-    [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:self.view];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.view];
+    
+    
     
     [UIView animateWithDuration:0.3 animations:^{
         self.view.transform = CGAffineTransformMakeScale(1, 1);
