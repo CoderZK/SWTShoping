@@ -30,4 +30,12 @@
     // Configure the view for the selected state
 }
 
+- (void)setModel:(SWTModel *)model {
+    _model = model;
+    [self.imgV sd_setImageWithURL:model.img.getPicURL placeholderImage:[UIImage imageNamed:@"369"]];
+    self.titleLB.text = model.name;
+    self.contentLB.text = model.msg;
+    self.timeLB.text = model.time;
+}
+
 @end

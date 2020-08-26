@@ -30,9 +30,7 @@
     NSMutableDictionary * dict = @{}.mutableCopy;
     NSString * url = merchreportGet_finance_report_SWT;
     if (self.type == 1) {
-        url = merchGet_live_list_SWT;
-    }else if (self.type == 2) {
-        url = @"";
+        url = merchreportGet_merch_report_SWT;
     }
     dict[@"merchid"] = [zkSignleTool shareTool].selectShopID;
     [zkRequestTool networkingPOST:url parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -40,10 +38,8 @@
         [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
-            if (self.type == 0) {
-                self.dataDict = responseObject[@"data"];
-            }
-            
+            self.dataDict = responseObject[@"data"];
+            [self.tableView reloadData];
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }
@@ -57,15 +53,16 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 4;
+    if (self.dataDict== nil) {
+        return 0;
+    }
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (self.type == 0) {
         if (section == 1) {
             return 2;
-        }else if (section == 3) {
-            return 3;
         }else {
             return 1;
         }
@@ -87,45 +84,40 @@
         cell.LB3.text = @"数量";
         if (indexPath.section == 0) {
             cell.LB1.text = @"今日成拍:";
-            cell.LB2.text = self.dataDict[@"ok"][@"price"];
-            cell.LB4.text = self.dataDict[@"ok"][@"num"];
+            cell.LB2.text =  [NSString stringWithFormat:@"%@",self.dataDict[@"ok"][@"price"]];;
+            cell.LB4.text =  [NSString stringWithFormat:@"%@",self.dataDict[@"ok"][@"num"]];;
         }else if (indexPath.section == 1) {
             if (indexPath.row == 0) {
                 cell.LB1.text = @"今日已经付款: ";
+                cell.LB2.text =  [NSString stringWithFormat:@"%@",self.dataDict[@"pay"][@"price"]];
+                cell.LB4.text = [NSString stringWithFormat:@"%@",self.dataDict[@"pay"][@"num"]];
             }else {
                 cell.LB1.text = @"今日已经退款: ";
+                cell.LB2.text =  [NSString stringWithFormat:@"%@",self.dataDict[@"refund"][@"price"]];
+                cell.LB4.text = [NSString stringWithFormat:@"%@",self.dataDict[@"refund"][@"num"]];
             }
         }else if (indexPath.section == 2) {
             cell.LB1.text = @"今日已收款: ";
-            cell.LB2.text = self.dataDict[@"earn"][@"price"];
-            cell.LB4.text = self.dataDict[@"earn"][@"num"];
-        }else {
-            if (indexPath.row == 0) {
-                cell.LB1.text = @"今日未发货: ";
-            }else if (indexPath.row == 0) {
-                cell.LB1.text = @"今日退款中: ";
-            } else {
-                cell.LB1.text = @"今日待确认: ";
-            }
+            cell.LB2.text =  [NSString stringWithFormat:@"%@",self.dataDict[@"earn"][@"price"]];;
+            cell.LB4.text =  [NSString stringWithFormat:@"%@",self.dataDict[@"earn"][@"num"]];;
         }
-    }else if (self.type == 1) {
+    }else  {
         cell.LB3.hidden = cell.LB4.hidden = YES;
             cell.LB3.text = @"昨日笔数:";
             if (indexPath.section == 0) {
                 cell.LB1.text = @"昨日直播时长:";
-        
+                cell.LB2.text =  [NSString stringWithFormat:@"%@",self.dataDict[@"time"]];;
             }else if (indexPath.section == 1) {
                 
                 cell.LB1.text = @"昨日销售额: ";
+                cell.LB2.text =  [NSString stringWithFormat:@"%@",self.dataDict[@"live"][@"price"]];;
                 cell.LB3.hidden = cell.LB4.hidden = NO;
+                cell.LB4.text =  [NSString stringWithFormat:@"%@",self.dataDict[@"live"][@"num"]];;
                 
             }else if (indexPath.section == 2) {
-                cell.LB1.text = @"昨日分享人数: ";
-            }else {
-                cell.LB1.text = @"昨日新增关注: ";
+                cell.LB1.text = @"粉丝数量: ";
+                cell.LB2.text =  [NSString stringWithFormat:@"%@",self.dataDict[@"follow"]];;
             }
-    }else {
-        
     }
     return cell;
 }

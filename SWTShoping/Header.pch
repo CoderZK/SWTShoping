@@ -48,7 +48,7 @@
 #import "XPCollectionViewWaterfallFlowLayout.h"
 #import "LTSCEventBus.h"
 #import "LTSCNoneView.h"
-
+#import "TZImagePickerController.h"
 
 
 #import "SWTNavitageView.h"

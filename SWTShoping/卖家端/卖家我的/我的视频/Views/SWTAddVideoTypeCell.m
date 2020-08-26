@@ -21,4 +21,14 @@
     // Configure the view for the selected state
 }
 
+- (void)setModel:(SWTModel *)model {
+    _model = model;
+    if (model.isSelect) {
+        self.imgV.image = [UIImage imageNamed:@"bbdyx34"];
+    }else {
+        self.imgV.image = [UIImage imageNamed:@"dyx44"];
+    }
+    self.titleLB.text = model.name;
+}
+
 @end

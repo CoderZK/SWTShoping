@@ -209,7 +209,7 @@
                 
                 
             }];
-            cell.model = self.dataModel;
+            cell.model = self.dataModel.merchinfo;
             cell.clipsToBounds = YES;
             return cell;
         }else {
@@ -310,22 +310,21 @@
             [self.navigationController pushViewController:vc animated:YES];
         }else if (indexPath.row == 4) {
             
-            SWTMJShenQingZhiBoVC * vc =[[SWTMJShenQingZhiBoVC alloc] init];
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
+//            SWTMJShenQingZhiBoVC * vc =[[SWTMJShenQingZhiBoVC alloc] init];
+//            vc.hidesBottomBarWhenPushed = YES;
+//            [self.navigationController pushViewController:vc animated:YES];
             
-//            if (self.dataModel.merchinfo.islive) {
-//                //可以直播
-//                SWTMJZhiBoHomeTVC * vc =[[SWTMJZhiBoHomeTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-//                vc.hidesBottomBarWhenPushed = YES;
-//                [self.navigationController pushViewController:vc animated:YES];
-//            }else {
-//                //不可以直播,去生情
-//                SWTMJShenQingZhiBoVC * vc =[[SWTMJShenQingZhiBoVC alloc] init];
-//                vc.hidesBottomBarWhenPushed = YES;
-//                [self.navigationController pushViewController:vc animated:YES];
-//                
-//            }
+            if (self.dataModel.merchinfo.islive) {
+                //可以直播,检查直播间状态
+                [self checkRoom];
+                
+            }else {
+                //不可以直播,去生情
+                SWTMJShenQingZhiBoVC * vc =[[SWTMJShenQingZhiBoVC alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+                
+            }
             
             
         }else if (indexPath.row == 5) {
@@ -337,6 +336,44 @@
     
     
 }
+
+- (void)checkRoom  {
+    
+    
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"id"] = [zkSignleTool shareTool].selectShopID;
+    [zkRequestTool networkingPOST:merchliveCheck_room_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            NSString * status = [NSString stringWithFormat:@"%@",responseObject[@"data"][@"status"]];
+            if (status.intValue == 1) {
+                [SVProgressHUD showErrorWithStatus:@"直播未申请"];
+            }else if (status.intValue == 2) {
+                [SVProgressHUD showErrorWithStatus:@"直播间等待审核中"];
+            }else if (status.intValue == 3) {
+               SWTMJZhiBoHomeTVC * vc =[[SWTMJZhiBoHomeTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+                
+            }else if (status.intValue == 4) {
+                [SVProgressHUD showErrorWithStatus:@"直播间被禁用"];
+            }
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+
+}
+
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     BaseNavigationController * navc = (BaseNavigationController *)viewController;

@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTMJMineVideSubTVC : BaseViewController
 @property(nonatomic , assign)NSInteger  type;
+@property(nonatomic , strong)NSString *ID;
 @end
 
 NS_ASSUME_NONNULL_END

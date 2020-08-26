@@ -21,7 +21,7 @@ pod 'UMCPush'
 #pod 'AlipaySDK-iOS'
 #pod 'WechatOpenSDK'
 pod 'TYPagerController'
-
+pod 'TZImagePickerController'
 #pod 'LSTTimer'
 
 #use_modular_headers!

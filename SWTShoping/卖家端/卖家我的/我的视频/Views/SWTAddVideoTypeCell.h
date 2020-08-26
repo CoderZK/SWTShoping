@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SWTAddVideoTypeCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *imgV;
 @property (weak, nonatomic) IBOutlet UILabel *titleLB;
+@property(nonatomic , strong)SWTModel *model;
 
 @end
 

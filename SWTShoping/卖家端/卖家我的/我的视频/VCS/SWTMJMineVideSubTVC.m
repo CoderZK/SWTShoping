@@ -9,6 +9,7 @@
 #import "SWTMJMineVideSubTVC.h"
 #import "XPCollectionViewWaterfallFlowLayout.h"
 #import "SWTMJVideoCell.h"
+#import "SWTMJUploadVideoTVC.h"
 @interface SWTMJMineVideSubTVC ()<UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource>
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 
@@ -49,69 +50,70 @@
     }];
     
 
-//    self.page = 1;
-//    self.dataArray = @[].mutableCopy;
-//    [self getData];
-//    self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-//        self.page = 1;
-//        [self getData];
-//    }];
-//    self.collectionView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-//        self.page++;
-//        [self getData];
-//    }];
-//    Weak(weakSelf);
-//    self.noneView.clickBlock = ^{
-//
-//        weakSelf.page = 1;
-//        [weakSelf getData];
-//      };
+    self.page = 1;
+    self.dataArray = @[].mutableCopy;
+    [self getData];
+    self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        self.page = 1;
+        [self getData];
+    }];
+    self.collectionView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        self.page++;
+        [self getData];
+    }];
+    Weak(weakSelf);
+    self.noneView.clickBlock = ^{
+
+        weakSelf.page = 1;
+        [weakSelf getData];
+      };
     
+    [LTSCEventBus registerEvent:@"addvideo" block:^(id data) {
+        weakSelf.page = 1;
+        [weakSelf getData];
+    }];
 }
 
 
 - (void)getData {
     
     
-//    [SVProgressHUD show];
-//    NSMutableDictionary * dict = @{}.mutableCopy;
-//    dict[@"page"] = @(self.page);
-//    dict[@"pagesize"] = @(10);
-//    NSString * url =  [NSString stringWithFormat:@"%@/%@",userFollow_SWT,[zkSignleTool shareTool].session_uid];
-//    dict[@"type"] = @"0";
-//    if (self.isMineZuJi) {
-//        url =  [NSString stringWithFormat:@"%@/%@",userTrace_SWT,[zkSignleTool shareTool].session_uid];
-//        dict[@"type"] = @"1";
-//    }
-//    [zkRequestTool networkingPOST:url parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
-//        [self.collectionView.mj_header endRefreshing];
-//        [self.collectionView.mj_footer endRefreshing];
-//        [SVProgressHUD dismiss];
-//        if ([[NSString stringWithFormat:@"%@",responseObject[@"code"]] integerValue] == 200) {
-//            NSArray<SWTModel *>*arr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
-//            if (self.page == 1) {
-//                [self.dataArray removeAllObjects];
-//            }
-//            [self.dataArray addObjectsFromArray:arr];
-//            if (self.dataArray.count == 0) {
-//                [self.noneView showNoneDataViewAt:self.view img:[UIImage imageNamed:@"dyx47"] tips:@"暂无数据"];
-//            }else {
-//                [self.noneView  dismiss];
-//            }
-//            
-//            
-//            [self.collectionView reloadData];
-//        }else {
-//            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
-//        }
-//    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-//        [self.collectionView.mj_header endRefreshing];
-//        [self.collectionView.mj_footer endRefreshing];
-//        
-//        
-//        
-//    }];
-//    
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"pageindex"] = @(self.page);
+    dict[@"pagesize"] = @(20);
+    dict[@"category"] = self.ID;
+    dict[@"userid"] = [zkSignleTool shareTool].selectShopID;
+   
+    [zkRequestTool networkingPOST:merchvideoGet_video_list_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.collectionView.mj_header endRefreshing];
+        [self.collectionView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([[NSString stringWithFormat:@"%@",responseObject[@"code"]] integerValue] == 200) {
+            NSArray<SWTModel *>*arr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            if (self.page == 1) {
+                [self.dataArray removeAllObjects];
+            }
+            [self.dataArray addObjectsFromArray:arr];
+            if (self.dataArray.count == 0) {
+                [self.noneView showNoneDataViewAt:self.view img:[UIImage imageNamed:@"dyx47"] tips:@"暂无数据"];
+            }else {
+                [self.noneView  dismiss];
+            }
+            
+            
+            [self.collectionView reloadData];
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self.collectionView.mj_header endRefreshing];
+        [self.collectionView.mj_footer endRefreshing];
+        
+        
+        
+    }];
+    
     
     
 }
@@ -125,32 +127,40 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     
-    return 9;
-//    return self.dataArray.count;
+//    return 9;
+    return self.dataArray.count;
 }
 
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     SWTMJVideoCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTMJVideoCell" forIndexPath:indexPath];
-//    self.dataArray[indexPath.row].img = self.dataArray[indexPath.row].liveimg;
-//    self.dataArray[indexPath.row].name = self.dataArray[indexPath.row].livename;
-//    self.dataArray[indexPath.row].playnum = self.dataArray[indexPath.row].watchnum;
-//    cell.model = self.dataArray[indexPath.row];
+    cell.model = self.dataArray[indexPath.row];
+    cell.playBt.tag = indexPath.row;
+    [cell.playBt addTarget:self action:@selector(playAction:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
     
 }
 
 
 
-
+- (void)playAction:(UIButton *)button {
+    [PublicFuntionTool presentVideoVCWithNSString:self.dataArray[button.tag].video isBenDiPath:NO];
+}
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
+    SWTMJUploadVideoTVC * vc =[[SWTMJUploadVideoTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
     vc.hidesBottomBarWhenPushed = YES;
-    vc.model = self.dataArray[indexPath.row];
+    vc.isEdit = YES;
+    Weak(weakSelf);
+    vc.sendVideoBlock = ^(SWTModel * _Nonnull model) {
+        weakSelf.dataArray[indexPath.row] = model;
+        [weakSelf.collectionView reloadData];
+    };
+    vc.dataModel = self.dataArray[indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];
+   
+    
 }
 
 

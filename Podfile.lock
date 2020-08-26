@@ -39,6 +39,7 @@ PODS:
     - Toast
     - TXIMSDK_iOS
   - TYPagerController (2.1.2)
+  - TZImagePickerController (3.3.2)
   - UMCCommon (2.1.4)
   - UMCCommonLog (1.0.0)
   - UMCPush (3.2.4):
@@ -66,6 +67,7 @@ DEPENDENCIES:
   - SwipeBack
   - TXIMSDK_TUIKit_iOS
   - TYPagerController
+  - TZImagePickerController
   - UMCCommon
   - UMCCommonLog
   - UMCPush
@@ -91,6 +93,7 @@ SPEC REPOS:
     - TXIMSDK_iOS
     - TXIMSDK_TUIKit_iOS
     - TYPagerController
+    - TZImagePickerController
     - UMCCommon
     - UMCCommonLog
     - UMCPush
@@ -114,11 +117,12 @@ SPEC CHECKSUMS:
   TXIMSDK_iOS: 17de2fef786f78843687cc7bd9592759edd2ec0b
   TXIMSDK_TUIKit_iOS: 07d410f70bd3601506d1b0f219174fc1eed76ef9
   TYPagerController: 262556ecef99986d26ed77fb1288a198ed42f4af
+  TZImagePickerController: 36ca728ec681228918aa82e993aaab1962281b72
   UMCCommon: b0703b0053323f598e01670ea702b8eb1e66e611
   UMCCommonLog: 05a2d5de21858e3d870551562cff405c1366d244
   UMCPush: 1edd856027dcf905333effb4040ace5d236a7316
   UMCShare: a250203b34a56cde25cc4c28335449b542f0255d
 
-PODFILE CHECKSUM: b86f208a6485887d82207c219890c9fa5ce01a7c
+PODFILE CHECKSUM: 2a598f9533432136125b22b697bcc4f132df1fca
 
 COCOAPODS: 1.7.2

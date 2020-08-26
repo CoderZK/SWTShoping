@@ -20,20 +20,35 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTMJMessageOneCell" bundle:nil] forCellReuseIdentifier:@"cell"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    self.dataArray = @[].mutableCopy;
-       [self getData];
-       self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-           [self getData];
-       }];
-       
-       Weak(weakSelf);
-       self.noneView.clickBlock = ^{
-           
-           
-           [weakSelf getData];
-       };
+    
+    if (self.type == 0) {
+        
+        self.page = 1;
+        self.dataArray = @[].mutableCopy;
+        [self getData];
+        self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+            self.page = 1;
+            [self getData];
+        }];
+        self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+            self.page++;
+            [self getData];
+        }];
+        Weak(weakSelf);
+        self.noneView.clickBlock = ^{
+            
+            
+            [weakSelf getData];
+        };
+    }else {
+        
+    }
+    
+    
     
 }
+
+
 
 - (void)getData {
     
@@ -43,21 +58,27 @@
     
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-//    dict[@"receiveid"] = [zkSignleTool shareTool].session_uid;
-//    dict[@"sendid"] = self.sendid;;
-    [zkRequestTool networkingPOST:pushmsgDetail_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+    dict[@"memberid"] = [zkSignleTool shareTool].session_uid;
+    dict[@"pageindex"] = @(self.page);
+    dict[@"pagesize"] = @(20);
+    [zkRequestTool networkingPOST:merchmsgGet_msg_list_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             
             
-            self.dataArray = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            NSArray<SWTModel *>*arr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            if (self.page == 1) {
+                [self.dataArray removeAllObjects];
+            }
+            [self.dataArray addObjectsFromArray:arr];
             if (self.dataArray.count == 0) {
                 [self.noneView showNoneDataViewAt:self.view img:[UIImage imageNamed:@"dyx47"] tips:@"暂无数据"];
             }else {
                 [self.noneView  dismiss];
             }
+            self.page++;
             [self.tableView reloadData];
             
         }else {
@@ -81,6 +102,7 @@
 }
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SWTMJMessageOneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    cell.model = self.dataArray[indexPath.row];
     return cell;
 }
 

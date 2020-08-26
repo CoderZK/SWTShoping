@@ -23,8 +23,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"卖家拍品管理";
-    self.navigationItem.title = @"我的订单";
-    self.titleArr = @[@"资金报表",@"直播报表",@"经营报表"];
+    self.navigationItem.title = @"我的报表";
+    self.titleArr = @[@"资金报表",@"直播报表"];
     [self addTabPageView];
     [self addPagerController];
     
@@ -127,7 +127,7 @@
 #pragma mark - TYTabPagerBarDelegate
 
 - (CGFloat)pagerTabBar:(TYTabPagerBar *)pagerTabBar widthForItemAtIndex:(NSInteger)index {
-            return (ScreenW -60-30)/3;
+            return (ScreenW -40-30)/2;
 //    return [self.titleArr[index] getWidhtWithFontSize:15] + 10;
 }
 - (void)pagerTabBar:(TYTabPagerBar *)pagerTabBar didSelectItemAtIndex:(NSInteger)index {

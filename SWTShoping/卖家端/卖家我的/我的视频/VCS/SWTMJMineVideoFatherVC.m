@@ -13,8 +13,9 @@
 @property (nonatomic, strong) TYTabPagerBar *tabBar;//顶部菜单栏
 
 @property (nonatomic, weak) TYPagerController *pagerController;
-@property(nonatomic , strong)NSArray *titleArr;
+//@property(nonatomic , strong)NSArray *titleArr;
 @property(nonatomic , assign)NSInteger  selectIndex;
+@property(nonatomic , strong)NSMutableArray<SWTModel *> *dataArray;
 
 
 @end
@@ -45,7 +46,7 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
    
     
-    self.titleArr = @[@"全部",@"分类1",@"分类2",@"分类3",@"分类4"];
+//    self.titleArr = @[@"全部",@"分类1",@"分类2",@"分类3",@"分类4"];
     [self addTabPageView];
     [self addPagerController];
     
@@ -58,7 +59,9 @@
         make.top.equalTo(self.tabBar.mas_bottom);
         make.leading.bottom.trailing.equalTo (self.view);
     }];
-    [self reloadData];
+//    [self reloadData];
+    self.dataArray = @[].mutableCopy;
+    [self getData];
     
 //    UIButton * backBt  =[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 30)];
 //    [backBt setImage:[UIImage imageNamed:@"bback"] forState:UIControlStateNormal];
@@ -71,6 +74,34 @@
 //- (void)goback:(UIButton *)button {
 //    [self.navigationController popToRootViewControllerAnimated:YES];
 //}
+
+//获取去视屏分类
+- (void)getData {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    [zkRequestTool networkingPOST:merchvideoGet_video_cate_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            self.dataArray = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"][@"list"]];
+            
+            SWTModel * model = [[SWTModel alloc] init];
+            model.name= @"全部";
+            [self.dataArray insertObject:model atIndex:0];
+            
+            [self reloadData];
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        
+        
+    }];
+}
 
 - (void)addTabPageView {
     TYTabPagerBar *tabBar = [[TYTabPagerBar alloc] init];
@@ -133,14 +164,15 @@
 }
 
 - (NSInteger)numberOfItemsInPagerTabBar {
-    return self.titleArr.count;
+    return self.dataArray.count;
     
 }
 
 - (UICollectionViewCell<TYTabPagerBarCellProtocol> *)pagerTabBar:(TYTabPagerBar *)pagerTabBar cellForItemAtIndex:(NSInteger)index {
     
     UICollectionViewCell<TYTabPagerBarCellProtocol> *cell = [pagerTabBar dequeueReusableCellWithReuseIdentifier:[TYTabPagerBarCell cellIdentifier] forIndex:index];
-    cell.titleLabel.text = self.titleArr[index];
+    
+    cell.titleLabel.text = self.dataArray[index].name;
     return cell;
     
     
@@ -149,7 +181,7 @@
 
 - (CGFloat)pagerTabBar:(TYTabPagerBar *)pagerTabBar widthForItemAtIndex:(NSInteger)index {
     //        return (ScreenW - 110)/5;
-    return [self.titleArr[index] getWidhtWithFontSize:15] + 10;
+    return [self.dataArray[index].name getWidhtWithFontSize:15] + 10;
 }
 - (void)pagerTabBar:(TYTabPagerBar *)pagerTabBar didSelectItemAtIndex:(NSInteger)index {
     self.selectIndex = index;
@@ -162,7 +194,7 @@
 
 - (NSInteger)numberOfControllersInPagerController {
     
-    return self.titleArr.count;
+    return self.dataArray.count;
     
     
 }
@@ -171,7 +203,7 @@
     
     SWTMJMineVideSubTVC *vc = [[SWTMJMineVideSubTVC alloc] init];
     vc.type = index;
-    
+    vc.ID = self.dataArray[index].ID;
     return vc;
     
 }

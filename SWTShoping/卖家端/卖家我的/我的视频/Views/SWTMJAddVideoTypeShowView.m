@@ -21,6 +21,7 @@
 @property(nonatomic , strong)ALCSearchView *searchTitleView;
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *searchArr;
 @property(nonatomic,assign)BOOL isSearch;
+@property(nonatomic , assign)NSInteger  selectIndex;;
 @end
 
 @implementation SWTMJAddVideoTypeShowView
@@ -70,6 +71,7 @@
             make.left.right.bottom.equalTo(self.whiteV);
             make.top.equalTo(self.whiteV).offset(100);
         }];
+        self.selectIndex = -1;
         
     }
     
@@ -133,8 +135,12 @@
     if (self.type == 1) {
         [self dismiss];
     }else {
+        if (self.selectIndex == -1) {
+            [SVProgressHUD showErrorWithStatus:@"请选择视频分类"];
+            return;
+        }
         if (self.delegateSignal) {
-            [self.delegateSignal sendNext:self.TF.text];
+            [self.delegateSignal sendNext:@(self.selectIndex)];
         }
     }
     
@@ -186,6 +192,7 @@
         return cell;
     }else {
         SWTAddVideoTypeCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+        cell.model = self.dataArray[indexPath.row];
         return cell;
     }
     
@@ -205,6 +212,18 @@
             }
             
         }
+    }else if (self.type == 0){
+        self.selectIndex = indexPath.row;
+        for (int i = 0 ; i < self.dataArray.count; i++) {
+            SWTModel * MM = self.dataArray[i];
+            if (i == indexPath.row) {
+                MM.isSelect = YES;
+            }else {
+                MM.isSelect = NO;
+            }
+        }
+        [self.tableView reloadData];
+        
     }
     
     

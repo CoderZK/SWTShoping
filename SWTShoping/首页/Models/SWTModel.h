@@ -155,8 +155,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *warehouse_str;
 @property(nonatomic,strong)NSString *sn;
 @property(nonatomic,strong)NSString *weight;
-//@property(nonatomic,strong)NSString *idcard;
-//@property(nonatomic,strong)NSString *orderprice_curr;
+@property(nonatomic,strong)NSString *msg;
+@property(nonatomic,strong)NSString *time;
 //@property(nonatomic,strong)NSString *orderprice_last;
 //@property(nonatomic,strong)NSString *orderpay;
 //@property(nonatomic,strong)NSString *orderrefund;

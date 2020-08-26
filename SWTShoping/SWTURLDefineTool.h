@@ -216,6 +216,20 @@
 /** 获取你喜欢的视频 */
 #define videoFav_SWT URLOne@"video/fav"
 
+/** 获取视频分类 */
+#define merchvideoGet_video_cate_SWT URLOne@"merchvideo/get_video_cate"
+/** 添加视频 */
+#define merchvideoAdd_video_SWT URLOne@"merchvideo/add_video"
+/** 删除视频 */
+#define merchvideoDel_video_SWT URLOne@"merchvideo/del_video"
+/** 修改视频 */
+#define merchvideoUpd_video_SWT URLOne@"merchvideo/upd_video"
+
+/** 根据分类获取视频列表*/
+#define merchvideoGet_video_list_SWT URLOne@"merchvideo/get_video_list"
+
+
+
 #pragma mark ----订单信息接口 -----
 
 /** 申请退款 */

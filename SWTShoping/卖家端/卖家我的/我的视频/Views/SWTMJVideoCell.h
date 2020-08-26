@@ -11,7 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTMJVideoCell : UICollectionViewCell
-
+@property (weak, nonatomic) IBOutlet UIButton *playBt;
+@property (weak, nonatomic) IBOutlet UIImageView *imgV;
+@property(nonatomic , strong)SWTModel *model;
 @end
 
 NS_ASSUME_NONNULL_END
