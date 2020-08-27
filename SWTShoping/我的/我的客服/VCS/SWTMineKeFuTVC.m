@@ -38,8 +38,9 @@
         @strongify(self);
         
         
-        TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:@"1"];
+        TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:@"6"];
         TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
+        vc.navigationItem.title = @"客服";
         [self.navigationController pushViewController:vc animated:YES];
         
         

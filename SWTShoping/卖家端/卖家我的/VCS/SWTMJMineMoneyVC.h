@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTMJMineMoneyVC : BaseViewController
-
+@property(nonatomic , strong)NSString *money;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -8,7 +8,8 @@
 
 #import "SWTMJMeessageVC.h"
 #import "SWTMJMessageSubTVC.h"
-@interface SWTMJMeessageVC ()<TYTabPagerBarDataSource,TYTabPagerBarDelegate,TYPagerControllerDataSource,TYPagerControllerDelegate,UIScrollViewDelegate>
+#import <TUIConversationListController.h>
+@interface SWTMJMeessageVC ()<TYTabPagerBarDataSource,TYTabPagerBarDelegate,TYPagerControllerDataSource,TYPagerControllerDelegate,UIScrollViewDelegate,TUIConversationListControllerDelegagte>
 @property (nonatomic, weak) TYPagerController *pagerController;
 @property (nonatomic, strong) TYTabPagerBar *tabBar;
 @property(nonatomic , assign)NSInteger selectIndex;
@@ -19,10 +20,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"我的收藏";
-     self.titleArr = @[@"卖家消息",@"买家消息"];
+    self.navigationItem.title = @"商铺消息";
+    self.titleArr = @[@"卖家消息",@"买家消息"];
     
-
     [self addTabPageView];
     [self addPagerController];
     
@@ -134,12 +134,30 @@
 
 - (UIViewController *)pagerController:(TYPagerController *)pagerController controllerForIndex:(NSInteger)index prefetching:(BOOL)prefetching {
     
-  
-    SWTMJMessageSubTVC * vc1 = [[SWTMJMessageSubTVC alloc] init];
-    vc1.type = index;
-    return vc1;
+    if (index == 0) {
+        SWTMJMessageSubTVC * vc1 = [[SWTMJMessageSubTVC alloc] init];
+           vc1.type = index;
+           return vc1;
+    }else {
+        TUIConversationListController *vc = [[TUIConversationListController alloc] init];
+        vc.delegate = self;
+        return vc;
+    }
+   
    
 
+    
+}
+
+- (void)conversationListController:(TUIConversationListController *)conversationController didSelectConversation:(TUIConversationCell *)conversation
+{
+    // 会话列表点击事件，通常是打开聊天界面
+    
+    TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:conversation.convData.convId];
+    TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
+    vc.navigationItem.title =conversation.convData.title;
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
     
 }
 

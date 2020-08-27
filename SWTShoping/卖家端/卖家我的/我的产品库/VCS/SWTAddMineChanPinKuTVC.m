@@ -13,7 +13,7 @@
 #import "SWTMJAddCHanPinKuSHowView.h"
 #import "SWTMJCangKuSelectView.h"
 @interface SWTAddMineChanPinKuTVC ()<UITextFieldDelegate,zkPickViewDelelgate>
-@property(nonatomic , strong)NSString *bianHaoStr,*kuCunStr,*diJiaStr,*jiaJiaStr,*timeStr;
+@property(nonatomic , strong)NSString *bianHaoStr,*kuCunStr,*diJiaStr,*jiaJiaStr,*timeStr,*endTimeStr;
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *pingMingArr;
 @property(nonatomic , strong)NSMutableArray<SWTModel *>*caiZhiArr,*chanPinKuArr;
 @property(nonatomic , assign)NSInteger  selectIndex;
@@ -204,6 +204,19 @@
         return;;
     }
     
+    if (self.typeStr.intValue == 1) {
+        if (self.jiaJiaStr.length ==0) {
+            [SVProgressHUD showErrorWithStatus:@"每次加价幅度"];
+        }
+        if (self.timeStr.length == 0) {
+            [SVProgressHUD showErrorWithStatus:@"请选择开始时间"];
+            return;
+        }
+        if (self.endTimeStr.length == 0) {
+            [SVProgressHUD showErrorWithStatus:@"请选结束时间"];
+            return;
+        }
+    }
     
     [self updateImage];
 }
@@ -221,6 +234,9 @@
     dict[@"description"] = self.headV.TV.text;
     dict[@"sn"] = self.bianHaoStr;
     dict[@"stock"] = self.kuCunStr;
+    dict[@"auction_start_time"] =[NSString stringWithFormat:@"%@ 00:00:00",self.timeStr];
+    dict[@"auction_end_time"] =  [NSString stringWithFormat:@"%@ 00:00:00",self.endTimeStr];
+    dict[@"stepprice"] = self.jiaJiaStr;
     NSMutableArray * arrOne = @[].mutableCopy;
     for (int i = 0 ; i < self.selectCangKuArr.count; i++) {
         [arrOne addObject:self.selectCangKuArr[i].ID];
@@ -352,7 +368,7 @@
     }else if (section == 1) {
         return 2 + self.selectCangKuArr.count;
     }else {
-        return 4;
+        return 5;
     }
 
 }
@@ -363,10 +379,7 @@
         }
         return 40;
     }
-    if (indexPath.section == 2 && indexPath.row == 2) {
-        return 0;
-    }
-    if (indexPath.section == 2 && indexPath.row == 1) {
+    if (indexPath.section == 2 && (indexPath.row == 1 || indexPath.row == 2 || indexPath.row == 1 || indexPath.row == 3)) {
         if (self.typeStr.intValue == 0) {
             return 0;
         }else {
@@ -419,17 +432,27 @@
         cell.leftwoLB.hidden = YES;
         
         if (indexPath.row == 0) {
-            cell.leftLB.text = @"底价";
+            
+            if (self.typeStr.intValue == 0) {
+                cell.leftLB.text = @"价格";
+            }else {
+               cell.leftLB.text = @"底价";
+            }
             cell.rightTF.text = self.diJiaStr;
         }else if (indexPath.row == 1){
             cell.leftLB.text = @"加价幅度";
             cell.rightTF.text = self.jiaJiaStr;
         }else if (indexPath.row == 2){
-            cell.leftLB.text = @"时间";
+            cell.leftLB.text = @"开始时间";
             cell.rightTF.placeholder = @"请选择";
             cell.rightTF.userInteractionEnabled = NO;
             cell.rightTF.text = self.timeStr;
         }else if (indexPath.row == 3){
+            cell.leftLB.text = @"结束时间";
+            cell.rightTF.placeholder = @"请选择";
+            cell.rightTF.userInteractionEnabled = NO;
+            cell.rightTF.text = self.endTimeStr;
+        }else if (indexPath.row == 4){
             cell.rightTF.userInteractionEnabled = NO;
             cell.rightTF.placeholder = @"";
             cell.leftLB.text = @"包邮";
@@ -539,8 +562,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     if (indexPath.section == 1 && self.selectCangKuArr.count + 1 == indexPath.row) {
-        
+        [self.tableView endEditing:YES];
         SWTMJCangKuSelectView * v = [[SWTMJCangKuSelectView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
         v.dataArray = self.chanPinKuArr;
         [v show];
@@ -554,9 +578,64 @@
             
         }];
     }
-    if (indexPath.section == 2 && indexPath.row == 3) {
+    if (indexPath.section == 2 && indexPath.row == 4) {
+        [self.tableView endEditing:YES];
         self.isBaoYou = !self.isBaoYou;
         [self.tableView reloadData];
+    }
+    
+    if (indexPath.section == 2) {
+        
+        if (indexPath.row == 2) {
+            [self.tableView endEditing:YES];
+            SelectTimeV *selectTimeV = [[SelectTimeV alloc] init];
+            selectTimeV.isCanSelectOld = NO;
+            selectTimeV.isCanSelectToday = YES;
+            Weak(weakSelf);
+            selectTimeV.block = ^(NSString *timeStr) {
+               
+                if (weakSelf.endTimeStr.length != 0) {
+                    NSTimeInterval number = [NSString pleaseInsertStarTime:[NSString stringWithFormat:@"%@ 00:00:00",timeStr] andInsertEndTime:[NSString stringWithFormat:@"%@ 00:00:00",weakSelf.endTimeStr]];
+                    if (number < 0) {
+                        [SVProgressHUD showErrorWithStatus:@"结束时间要大于等于开时间"];
+                        return;
+                    }else {
+                        weakSelf.timeStr = timeStr;
+                        [weakSelf.tableView reloadData];
+                    }
+                               
+                }else {
+                    weakSelf.timeStr = timeStr;
+                    [weakSelf.tableView reloadData];
+                }
+            };
+            [[UIApplication sharedApplication].keyWindow addSubview:selectTimeV];
+        }else if (indexPath.row == 3) {
+            [self.tableView endEditing:YES];
+            SelectTimeV *selectTimeV = [[SelectTimeV alloc] init];
+            selectTimeV.isCanSelectOld = NO;
+            selectTimeV.isCanSelectToday = YES;
+            Weak(weakSelf);
+            selectTimeV.block = ^(NSString *timeStr) {
+                if (weakSelf.timeStr.length != 0) {
+                    NSTimeInterval number = [NSString pleaseInsertStarTime: [NSString stringWithFormat:@"%@ 00:00:00",weakSelf.timeStr] andInsertEndTime:[NSString stringWithFormat:@"%@ 00:00:00",timeStr]];
+                    if (number < 0) {
+                        [SVProgressHUD showErrorWithStatus:@"结束时间要大于等于开时间"];
+                        return;
+                    }else {
+                        weakSelf.endTimeStr = timeStr;
+                        [weakSelf.tableView reloadData];
+                    }
+                               
+                }else {
+                    weakSelf.endTimeStr = timeStr;
+                    [weakSelf.tableView reloadData];
+                }
+               
+                
+            };
+            [[UIApplication sharedApplication].keyWindow addSubview:selectTimeV];
+        }
     }
     
     

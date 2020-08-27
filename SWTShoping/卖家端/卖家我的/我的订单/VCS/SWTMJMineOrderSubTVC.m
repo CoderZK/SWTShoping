@@ -163,7 +163,7 @@
     [showV.delegateSignal subscribeNext:^(NSArray * x) {
         @strongify(self);
         
-        
+        [self sendGoodWithArr:x withID:model.ID];
         
     }];
     [showV show];
@@ -171,7 +171,39 @@
     
 }
 
+//发货
+- (void)sendGoodWithArr:(NSArray *)arr withID:(NSString *)ID{
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"id"] = ID;
+    dict[@"expresssn"] = arr[0];
+    dict[@"expressid"] = arr[1];
+    dict[@"expressname"] = arr[2];
+    dict[@"express"] = arr[3];
+    [zkRequestTool networkingPOST:merchorderSend_order_merch_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            [SVProgressHUD showSuccessWithStatus:@"发货成功"];
+            self.page = 1;
+            [self getData];
+            
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
 
+    
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -179,6 +211,10 @@
     SWTMineOrderDetailTVC * vc =[[SWTMineOrderDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
     vc.hidesBottomBarWhenPushed = YES;
     vc.ID = self.dataArray[indexPath.row].orderid;
+    vc.IDTwo = self.dataArray[indexPath.row].ID;
+    if (self.type == 4) {
+        vc.isShouHou = YES;
+    }
     [self.navigationController pushViewController:vc animated:YES];
     
     

@@ -18,8 +18,10 @@
 #import "SWTWuLiuTVC.h"
 #import "SWTTuiHuoOneTVC.h"
 #import "SWTMJFaHuoShowView.h"
+#import "SWTMJRefundCell.h"
 @interface SWTMineOrderDetailTVC ()
 @property(nonatomic , strong)SWTModel *dataModel;
+@property(nonatomic , strong)SWTModel *refundModel;
 @end
 
 @implementation SWTMineOrderDetailTVC
@@ -28,6 +30,11 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self getData];
+    
+    if (self.isShouHou) {
+        [self getRufure];
+    }
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -37,10 +44,15 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTOrderDetailFourCell" bundle:nil] forCellReuseIdentifier:@"SWTOrderDetailFourCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTOrderThreeCell" bundle:nil] forCellReuseIdentifier:@"SWTOrderThreeCell"];
     [self.tableView registerClass:[SWTMineOrderCell class] forCellReuseIdentifier:@"SWTMineOrderCell"];
+    [self.tableView registerClass:[SWTMJRefundCell class] forCellReuseIdentifier:@"SWTMJRefundCell"];
+    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
        self.tableView.estimatedRowHeight = 40;
+    
+    
+    
 }
 - (void)getData {
     [SVProgressHUD show];
@@ -53,6 +65,7 @@
         if ([responseObject[@"code"] intValue]== 200) {
             
             self.dataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
+            
             [self.tableView reloadData];
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
@@ -71,7 +84,7 @@
     if (self.dataModel == nil) {
         return 0;
     }
-    return 3;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -79,6 +92,8 @@
         return 3;
     }else if (section == 1) {
         return 5;
+    }else if (section == 2) {
+        return 1;
     }else {
         return 4;
     }
@@ -101,6 +116,11 @@
         }else {
             return 30;
         }
+    }else if (indexPath.section == 2) {
+        if (self.refundModel == nil) {
+            return 0;
+        }
+        return UITableViewAutomaticDimension;
     }else {
        if (indexPath.row == 0) {
             return 50;
@@ -179,11 +199,19 @@
             self.dataModel.goodnum = self.dataModel.num;
             self.dataModel.nickname = self.dataModel.store_name;
             self.dataModel.title = self.dataModel.goodname;
+            
+            if (self.isShouHou) {
+                cell.isShangJia = YES;
+                cell.status = self.refundModel.status;
+            }
             cell.mjModel = self.dataModel;
             [cell.rightTwoBt addTarget:self action:@selector(rightTwoAction:) forControlEvents:UIControlEventTouchUpInside];
             [cell.rightOneBt addTarget:self action:@selector(rightOneAction:) forControlEvents:UIControlEventTouchUpInside];
             [cell.rightThreeBt addTarget:self action:@selector(rightThreeAction:) forControlEvents:UIControlEventTouchUpInside];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            
+            
             return cell;
         }else {
            SWTOrderDetailFourCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTOrderDetailFourCell" forIndexPath:indexPath];
@@ -210,7 +238,13 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }
-    }else {
+    }else if (indexPath.section == 2) {
+        SWTMJRefundCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTMJRefundCell" forIndexPath:indexPath];
+        cell.model = self.refundModel;
+        cell.clipsToBounds = YES;
+        return cell;
+        
+    } else {
         SWTOrderDetailFourCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTOrderDetailFourCell" forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.rightLB.hidden = YES;
@@ -241,6 +275,36 @@
 
 }
 
+- (void)getRufure {
+    
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"orderid"] = self.IDTwo;
+    [zkRequestTool networkingPOST:merchorderGet_refund_info_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            self.refundModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
+            NSArray * arr = responseObject[@"data"][@"imgs"];
+            self.refundModel.refundImgs = arr;
+            [self.tableView reloadData];
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+
+    
+    
+}
 
 //右侧按钮
 //0未支付1待发货2待收货3待评价4已完成5已关闭-1交易失败 -2 全部 6 售后
@@ -321,23 +385,33 @@
 
 //左侧按钮
 - (void)rightOneAction:(UIButton *)button {
-    
     SWTModel * model = self.dataModel;
-    if (model.status.intValue == 0) {
-        //改地址
-        [self editOrderAddressOneWithModel:model];
-    }else if (model.status.intValue == 1) {
+    if (self.isMj) {
         
-    }else if (model.status.intValue == 2 || model.status.intValue == 3) {
-        SWTWuLiuTVC * vc =[[SWTWuLiuTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-        vc.hidesBottomBarWhenPushed = YES;
-        vc.ID = self.dataModel.ID;
-        [self.navigationController pushViewController:vc animated:YES];
-    }else if (model.status.intValue == 4) {
-        
-    }else if (model.status.intValue == 5) {
-        
+       if ([button.titleLabel.text containsString:@"拒绝"]) {
+           //拒绝申请退款
+
+        }
+    }else {
+
+        if (model.status.intValue == 0) {
+            //改地址
+            [self editOrderAddressOneWithModel:model];
+        }else if (model.status.intValue == 1) {
+            
+        }else if (model.status.intValue == 2 || model.status.intValue == 3) {
+            SWTWuLiuTVC * vc =[[SWTWuLiuTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+            vc.hidesBottomBarWhenPushed = YES;
+            vc.ID = self.dataModel.ID;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else if (model.status.intValue == 4) {
+            
+        }else if (model.status.intValue == 5) {
+            
+        }
     }
+    
+    
     
 }
 //点击售后

@@ -12,7 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTMineOrderDetailTVC : BaseTableViewController
 @property(nonatomic , strong)NSString *ID;
+@property(nonatomic , strong)NSString *IDTwo;
 @property(nonatomic,assign)BOOL isMj;
+@property(nonatomic,assign)BOOL isShouHou;
+
 @end
 
 NS_ASSUME_NONNULL_END

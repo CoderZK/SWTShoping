@@ -199,6 +199,7 @@
     [[self.naView.rightBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:self.dataModel.imid];
         TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
+        vc.navigationItem.title = self.dataModel.store_name;
         [self.navigationController pushViewController:vc animated:YES];
     }];
     [self.view addSubview:self.naView];

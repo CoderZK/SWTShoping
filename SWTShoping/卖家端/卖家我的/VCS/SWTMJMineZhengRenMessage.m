@@ -87,6 +87,7 @@
         cell.rightImgV.hidden = NO;
     }
     if (indexPath.section == 0) {
+        cell.TF.userInteractionEnabled = NO;
         if (indexPath.row == 0) {
             cell.TF.text = @"已认证";
         }else {
@@ -119,12 +120,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
+    
     if (indexPath.section == 1 && indexPath.row == 3){
+        [self.tableView endEditing:YES];
         NSArray * arr = @[self.dataModel.idcard_front,self.dataModel.idcard_back,self.dataModel.idcard_hold];
         [[zkPhotoShowVC alloc] initWithArray:arr index:0];
         
     }
     if (indexPath.section == 2 && indexPath.row == 2) {
+         [self.tableView endEditing:YES];
         [self addPict];
     }
     

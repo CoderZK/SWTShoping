@@ -25,6 +25,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic , strong)SWTModel *mjModel;//卖家
 //0未支付1待发货2待收货3待评价4已完成5已关闭-1交易失败 -2 全部
 
+@property(nonatomic,assign)BOOL isShangJia;//是否是商家
+@property(nonatomic , strong)NSString *status;// 退货退款状态
+
 @end
 
 NS_ASSUME_NONNULL_END

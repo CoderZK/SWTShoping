@@ -285,6 +285,7 @@
             //总资产
             SWTMJMineMoneyVC * vc =[[SWTMJMineMoneyVC alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
+            vc.money = self.dataModel.credit;
             [self.navigationController pushViewController:vc animated:YES];
         }else if (indexPath.row == 1) {
             SWTMJMineJingPaiFatherVC * vc =[[SWTMJMineJingPaiFatherVC alloc] init];

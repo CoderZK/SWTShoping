@@ -24,7 +24,7 @@
                             <constraint firstAttribute="height" constant="0.5" id="xtF-PZ-8TM"/>
                         </constraints>
                     </view>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="369" translatesAutoresizingMaskIntoConstraints="NO" id="TBO-Hc-agt">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="369" translatesAutoresizingMaskIntoConstraints="NO" id="TBO-Hc-agt">
                         <rect key="frame" x="15" y="14.5" width="70" height="70"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="70" id="3m8-nO-iag"/>
