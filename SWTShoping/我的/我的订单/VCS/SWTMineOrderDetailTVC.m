@@ -322,7 +322,9 @@
             vc.ID = model.ID;
             [self.navigationController pushViewController:vc animated:YES];
         }else if ([button.titleLabel.text containsString:@"退款"]) {
-            //
+            //退款
+//            [self caozuoWithID:self.ID withType:2];
+            [self mjTuiKuanAction];
         }else if ([button.titleLabel.text containsString:@"同意买家退货"]) {
             
         }
@@ -390,7 +392,7 @@
         
        if ([button.titleLabel.text containsString:@"拒绝"]) {
            //拒绝申请退款
-
+           [self caozuoWithID:self.ID withType:1];
         }
     }else {
 
@@ -414,6 +416,7 @@
     
     
 }
+
 //点击售后
 - (void)rightThreeAction:(UIButton *)button {
     
@@ -423,6 +426,75 @@
     [self.navigationController pushViewController:vc animated:YES];
     
     
+}
+
+// 售后操作
+- (void)caozuoWithID:(NSString *)ID withType:(NSInteger)type {
+    
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"refundid"] = self.refundModel.ID;
+    dict[@"opt"] = @(type);
+    [zkRequestTool networkingPOST:merchorderAudit_order_merch_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            if (type == 1) {
+                [SVProgressHUD showSuccessWithStatus:@"退款申请拒绝成功"];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self getRufure];
+                });
+            }else if (type == 3) {
+                [SVProgressHUD showSuccessWithStatus:@"退款完成"];
+                [LTSCEventBus sendEvent:@"tuikuan" data:nil];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.navigationController popViewControllerAnimated:YES];
+                    
+                });
+                
+            }
+            
+            
+ 
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+
+    
+}
+
+//退款操作
+- (void)mjTuiKuanAction {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"merOrderId"] = self.dataModel.orderid;
+    dict[@"refundAmount"] =  [NSString stringWithFormat:@"%0.0f",self.dataModel.realprice.floatValue * 100];
+    [zkRequestTool networkingPOST:payRefund_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            [self caozuoWithID:nil withType:3];
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+
 }
 
 - (void)editOrderAddressOneWithModel:(SWTModel *)orderModel {

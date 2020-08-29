@@ -1,34 +1,35 @@
 //
-//  SWTMienZuJiSubVC.m
+//  SWTSearchSubVC.m
 //  SWTShoping
 //
-//  Created by kunzhang on 2020/7/8.
+//  Created by kunzhang on 2020/8/28.
 //  Copyright © 2020 kunzhang. All rights reserved.
 //
 
-#import "SWTMienZuJiSubVC.h"
-#import "SWTGuanZhuCollectionCell.h"
-@interface SWTMienZuJiSubVC ()<UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource>
+#import "SWTSearchSubVC.h"
+#import "XPCollectionViewWaterfallFlowLayout.h"
+#import "SWTHomeCollectionTwoCell.h"
+#import "SWTHomeCollectionThreeCell.h"
+@interface SWTSearchSubVC ()<UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource>
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
-
 @property(nonatomic , strong)UICollectionView *collectionView;
 @property(nonatomic,assign)NSInteger page;
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *dataArray;
+@property(nonatomic , strong)NSString *searchWord;
 
 @end
 
-@implementation SWTMienZuJiSubVC
+@implementation SWTSearchSubVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    
     self.layout =[[XPCollectionViewWaterfallFlowLayout alloc] init];
     self.layout.dataSource = self;
-    CGRect frame = CGRectMake(0, 0, ScreenW, ScreenH - sstatusHeight - 44 - 40 - 49);
-    if (sstatusHeight > 20) {
-        frame = CGRectMake(0, 0, ScreenW, ScreenH - sstatusHeight - 44 - 40 - 49 - 34);
-    }
     
-    self.collectionView  = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:self.layout];;
+    self.collectionView  = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH) collectionViewLayout:self.layout];;
     
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
@@ -37,12 +38,9 @@
     self.collectionView.backgroundColor = BackgroundColor;
     [self.view addSubview:self.collectionView];
     
-    [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.top.bottom.equalTo(self.view);
-    }];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"SWTHomeCollectionTwoCell" bundle:nil] forCellWithReuseIdentifier:@"SWTHomeCollectionTwoCell"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"SWTHomeCollectionThreeCell" bundle:nil] forCellWithReuseIdentifier:@"SWTHomeCollectionThreeCell"];
     
-    
-    [self.collectionView registerNib:[UINib nibWithNibName:@"SWTGuanZhuCollectionCell" bundle:nil] forCellWithReuseIdentifier:@"SWTGuanZhuCollectionCell"];
     [self.view addSubview:self.collectionView];
     
     self.page = 1;
@@ -56,15 +54,20 @@
         self.page++;
         [self getData];
     }];
-    
     Weak(weakSelf);
-       self.noneView.clickBlock = ^{
+    [LTSCEventBus registerEvent:@"search" block:^(NSString * data) {
+        weakSelf.searchWord = data;
+        weakSelf.page = 1;
+        [weakSelf getData];
+    }];
+    
+     self.noneView.clickBlock = ^{
            
            weakSelf.page = 1;
            [weakSelf getData];
-         };
+       };
+    
 }
-
 
 - (void)getData {
     
@@ -73,9 +76,10 @@
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"page"] = @(self.page);
     dict[@"pagesize"] = @(10);
-    NSString * url = [NSString stringWithFormat:@"%@/%@",userTrace_SWT,[zkSignleTool shareTool].session_uid];
-           dict[@"type"] = @"2";
-    [zkRequestTool networkingPOST:url parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+    dict[@"name"] = self.searchWord;
+    dict[@"type"] = @(self.type+1);
+    dict[@"token"] = [zkSignleTool shareTool].session_token;
+    [zkRequestTool networkingPOST:search_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.collectionView.mj_header endRefreshing];
         [self.collectionView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];
@@ -113,15 +117,37 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     
 //    return 9;
-    return self.dataArray.count;
+        return self.dataArray.count;
 }
 
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    SWTGuanZhuCollectionCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTGuanZhuCollectionCell" forIndexPath:indexPath];
-    cell.model = self.dataArray[indexPath.row];
-    return cell;
+    
+    
+    SWTModel * model = self.dataArray[indexPath.row];
+    model.goodprice = model.price;
+    if (self.type == 0) {
+        if ([model.showtype isEqualToString:@"live"]) {
+            SWTHomeCollectionTwoCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionTwoCell" forIndexPath:indexPath];
+            model.playnum = model.watchnum;
+            cell.model = model;
+            return cell;
+        }else {
+            SWTHomeCollectionThreeCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionThreeCell" forIndexPath:indexPath];
+            
+            cell.model = model;
+            return cell;
+        }
+    }else {
+        SWTHomeCollectionTwoCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTHomeCollectionTwoCell" forIndexPath:indexPath];
+        model.playnum = model.watchnum;
+        cell.model = model;
+        return cell;
+    }
+    
+    
+    
     
 }
 
@@ -130,6 +156,35 @@
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+   
+    
+    SWTModel * model = self.dataArray[indexPath.row];
+    
+    if (self.type == 2) {
+        SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
+                   vc.hidesBottomBarWhenPushed = YES;
+                   vc.model = model;
+                   [self.navigationController pushViewController:vc animated:YES];
+    }else {
+        if ([model.showtype isEqualToString:@"live"]) {
+            SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            vc.isHeMai = YES;
+            vc.model = model;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else {
+            SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+            vc.hidesBottomBarWhenPushed = YES;
+            vc.goodID = self.dataArray[indexPath.row].goodid;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
+    
+    
+    
+    
     
     
 }
@@ -144,12 +199,25 @@
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout itemWidth:(CGFloat)width heightForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    return (ScreenW - 30)/2 + 64;
+    
+    CGFloat imgH  =   (ScreenW - 30)/2 * 3/4;
+    SWTModel * model = self.dataArray[indexPath.row];
+    if ([model.showtype isEqualToString:@"live"]) {
+        
+        return  (ScreenW - 30)/2;
+    }else {
+        NSArray * arr = [model getTypeLBArr];
+        if (arr.count == 0) {
+            return imgH + 39;
+        }else {
+            return imgH + 59;
+        }
+    }
     
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout *)layout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(0, 10.0, 10.0, 10.0);
+    return UIEdgeInsetsMake(10.0, 10.0, 10.0, 10.0);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout*)layout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
@@ -159,5 +227,7 @@
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(XPCollectionViewWaterfallFlowLayout*)layout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     return 10.0;
 }
+
+
 
 @end

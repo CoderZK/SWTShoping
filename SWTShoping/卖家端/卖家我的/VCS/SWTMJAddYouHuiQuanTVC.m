@@ -107,8 +107,8 @@
     dict[@"merch_id"] = self.merch_id;
     dict[@"useprice"] = self.jiaGeStr;
     dict[@"rate"] = self.zheKouStr;
-    dict[@"start_date"] =  [NSString stringWithFormat:@"%@ 00:00:00",self.startTime];
-    dict[@"end_date"] =  [NSString stringWithFormat:@"%@ 00:00:00",self.endTime];
+    dict[@"start_date"] =  [NSString stringWithFormat:@"%@:00",self.startTime];
+    dict[@"end_date"] =  [NSString stringWithFormat:@"%@:00",self.endTime];
     dict[@"num"] = self.numberStr;
     [zkRequestTool networkingPOST:mmerchcouponAdd_coupon_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
@@ -242,12 +242,13 @@
     if (indexPath.row == 3) {
         SelectTimeV *selectTimeV = [[SelectTimeV alloc] init];
         selectTimeV.isCanSelectOld = NO;
+        selectTimeV.isBaoHanHHmm = YES;
         selectTimeV.isCanSelectToday = YES;
         Weak(weakSelf);
         selectTimeV.block = ^(NSString *timeStr) {
            
             if (weakSelf.endTime.length != 0) {
-                NSTimeInterval number = [NSString pleaseInsertStarTime:[NSString stringWithFormat:@"%@ 00:00:00",timeStr] andInsertEndTime:[NSString stringWithFormat:@"%@ 00:00:00",weakSelf.endTime]];
+                NSTimeInterval number = [NSString pleaseInsertStarTime:[NSString stringWithFormat:@"%@:00",timeStr] andInsertEndTime:[NSString stringWithFormat:@"%@:00",weakSelf.endTime]];
                 if (number < 0) {
                     [SVProgressHUD showErrorWithStatus:@"结束时间要大于等于开时间"];
                     return;
@@ -267,10 +268,11 @@
         SelectTimeV *selectTimeV = [[SelectTimeV alloc] init];
         selectTimeV.isCanSelectOld = NO;
         selectTimeV.isCanSelectToday = YES;
+        selectTimeV.isBaoHanHHmm = YES;
         Weak(weakSelf);
         selectTimeV.block = ^(NSString *timeStr) {
             if (weakSelf.startTime.length != 0) {
-                NSTimeInterval number = [NSString pleaseInsertStarTime: [NSString stringWithFormat:@"%@ 00:00:00",weakSelf.startTime] andInsertEndTime:[NSString stringWithFormat:@"%@ 00:00:00",timeStr]];
+                NSTimeInterval number = [NSString pleaseInsertStarTime: [NSString stringWithFormat:@"%@:00",weakSelf.startTime] andInsertEndTime:[NSString stringWithFormat:@"%@:00",timeStr]];
                 if (number < 0) {
                     [SVProgressHUD showErrorWithStatus:@"结束时间要大于等于开时间"];
                     return;

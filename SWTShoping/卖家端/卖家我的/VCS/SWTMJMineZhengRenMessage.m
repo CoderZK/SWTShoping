@@ -15,6 +15,7 @@
 @property(nonatomic , strong)UIView *footV;
 @property(nonatomic , strong)UIImage *image;
 @property(nonatomic , strong)NSString *headImgStr;
+@property(nonatomic , strong)UIImageView *imgV;
 @end
 
 @implementation SWTMJMineZhengRenMessage
@@ -31,11 +32,19 @@
      [self.tableView registerNib:[UINib nibWithNibName:@"SWTMJDainPuLoGoCell" bundle:nil] forCellReuseIdentifier:@"SWTMJDainPuLoGoCell"];
        [self.tableView registerClass:[SWTMineShopSettingSectionV class] forHeaderFooterViewReuseIdentifier:@"head"];
     
-    self.leftTitleArr = @[@[@"实名认证",@"证件有效期"],@[@"姓名",@"电话",@"身份证",@"身份证照认证"],@[@"店铺名称",@"店铺简介",@"店铺LOGO"]];
+    self.leftTitleArr = @[@[@"实名认证"],@[@"姓名",@"电话",@"身份证",@"身份证照认证"],@[@"店铺名称",@"店铺简介",@"店铺LOGO"]];
     
     
-    self.footV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 80)];
-    UIButton * button  =[[UIButton alloc] initWithFrame:CGRectMake(40, 20, ScreenW - 80, 40)];
+    self.footV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW,  150+  80)];
+    
+    self.imgV = [[UIImageView alloc] initWithFrame:CGRectMake(20, 10, ScreenW - 40, 130)];
+    self.imgV.contentMode =  UIViewContentModeScaleAspectFill;
+    self.imgV.clipsToBounds = YES;
+    [self.imgV sd_setImageWithURL:self.dataModel.avatar.getPicURL placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+    
+    [self.footV addSubview:self.imgV];
+    
+    UIButton * button  =[[UIButton alloc] initWithFrame:CGRectMake(40, 170, ScreenW - 80, 40)];
     [button setBackgroundImage:[UIImage imageNamed:@"bbdyx27"] forState:UIControlStateNormal];
     button.titleLabel.font = kFont(14);
     [button setTitleColor:WhiteColor forState:UIControlStateNormal];
@@ -211,7 +220,7 @@
         if ([responseObject[@"code"] intValue] == 200) {
           
             self.headImgStr = responseObject[@"data"];
-            
+            self.imgV.image = self.image;
             [self.tableView reloadData];
             
         }else {
@@ -252,7 +261,11 @@
         [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
-            
+            [SVProgressHUD showSuccessWithStatus:@"修改成功"];
+            self.dataModel.avatar = self.headImgStr;
+            if (self.upshopMessageBlock != nil) {
+                self.upshopMessageBlock(self.dataModel);
+            }
             
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];

@@ -336,7 +336,8 @@
 
 /** 订单查询支付状态 */
 #define payOrderquery_SWT URLOne@"pay/orderquery"
-
+/** 退款 */
+#define payRefund_SWT URLOne@"pay/refund"
 
 #pragma mark ---- 商户端注册模块 -----
 
@@ -456,10 +457,10 @@
 #define merchlotsAdd_lots_info_SWT URLOne@"merchlots/add_lots_info"
 /** 获取上传资料记录*/
 #define merchlotsGet_lots_info_SWT URLOne@"merchlots/get_lots_info"
-///**合买抽签*/
-//#define mmerchcouponAdd_coupon_SWT URLOne@"merchcoupon/add_coupon"
-///** 获取抽签订单信息*/
-//#define merchcouponGet_coupon_list_SWT URLOne@"merchcoupon/get_coupon_list"
+/**获取客服IM*/
+#define getimid_SWT URLOne@"getimid"
+///** 首页搜索*/
+#define search_SWT URLOne@"search"
 ///**合买抽签*/
 //#define mmerchcouponAdd_coupon_SWT URLOne@"merchcoupon/add_coupon"
 ///** 获取抽签订单信息*/

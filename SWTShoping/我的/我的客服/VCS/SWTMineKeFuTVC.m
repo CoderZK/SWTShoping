@@ -14,6 +14,7 @@
 @property(nonatomic , strong)NSMutableArray *dataArray;
 @property(nonatomic , strong)NSArray *reMenArr;
 @property(nonatomic , assign)CGFloat cellH;
+@property(nonatomic , strong)NSString *IMID;
 @end
 
 @implementation SWTMineKeFuTVC
@@ -37,8 +38,7 @@
     [[button rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         @strongify(self);
         
-        
-        TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:@"6"];
+        TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:self.IMID];
         TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
         vc.navigationItem.title = @"客服";
         [self.navigationController pushViewController:vc animated:YES];
@@ -47,6 +47,9 @@
     }];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    
+    [self getIM];
+    
     
 }
 
@@ -78,6 +81,28 @@
         [self.tableView.mj_footer endRefreshing];
         
     }];
+}
+
+//获取客服IM
+- (void)getIM {
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    [zkRequestTool networkingPOST:getimid_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            self.IMID =  [NSString stringWithFormat:@"%@",responseObject[@"data"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+
+    
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

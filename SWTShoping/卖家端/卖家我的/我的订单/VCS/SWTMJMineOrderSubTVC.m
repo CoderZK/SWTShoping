@@ -43,7 +43,10 @@
         weakSelf.page = 1;
         [weakSelf getData];
     };
-    
+    [LTSCEventBus registerEvent:@"tuikuan" block:^(id data) {
+        weakSelf.page = 1;
+        [weakSelf getData];
+    }];
 }
 
 - (void)getData {
@@ -109,9 +112,6 @@
     
     if ([button.titleLabel.text containsString:@"发货"]) {
         [self faHuoActionWithModel:self.dataArray[button.tag]];
-        
-        
-        
     }else if ([button.titleLabel.text containsString:@"查看物流"]) {
         SWTWuLiuTVC * vc =[[SWTWuLiuTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
         vc.hidesBottomBarWhenPushed = YES;
@@ -212,8 +212,10 @@
     vc.hidesBottomBarWhenPushed = YES;
     vc.ID = self.dataArray[indexPath.row].orderid;
     vc.IDTwo = self.dataArray[indexPath.row].ID;
+    vc.isMj = YES;
     if (self.type == 4) {
         vc.isShouHou = YES;
+        
     }
     [self.navigationController pushViewController:vc animated:YES];
     

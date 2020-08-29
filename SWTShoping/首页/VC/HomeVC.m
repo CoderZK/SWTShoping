@@ -18,7 +18,7 @@
 #import "SWTZhenPinGeFatherVC.h"
 #import "SWTZhiBoDetailVC.h"
 #import "SWTHeMaiFatherVC.h"
-
+#import "SWTSearchFatherVC.h"
 @interface HomeVC ()<UIScrollViewDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource,SWTHomeHeadViewDelegate>
 @property(nonatomic , strong)SWTHomeHeadView *headView;
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
@@ -179,7 +179,7 @@
     
     ALCSearchView * searchTitleView = [[ALCSearchView alloc] initWithFrame:CGRectMake(0, 0, ScreenW - 120, 44)];
     searchTitleView.searchTF.delegate = self;
-    searchTitleView.isPush = NO;
+    searchTitleView.isPush = YES;
     
     self.navigationItem.titleView = searchTitleView;
     @weakify(self);
@@ -193,6 +193,9 @@
     }] subscribeNext:^(NSString * _Nullable x) {
         NSLog(@"======\n%@",x);
     }];
+    
+    [searchTitleView.clickBt addTarget:self action:@selector(goSearch:) forControlEvents:UIControlEventTouchUpInside];
+    
     self.navigationItem.titleView = searchTitleView;
     
     UIButton * submitBtn = [[UIButton alloc] initWithFrame:CGRectMake(15, 200, 56, 19)];
@@ -214,6 +217,12 @@
     self.navigationItem.rightBarButtonItem  = [[UIBarButtonItem alloc] initWithCustomView:nil];
     
     
+}
+
+- (void)goSearch:(UIButton *)button {
+    SWTSearchFatherVC * vc =[[SWTSearchFatherVC alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)setheadViewVV{

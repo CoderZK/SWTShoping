@@ -197,6 +197,10 @@
                     SWTMJMineZhengRenMessage * vc =[[SWTMJMineZhengRenMessage alloc] init];
                     vc.hidesBottomBarWhenPushed = YES;
                     vc.dataModel = self.dataModel.merchinfo;
+                    Weak(weakSelf);
+                    vc.upshopMessageBlock = ^(SWTModel * _Nonnull model) {
+                        weakSelf.dataModel.merchinfo = model;
+                    };
                     [self.navigationController pushViewController:vc animated:YES];
                 }else if (x.intValue== 101) {
                     //点击的是设置
