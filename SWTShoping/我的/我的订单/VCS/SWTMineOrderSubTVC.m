@@ -157,7 +157,7 @@
 //0未支付1待发货2待收货3待评价4已完成5已关闭-1交易失败 -2 全部 6 售后
 - (void)rightTwoAction:(UIButton *)button {
     SWTModel * model = self.dataArray[button.tag];
-    if (model.status.intValue == 0) {
+    if ([button.titleLabel.text containsString:@"付款"]) {
         //付款
         SWTPayVC * vc =[[SWTPayVC alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
@@ -166,22 +166,18 @@
         [self.navigationController pushViewController:vc animated:YES];
         
 //        [self actionModel:model withOrderID:nil withUrlStr:orderPay_SWT withtype:-20];
-    }else if (model.status.intValue == 1) {
+    }else if ([button.titleLabel.text containsString:@"提醒卖家发货"]) {
         //
-        [self actionModel:model withOrderID:nil withUrlStr:@"1234" withtype:-11];
-    }else if (model.status.intValue == 2) {
+        [self actionModel:model withOrderID:nil withUrlStr:pushmsgRemindsend_SWT withtype:-11];
+    }else if ([button.titleLabel.text containsString:@"确认收货"]) {
         [self actionModel:model withOrderID:nil withUrlStr:orderDelivery_SWT withtype:-2];
-    }else if (model.status.intValue == 3) {
+    }else if ([button.titleLabel.text containsString:@"评价"]) {
         
         SWTSendMinePingLunTVC* vc =[[SWTSendMinePingLunTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
         vc.hidesBottomBarWhenPushed = YES;
         vc.model = model;
         [self.navigationController pushViewController:vc animated:YES];
         
-    }else if (model.status.intValue == 4) {
-        [self actionModel:model withOrderID:nil withUrlStr:@"1234" withtype:-4];
-    }else if (model.status.intValue == 5) {
-        [self actionModel:model withOrderID:nil withUrlStr:@"1234" withtype:-5];
     }else if (model.status.intValue == 6) {
         SWTTiJiaoTuiHuoTwoTVC * vc =[[SWTTiJiaoTuiHuoTwoTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
         vc.hidesBottomBarWhenPushed = YES;
@@ -195,12 +191,12 @@
 - (void)rightOneAction:(UIButton *)button {
     
     SWTModel * model = self.dataArray[button.tag];
-    if (model.status.intValue == 0) {
+    if ([button.titleLabel.text containsString:@"改地址"]) {
         //改地址
         [self editOrderAddressOneWithModel:model];
     }else if (model.status.intValue == 1) {
         
-    }else if (model.status.intValue == 2 || model.status.intValue == 3) {
+    }else if ([button.titleLabel.text containsString:@"查看物流"]) {
         SWTWuLiuTVC * vc =[[SWTWuLiuTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
         vc.hidesBottomBarWhenPushed = YES;
         vc.ID = model.ID;
@@ -251,7 +247,7 @@
                 [SVProgressHUD showSuccessWithStatus:@"付款成功"];
             }else if (type == 0){
                 [SVProgressHUD showSuccessWithStatus:@"修改收货地址成功"];
-            }else if (type == 1) {
+            }else if (type == -11) {
                 [SVProgressHUD showSuccessWithStatus:@"催发货成功"];
             }
             

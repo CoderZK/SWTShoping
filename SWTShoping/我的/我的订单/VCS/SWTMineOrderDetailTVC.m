@@ -345,7 +345,7 @@
         //        [self actionModel:model withOrderID:nil withUrlStr:orderPay_SWT withtype:-20];
             }else if ([button.titleLabel.text containsString:@"提醒卖家发货"]) {
                 //提醒发货
-                [self actionModel:model withOrderID:pushmsgRemindsend_SWT withUrlStr:@"1234" withtype:-11];
+                [self actionModel:model withOrderID:nil withUrlStr:pushmsgRemindsend_SWT withtype:-11];
             }else if ([button.titleLabel.text containsString:@"确认收货"]) {
                 [self actionModel:model withOrderID:nil withUrlStr:orderDelivery_SWT withtype:-2];
             }else if ([button.titleLabel.text containsString:@"评价"]) {
