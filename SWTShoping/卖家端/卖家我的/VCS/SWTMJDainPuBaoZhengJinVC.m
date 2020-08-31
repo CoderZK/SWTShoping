@@ -18,6 +18,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"店铺保证金";
+    if (self.dataModel.margin.length == 0) {
+        self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",@"0"];
+    }else {
+       self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",self.dataModel.margin.getPriceAllStr];
+    }
+    
 
 }
 - (IBAction)payAction:(id)sender {

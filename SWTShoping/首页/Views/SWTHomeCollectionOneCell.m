@@ -36,11 +36,11 @@
         
         [self addSubview:self.scrollView];
     
-        self.scrollView.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
+        self.scrollView.frame = CGRectMake(0, 0, ScreenW - 20, 160);
         
         CGFloat space = 10;
-        CGFloat hh = frame.size.height - 10;
-        CGFloat ww = (frame.size.width - 20)/3;
+        CGFloat hh = 160 - 10;
+        CGFloat ww = (ScreenW - 20 - 20)/3;
         for (int i = 0 ; i < 3; i++) {
             
             SWTHomeReMenView * renMenV = [[SWTHomeReMenView alloc] initWithFrame:CGRectMake( i*(space + ww), 0, ww, hh)];

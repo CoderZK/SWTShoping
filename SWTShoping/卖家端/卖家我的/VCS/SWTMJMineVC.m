@@ -294,6 +294,7 @@
         }else if (indexPath.row == 1) {
             SWTMJMineJingPaiFatherVC * vc =[[SWTMJMineJingPaiFatherVC alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
+            vc.model = self.dataModel.merchinfo;
             [self.navigationController pushViewController:vc animated:YES];
         }else if (indexPath.row == 2) {
             if (self.isOpenChanPinKu) {

@@ -32,7 +32,7 @@
 - (void)setModel:(SWTModel *)model {
     _model = model;
     self.titleLB.text = model.name;
-    if ([model.isfav isEqualToString:@"no"]) {
+    if ([model.isfav isEqualToString:@"yes"]) {
         [self.collectionBt setImage:[UIImage imageNamed:@"praise2"] forState:UIControlStateNormal];
     }else {
         [self.collectionBt setImage:[UIImage imageNamed:@"praise1"] forState:UIControlStateNormal];

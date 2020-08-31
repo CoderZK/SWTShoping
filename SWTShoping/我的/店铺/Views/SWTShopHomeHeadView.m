@@ -395,10 +395,10 @@
         [imgGroupArr addObject:neiM.pic];
     }
     self.sdView.imageURLStringsGroup = imgGroupArr;
-     if ([model.isfollow isEqualToString:@"no"]) {
-           [self.guanZhuBt setBackgroundImage:[UIImage imageNamed:@"Focus"] forState:UIControlStateNormal];
+     if ([model.isfollow isEqualToString:@"yes"]) {
+           [self.guanZhuBt setBackgroundImage:[UIImage imageNamed:@"dyx24"] forState:UIControlStateNormal];
        }else {
-          [self.guanZhuBt setBackgroundImage:[UIImage imageNamed:@"dyx24"] forState:UIControlStateNormal];
+          [self.guanZhuBt setBackgroundImage:[UIImage imageNamed:@"Focus"] forState:UIControlStateNormal];
        }
     
     [self.lebftBt setTitle: [NSString stringWithFormat:@"竞拍(%ld)",(long)model.auctiongoodnum] forState:UIControlStateNormal];

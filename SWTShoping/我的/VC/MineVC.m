@@ -305,6 +305,9 @@
             cell.mineTwoCellBlock = ^(NSInteger index) {
                 SWTMineOrderFartherVC * vc =[[SWTMineOrderFartherVC alloc] init];
                 vc.selectIndex = index;
+                if (index == 5) {
+                    vc.selectIndex = 6;
+                }
                 vc.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:vc animated:YES];
             };

@@ -20,6 +20,7 @@
     [self setLeftNagate];
 }
 
+
 - (void)setLeftNagate {
     
     UIButton * leftBt  =[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
@@ -30,8 +31,11 @@
     [[leftBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         @strongify(self);
         [self dismissViewControllerAnimated:YES completion:nil];
+        [LTSCEventBus sendEvent:@"diss" data:nil];
     }];
     
     
 }
+
+
 @end

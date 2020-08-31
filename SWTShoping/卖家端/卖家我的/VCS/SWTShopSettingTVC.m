@@ -22,6 +22,14 @@
 
 @implementation SWTShopSettingTVC
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self editShopSetting];
+    
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"店铺设置";
@@ -90,11 +98,12 @@
     cell.rightTF.userInteractionEnabled = NO;
     if (indexPath.section == 0) {
         cell.rightImgV.hidden = YES;
-        cell.rightTF.userInteractionEnabled = NO;
         if (indexPath.row == 0) {
-            cell.rightTF.text = self.dataModel.realname;
+            cell.rightTF.text = self.dataModel.link;
+            cell.rightTF.userInteractionEnabled = YES;
         }else {
             cell.rightTF.text = self.dataModel.mobile;
+            cell.rightTF.userInteractionEnabled = YES;
         }
         
     }else if (indexPath.section == 1) {
@@ -102,6 +111,7 @@
         if (indexPath.row == 0) {
             cell.rightTF.text  = self.dataModel.autodeduct ? @"已开启":@"未开启";
         }else if (indexPath.row == 1) {
+            cell.rightTF.text  = self.dataModel.level_open ? @"已开启":@"未开启";
             
         } if (indexPath.row == 2) {
             cell.rightTF.hidden = YES;
@@ -119,6 +129,11 @@
             cell.rightTF.hidden = YES;
             cell.swithBt.hidden = NO;
         }else if (indexPath.row == 1) {
+            cell.rightTF.hidden = NO;
+            cell.rightTF.userInteractionEnabled = NO;
+            cell.swithBt.hidden = YES;
+            
+            cell.rightTF.text =  [NSString stringWithFormat:@"%@",self.dataModel.refund_address.length == 0?@"":self.dataModel.refund_address];
             
         }else {
             
@@ -185,6 +200,12 @@
                   ) {
             SWTMJAddShouHuoDiZhiTVC * vc =[[SWTMJAddShouHuoDiZhiTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
             vc.hidesBottomBarWhenPushed = YES;
+            Weak(weakSelf);
+            vc.addTuiHuoAddressBlock = ^(SWTModel * _Nonnull model) {
+                weakSelf.dataModel = model;
+                [weakSelf.tableView reloadData];
+            };
+            vc.dataModel = self.dataModel;
             [self.navigationController pushViewController:vc animated:YES];
         }
     }
@@ -198,11 +219,42 @@
     NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            self.nameStr = textField.text;
+            self.dataModel.link = textField.text;
         }else if (indexPath.row == 1){
-            self.phone = textField.text;
+            self.dataModel.mobile = textField.text;
         }
     }
+}
+
+
+- (void)editShopSetting {
+    [self.tableView endEditing:YES];
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"id"] = [zkSignleTool shareTool].selectShopID;
+    dict[@"link"] = self.dataModel.link;
+    dict[@"mobile"] = self.dataModel.mobile;
+    [zkRequestTool networkingPOST:merchUpd_merchinfo_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            if (self.shopSettingBlock != nil) {
+                self.shopSettingBlock(self.dataModel);
+            }
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+
+    
+    
 }
 
 @end

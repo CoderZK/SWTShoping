@@ -816,7 +816,9 @@
 }
 
 - (NSString *)getPriceStr {
-    
+    if (self.length == 0) {
+        return @"0";
+    }
     NSString * str =  [NSString stringWithFormat:@"%.2f",self.floatValue];;
     if (str.floatValue > 10000) {
         return  [NSString stringWithFormat:@"%0.1f万",str.floatValue/10000];;
@@ -837,6 +839,10 @@
 }
 
 - (NSString *)getPriceAllStr {
+    
+    if (self.length == 0) {
+        return @"0";
+    }
     NSString * str =  [NSString stringWithFormat:@"%.2f",self.floatValue];;
     if ([[str substringFromIndex:str.length-2] isEqualToString:@"00"]){
         return [str substringToIndex:str.length-3];

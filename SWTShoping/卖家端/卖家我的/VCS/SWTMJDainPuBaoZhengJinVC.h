@@ -11,7 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTMJDainPuBaoZhengJinVC : BaseViewController
-
+@property(nonatomic , strong)SWTModel *dataModel;
+@property(nonatomic , copy)void(^sendBaoZhenJinBlock)(SWTModel *model);
 @end
 
 NS_ASSUME_NONNULL_END

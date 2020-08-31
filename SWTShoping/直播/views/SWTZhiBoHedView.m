@@ -128,10 +128,10 @@
     _model = model;
     self.nameLB.text = model.name;
     [self.headBt sd_setBackgroundImageWithURL:[model.avatar getPicURL] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"369"]];
-     if ([model.merchisfollow isEqualToString:@"no"]) {
-           [self.guanzhuBt setBackgroundImage:[UIImage imageNamed:@"Focus"] forState:UIControlStateNormal];
+     if ([model.liveisfollow isEqualToString:@"yes"]) {
+           [self.guanzhuBt setBackgroundImage:[UIImage imageNamed:@"dyx24"] forState:UIControlStateNormal];
        }else {
-          [self.guanzhuBt setBackgroundImage:[UIImage imageNamed:@"dyx24"] forState:UIControlStateNormal];
+          [self.guanzhuBt setBackgroundImage:[UIImage imageNamed:@"Focus"] forState:UIControlStateNormal];
        }
     
     self.shopNameLB.text = model.livename;

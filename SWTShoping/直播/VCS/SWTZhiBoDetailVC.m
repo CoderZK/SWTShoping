@@ -66,8 +66,8 @@
     //    self.huoDeShowView = [[SWTHuoDeShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
     //    [self.huoDeShowView show];
     
-    SWTPeopleChuJiaVIew * chuajiaV  = [[SWTPeopleChuJiaVIew alloc] initWithFrame:CGRectMake(0, 150, 180, 70)];
-    [self.view addSubview:chuajiaV];
+//    SWTPeopleChuJiaVIew * chuajiaV  = [[SWTPeopleChuJiaVIew alloc] initWithFrame:CGRectMake(0, 150, 180, 70)];
+//    [self.view addSubview:chuajiaV];
     self.zhiBoArr = @[].mutableCopy;
     self.heMaiArr = @[].mutableCopy;
     self.mineHeMaiArr = @[].mutableCopy;
@@ -260,6 +260,7 @@
         if ([responseObject[@"code"] intValue]== 200) {
             self.dataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
             self.headV.model = self.dataModel;
+            self.bottomV.model = self.dataModel;
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
@@ -499,7 +500,7 @@
                     [SVProgressHUD showSuccessWithStatus:@"取消关注店铺"];
                     self.dataModel.merchisfollow = @"no";
                 }
-                self.headV.model = self.dataModel;
+                self.bottomV.model = self.dataModel;
             }else  {
                 if ([self.dataModel.liveisfollow isEqualToString:@"no"]) {
                     [SVProgressHUD showSuccessWithStatus:@"关注直播成功"];
@@ -512,7 +513,7 @@
                     [self.bottomV.collectBt setBackgroundImage:[UIImage imageNamed:@"collectN"] forState:UIControlStateNormal];
                 }
                 
-                
+                self.headV.model = self.dataModel;
                 
             }
             

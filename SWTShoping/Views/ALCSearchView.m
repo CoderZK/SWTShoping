@@ -55,7 +55,7 @@
 - (void)setIsBlack:(BOOL)isBlack {
     _isBlack = isBlack;
     if (!isBlack ) {
-        self.searchTF.tintColor = CharacterColor70;
+        self.searchTF.textColor = self.searchTF.tintColor = CharacterColor70;
         self.imgView.image = [UIImage imageNamed:@"searchw"];
         NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:@"请输入拍品" attributes:
                                           @{NSForegroundColorAttributeName:CharacterColor70,
@@ -66,10 +66,11 @@
         self.searchTF.font = [UIFont systemFontOfSize:14];
         self.searchTF.backgroundColor = [UIColor colorWithWhite:1 alpha:0.5];
     }else {
-        self.searchTF.tintColor = CharacterColor183;
+        self.searchTF.tintColor = CharacterColor70;
+        self.searchTF.textColor = CharacterColor70;
         self.imgView.image = [UIImage imageNamed:@"searchb"];
         NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:@"请输入拍品" attributes:
-                                          @{NSForegroundColorAttributeName:CharacterColor183,
+                                          @{NSForegroundColorAttributeName:CharacterColor70,
                                             NSFontAttributeName:self.searchTF.font
                                           }];
         self.searchTF.attributedPlaceholder = attrString;

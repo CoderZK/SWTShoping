@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTShopSettingTVC : BaseTableViewController
 @property(nonatomic , strong)SWTModel *dataModel;
+@property(nonatomic , copy)void(^shopSettingBlock)(SWTModel *model);
 @end
 
 NS_ASSUME_NONNULL_END

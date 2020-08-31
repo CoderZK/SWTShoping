@@ -206,6 +206,9 @@
         [self.tableView.mj_header endRefreshing];
         if ([responseObject[@"code"] intValue]== 200) {
             self.dataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
+            if ( [[NSString stringWithFormat:@"%@",self.dataModel.startprice] isEqualToString:@"(null)"]) {
+                self.dataModel.startprice = self.dataModel.productprice;
+            }
             self.dataModel.merch_id = self.dataModel.merchid;
             [self.headV.imgV sd_setImageWithURL:[self.dataModel.goodimg getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
             self.naView.titleLB.text = self.dataModel.name;
@@ -569,6 +572,9 @@
         if ([responseObject[@"code"] intValue]== 200) {
             
             SWTModel * priceModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
+            if ( [[NSString stringWithFormat:@"%@",priceModel.newprice] isEqualToString:@"(null)"]) {
+                priceModel.newprice = self.dataModel.productprice;
+            }
             self.zuiXinPrice = priceModel.newprice;
             self.dataModel.auctionlist = priceModel.auctionlist;
             [self.tableView reloadData];

@@ -71,7 +71,7 @@
         
         self.leftThreeLB = [[UILabel alloc] init];
         self.leftThreeLB.font = kFont(12);
-        self.leftThreeLB.textColor = RedColor;
+        self.leftThreeLB.textColor = RedLightColor;
         self.leftThreeLB.text = @"￥145";
         [self addSubview:self.leftThreeLB];
         
@@ -301,10 +301,14 @@
     }else if (model.state.intValue == 1){
         [self.xieJiaBt setTitle:@"下架" forState:UIControlStateNormal];
     }
+  
     
-    self.leftTwoLb.text =  [NSString stringWithFormat:@"￥%@",model.curr_price];
+    self.leftTwoLb.text =  [NSString stringWithFormat:@"￥%@",model.curr_price.getPriceAllStr];
+    if ([[NSString stringWithFormat:@"%@",model.curr_price] isEqualToString:@"(null)"]) {
+        self.leftTwoLb.text =  [NSString stringWithFormat:@"￥%@",@"0"];
+    }
     self.leftTwoLb.textAlignment = NSTextAlignmentLeft;
-    self.leftThreeLB.text = model.bidsnum;
+    self.leftThreeLB.text = model.bidsnum.length == 0?@"0":model.bidsnum;
     self.leftThreeLB.textAlignment = NSTextAlignmentLeft;
     
 }

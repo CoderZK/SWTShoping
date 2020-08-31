@@ -16,7 +16,7 @@
 @property(nonatomic , strong)UISwitch *switchBt;
 @property(nonatomic , strong)NSString *pStr,*cStr,*aStr,*addStr;
 @property(nonatomic , strong)NSMutableArray<zkPickModel *> *cityArr;
-@property(nonatomic , strong)SWTModel *dataModel;
+
 
 @end
 
@@ -26,7 +26,9 @@
     [super viewDidLoad];
     
     
-    self.navigationItem.title = @"添加收货地址";
+ 
+    self.navigationItem.title = @"添加退货地址";
+    
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTMineTwoAddCell" bundle:nil] forCellReuseIdentifier:@"cell"];
     //       self.tableView.rowHeight = UITableViewAutomaticDimension;
     //       self.tableView.estimatedRowHeight = 40;
@@ -49,42 +51,39 @@
         [self.cityArr insertObject:model atIndex:0];
     }
     
-    [self initTFootV];
+//    [self initTFootV];
     
 }
 
 - (void)addAddressAction {
     
-//    [SVProgressHUD show];
-//    NSMutableDictionary * dict = @{}.mutableCopy;
-//    dict[@"realname"] = self.shouHuoStr;
-//    dict[@"mobile"] = self.phoneStr;
-//    dict[@"address"] = self.detailStr;
-//    dict[@"userid"] = [zkSignleTool shareTool].session_uid;
-//    dict[@"province"] = self.pStr;
-//    dict[@"district"] = self.aStr;
-//    dict[@"city"] = self.cStr;
-//    if (self.switchBt.on) {
-//        dict[@"is_deafult"] = @"1";
-//    }else {
-//        dict[@"is_deafult"] = @"0";
-//    }
-//    [zkRequestTool networkingPOST: [NSString stringWithFormat:@"%@/%@",addressAdd_SWT,[zkSignleTool shareTool].session_uid] parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
-//        [self.tableView.mj_header endRefreshing];
-//        [self.tableView.mj_footer endRefreshing];
-//        [SVProgressHUD dismiss];
-//        if ([[NSString stringWithFormat:@"%@",responseObject[@"code"]] integerValue] == 200) {
-//            [SVProgressHUD showSuccessWithStatus:@"添加地址成功"];
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                [self.navigationController popViewControllerAnimated:YES];
-//            });
-//        }else {
-//            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
-//        }
-//    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-//        [self.tableView.mj_header endRefreshing];
-//        [self.tableView.mj_footer endRefreshing];
-//    }];
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"refund_link"] = self.dataModel.refund_link;
+    dict[@"mobile"] = self.dataModel.mobile;
+    dict[@"refund_address"] =  [NSString stringWithFormat:@"%@%@%@%@",self.pStr,self.cStr,self.aStr,self.addStr];;
+    dict[@"id"] = [zkSignleTool shareTool].selectShopID;
+    [zkRequestTool networkingPOST: merchUpd_merchinfo_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([[NSString stringWithFormat:@"%@",responseObject[@"code"]] integerValue] == 200) {
+            [SVProgressHUD showSuccessWithStatus:@"添加收货地址成功"];
+            self.dataModel.refund_address = [NSString stringWithFormat:@"%@%@%@%@",self.pStr,self.cStr,self.aStr,self.addStr];
+            if (self.addTuiHuoAddressBlock != nil) {
+                self.addTuiHuoAddressBlock(self.dataModel);
+            }
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+                
+            });
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+    }];
     
     
     
@@ -160,6 +159,11 @@
         cell.rightImgV.hidden = cell.rightTF.userInteractionEnabled =YES;
         cell.cons.constant = 10;
         cell.rightTF.placeholder = @"请填写";
+        if (indexPath.row == 1) {
+            cell.rightTF.text = self.dataModel.refund_mobile;
+        }else if (indexPath.row == 0) {
+            cell.rightTF.text = self.dataModel.refund_link;
+        }
     }
     cell.leftLB.text  = self.leftArr[indexPath.row];
     return cell;
@@ -195,13 +199,13 @@
     SWTMineTwoAddCell * cell = (SWTMineTwoAddCell *)textField.superview.superview;
     NSIndexPath * indexPath  = [self.tableView indexPathForCell:cell];
     if (indexPath.row == 0 ) {
-        self.shouHuoStr = textField.text;
+        self.dataModel.refund_link = textField.text;
         
     }else if (indexPath.row == 1){
-        self.phoneStr = textField.text;
+        self.dataModel.refund_mobile = textField.text;
         
     }else if (indexPath.row == 3) {
-        self.detailStr = textField.text;
+        self.addStr = textField.text;
     }
 }
 

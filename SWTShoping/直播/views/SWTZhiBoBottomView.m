@@ -184,4 +184,14 @@
     return YES;;
 }
 
+- (void)setModel:(SWTModel *)model {
+    _model = model;
+    self.numberLB.text = model.merchfollownum;
+    if ([model.merchisfollow isEqualToString:@"yes"]) {
+        [self.collectBt setBackgroundImage:[UIImage imageNamed:@"collectY"] forState:UIControlStateNormal];
+    }else {
+        [self.collectBt setBackgroundImage:[UIImage imageNamed:@"collectN"] forState:UIControlStateNormal];
+    }
+}
+
 @end

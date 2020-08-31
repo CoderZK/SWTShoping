@@ -36,6 +36,12 @@
 }
 
 - (IBAction)action:(UIButton *)sender {
+    
+    
+    [SVProgressHUD showSuccessWithStatus:@"该功能在未开放"];
+    return;
+    
+    
     if (sender.tag == 100) {
         //提现
     }else if (sender.tag ==101) {

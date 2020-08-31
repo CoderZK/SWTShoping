@@ -71,7 +71,7 @@
     self.layout =[[XPCollectionViewWaterfallFlowLayout alloc] init];
     self.layout.dataSource = self;
     
-    self.collectionView  = [[UICollectionView alloc] initWithFrame:CGRectMake(0, -sstatusHeight - 44, ScreenW, ScreenH + sstatusHeight) collectionViewLayout:self.layout];;
+    self.collectionView  = [[UICollectionView alloc] initWithFrame:CGRectMake(0, -sstatusHeight - 44, ScreenW, ScreenH) collectionViewLayout:self.layout];;
     
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
@@ -290,6 +290,7 @@
     if (indexPath.section == 0) {
         SWTHomeCollectionOneCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
         cell.delegateSignal = [[RACSubject alloc] init];
+        cell.clipsToBounds = YES;
         @weakify(self);
         //点击今日热门
         [cell.delegateSignal subscribeNext:^(NSNumber * x) {

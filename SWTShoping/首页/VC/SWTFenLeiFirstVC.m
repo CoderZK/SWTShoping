@@ -20,6 +20,9 @@
 @property(nonatomic , assign)NSInteger  selectIndex;
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *leftDataArr;
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *rightDataArr;
+@property(nonatomic,assign)BOOL isSearch;
+@property(nonatomic , strong)NSString *searchWork;
+@property(nonatomic , strong)NSMutableArray<SWTModel *> *searchArr;
 @end
 
 @implementation SWTFenLeiFirstVC
@@ -35,6 +38,7 @@
     
     self.leftDataArr = @[].mutableCopy;
     self.rightDataArr = [NSMutableArray array];
+    self.searchArr = @[].mutableCopy;
     [self getFirstCateData];
     [self getTopImgStr];
 
@@ -122,6 +126,7 @@
 }
 
 
+
 - (void)addTV {
     
     
@@ -189,16 +194,32 @@
     @weakify(self);
     [[[searchTitleView.searchTF rac_textSignal] filter:^BOOL(NSString * _Nullable value) {
         @strongify(self);
-        if (value.length > 0) {
-            return YES;
-        }else {
-            return NO;
-        }
+        return YES;
     }] subscribeNext:^(NSString * _Nullable x) {
         NSLog(@"======\n%@",x);
+        self.searchWork = x;
+        if (x.length == 0) {
+            self.isSearch = NO;
+            [self.collectionView reloadData];
+        }else {
+            self.isSearch = YES;
+            [self searchAction];
+        }
     }];
     [self.view addSubview:searchTitleView];
     
+}
+
+
+- (void)searchAction {
+    [self.searchArr  removeAllObjects];
+    for (SWTModel * model  in self.rightDataArr) {
+        
+        if ([model.name containsString:self.searchWork]) {
+            [self.searchArr  addObject:model];
+        }
+    }
+    [self.collectionView reloadData];
 }
 
 
@@ -231,6 +252,9 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    if (self.isSearch) {
+        return self.searchArr.count;
+    }
     return self.rightDataArr.count;
 }
 
@@ -242,7 +266,12 @@
     
     
     SWTFenLeiCollectTwoCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTFenLeiCollectTwoCell" forIndexPath:indexPath];
-    cell.model = self.rightDataArr[indexPath.row];
+    if (self.isSearch) {
+       cell.model = self.searchArr[indexPath.row];
+    }else {
+        cell.model = self.rightDataArr[indexPath.row];
+    }
+    
     
     return cell;
     
@@ -255,9 +284,14 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     SWTCateSubVC * vc =[[SWTCateSubVC alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
-    vc.naStr = self.rightDataArr[indexPath.row].name;
-//    vc.selectIndex = indexPath.row;
-    vc.ID = self.rightDataArr[indexPath.row].ID;
+    if (self.isSearch) {
+        vc.naStr = self.searchArr[indexPath.row].name;
+        vc.ID = self.searchArr[indexPath.row].ID;
+    }else {
+        vc.naStr = self.rightDataArr[indexPath.row].name;
+        vc.ID = self.rightDataArr[indexPath.row].ID;
+    }
+    
     [self.navigationController pushViewController:vc animated:YES];
     
 } 

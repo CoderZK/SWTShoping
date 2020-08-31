@@ -32,10 +32,10 @@
     self.nameLB.text = model.store_name;
     self.titleLB.text = model.name;
     self.contentLB.text = model.des;
-    if ([model.isfollow isEqualToString:@"no"]) {
-        [self.gaunzhuBt setBackgroundImage:[UIImage imageNamed:@"Focus"] forState:UIControlStateNormal];
+    if ([model.isfollow isEqualToString:@"yes"]) {
+        [self.gaunzhuBt setBackgroundImage:[UIImage imageNamed:@"dyx24"] forState:UIControlStateNormal];
     }else {
-       [self.gaunzhuBt setBackgroundImage:[UIImage imageNamed:@"dyx24"] forState:UIControlStateNormal];
+       [self.gaunzhuBt setBackgroundImage:[UIImage imageNamed:@"Focus"] forState:UIControlStateNormal];
     }
     
     NSArray * arr = [model getTypeLBArr];

@@ -87,6 +87,8 @@
 
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SWTMJJingPaiGuanLiCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    cell.avatar = self.model.avatar;
+    cell.name = self.model.store_name;
     cell.model = self.dataArray[indexPath.row];
     cell.xieJiaBt.tag = indexPath.row;
     [cell.xieJiaBt addTarget:self action:@selector(xiaJiaAction:) forControlEvents:UIControlEventTouchUpInside];

@@ -157,6 +157,7 @@
     //        vc.shopId = self.shopId;
     //        vc.cateModel = model;
     vc.type = index+1;
+    vc.model = self.model;
     return vc;
     
 }

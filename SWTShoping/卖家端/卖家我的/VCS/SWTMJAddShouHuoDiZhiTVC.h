@@ -11,7 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTMJAddShouHuoDiZhiTVC : BaseTableViewController
-
+@property(nonatomic,assign)BOOL isShop;
+@property(nonatomic , strong)SWTModel *dataModel;
+@property(nonatomic , copy)void(^addTuiHuoAddressBlock)(SWTModel *model);
 @end
 
 NS_ASSUME_NONNULL_END

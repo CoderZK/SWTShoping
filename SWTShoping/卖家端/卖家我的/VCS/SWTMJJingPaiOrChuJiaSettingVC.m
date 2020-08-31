@@ -56,7 +56,7 @@
             if (self.isBaoZhengJin) {
                 self.model.autodeduct = !self.swiftBt.on ;
             }else {
-                self.model.autodeduct = !self.swiftBt.on;
+                self.model.level_open = !self.swiftBt.on;
             }
             self.swiftBt.on = !self.swiftBt.on;
             if (self.autoBlock != nil) {

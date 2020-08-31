@@ -29,10 +29,10 @@
     [self.vipBt setTitle:model.levelcode forState:UIControlStateNormal];
     // 是否收藏
     
-    if ([model.isfav isEqualToString:@"no"]) {
-        [self.collectBt setImage:[UIImage imageNamed:@"praise2"] forState:UIControlStateNormal];
-    }else {
+    if ([model.isfav isEqualToString:@"yes"]) {
         [self.collectBt setImage:[UIImage imageNamed:@"praise1"] forState:UIControlStateNormal];
+    }else {
+        [self.collectBt setImage:[UIImage imageNamed:@"praise2"] forState:UIControlStateNormal];
     }
     
     

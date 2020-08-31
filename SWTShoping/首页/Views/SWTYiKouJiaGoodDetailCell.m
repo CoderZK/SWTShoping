@@ -25,10 +25,10 @@
     _model = model;
     self.shopNameLB.text = model.name;
     self.priceLB.text =  [NSString stringWithFormat:@"￥%@",[model.price getPriceAllStr]];
-    if ([model.isfav isEqualToString:@"no"]) {
-        [self.collectBt setImage:[UIImage imageNamed:@"praise2"] forState:UIControlStateNormal];
-    }else {
+    if ([model.isfav isEqualToString:@"yes"]) {
         [self.collectBt setImage:[UIImage imageNamed:@"praise1"] forState:UIControlStateNormal];
+    }else {
+        [self.collectBt setImage:[UIImage imageNamed:@"praise2"] forState:UIControlStateNormal];
     }
 }
 

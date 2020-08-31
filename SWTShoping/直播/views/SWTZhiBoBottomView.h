@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic , strong)UITextField *TF;
 @property(nonatomic , strong)UIButton *gouWuBt ,*shareBt,*collectBt,*heMaibt;
 @property(nonatomic , strong)UILabel *numberLB;
+@property(nonatomic , strong)SWTModel *model;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -157,10 +157,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *weight;
 @property(nonatomic,strong)NSString *msg;
 @property(nonatomic,strong)NSString *time;
-//@property(nonatomic,strong)NSString *orderprice_last;
-//@property(nonatomic,strong)NSString *orderpay;
-//@property(nonatomic,strong)NSString *orderrefund;
-//@property(nonatomic,strong)NSString *goodsnum;
+@property(nonatomic,strong)NSString *link;
+@property(nonatomic,strong)NSString *refund_mobile;
+@property(nonatomic,strong)NSString *refund_link;
+@property(nonatomic,strong)NSString *merchfollownum;
 //@property(nonatomic,strong)NSString *place;
 //@property(nonatomic,strong)NSString *warehouse_str;
 //@property(nonatomic,strong)NSString *sn;
