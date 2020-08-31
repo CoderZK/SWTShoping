@@ -204,7 +204,11 @@
                 cell.isShangJia = YES;
                 cell.status = self.refundModel.status;
             }
-            cell.mjModel = self.dataModel;
+            if (self.isMj) {
+                cell.mjModel = self.dataModel;
+            }else {
+                cell.model = self.dataModel;
+            }
             [cell.rightTwoBt addTarget:self action:@selector(rightTwoAction:) forControlEvents:UIControlEventTouchUpInside];
             [cell.rightOneBt addTarget:self action:@selector(rightOneAction:) forControlEvents:UIControlEventTouchUpInside];
             [cell.rightThreeBt addTarget:self action:@selector(rightThreeAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -330,7 +334,7 @@
         }
     }else {
 
-            if (model.status.intValue == 0) {
+            if ([button.titleLabel.text containsString:@"付款"]) {
                 //付款
                 SWTPayVC * vc =[[SWTPayVC alloc] init];
                 vc.hidesBottomBarWhenPushed = YES;
@@ -339,12 +343,12 @@
                 [self.navigationController pushViewController:vc animated:YES];
                 
         //        [self actionModel:model withOrderID:nil withUrlStr:orderPay_SWT withtype:-20];
-            }else if (model.status.intValue == 1) {
-                //
-                [self actionModel:model withOrderID:nil withUrlStr:@"1234" withtype:-11];
-            }else if (model.status.intValue == 2) {
+            }else if ([button.titleLabel.text containsString:@"提醒卖家发货"]) {
+                //提醒发货
+                [self actionModel:model withOrderID:pushmsgRemindsend_SWT withUrlStr:@"1234" withtype:-11];
+            }else if ([button.titleLabel.text containsString:@"确认收货"]) {
                 [self actionModel:model withOrderID:nil withUrlStr:orderDelivery_SWT withtype:-2];
-            }else if (model.status.intValue == 3) {
+            }else if ([button.titleLabel.text containsString:@"评价"]) {
                 
                 SWTSendMinePingLunTVC* vc =[[SWTSendMinePingLunTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
                 vc.hidesBottomBarWhenPushed = YES;
@@ -352,9 +356,9 @@
                 [self.navigationController pushViewController:vc animated:YES];
                 
             }else if (model.status.intValue == 4) {
-                [self actionModel:model withOrderID:nil withUrlStr:@"1234" withtype:-4];
+//                [self actionModel:model withOrderID:nil withUrlStr:@"1234" withtype:-4];
             }else if (model.status.intValue == 5) {
-                [self actionModel:model withOrderID:nil withUrlStr:@"1234" withtype:-5];
+//                [self actionModel:model withOrderID:nil withUrlStr:@"1234" withtype:-5];
             }else if (model.status.intValue == 6) {
                 SWTTiJiaoTuiHuoTwoTVC * vc =[[SWTTiJiaoTuiHuoTwoTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
                 vc.hidesBottomBarWhenPushed = YES;
@@ -376,13 +380,46 @@
     [showV.delegateSignal subscribeNext:^(NSArray * x) {
         @strongify(self);
         
-        
+        [self sendGoodWithArr:x withID:self.IDTwo];
         
     }];
     [showV show];
     
     
 }
+
+
+//发货
+- (void)sendGoodWithArr:(NSArray *)arr withID:(NSString *)ID{
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"id"] = ID;
+    dict[@"expresssn"] = arr[0];
+    dict[@"expressid"] = arr[1];
+    dict[@"expressname"] = arr[2];
+    dict[@"express"] = arr[3];
+    [zkRequestTool networkingPOST:merchorderSend_order_merch_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            [SVProgressHUD showSuccessWithStatus:@"发货成功"];
+            [self getData];
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+
+    
+}
+
 
 
 //左侧按钮
@@ -396,20 +433,14 @@
         }
     }else {
 
-        if (model.status.intValue == 0) {
+        if ([button.titleLabel.text containsString:@"改地址"]) {
             //改地址
             [self editOrderAddressOneWithModel:model];
-        }else if (model.status.intValue == 1) {
-            
-        }else if (model.status.intValue == 2 || model.status.intValue == 3) {
+        }else if ([button.titleLabel.text containsString:@"查看物流"]) {
             SWTWuLiuTVC * vc =[[SWTWuLiuTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
             vc.hidesBottomBarWhenPushed = YES;
             vc.ID = self.dataModel.ID;
             [self.navigationController pushViewController:vc animated:YES];
-        }else if (model.status.intValue == 4) {
-            
-        }else if (model.status.intValue == 5) {
-            
         }
     }
     
@@ -478,14 +509,12 @@
     dict[@"merOrderId"] = self.dataModel.orderid;
     dict[@"refundAmount"] =  [NSString stringWithFormat:@"%0.0f",self.dataModel.realprice.floatValue * 100];
     [zkRequestTool networkingPOST:payRefund_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
-        [self.tableView.mj_header endRefreshing];
-        [self.tableView.mj_footer endRefreshing];
-        [SVProgressHUD dismiss];
-        if ([responseObject[@"code"] intValue]== 200) {
-            [self caozuoWithID:nil withType:3];
+         
+        if ([responseObject[@"errCode"] isEqualToString:@"SUCCESS"]) {
+             [self caozuoWithID:nil withType:3];
             
         }else {
-            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+            [SVProgressHUD showErrorWithStatus:@"退款失败,请联系客服"];
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -525,7 +554,7 @@
                 [SVProgressHUD showSuccessWithStatus:@"付款成功"];
             }else if (type == 0){
                 [SVProgressHUD showSuccessWithStatus:@"修改收货地址成功"];
-            }else if (type == 1) {
+            }else if (type == -11) {
                 [SVProgressHUD showSuccessWithStatus:@"催发货成功"];
             }
             

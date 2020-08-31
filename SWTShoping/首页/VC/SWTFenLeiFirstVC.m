@@ -11,6 +11,7 @@
 #import "SWTJiFenCollectHeadView.h"
 #import "SWTFenLeiCollectTwoCell.h"
 #import "SWTCateSubVC.h"
+#import "SWTSearchFatherVC.h"
 @interface SWTFenLeiFirstVC ()<UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 @property(nonatomic , strong)UITableView *leftV;
 @property(nonatomic , strong)UICollectionView *collectionView;
@@ -186,7 +187,7 @@
     ALCSearchView * searchTitleView = [[ALCSearchView alloc] initWithFrame:CGRectMake(15, 0, ScreenW - 30, 35)];
     searchTitleView.searchTF.delegate = self;
     
-    searchTitleView.isPush = NO;
+    searchTitleView.isPush = YES;
     searchTitleView.isBlack = YES;
     searchTitleView.searchTF.placeholder = @"请输入竞拍品";
     
@@ -206,10 +207,18 @@
             [self searchAction];
         }
     }];
+    
+    [searchTitleView.clickBt addTarget:self action:@selector(goSearch:) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.view addSubview:searchTitleView];
     
 }
 
+- (void)goSearch:(UIButton *)button {
+    SWTSearchFatherVC * vc =[[SWTSearchFatherVC alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 - (void)searchAction {
     [self.searchArr  removeAllObjects];

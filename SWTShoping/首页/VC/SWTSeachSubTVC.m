@@ -57,9 +57,9 @@
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"page"] = @(self.page);
     dict[@"pagesize"] = @(10);
-    dict[@"type"] = @"1";
+    dict[@"type"] = @"2";
     dict[@"name"] = self.searchWord;
-    [zkRequestTool networkingPOST:[NSString stringWithFormat:@"%@/%@",search_SWT,[zkSignleTool shareTool].session_uid] parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+    [zkRequestTool networkingPOST:search_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];

@@ -76,7 +76,11 @@
     return [self.titleArr[section] count];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 3 && indexPath.row == 0) {
+        return 0;
+    }
     return 50;
+    
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 0.01;
@@ -141,6 +145,7 @@
         
         
     }
+    cell.clipsToBounds = YES;
     cell.rightTF.delegate = self;
     return cell;
 }

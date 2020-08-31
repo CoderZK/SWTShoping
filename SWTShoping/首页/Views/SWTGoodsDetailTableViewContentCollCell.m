@@ -26,7 +26,7 @@
         
         self.collectionView  = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 1) collectionViewLayout:self.layout];;
 
-        self.collectionView.collectionViewLayout = self.layout;
+//        self.collectionView.collectionViewLayout = self.layout;
         self.collectionView.dataSource = self;
         self.collectionView.delegate = self;
         
@@ -94,6 +94,7 @@
 
 - (void)setDataArray:(NSMutableArray<SWTModel *> *)dataArray {
     _dataArray = dataArray;
+    
     [self.collectionView reloadData];
     [self.collectionView layoutIfNeeded];
     [self.collectionView mas_updateConstraints:^(MASConstraintMaker *make) {
