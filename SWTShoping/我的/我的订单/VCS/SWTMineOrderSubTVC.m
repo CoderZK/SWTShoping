@@ -106,9 +106,9 @@
 
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SWTMineOrderCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    if (self.type == 6) {
-        self.dataArray[indexPath.row].status = @"6";
-    }
+//    if (self.type == 6) {
+//        self.dataArray[indexPath.row].status = @"6";
+//    }
     cell.model = self.dataArray[indexPath.row];
     cell.rightOneBt.tag = indexPath.row;
     cell.rightTwoBt.tag = indexPath.row;

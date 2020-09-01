@@ -259,11 +259,9 @@
             cell.leftLB.font = kFont(15);
             cell.leftLB.text = @"订单信息";
         }else if (indexPath.row == 1) {
-            if (self.dataModel.paystatus.length == 0) {
-                cell.leftLB.text = @"支付方式: 未支付";
-            }else if (self.dataModel.paystatus.intValue == 0) {
+            if (self.dataModel.paystatus.intValue == 1) {
                 cell.leftLB.text = @"支付方式: 微信支付";
-            }else if (self.dataModel.paystatus.intValue == 1) {
+            }else if (self.dataModel.paystatus.intValue == 0) {
                 cell.leftLB.text = @"支付方式: 支付宝支付";
             }else if (self.dataModel.paystatus.intValue == 2) {
                 cell.leftLB.text = @"支付方式: 云闪付支付";
@@ -473,13 +471,13 @@
         if ([responseObject[@"code"] intValue]== 200) {
             if (type == 1) {
                 [SVProgressHUD showSuccessWithStatus:@"退款申请拒绝成功"];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [self getRufure];
                 });
             }else if (type == 3) {
-                [SVProgressHUD showSuccessWithStatus:@"退款完成"];
+                [SVProgressHUD showSuccessWithStatus:@"退款完成"]; 
                 [LTSCEventBus sendEvent:@"tuikuan" data:nil];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [self.navigationController popViewControllerAnimated:YES];
                     
                 });
@@ -509,10 +507,9 @@
     dict[@"merOrderId"] = self.dataModel.orderid;
     dict[@"refundAmount"] =  [NSString stringWithFormat:@"%0.0f",self.dataModel.realprice.floatValue * 100];
     [zkRequestTool networkingPOST:payRefund_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
-         
-        if ([responseObject[@"errCode"] isEqualToString:@"SUCCESS"]) {
+        NSDictionary * dict = [responseObject[@"returninfo"] mj_JSONObject];
+        if ([dict.allKeys containsObject:@"errCode"] &&  [dict[@"errCode"] isEqualToString:@"SUCCESS"]) {
              [self caozuoWithID:nil withType:3];
-            
         }else {
             [SVProgressHUD showErrorWithStatus:@"退款失败,请联系客服"];
         }

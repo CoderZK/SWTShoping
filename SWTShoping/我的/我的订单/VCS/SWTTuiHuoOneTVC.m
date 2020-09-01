@@ -231,7 +231,7 @@
 }
 
 - (void)tuihuoActionTwo {
-    [SVProgressHUD show];
+    
     
     if (self.yuanYin.length == 0) {
         [SVProgressHUD showErrorWithStatus:@"请选择原因"];
@@ -240,6 +240,8 @@
     if (self.TV.text.length == 0) {
         [SVProgressHUD showErrorWithStatus:@"请输入退款或者退货描述"];
     }
+    
+    [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"context"] = self.TV.text;
     dict[@"id"] = self.model.ID;

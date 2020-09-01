@@ -16,6 +16,7 @@
         
         self.imgV  =[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
         self.imgV.image = [UIImage imageNamed:@"369"];
+        self.imgV.contentMode = UIViewContentModeScaleAspectFill;
         [self addSubview:self.imgV];
         
     

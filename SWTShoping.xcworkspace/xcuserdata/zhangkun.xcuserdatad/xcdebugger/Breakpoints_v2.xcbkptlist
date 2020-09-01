@@ -138,8 +138,8 @@
             filePath = "SWTShoping/&#x6211;&#x7684;/&#x6211;&#x7684;&#x8ba2;&#x5355;/VCS/SWTMineOrderDetailTVC.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "428"
-            endingLineNumber = "428"
+            startingLineNumber = "426"
+            endingLineNumber = "426"
             landmarkName = "-rightOneAction:"
             landmarkType = "7">
          </BreakpointContent>
@@ -154,8 +154,8 @@
             filePath = "SWTShoping/&#x6211;&#x7684;/&#x6211;&#x7684;&#x8ba2;&#x5355;/VCS/SWTMineOrderDetailTVC.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "430"
-            endingLineNumber = "430"
+            startingLineNumber = "428"
+            endingLineNumber = "428"
             landmarkName = "-rightOneAction:"
             landmarkType = "7">
          </BreakpointContent>
@@ -202,10 +202,10 @@
             filePath = "SWTShoping/&#x6211;&#x7684;/&#x6211;&#x7684;&#x8ba2;&#x5355;/VCS/SWTMineOrderDetailTVC.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "463"
-            endingLineNumber = "463"
-            landmarkName = "-caozuoWithID:withType:"
-            landmarkType = "7">
+            startingLineNumber = "461"
+            endingLineNumber = "461"
+            landmarkName = "SWTMineOrderDetailTVC"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -218,8 +218,8 @@
             filePath = "SWTShoping/&#x6211;&#x7684;/&#x6211;&#x7684;&#x8ba2;&#x5355;/VCS/SWTMineOrderDetailTVC.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "330"
-            endingLineNumber = "330"
+            startingLineNumber = "328"
+            endingLineNumber = "328"
             landmarkName = "-rightTwoAction:"
             landmarkType = "7">
          </BreakpointContent>
@@ -234,8 +234,8 @@
             filePath = "SWTShoping/&#x6211;&#x7684;/&#x6211;&#x7684;&#x8ba2;&#x5355;/VCS/SWTMineOrderDetailTVC.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "320"
-            endingLineNumber = "320"
+            startingLineNumber = "318"
+            endingLineNumber = "318"
             landmarkName = "-rightTwoAction:"
             landmarkType = "7">
          </BreakpointContent>
@@ -381,6 +381,214 @@
             startingLineNumber = "101"
             endingLineNumber = "101"
             landmarkName = "-setDataArray:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "24C255CA-831D-4FDF-B6F3-05EBAA42019E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SWTShoping/&#x6211;&#x7684;/&#x6211;&#x7684;&#x8ba2;&#x5355;/VCS/SWTMineOrderDetailTVC.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "511"
+            endingLineNumber = "511"
+            landmarkName = "-mjTuiKuanAction"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2C1D863E-BD6C-4F78-8F10-6EC762521716"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SWTShoping/&#x6211;&#x7684;/&#x6211;&#x7684;&#x8ba2;&#x5355;/VCS/SWTPayVC.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
+            landmarkName = "-payAction"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "2C1D863E-BD6C-4F78-8F10-6EC762521716 - ec625f70e8a25d9f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[SWTPayVC payAction]"
+                  moduleName = "&#x6ef4;&#x96e8;&#x8f69;"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhangkun/Documents/SWT/SWTShoping/SWTShoping/%E6%88%91%E7%9A%84/%E6%88%91%E7%9A%84%E8%AE%A2%E5%8D%95/VCS/SWTPayVC.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "162"
+                  endingLineNumber = "162"
+                  offsetFromSymbolStart = "203">
+               </Location>
+               <Location
+                  uuid = "2C1D863E-BD6C-4F78-8F10-6EC762521716 - 535f7fa6a1e80c81"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__21-[SWTPayVC payAction]_block_invoke_2"
+                  moduleName = "&#x6ef4;&#x96e8;&#x8f69;"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhangkun/Documents/SWT/SWTShoping/SWTShoping/%E6%88%91%E7%9A%84/%E6%88%91%E7%9A%84%E8%AE%A2%E5%8D%95/VCS/SWTPayVC.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "163"
+                  endingLineNumber = "163"
+                  offsetFromSymbolStart = "82">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0D81FFC9-4E8F-4836-865A-B753FDB56ABF"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SWTShoping/&#x6211;&#x7684;/&#x6211;&#x7684;&#x8ba2;&#x5355;/VCS/SWTPayVC.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "169"
+            endingLineNumber = "169"
+            landmarkName = "-payAction"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0350F14B-5472-4F00-A9A8-9DCB06E92B55"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SWTShoping/&#x6211;&#x7684;/&#x6211;&#x7684;&#x8ba2;&#x5355;/VCS/SWTPayVC.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "-getOrderStatus"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0350F14B-5472-4F00-A9A8-9DCB06E92B55 - 1daf2d853af86dbc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[SWTPayVC getOrderStatus]"
+                  moduleName = "&#x6ef4;&#x96e8;&#x8f69;"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhangkun/Documents/SWT/SWTShoping/SWTShoping/%E6%88%91%E7%9A%84/%E6%88%91%E7%9A%84%E8%AE%A2%E5%8D%95/VCS/SWTPayVC.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "45"
+                  endingLineNumber = "45"
+                  offsetFromSymbolStart = "173">
+               </Location>
+               <Location
+                  uuid = "0350F14B-5472-4F00-A9A8-9DCB06E92B55 - c8e4e445e4d19630"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__26-[SWTPayVC getOrderStatus]_block_invoke"
+                  moduleName = "&#x6ef4;&#x96e8;&#x8f69;"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhangkun/Documents/SWT/SWTShoping/SWTShoping/%E6%88%91%E7%9A%84/%E6%88%91%E7%9A%84%E8%AE%A2%E5%8D%95/VCS/SWTPayVC.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "47"
+                  endingLineNumber = "47"
+                  offsetFromSymbolStart = "72">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4807AB97-A3D0-46AB-9C0F-E0DA9B3B2865"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SWTShoping/&#x6211;&#x7684;/&#x6211;&#x7684;&#x8ba2;&#x5355;/VCS/SWTPayVC.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
+            landmarkName = "-getOrderWityType:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0C8617AB-BD1D-4AC4-8F33-AFE50C1DFD14"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SWTShoping/&#x6211;&#x7684;/&#x6211;&#x7684;&#x8ba2;&#x5355;/VCS/SWTPayVC.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
+            landmarkName = "-getOrderWityType:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CF8B0EE3-DB42-4685-A250-3A77B3E99A33"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SWTShoping/&#x6211;&#x7684;/&#x6211;&#x7684;&#x8ba2;&#x5355;/VCS/SWTPayVC.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
+            landmarkName = "-getOrderWityType:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CFC3AC77-8D29-4712-BE21-98A60F917681"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SWTShoping/&#x6211;&#x7684;/&#x6211;&#x7684;&#x8ba2;&#x5355;/VCS/SWTPayVC.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
+            landmarkName = "-getOrderWityType:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A6DA34AE-1151-4C9D-B354-23F639929479"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SWTShoping/&#x6211;&#x7684;/&#x6211;&#x7684;&#x8ba2;&#x5355;/VCS/SWTPayVC.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "116"
+            endingLineNumber = "116"
+            landmarkName = "-getOrderWityType:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
