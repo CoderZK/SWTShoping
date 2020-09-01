@@ -28,4 +28,7 @@ pod 'TZImagePickerController'
 pod 'TXIMSDK_TUIKit_iOS'
 #pod 'TXIMSDK_iOS'
 
+pod 'PLMediaStreamingKit'
+pod 'PLPlayerKit'
+
 end

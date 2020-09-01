@@ -21,6 +21,12 @@ PODS:
   - MJExtension (3.0.13)
   - MJRefresh (3.1.15.3)
   - MMLayout (0.2.0)
+  - PLMediaStreamingKit (3.0.0):
+    - PLMediaStreamingKit/iphoneos (= 3.0.0)
+  - PLMediaStreamingKit/iphoneos (3.0.0)
+  - PLPlayerKit (3.4.3):
+    - PLPlayerKit/iphoneos (= 3.4.3)
+  - PLPlayerKit/iphoneos (3.4.3)
   - ReactiveObjC (3.1.1)
   - SDCycleScrollView (1.75):
     - SDWebImage (>= 4.0.0)
@@ -60,6 +66,8 @@ DEPENDENCIES:
   - MBProgressHUD
   - MJExtension
   - MJRefresh
+  - PLMediaStreamingKit
+  - PLPlayerKit
   - ReactiveObjC
   - SDCycleScrollView
   - SDWebImage
@@ -84,6 +92,8 @@ SPEC REPOS:
     - MJExtension
     - MJRefresh
     - MMLayout
+    - PLMediaStreamingKit
+    - PLPlayerKit
     - ReactiveObjC
     - SDCycleScrollView
     - SDWebImage
@@ -108,6 +118,8 @@ SPEC CHECKSUMS:
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
   MJRefresh: b48380ae2b927b46c4ef000de9adb8dc748e1df7
   MMLayout: 3fb59d58eeb8656c64e61d550fb0088e10666c11
+  PLMediaStreamingKit: 3f4fafe3535de54a02c219f40331afa2b47592e0
+  PLPlayerKit: a44734dc78c1f8f9fb22c537fa1916612fa46b06
   ReactiveObjC: 011caa393aa0383245f2dcf9bf02e86b80b36040
   SDCycleScrollView: 884b88f0266dd4708a0e1934975c69cb971707b1
   SDWebImage: 29bd3c0bc1f01e5eb59720847c64ad4c4ca1af5d
@@ -123,6 +135,6 @@ SPEC CHECKSUMS:
   UMCPush: 1edd856027dcf905333effb4040ace5d236a7316
   UMCShare: a250203b34a56cde25cc4c28335449b542f0255d
 
-PODFILE CHECKSUM: 2a598f9533432136125b22b697bcc4f132df1fca
+PODFILE CHECKSUM: 6c935b44bb6e4b609d9d71248bed3368b7211315
 
 COCOAPODS: 1.7.2
