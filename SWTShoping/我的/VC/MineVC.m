@@ -32,6 +32,7 @@
 #import "SWTMineHeMaiOrderFatherVC.h"
 #import "SWTMJTabbarVC.h"
 #import "SWTMineFourCell.h"
+#import "HangQingVC.h"
 @interface MineVC ()<XPCollectionViewWaterfallFlowLayoutDataSource,UICollectionViewDelegate,UICollectionViewDataSource,zkPickViewDelelgate>
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 @property(nonatomic , strong)UICollectionView *collectionView;
@@ -271,7 +272,11 @@
                     [self.navigationController pushViewController:vc animated:YES];
                     
                 }else if (index == 2) {
-                    self.tabBarController.selectedIndex = 2;
+//                    self.tabBarController.selectedIndex = 2;
+                    
+                    HangQingVC * vc =[[HangQingVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
                 }else if (index == 3) {
                     GuanZhuVC * vc =[[GuanZhuVC alloc] init];
                     vc.hidesBottomBarWhenPushed = YES;

@@ -73,6 +73,7 @@
     self.shopWinXinV = [[SWTDianPuInfoView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.shopDesV.frame), ScreenW, hh) withIsJianTou:NO withMaxNumber:40];
     self.shopWinXinV.leftLB.text = @"店铺微信号";
     self.shopWinXinV.rightTF.placeholder = @"请填写微信号";
+    self.shopWinXinV.rightTF.keyboardType = UIKeyboardTypePhonePad;
     [self.headView addSubview:self.shopWinXinV];
     
     self.shopPhoneV = [[SWTDianPuInfoView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.shopWinXinV.frame), ScreenW, hh) withIsJianTou:NO withMaxNumber:40];

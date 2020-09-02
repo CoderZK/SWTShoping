@@ -12,6 +12,9 @@
 //#import <WXApi.h>
 #import "TabBarController.h"
 #import "LYGuideViewController.h"
+#import <PLMediaStreamingKit/PLMediaStreamingKit.h>
+
+
 
 #define UMKey @"567a0b8767e58e04b70070c0"
 //友盟安全密钥//r6xbw5gy0zenei6x56xtm9wmkrrz653y
@@ -44,6 +47,8 @@
     self.window.rootViewController = [self instantiateRootVC];
     [self.window makeKeyAndVisible];
     self.window.backgroundColor = BackgroundColor;
+    
+    [PLStreamingEnv initEnv];
     
     [WXApi registerApp:WXAppID universalLink:@"https://www.zftgame.com/huishou/"];
       [self initPush];

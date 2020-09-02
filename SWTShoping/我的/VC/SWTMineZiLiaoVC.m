@@ -10,6 +10,7 @@
 #import "SWTMineZiLiaoCell.h"
 #import "SWTMineAddressTVC.h"
 #import "SWTEditPasswordVC.h"
+#import "SWTMinePaySettingVC.h"
 @interface SWTMineZiLiaoVC ()<zkPickViewDelelgate>
 @property(nonatomic , strong)NSArray *leftArr;
 @property(nonatomic , strong)UIView *footV;
@@ -106,7 +107,9 @@
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
     }else if (indexPath.row == 4) {
-        
+        SWTMinePaySettingVC * vc =[[SWTMinePaySettingVC alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
     }else if (indexPath.row == 5) {
         SWTEditPasswordVC * vc =[[SWTEditPasswordVC alloc] init];
         vc.hidesBottomBarWhenPushed = YES;

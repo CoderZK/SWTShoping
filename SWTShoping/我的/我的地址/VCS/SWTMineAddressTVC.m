@@ -41,7 +41,7 @@
     
     
     self.dataArray = @[].mutableCopy;
-   
+    
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         self.page = 1;
         [self getData];
@@ -51,11 +51,11 @@
         [self getData];
     }];
     Weak(weakSelf);
-       self.noneView.clickBlock = ^{
-
-           weakSelf.page = 1;
-           [weakSelf getData];
-         };
+    self.noneView.clickBlock = ^{
+        
+        weakSelf.page = 1;
+        [weakSelf getData];
+    };
     
 }
 
@@ -136,16 +136,25 @@
 
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SWTMienAddressCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    
+    cell.editBt.tag = indexPath.row;
+    [cell.editBt addTarget:self action:@selector(editAction:) forControlEvents:UIControlEventTouchUpInside];
+    
     @weakify(self);
     [[cell.editBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         @strongify(self);
-        SWTEditAddressTVC * vc =[[SWTEditAddressTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-        vc.hidesBottomBarWhenPushed = YES;
-        vc.model = self.dataArray[indexPath.row];
-        [self.navigationController pushViewController:vc animated:YES];;
+        
     }];
     cell.model = self.dataArray[indexPath.row];
     return cell;
+}
+
+- (void)editAction:(UIButton *)button {
+    
+    SWTEditAddressTVC * vc =[[SWTEditAddressTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+    vc.hidesBottomBarWhenPushed = YES;
+    vc.model = self.dataArray[button.tag];
+    [self.navigationController pushViewController:vc animated:YES];;
 }
 
 

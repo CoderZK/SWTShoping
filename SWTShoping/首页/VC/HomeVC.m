@@ -19,13 +19,17 @@
 #import "SWTZhiBoDetailVC.h"
 #import "SWTHeMaiFatherVC.h"
 #import "SWTSearchFatherVC.h"
+#import "SWTShowLoginView.h"
 @interface HomeVC ()<UIScrollViewDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource,SWTHomeHeadViewDelegate>
 @property(nonatomic , strong)SWTHomeHeadView *headView;
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 @property(nonatomic , strong)UICollectionView *collectionView;
 @property(nonatomic , strong)NSArray<SWTModel *> *bannerArr;
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *recommendArr;
+@property(nonatomic , assign)NSInteger  page;
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *hotArr;
+@property(nonatomic , strong)SWTShowLoginView *showLoginV;
+
 @end
 
 @implementation HomeVC
@@ -49,6 +53,11 @@
     //        [self getData];
     //    }];
     
+    if (ISLOGIN) {
+        self.showLoginV.hidden = YES;
+    }else {
+        self.showLoginV.hidden = NO;
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -58,7 +67,12 @@
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }
 
-
+-(SWTShowLoginView *)showLoginV {
+    if (_showLoginV == nil) {
+        _showLoginV = [[SWTShowLoginView alloc] init];
+    }
+    return _showLoginV;
+}
 
 
 - (void)viewDidLoad {
@@ -93,16 +107,38 @@
     [self setNavigateView];
     [self setheadViewVV];
     
-    
+    self.page = 1;
     [self getData];
     [self getDataHotData];
     [self getRecommendData];
     self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        self.page = 1;
         [self getDataHotData];
         [self getRecommendData];
     }];
+  
+    self.collectionView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        self.page++;
+        [self getRecommendData];
+    }];
     
+    [self.view addSubview:self.showLoginV];
+    [self.showLoginV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.height.equalTo(@50);
+        if (sstatusHeight > 20) {
+            make.bottom.equalTo(self.view).offset(-83);
+        }else {
+            make.bottom.equalTo(self.view).offset(-49);
+        }
+    }];
     
+    [self.showLoginV.rightBt addTarget:self action:@selector(loginAction) forControlEvents:UIControlEventTouchUpInside];
+    
+}
+
+- (void)loginAction {
+    [self gotoLoginVC];
 }
 
 - (void)getData {
@@ -156,13 +192,20 @@
     
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"type"] = @(1);
+    dict[@"page"] = @(self.page);
+    dict[@"pagesize"] = @(10);
     [zkRequestTool networkingPOST:indexRecommend_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         
         [SVProgressHUD dismiss];
+        
         [self.collectionView.mj_header endRefreshing];
+        [self.collectionView.mj_footer endRefreshing];
         if ([responseObject[@"code"] intValue]== 200) {
-            
-            self.recommendArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            NSArray<SWTModel *> * arr =  [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            if (self.page == 1) {
+                [self.recommendArr removeAllObjects];
+            }
+             [self.recommendArr addObjectsFromArray:arr];
             [self.collectionView reloadData];
             //            self.headView.sdView.imageURLStringsGroup = picArr;
         }else {
@@ -170,7 +213,7 @@
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
+        [self.collectionView.mj_footer endRefreshing];
         [self.collectionView.mj_header endRefreshing];
     }];
     

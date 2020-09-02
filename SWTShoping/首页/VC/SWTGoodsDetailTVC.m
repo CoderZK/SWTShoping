@@ -137,9 +137,10 @@
         }else if (x.intValue == 101) {
             //点击私信
             
-//            TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:self.dataModel.imid];
-//            TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
-//            [self.navigationController pushViewController:vc animated:YES];
+            TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:self.dataModel.imid];
+            TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
+            vc.navigationItem.title = self.dataModel.storename;
+            [self.navigationController pushViewController:vc animated:YES];
             
         }else if (x.intValue == 102) {
             if (self.isYiKouJia) {

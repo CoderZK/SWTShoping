@@ -19,8 +19,16 @@
     
     PLPlayerOption *option = [PLPlayerOption defaultOption];
     [option setOptionValue:@15 forKey:PLPlayerOptionKeyTimeoutIntervalForMediaPackets];
-    NSURL *url = [NSURL URLWithString:@"rtmp://pili-live-rtmp.xunshun.net/diyuxuan6188/11598953997379A"];
+    [option setOptionValue:@2000 forKey:PLPlayerOptionKeyMaxL1BufferDuration];
+    [option setOptionValue:@1000 forKey:PLPlayerOptionKeyMaxL2BufferDuration];
+    [option setOptionValue:@(NO) forKey:PLPlayerOptionKeyVideoToolbox];
+    [option setOptionValue:@(kPLLogInfo) forKey:PLPlayerOptionKeyLogLevel];
+    NSURL *url = [NSURL URLWithString:@"http://pili-live-hls.xunshun.net/diyuxuan6188/2.m3u8?sign=403319a2d779adde70abdc50ddf79a2d&t=5f4f125d"];
+    
+   
+    
     self.player = [PLPlayer playerWithURL:url option:option];
+    
     self.player.delegate = self;
     
     [self.view addSubview:self.player.playerView];
@@ -73,6 +81,8 @@
  */
 - (void)player:(nonnull PLPlayer *)player stoppedWithError:(nullable NSError *)error{
     NSLog(@"%@",error);
+    
+    
 }
 
 /**

@@ -28,6 +28,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 }
@@ -36,6 +37,7 @@
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+    [SVProgressHUD dismiss];
 }
 
 - (void)viewDidLoad {
@@ -197,6 +199,7 @@
     }];
     
     [[self.naView.rightBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        [SVProgressHUD show];
         TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:self.dataModel.imid];
         TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
         vc.navigationItem.title = self.dataModel.store_name;

@@ -9,6 +9,7 @@
 #import "SWTLoginTwoVC.h"
 #import "SWTRegistVC.h"
 #import "SWTBoLiuVC.h"
+#import "SWTTuiLiuVC.h"
 @interface SWTLoginTwoVC ()
 @property (weak, nonatomic) IBOutlet UITextField *phoneTF;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTF;
@@ -153,11 +154,13 @@
         [self loginAction];
     }else if (sender.tag == 101) {
         
-        
-        
-        SWTRegistVC * vc =[[SWTRegistVC alloc] init];
+        SWTTuiLiuVC * vc =[[SWTTuiLiuVC alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
+        
+//        SWTRegistVC * vc =[[SWTRegistVC alloc] init];
+//        vc.hidesBottomBarWhenPushed = YES;
+//        [self.navigationController pushViewController:vc animated:YES];
     }else if (sender.tag == 102) {
         SWTBoLiuVC * vc =[[SWTBoLiuVC alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
