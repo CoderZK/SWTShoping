@@ -17,6 +17,7 @@
 #import "SWTPeopleChuJiaVIew.h"
 #import "SWTHeMaiMineDingZhiShowView.h"
 #import "SWTAVChatRoomView.h"
+#import "SWTZhiBoPeopleComeInView.h"
 @interface SWTZhiBoDetailVC ()<V2TIMAdvancedMsgListener,V2TIMGroupListener>
 @property(nonatomic , strong)SWTZhiBoHedView *headV; // 头视图
 @property(nonatomic , strong)SWTZhiBoBottomView *bottomV;
@@ -33,6 +34,7 @@
 @property(nonatomic , strong)SWTHeMaiMineDingZhiShowView *dingZHiView;
 @property(nonatomic , strong)SWTAVChatRoomView *avChatRoomView;
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *AVCharRoomArr;
+@property(nonatomic , strong)SWTZhiBoPeopleComeInView *comeInV;
 @end
 
 @implementation SWTZhiBoDetailVC
@@ -49,6 +51,13 @@
     [[V2TIMManager sharedInstance] removeAdvancedMsgListener:self];
 }
 
+-(SWTZhiBoPeopleComeInView *)comeInV {
+    if (_comeInV == nil) {
+        _comeInV = [[SWTZhiBoPeopleComeInView alloc] init];
+    }
+    return _comeInV;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
@@ -62,6 +71,22 @@
     
     
     [self creaeteAVRoom];
+    
+    [self.view addSubview:self.comeInV];
+    self.comeInV.hidden = YES;
+    [self.comeInV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).offset(15);
+        make.height.equalTo(@30);
+        make.width.equalTo(@((ScreenW - 30) / 4 * 3));
+        make.bottom.equalTo(self.avChatRoomView.mas_top);
+    }];
+    
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.comeInV.titleLB.text = @"欢迎134*****789进入直播间";
+        [self.comeInV show];
+    });
+    
     
     //    self.huoDeShowView = [[SWTHuoDeShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
     //    [self.huoDeShowView show];
@@ -453,6 +478,7 @@
 - (void)onMemberEnter:(NSString *)groupID memberList:(NSArray<V2TIMGroupMemberInfo *>*)memberList {
     
     
+    NSLog(@"===\n%@",memberList);
     
     
 }
