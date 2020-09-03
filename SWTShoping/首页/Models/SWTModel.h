@@ -161,9 +161,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *refund_mobile;
 @property(nonatomic,strong)NSString *refund_link;
 @property(nonatomic,strong)NSString *merchfollownum;
-//@property(nonatomic,strong)NSString *place;
-//@property(nonatomic,strong)NSString *warehouse_str;
-//@property(nonatomic,strong)NSString *sn;
+@property(nonatomic,strong)NSString *hlsurl;
+@property(nonatomic,strong)NSString *hdlurl;
+@property(nonatomic,strong)NSString *rtmpurl;
+@property(nonatomic,strong)NSString *livegroupid;
+//@property(nonatomic,strong)NSString *rtmpurl;
+//@property(nonatomic,strong)NSString *rtmpurl;
+//@property(nonatomic,strong)NSString *rtmpurl;
+//@property(nonatomic,strong)NSString *rtmpurl;
+//@property(nonatomic,strong)NSString *rtmpurl;
+//@property(nonatomic,strong)NSString *rtmpurl;
 @property(nonatomic,strong)NSArray *refundImgs;
 
 

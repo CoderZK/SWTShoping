@@ -139,12 +139,6 @@
     
     cell.editBt.tag = indexPath.row;
     [cell.editBt addTarget:self action:@selector(editAction:) forControlEvents:UIControlEventTouchUpInside];
-    
-    @weakify(self);
-    [[cell.editBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-        @strongify(self);
-        
-    }];
     cell.model = self.dataArray[indexPath.row];
     return cell;
 }

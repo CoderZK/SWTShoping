@@ -163,9 +163,9 @@
     dict[@"mobile"] = self.phoneStr;
     dict[@"address"] = self.detailStr;
     dict[@"userid"] = [zkSignleTool shareTool].session_uid;
-    dict[@"province"] = @"444444";
-    dict[@"district"] = @"66666";
-    dict[@"city"] = @"555555";
+    dict[@"province"] = self.model.province;
+    dict[@"district"] = self.model.city;
+    dict[@"city"] = self.model.district;
     dict[@"id"] = self.model.ID;
     if (self.switchBt.on) {
         dict[@"is_deafult"] = @"1";
@@ -202,6 +202,7 @@
 }
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SWTEditeAddressCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    cell.leftTF.userInteractionEnabled = YES;
     if (indexPath.row == 2) {
         cell.rightImgV.hidden = NO;
     }else {
@@ -212,6 +213,7 @@
     }else if (indexPath.row == 1) {
         cell.leftTF.text = self.model.mobile;
     }else if (indexPath.row == 2) {
+        cell.leftTF.userInteractionEnabled = NO;
         cell.leftTF.text =  [NSString stringWithFormat:@"%@%@%@",self.model.province,self.model.city,self.model.district];
     }else {
         cell.leftTF.text = self.model.address_info;
@@ -240,6 +242,9 @@
     self.cStr = self.cityArr[leftIndex].cityList[centerIndex].areaname;
     self.aStr = self.cityArr[leftIndex].cityList[centerIndex].areaList[rightIndex].areaname;
     self.addStr =  [NSString stringWithFormat:@"%@%@%@",self.pStr,self.cStr,self.aStr];
+    self.model.province = self.pStr;
+    self.model.city = self.cStr;
+    self.model.district = self.aStr;
     [self.tableView reloadData];
     
 }
@@ -250,12 +255,13 @@
     NSIndexPath * indexPath  = [self.tableView indexPathForCell:cell];
     if (indexPath.row == 0 ) {
         self.shouHuoStr = textField.text;
-        
+        self.model.realname = textField.text;
     }else if (indexPath.row == 1){
         self.phoneStr = textField.text;
-        
+        self.model.mobile = textField.text;
     }else if (indexPath.row == 3) {
         self.detailStr = textField.text;
+        self.model.address_info = textField.text;
     }
 }
 

@@ -18,12 +18,14 @@
 #import "SWTHeMaiMineDingZhiShowView.h"
 #import "SWTAVChatRoomView.h"
 #import "SWTZhiBoPeopleComeInView.h"
-@interface SWTZhiBoDetailVC ()<V2TIMAdvancedMsgListener,V2TIMGroupListener>
+#import <PLMediaStreamingKit/PLMediaStreamingKit.h>
+#import <PLPlayerKit/PLPlayerKit.h>
+
+@interface SWTZhiBoDetailVC ()<V2TIMAdvancedMsgListener,V2TIMGroupListener,PLPlayerDelegate>
 @property(nonatomic , strong)SWTZhiBoHedView *headV; // 头视图
 @property(nonatomic , strong)SWTZhiBoBottomView *bottomV;
 @property(nonatomic , strong)SWTZhiBoChuJiaBottomView *chuJiaBottomV;
 
-@property(nonatomic , strong)NSString *groupId;
 @property(nonatomic , strong)SWTHuoDeShowView *huoDeShowView;
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *heMaiArr; // 直播接合买列表
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *zhiBoArr;
@@ -35,6 +37,12 @@
 @property(nonatomic , strong)SWTAVChatRoomView *avChatRoomView;
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *AVCharRoomArr;
 @property(nonatomic , strong)SWTZhiBoPeopleComeInView *comeInV;
+
+//推流部分
+@property (nonatomic, strong) PLMediaStreamingSession *session;
+//播流部分
+@property (nonatomic, strong) PLPlayer  *player;
+
 @end
 
 @implementation SWTZhiBoDetailVC
@@ -70,7 +78,7 @@
     self.chuJiaBottomV.hidden = YES;
     
     
-    [self creaeteAVRoom];
+    
     
     [self.view addSubview:self.comeInV];
     self.comeInV.hidden = YES;
@@ -91,8 +99,8 @@
     //    self.huoDeShowView = [[SWTHuoDeShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
     //    [self.huoDeShowView show];
     
-//    SWTPeopleChuJiaVIew * chuajiaV  = [[SWTPeopleChuJiaVIew alloc] initWithFrame:CGRectMake(0, 150, 180, 70)];
-//    [self.view addSubview:chuajiaV];
+    //    SWTPeopleChuJiaVIew * chuajiaV  = [[SWTPeopleChuJiaVIew alloc] initWithFrame:CGRectMake(0, 150, 180, 70)];
+    //    [self.view addSubview:chuajiaV];
     self.zhiBoArr = @[].mutableCopy;
     self.heMaiArr = @[].mutableCopy;
     self.mineHeMaiArr = @[].mutableCopy;
@@ -188,10 +196,10 @@
                     SWTModel * model  = self.heMaiArr[x.intValue-200];
                     //合买提交订单
                     
-//                    if ([NSString pleaseInsertEndTime:model.endtime] <= 0) {
-//                        [SVProgressHUD showErrorWithStatus:@"已结束"];
-//                        return;
-//                    }
+                    //                    if ([NSString pleaseInsertEndTime:model.endtime] <= 0) {
+                    //                        [SVProgressHUD showErrorWithStatus:@"已结束"];
+                    //                        return;
+                    //                    }
                     
                     SWTMineHeMaiTiJiaoOrderTVC * vc =[[SWTMineHeMaiTiJiaoOrderTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
                     vc.hidesBottomBarWhenPushed = YES;
@@ -286,6 +294,12 @@
             self.dataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
             self.headV.model = self.dataModel;
             self.bottomV.model = self.dataModel;
+            [self creaeteAVRoom];
+            if (self.isTuiLiu) {
+                [self addTuiLiu];
+            }else {
+                [self addBoLiu];
+            }
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
@@ -407,9 +421,8 @@
 //创建直播室
 - (void)creaeteAVRoom {
     V2TIMManager * manager = [V2TIMManager sharedInstance];
-    [manager joinGroup:@"@TGS#aG55HCUGH" msg:@"333" succ:^{
+    [manager joinGroup:self.dataModel.livegroupid msg:@"333" succ:^{
         NSLog(@"%@",@"进入直播间成功");
-        self.groupId = @"@TGS#aG55HCUGH";
     } fail:^(int code, NSString *desc) {
         NSLog(@"%@",@"进入直播间失败");
     }];
@@ -429,7 +442,7 @@
     V2TIMMessage * cusMsg = [[V2TIMManager sharedInstance] createCustomMessage:[@[@0,self.bottomV.TF.text] mj_JSONData]];
     
     
-    [[V2TIMManager sharedInstance] sendMessage:cusMsg receiver:nil groupID:self.groupId priority:(V2TIM_PRIORITY_DEFAULT) onlineUserOnly:NO offlinePushInfo:nil progress:^(uint32_t progress) {
+    [[V2TIMManager sharedInstance] sendMessage:cusMsg receiver:nil groupID:self.dataModel.livegroupid priority:(V2TIM_PRIORITY_DEFAULT) onlineUserOnly:NO offlinePushInfo:nil progress:^(uint32_t progress) {
         
     } succ:^{
         NSLog(@"%@",@"发送成功");
@@ -569,6 +582,150 @@
         make.height.equalTo(@(ScreenH/2.0));
     }];
     
+}
+//添加播流
+- (void)addBoLiu {
+    
+    PLPlayerOption *option = [PLPlayerOption defaultOption];
+    [option setOptionValue:@15 forKey:PLPlayerOptionKeyTimeoutIntervalForMediaPackets];
+    [option setOptionValue:@2000 forKey:PLPlayerOptionKeyMaxL1BufferDuration];
+    [option setOptionValue:@1000 forKey:PLPlayerOptionKeyMaxL2BufferDuration];
+    [option setOptionValue:@(NO) forKey:PLPlayerOptionKeyVideoToolbox];
+    [option setOptionValue:@(kPLLogInfo) forKey:PLPlayerOptionKeyLogLevel];
+    NSURL *url = [NSURL URLWithString:@"http://pili-live-hls.xunshun.net/diyuxuan6188/2.m3u8?sign=403319a2d779adde70abdc50ddf79a2d&t=5f4f125d"];
+    
+    
+    
+    self.player = [PLPlayer playerWithURL:url option:option];
+    
+    self.player.delegate = self;
+    
+    [self.view addSubview:self.player.playerView];
+    [self.view sendSubviewToBack:self.player.playerView];
+    
+    [self.player play];
+    
+    
+    
+}
+
+
+
+//添加推流
+- (void)addTuiLiu {
+    
+    PLVideoCaptureConfiguration *videoCaptureConfiguration = [PLVideoCaptureConfiguration defaultConfiguration];
+    
+    videoCaptureConfiguration.position = AVCaptureDevicePositionFront;
+    PLAudioCaptureConfiguration *audioCaptureConfiguration = [PLAudioCaptureConfiguration defaultConfiguration];
+    
+    
+    
+    PLVideoStreamingConfiguration *videoStreamingConfiguration = [PLVideoStreamingConfiguration defaultConfiguration];
+    PLAudioStreamingConfiguration *audioStreamingConfiguration = [PLAudioStreamingConfiguration defaultConfiguration];
+    
+    
+    self.session = [[PLMediaStreamingSession alloc] initWithVideoCaptureConfiguration:videoCaptureConfiguration audioCaptureConfiguration:audioCaptureConfiguration videoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:nil];
+    
+    
+    [self.view addSubview:self.session.previewView];
+    [self.view sendSubviewToBack:self.session.previewView];
+    
+    
+    NSURL *pushURL = [NSURL URLWithString:@"rtmp://pili-publish.xunshun.net/diyuxuan6188/11598953718395A?e=1599021506&token=KHCzbpIL_mUAG8Dh5MZxFb9ahViYoMiSnVbTqwvx:C9R_CsByspLsHedPDXRoCa0OeAw="];
+    [self.session startStreamingWithPushURL:pushURL feedback:^(PLStreamStartStateFeedback feedback) {
+        if (feedback == PLStreamStartStateSuccess) {
+            NSLog(@"Streaming started.");
+        }
+        else {
+            NSLog(@"Oops.");
+        }
+    }];
+}
+
+
+/**
+ 告知代理对象 PLPlayer 即将开始进入后台播放任务
+ 
+ @param player 调用该代理方法的 PLPlayer 对象
+ 
+ @since v1.0.0
+ */
+- (void)playerWillBeginBackgroundTask:(nonnull PLPlayer *)player{
+    NSLog(@"%@",@"00002334");
+}
+
+/**
+ 告知代理对象 PLPlayer 即将结束后台播放状态任务
+ 
+ @param player 调用该方法的 PLPlayer 对象
+ 
+ @since v2.1.1
+ */
+- (void)playerWillEndBackgroundTask:(nonnull PLPlayer *)player{
+    NSLog(@"%@",@"11112334");
+}
+
+/**
+ 告知代理对象播放器状态变更
+ 
+ @param player 调用该方法的 PLPlayer 对象
+ @param state  变更之后的 PLPlayer 状态
+ 
+ @since v1.0.0
+ */
+- (void)player:(nonnull PLPlayer *)player statusDidChange:(PLPlayerStatus)state{
+    NSLog(@"%@",@"2334");
+}
+
+/**
+ 告知代理对象播放器因错误停止播放
+ 
+ @param player 调用该方法的 PLPlayer 对象
+ @param error  携带播放器停止播放错误信息的 NSError 对象
+ 
+ @since v1.0.0
+ */
+- (void)player:(nonnull PLPlayer *)player stoppedWithError:(nullable NSError *)error{
+    NSLog(@"%@",error);
+    
+    
+}
+
+/**
+ 点播已缓冲区域
+ 
+ @param player 调用该方法的 PLPlayer 对象
+ @param timeRange  CMTime , 表示从0时开始至当前缓冲区域，单位秒。
+ 
+ @warning 仅对点播有效
+ 
+ @since v2.4.1
+ */
+- (void)player:(nonnull PLPlayer *)player loadedTimeRange:(CMTime)timeRange{
+    NSLog(@"%@",@"44442334");
+}
+
+/**
+ 回调将要渲染的帧数据
+ 该功能只支持直播
+ 
+ @param player 调用该方法的 PLPlayer 对象
+ @param frame 将要渲染帧 YUV 数据。
+ CVPixelBufferGetPixelFormatType 获取 YUV 的类型。
+ 软解为 kCVPixelFormatType_420YpCbCr8Planar.
+ 硬解为 kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange.
+ @param pts 显示时间戳 单位ms
+ @param sarNumerator
+ @param sarDenominator
+ 其中sar 表示 storage aspect ratio
+ 视频流的显示比例 sarNumerator sarDenominator
+ @discussion sarNumerator = 0 表示该参数无效
+ 
+ @since v2.4.3
+ */
+- (void)player:(nonnull PLPlayer *)player willRenderFrame:(nullable CVPixelBufferRef)frame pts:(int64_t)pts sarNumerator:(int)sarNumerator sarDenominator:(int)sarDenominator{
+    NSLog(@"%@",@"55552334");
 }
 
 

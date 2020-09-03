@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTEditAddressTVC : BaseTableViewController
 @property(nonatomic , strong)SWTModel *model;
+@property(nonatomic , copy)void(^sendAddressBlock)(SWTModel *model);
 @end
 
 NS_ASSUME_NONNULL_END

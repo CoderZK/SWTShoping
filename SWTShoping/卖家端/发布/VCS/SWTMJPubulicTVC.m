@@ -86,9 +86,13 @@
             }else if (status.intValue == 2) {
                 [SVProgressHUD showErrorWithStatus:@"直播等待审核中"];
             }else if (status.intValue == 3) {
-                
-                
-                
+                SWTModel * model = [[SWTModel alloc] init];
+                model.ID =  [NSString stringWithFormat:@"%@",responseObject[@"data"][@"liveid"]];;
+                SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                vc.model = model;
+                vc.isTuiLiu = YES;
+                [self.navigationController pushViewController:vc animated:YES];
                 
             }else if (status.intValue == 4) {
                 [SVProgressHUD showErrorWithStatus:@"直播间被禁用"];

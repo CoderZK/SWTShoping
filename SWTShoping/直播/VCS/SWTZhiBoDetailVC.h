@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SWTZhiBoDetailVC : BaseViewController
 @property(nonatomic , strong)SWTModel *model;
 @property(nonatomic,assign)BOOL isHeMai;
+@property(nonatomic,assign)BOOL isTuiLiu;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -30,7 +30,64 @@
     
     [self initSubV];
     
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textFiledEditChanged:)
+
+      name:@"UITextFieldTextDidChangeNotification"
+
+                                              object:self.shopWinXinV.rightTF];
     
+}
+
+
+
+ 
+
+-(void)textFiledEditChanged:(NSNotification*)notification
+
+{
+
+    UITextField*textField = notification.object;
+
+    if (textField.tag == 100) {
+        NSString*str = textField.text;
+
+            for (int i = 0; i<str.length; i++)
+
+            {
+
+                NSString*string = [str substringFromIndex:i];
+
+                NSString *regex = @"[\u4e00-\u9fa5]{0,}$"; // 中文
+
+                // 2、拼接谓词
+
+                NSPredicate *predicateRe1 = [NSPredicate predicateWithFormat:@"self matches %@", regex];
+
+                // 3、匹配字符串
+
+                BOOL resualt = [predicateRe1 evaluateWithObject:string];
+
+                
+
+                if (resualt)
+
+                {
+
+        　　　　//是中文替换为空字符串
+
+                    str =  [str stringByReplacingOccurrencesOfString:[str substringFromIndex:i] withString:@""];
+
+         
+
+                }
+
+            }
+
+            textField.text = str;
+    }
+    
+    
+
 }
 
 
@@ -73,7 +130,8 @@
     self.shopWinXinV = [[SWTDianPuInfoView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.shopDesV.frame), ScreenW, hh) withIsJianTou:NO withMaxNumber:40];
     self.shopWinXinV.leftLB.text = @"店铺微信号";
     self.shopWinXinV.rightTF.placeholder = @"请填写微信号";
-    self.shopWinXinV.rightTF.keyboardType = UIKeyboardTypePhonePad;
+    self.shopWinXinV.rightTF.tag = 100;
+//    self.shopWinXinV.rightTF.keyboardType = UIKeyboardTypePhonePad;
     [self.headView addSubview:self.shopWinXinV];
     
     self.shopPhoneV = [[SWTDianPuInfoView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.shopWinXinV.frame), ScreenW, hh) withIsJianTou:NO withMaxNumber:40];
