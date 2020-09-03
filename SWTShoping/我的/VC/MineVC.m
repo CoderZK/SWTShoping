@@ -54,13 +54,15 @@
     }else {
        [self getData];
     }
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+    
+ 
+    
 }
 
 - (void)viewDidLoad {
@@ -131,6 +133,7 @@
             }
             [zkSignleTool shareTool].nickname = responseObject[@"data"][@"nickname"];
             [zkSignleTool shareTool].level =  responseObject[@"data"][@"levelcode"];
+            [zkSignleTool shareTool].avatar = responseObject[@"data"][@"headimg"];
             self.userDataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
             [self.collectionView reloadData];
         }else {

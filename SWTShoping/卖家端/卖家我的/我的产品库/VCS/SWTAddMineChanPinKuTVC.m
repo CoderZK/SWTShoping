@@ -36,25 +36,25 @@
     self.picStrArr = @[].mutableCopy;
     
     UIButton * button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
-          button.titleLabel.font = kFont(13);
-          [button setTitle:@"提交" forState:UIControlStateNormal];
-          button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-          [button setTitleColor:CharacterColor50 forState:UIControlStateNormal];
-          @weakify(self);
-          [[button rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-              @strongify(self);
-              //点击提交
-              [self tiJiaoAction];
-
-          }];
-          
-          self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    button.titleLabel.font = kFont(13);
+    [button setTitle:@"提交" forState:UIControlStateNormal];
+    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    [button setTitleColor:CharacterColor50 forState:UIControlStateNormal];
+    @weakify(self);
+    [[button rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        @strongify(self);
+        //点击提交
+        [self tiJiaoAction];
+        
+    }];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTMineShopSettingCell" bundle:nil] forCellReuseIdentifier:@"SWTMineShopSettingCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTAddChanPinOneCellCell" bundle:nil] forCellReuseIdentifier:@"SWTAddChanPinOneCellCell"];
     
     [self addHeadV];
-
+    
     self.pingMingArr = @[].mutableCopy;
     [self getPingMingData];
     self.caiZhiArr = @[].mutableCopy;
@@ -82,7 +82,7 @@
         if ([responseObject[@"code"] intValue]== 200) {
             
             self.pingMingArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"][@"list"]];
-        
+            
             
         }
         
@@ -92,7 +92,7 @@
         [self.tableView.mj_footer endRefreshing];
         
     }];
-
+    
 }
 
 - (void)getCaiZHiData  {
@@ -105,7 +105,7 @@
         if ([responseObject[@"code"] intValue]== 200) {
             
             self.caiZhiArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"][@"list"]];
-        
+            
             
         }
         
@@ -115,7 +115,7 @@
         [self.tableView.mj_footer endRefreshing];
         
     }];
-
+    
 }
 
 
@@ -129,7 +129,7 @@
         if ([responseObject[@"code"] intValue]== 200) {
             
             self.chanPinKuArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"][@"list"]];
-        
+            
             
         }
         
@@ -139,7 +139,7 @@
         [self.tableView.mj_footer endRefreshing];
         
     }];
-
+    
 }
 
 
@@ -150,7 +150,7 @@
         return;
     }
     if (self.twoID.length == 0) {
-         [SVProgressHUD showErrorWithStatus:@"请选择品名"];
+        [SVProgressHUD showErrorWithStatus:@"请选择品名"];
         return;
     }
     if (self.headV.addressV.TF.text.length == 0) {
@@ -162,7 +162,7 @@
         return;
     }
     if (self.headV.caizhiV.TF.text.length == 0) {
-         [SVProgressHUD showErrorWithStatus:@"请选择材质"];
+        [SVProgressHUD showErrorWithStatus:@"请选择材质"];
         return;
     }
     if (self.headV.weightV.TF.text.length == 0) {
@@ -187,18 +187,18 @@
         return;;
     }
     if (self.kuCunStr.length == 0) {
-           [SVProgressHUD showErrorWithStatus:@"请输入库存数量"];
-           return;;
-       }
+        [SVProgressHUD showErrorWithStatus:@"请输入库存数量"];
+        return;;
+    }
     
     if (self.selectCangKuArr.count == 0) {
         [SVProgressHUD showErrorWithStatus:@"请至少选择添加一个产品库"];
         return;
     }
-     if (self.diJiaStr.length == 0) {
-              [SVProgressHUD showErrorWithStatus:@"请输入底价"];
-              return;;
-          }
+    if (self.diJiaStr.length == 0) {
+        [SVProgressHUD showErrorWithStatus:@"请输入底价"];
+        return;;
+    }
     if (self.jiaJiaStr.length == 0 && self.typeStr.intValue == 1) {
         [SVProgressHUD showErrorWithStatus:@"请输入每次加价"];
         return;;
@@ -234,9 +234,12 @@
     dict[@"description"] = self.headV.TV.text;
     dict[@"sn"] = self.bianHaoStr;
     dict[@"stock"] = self.kuCunStr;
-    dict[@"auction_start_time"] =[NSString stringWithFormat:@"%@:00",self.timeStr];
-    dict[@"auction_end_time"] =  [NSString stringWithFormat:@"%@:00",self.endTimeStr];
-    dict[@"stepprice"] = self.jiaJiaStr;
+    
+    if (self.typeStr.intValue == 1) {
+        dict[@"auction_start_time"] =[NSString stringWithFormat:@"%@:00",self.timeStr];
+        dict[@"auction_end_time"] =  [NSString stringWithFormat:@"%@:00",self.endTimeStr];
+        dict[@"stepprice"] = self.jiaJiaStr;
+    }
     NSMutableArray * arrOne = @[].mutableCopy;
     for (int i = 0 ; i < self.selectCangKuArr.count; i++) {
         [arrOne addObject:self.selectCangKuArr[i].ID];
@@ -261,7 +264,7 @@
             if (self.isEdit) {
                 [SVProgressHUD showSuccessWithStatus:@"商品编辑成功成功"];
             }else {
-               [SVProgressHUD showSuccessWithStatus:@"添加商品成功"];
+                [SVProgressHUD showSuccessWithStatus:@"添加商品成功"];
             }
             
             
@@ -289,7 +292,7 @@
         [self.tableView.mj_footer endRefreshing];
         
     }];
-
+    
 }
 
 
@@ -312,7 +315,7 @@
                 pickV.array = @[@"一口价",@"竞拍"].mutableCopy;
                 [pickV show];
                 pickV.delegate = self;
-            
+                
             }else if (x.intValue == 101) {
                 //品名
                 
@@ -331,7 +334,7 @@
                 [pinMingV show];
                 
             }else if (x.integerValue == 102) {
-               
+                
                 NSMutableArray * arr  =@[].mutableCopy;
                 for (SWTModel * mNei in self.caiZhiArr) {
                     [arr addObject:mNei.name];
@@ -344,7 +347,7 @@
                 
             }
         }else {
-           if (x.intValue == 198) {
+            if (x.intValue == 198) {
                 //添加视频
             }else if (x.intValue == 199) {
                 //添加图片
@@ -370,7 +373,7 @@
     }else {
         return 5;
     }
-
+    
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 1) {
@@ -423,7 +426,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else {
-       SWTMineShopSettingCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTMineShopSettingCell" forIndexPath:indexPath];
+        SWTMineShopSettingCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTMineShopSettingCell" forIndexPath:indexPath];
         cell.rightTF.userInteractionEnabled = YES;
         cell.rightImgV.hidden = YES;
         cell.rightTF.placeholder = @"请填写";
@@ -436,7 +439,7 @@
             if (self.typeStr.intValue == 0) {
                 cell.leftLB.text = @"价格";
             }else {
-               cell.leftLB.text = @"底价";
+                cell.leftLB.text = @"底价";
             }
             cell.rightTF.text = self.diJiaStr;
         }else if (indexPath.row == 1){
@@ -466,7 +469,7 @@
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         return cell;
     }
-
+    
 }
 
 
@@ -476,14 +479,14 @@
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if ([self isCanUsePhotos]) {
             
-         
+            
             [self showMXPhotoCameraAndNeedToEdit:YES completion:^(UIImage *image, UIImage *originImage, CGRect cutRect) {
                 
                 [self.picArr addObject:image];
                 self.headV.picArr = self.picArr;
-
+                
             }];
-       
+            
         }else{
             UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相机" message:@"请在iPhone的""设置-隐私-相机""中允许访问相机" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
@@ -517,18 +520,18 @@
                     
                 }
                 
-              
+                
                 
                 
             }];
-           
+            
         }else{
             UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
         }
     }];
     
-   
+    
     
     UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     [ac addAction:action1];
@@ -545,10 +548,10 @@
     NSIndexPath * indexPath  = [self.tableView indexPathForCell:cell];
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-                   self.bianHaoStr = textField.text;
-               }else if (indexPath.row == 1) {
-                   self.kuCunStr = textField.text;
-               }
+            self.bianHaoStr = textField.text;
+        }else if (indexPath.row == 1) {
+            self.kuCunStr = textField.text;
+        }
     }else if (indexPath.section == 1) {
         
     }else if (indexPath.section == 2) {
@@ -594,7 +597,7 @@
             selectTimeV.isCanSelectToday = YES;
             Weak(weakSelf);
             selectTimeV.block = ^(NSString *timeStr) {
-               
+                
                 if (weakSelf.endTimeStr.length != 0) {
                     NSTimeInterval number = [NSString pleaseInsertStarTime:[NSString stringWithFormat:@"%@:00",timeStr] andInsertEndTime:[NSString stringWithFormat:@"%@ 00:00:00",weakSelf.endTimeStr]];
                     if (number < 0) {
@@ -604,7 +607,7 @@
                         weakSelf.timeStr = timeStr;
                         [weakSelf.tableView reloadData];
                     }
-                               
+                    
                 }else {
                     weakSelf.timeStr = timeStr;
                     [weakSelf.tableView reloadData];
@@ -628,12 +631,12 @@
                         weakSelf.endTimeStr = timeStr;
                         [weakSelf.tableView reloadData];
                     }
-                               
+                    
                 }else {
                     weakSelf.endTimeStr = timeStr;
                     [weakSelf.tableView reloadData];
                 }
-               
+                
                 
             };
             [[UIApplication sharedApplication].keyWindow addSubview:selectTimeV];
@@ -737,7 +740,7 @@
         [self.tableView.mj_footer endRefreshing];
         
     }];
-
+    
     
 }
 

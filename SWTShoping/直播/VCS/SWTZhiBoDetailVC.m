@@ -91,10 +91,10 @@
     }];
     
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.comeInV.titleLB.text = @"欢迎134*****789进入直播间";
-        [self.comeInV show];
-    });
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        self.comeInV.titleLB.text = @"欢迎134*****789进入直播间";
+//        [self.comeInV show];
+//    });
     
     
     //    self.huoDeShowView = [[SWTHuoDeShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
@@ -300,7 +300,7 @@
             self.dataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
             self.headV.model = self.dataModel;
             self.bottomV.model = self.dataModel;
-            [self creaeteAVRoom];
+            [self jionAVRoom];
             if (self.isTuiLiu) {
                 [self addTuiLiu];
             }else {
@@ -424,11 +424,12 @@
     
 }
 
-//创建直播室
-- (void)creaeteAVRoom {
+//加入直播室
+- (void)jionAVRoom {
+    
     V2TIMManager * manager = [V2TIMManager sharedInstance];
     [manager setGroupListener:self];
-    [manager joinGroup:@"@TGS#aEUZV2VGK" msg:@"333" succ:^{
+    [manager joinGroup:self.dataModel.livegroupid msg:@"333" succ:^{
         NSLog(@"%@",@"进入直播间成功");
     } fail:^(int code, NSString *desc) {
         NSLog(@"%@",@"进入直播间失败");
@@ -439,8 +440,7 @@
 - (void)quitAVRoom{
     
     V2TIMManager * manager = [V2TIMManager sharedInstance];
-       [manager setGroupListener:self];
-    [manager quitGroup:@"@TGS#aEUZV2VGK" succ:^{
+    [manager quitGroup:self.dataModel.livegroupid succ:^{
        NSLog(@"%@",@"退出直播间成功");
     } fail:^(int code, NSString *desc) {
         NSLog(@"%@",@"退出直播间失败");
@@ -453,17 +453,17 @@
     V2TIMMessage * cusMsg = [[V2TIMManager sharedInstance] createCustomMessage:[@[@0,self.bottomV.TF.text] mj_JSONData]];
     
     
-    [[V2TIMManager sharedInstance] sendMessage:cusMsg receiver:nil groupID:@"@TGS#aEUZV2VGK" priority:(V2TIM_PRIORITY_DEFAULT) onlineUserOnly:NO offlinePushInfo:nil progress:^(uint32_t progress) {
+    [[V2TIMManager sharedInstance] sendMessage:cusMsg receiver:nil groupID:self.dataModel.livegroupid priority:(V2TIM_PRIORITY_DEFAULT) onlineUserOnly:NO offlinePushInfo:nil progress:^(uint32_t progress) {
         
     } succ:^{
         NSLog(@"%@",@"发送成功");
         
         SWTModel * model = [[SWTModel alloc] init];
-        model.avatar = @"123456789";
+        model.avatar = [zkSignleTool shareTool].avatar;
         model.content = self.bottomV.TF.text;
         model.nickname = [zkSignleTool shareTool].nickname;
         model.type = @"0";
-        model.growth_value = [zkSignleTool shareTool].growth_value;
+        model.levelcode = [zkSignleTool shareTool].level;
         [self.AVCharRoomArr addObject:model];
         self.avChatRoomView.dataArr = self.AVCharRoomArr;
         
@@ -506,6 +506,15 @@
     
     NSLog(@"===list\n%@",memberList);
     
+    if (memberList.count > 0) {
+        V2TIMGroupMemberInfo * userInfo  = [memberList firstObject];
+        NSDictionary * dict = [userInfo.nickName mj_JSONObject];
+        NSString * nickname = [dict.allKeys containsObject:@"nickname"] ? dict[@"nickname"] : @"??";
+        self.comeInV.titleLB.text =  [NSString stringWithFormat:@"欢迎%@进入直播间",nickname];
+        [self.comeInV show];
+    }
+    
+    
     
 }
 //有成员离开
@@ -516,13 +525,13 @@
     
 }
 
-/// 收到消息已读回执（仅单聊有效）
+// 收到消息已读回执（仅单聊有效）
 - (void)onRecvC2CReadReceipt:(NSArray<V2TIMMessageReceipt *> *)receiptList{
     
     
 }
 
-/// 收到消息撤回
+// 收到消息撤回
 - (void)onRecvMessageRevoked:(NSString *)msgID {
     
 }

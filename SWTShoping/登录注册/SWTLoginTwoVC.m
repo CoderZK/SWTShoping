@@ -115,6 +115,7 @@
             [zkSignleTool shareTool].isLogin = YES;
             [zkSignleTool shareTool].phone = self.phoneTF.text;
             [zkSignleTool shareTool].userSig = responseObject[@"data"][@"usersig"];
+            [zkSignleTool shareTool].avatar = responseObject[@"data"][@"avatar"];
             [zkSignleTool shareTool].nickname =  responseObject[@"data"][@"nickname"];
             [zkSignleTool shareTool].level =  responseObject[@"data"][@"levelcode"];
             

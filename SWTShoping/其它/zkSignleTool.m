@@ -114,6 +114,15 @@ static zkSignleTool * tool = nil;
     return [[NSUserDefaults standardUserDefaults] objectForKey:@"userSig"];
 }
 
+- (void)setAvatar:(NSString *)avatar {
+     [[NSUserDefaults standardUserDefaults]setObject:avatar forKey:@"avatar"];
+       [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (NSString *)avatar {
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"avatar"];
+}
+
 -(void)uploadDeviceToken
 {
     if (self.isLogin&&self.session_token&&self.deviceToken)
