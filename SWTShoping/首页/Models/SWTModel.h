@@ -83,7 +83,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *store_name;
 
 @property(nonatomic,strong)NSString *categoryid;
-@property(nonatomic,strong)NSString *pushurl;
 @property(nonatomic,strong)NSString *readurl;
 @property(nonatomic,strong)NSString *watchnum;
 
@@ -161,11 +160,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *refund_mobile;
 @property(nonatomic,strong)NSString *refund_link;
 @property(nonatomic,strong)NSString *merchfollownum;
-@property(nonatomic,strong)NSString *hlsurl;
-@property(nonatomic,strong)NSString *hdlurl;
-@property(nonatomic,strong)NSString *rtmpurl;
-@property(nonatomic,strong)NSString *livegroupid;
-//@property(nonatomic,strong)NSString *rtmpurl;
+@property(nonatomic,strong)NSString *hlsurl; //播流地址
+@property(nonatomic,strong)NSString *hdlurl; //播流地址
+@property(nonatomic,strong)NSString *rtmpurl; //播流地址
+@property(nonatomic,strong)NSString *livegroupid;//聊天室room id
+@property(nonatomic,strong)NSString *pushurl;//推流地址
 //@property(nonatomic,strong)NSString *rtmpurl;
 //@property(nonatomic,strong)NSString *rtmpurl;
 //@property(nonatomic,strong)NSString *rtmpurl;

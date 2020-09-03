@@ -201,6 +201,9 @@
 /** 申请直播 */
 #define merchliveAdd_room_apply_SWT URLOne@"merchlive/add_room_apply"
 
+/** 直播开关 */
+#define merchliveUpd_live_status_SWT URLOne@"merchlive/upd_live_status"
+
 
 
 #pragma mark ---- 视频信息接口 -----

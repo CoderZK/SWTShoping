@@ -20,7 +20,7 @@
 #import "SWTHeMaiFatherVC.h"
 #import "SWTSearchFatherVC.h"
 #import "SWTShowLoginView.h"
-@interface HomeVC ()<UIScrollViewDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource,SWTHomeHeadViewDelegate>
+@interface HomeVC ()<UIScrollViewDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource,SWTHomeHeadViewDelegate,SDCycleScrollViewDelegate>
 @property(nonatomic , strong)SWTHomeHeadView *headView;
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
 @property(nonatomic , strong)UICollectionView *collectionView;
@@ -273,6 +273,7 @@
     self.collectionView.contentInset = UIEdgeInsetsMake(sstatusHeight + 44 + 10 + (ScreenW - 30) / 345 * 150 +110 ,0, 0, 0);
     self.headView = [[SWTHomeHeadView alloc] initWithFrame:CGRectMake(0, -( sstatusHeight + 44 + 10 + (ScreenW - 30) / 345 * 150 +110), ScreenW, sstatusHeight + 44 + 10 + (ScreenW - 30) / 345 * 150 +110)];
     self.headView.delegate = self;
+    self.headView.sdView.delegate = self;
     [self.collectionView addSubview:self.headView];;
     
 }
@@ -497,7 +498,21 @@
     
 }
 
+//点击录播图
 
+- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
+    
+    if (self.bannerArr[index].merchid.length == 0) {
+        return;
+    }
+    
+    SWTShopHomeVC * vc =[[SWTShopHomeVC alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    vc.shopId = self.bannerArr[index].merchid;
+    [self.navigationController pushViewController:vc animated:YES];
+    
+    
+}
 
 
 

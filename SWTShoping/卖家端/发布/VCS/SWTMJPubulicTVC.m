@@ -10,7 +10,7 @@
 #import "SWTMineFaBuOneCell.h"
 #import "SWTMJMineVideoFatherVC.h"
 @interface SWTMJPubulicTVC ()
-
+@property(nonatomic , strong)NSString *liveID;
 @end
 
 @implementation SWTMJPubulicTVC
@@ -59,11 +59,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.row == 0) {
+        self.tableView.userInteractionEnabled = NO;
         [self checkRoom];
     }else {
         SWTMJMineVideoFatherVC * vc =[[SWTMJMineVideoFatherVC alloc] init];
-                   vc.hidesBottomBarWhenPushed = YES;
-                   [self.navigationController pushViewController:vc animated:YES];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
     }
     
     
@@ -71,14 +72,13 @@
 
 - (void)checkRoom  {
     
-    
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"id"] = [zkSignleTool shareTool].selectShopID;
     [zkRequestTool networkingPOST:merchliveCheck_room_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
-        [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             NSString * status = [NSString stringWithFormat:@"%@",responseObject[@"data"][@"status"]];
             if (status.intValue == 1) {
@@ -86,31 +86,58 @@
             }else if (status.intValue == 2) {
                 [SVProgressHUD showErrorWithStatus:@"直播等待审核中"];
             }else if (status.intValue == 3) {
-                SWTModel * model = [[SWTModel alloc] init];
-                model.ID =  [NSString stringWithFormat:@"%@",responseObject[@"data"][@"liveid"]];;
-                SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
-                vc.hidesBottomBarWhenPushed = YES;
-                vc.model = model;
-                vc.isTuiLiu = YES;
-                [self.navigationController pushViewController:vc animated:YES];
+                self.liveID = [NSString stringWithFormat:@"%@",responseObject[@"data"][@"liveid"]];
+                [self upDateLive];
                 
             }else if (status.intValue == 4) {
                 [SVProgressHUD showErrorWithStatus:@"直播间被禁用"];
             }
-            
-            
+
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        self.tableView.userInteractionEnabled = YES;
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+
+}
+
+- (void)upDateLive {
+    
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"id"] = [zkSignleTool shareTool].selectShopID;
+    dict[@"type"] = @1;
+    [zkRequestTool networkingPOST:merchliveUpd_live_status_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        self.tableView.userInteractionEnabled = YES;
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+
+            SWTModel * model = [[SWTModel alloc] init];
+            model.ID =  self.liveID;
+            SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            vc.model = model;
+            vc.isTuiLiu = YES;
+            [self.navigationController pushViewController:vc animated:YES];
             
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
+        self.tableView.userInteractionEnabled = YES;
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         
     }];
 
+    
 }
 
 - (void)didReceiveMemoryWarning {

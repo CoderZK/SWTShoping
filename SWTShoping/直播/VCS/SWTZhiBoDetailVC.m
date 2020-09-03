@@ -57,6 +57,11 @@
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [[V2TIMManager sharedInstance] removeAdvancedMsgListener:self];
+    if (self.isTuiLiu) {
+        [self upDateLive];
+    }else {
+        [self quitAVRoom];
+    }
 }
 
 -(SWTZhiBoPeopleComeInView *)comeInV {
@@ -76,10 +81,6 @@
     [self addChuJiaBottomV];
     [self initChatRoomV];
     self.chuJiaBottomV.hidden = YES;
-    
-    
-    
-    
     [self.view addSubview:self.comeInV];
     self.comeInV.hidden = YES;
     [self.comeInV mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -113,7 +114,12 @@
         [self getLivegoodListDataWithType:0]; //获取竞拍和一口价列表
     }
     
-    
+    if (self.isTuiLiu) {
+        self.headV.guanzhuBt.hidden = YES;
+        
+    }else {
+        self.headV.guanzhuBt.hidden = NO;
+    }
     
     
     
@@ -421,28 +427,33 @@
 //创建直播室
 - (void)creaeteAVRoom {
     V2TIMManager * manager = [V2TIMManager sharedInstance];
-    [manager joinGroup:self.dataModel.livegroupid msg:@"333" succ:^{
+    [manager setGroupListener:self];
+    [manager joinGroup:@"@TGS#aEUZV2VGK" msg:@"333" succ:^{
         NSLog(@"%@",@"进入直播间成功");
     } fail:^(int code, NSString *desc) {
         NSLog(@"%@",@"进入直播间失败");
     }];
-    
-    
-    
-    
+
 }
+
+- (void)quitAVRoom{
+    
+    V2TIMManager * manager = [V2TIMManager sharedInstance];
+       [manager setGroupListener:self];
+    [manager quitGroup:@"@TGS#aEUZV2VGK" succ:^{
+       NSLog(@"%@",@"退出直播间成功");
+    } fail:^(int code, NSString *desc) {
+        NSLog(@"%@",@"退出直播间失败");
+    }];
+}
+
 //发送消息
 - (void)sendMessage {
-    
-    
-    [[V2TIMManager sharedInstance] setGroupListener:self];
-    
-    V2TIMMessage * msg = [[V2TIMManager sharedInstance] createTextMessage:self.bottomV.TF.text];
     
     V2TIMMessage * cusMsg = [[V2TIMManager sharedInstance] createCustomMessage:[@[@0,self.bottomV.TF.text] mj_JSONData]];
     
     
-    [[V2TIMManager sharedInstance] sendMessage:cusMsg receiver:nil groupID:self.dataModel.livegroupid priority:(V2TIM_PRIORITY_DEFAULT) onlineUserOnly:NO offlinePushInfo:nil progress:^(uint32_t progress) {
+    [[V2TIMManager sharedInstance] sendMessage:cusMsg receiver:nil groupID:@"@TGS#aEUZV2VGK" priority:(V2TIM_PRIORITY_DEFAULT) onlineUserOnly:NO offlinePushInfo:nil progress:^(uint32_t progress) {
         
     } succ:^{
         NSLog(@"%@",@"发送成功");
@@ -469,9 +480,11 @@
     NSLog(@"message === \n %@",msg);
     SWTModel * model = [[SWTModel alloc] init];
     model.avatar = msg.faceURL;
+    NSDictionary * userDict = [msg.nickName mj_JSONObject];
     NSData * data  = msg.customElem.data;
     NSArray * arr = [data mj_JSONObject];
-    model.nickname = msg.nickName;
+    model.nickname = [userDict.allKeys containsObject:@"nickname"] ? userDict[@"nickname"]:@"??";
+    model.levelcode = [userDict.allKeys containsObject:@"levelcode"] ? userDict[@"levelcode"]:@"0";
     if (arr.count > 0) {
         if ( [[NSString stringWithFormat:@"%@",arr[0]] isEqualToString:@"0"]) {
             model.type = @"0";
@@ -491,8 +504,15 @@
 - (void)onMemberEnter:(NSString *)groupID memberList:(NSArray<V2TIMGroupMemberInfo *>*)memberList {
     
     
-    NSLog(@"===\n%@",memberList);
+    NSLog(@"===list\n%@",memberList);
     
+    
+}
+//有成员离开
+-(void)onMemberLeave:(NSString *)groupID member:(V2TIMGroupMemberInfo *)member {
+    
+    
+    NSLog(@"%@",@"成员离开了");
     
 }
 
@@ -516,6 +536,11 @@
 
 //关注操作
 - (void)gaunZhuActionwithType:(NSInteger)type {
+    
+    
+    if (self.isTuiLiu) {
+        return;
+    }
     
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
@@ -592,7 +617,7 @@
     [option setOptionValue:@1000 forKey:PLPlayerOptionKeyMaxL2BufferDuration];
     [option setOptionValue:@(NO) forKey:PLPlayerOptionKeyVideoToolbox];
     [option setOptionValue:@(kPLLogInfo) forKey:PLPlayerOptionKeyLogLevel];
-    NSURL *url = [NSURL URLWithString:@"http://pili-live-hls.xunshun.net/diyuxuan6188/2.m3u8?sign=403319a2d779adde70abdc50ddf79a2d&t=5f4f125d"];
+    NSURL *url = [NSURL URLWithString:self.dataModel.hlsurl];
     
     
     
@@ -632,7 +657,7 @@
     [self.view sendSubviewToBack:self.session.previewView];
     
     
-    NSURL *pushURL = [NSURL URLWithString:@"rtmp://pili-publish.xunshun.net/diyuxuan6188/11598953718395A?e=1599021506&token=KHCzbpIL_mUAG8Dh5MZxFb9ahViYoMiSnVbTqwvx:C9R_CsByspLsHedPDXRoCa0OeAw="];
+    NSURL *pushURL = [NSURL URLWithString:self.dataModel.pushurl];
     [self.session startStreamingWithPushURL:pushURL feedback:^(PLStreamStartStateFeedback feedback) {
         if (feedback == PLStreamStartStateSuccess) {
             NSLog(@"Streaming started.");
@@ -728,6 +753,21 @@
     NSLog(@"%@",@"55552334");
 }
 
+//是直播时离开直播间关闭直播
 
+- (void)upDateLive {
+    
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"id"] = self.dataModel.merchid;
+    dict[@"type"] = @2;
+    [zkRequestTool networkingPOST:merchliveUpd_live_status_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+      
+        
+    }];
+
+    
+}
 
 @end

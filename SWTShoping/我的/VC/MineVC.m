@@ -130,6 +130,7 @@
                 return;
             }
             [zkSignleTool shareTool].nickname = responseObject[@"data"][@"nickname"];
+            [zkSignleTool shareTool].level =  responseObject[@"data"][@"levelcode"];
             self.userDataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
             [self.collectionView reloadData];
         }else {

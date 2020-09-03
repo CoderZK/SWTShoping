@@ -113,10 +113,10 @@
             [zkSignleTool shareTool].session_token = responseObject[@"data"][@"accessToken"];
             [zkSignleTool shareTool].session_uid =  responseObject[@"data"][@"userid"];
             [zkSignleTool shareTool].isLogin = YES;
-            [zkSignleTool shareTool].level =  responseObject[@"data"][@"level"];
             [zkSignleTool shareTool].phone = self.phoneTF.text;
             [zkSignleTool shareTool].userSig = responseObject[@"data"][@"usersig"];
             [zkSignleTool shareTool].nickname =  responseObject[@"data"][@"nickname"];
+            [zkSignleTool shareTool].level =  responseObject[@"data"][@"levelcode"];
             
             [self loginIM];
             

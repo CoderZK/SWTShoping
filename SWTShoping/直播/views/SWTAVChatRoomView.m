@@ -66,6 +66,10 @@
     [cell.headImgV sd_setImageWithURL:[model.avatar getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
     cell.nameLB.text = model.nickname;
     cell.contentLB.text = model.content;
+    [cell.leveBt setTitle:model.levelcode forState:UIControlStateNormal];
+    if (model.levelcode.length == 0) {
+        [cell.leveBt setTitle:@"0" forState:UIControlStateNormal];
+    }
     
     if (model.type.intValue == 0) {
         //正常聊天
