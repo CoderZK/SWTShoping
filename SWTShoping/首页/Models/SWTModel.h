@@ -152,6 +152,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *goodsnum;
 @property(nonatomic,strong)NSString *place;
 @property(nonatomic,strong)NSString *warehouse_str;
+@property(nonatomic,strong)NSString *warehouse;
 @property(nonatomic,strong)NSString *sn;
 @property(nonatomic,strong)NSString *weight;
 @property(nonatomic,strong)NSString *msg;

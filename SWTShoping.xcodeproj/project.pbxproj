@@ -1897,7 +1897,6 @@
 			isa = PBXGroup;
 			children = (
 				666A53A824E7D3A500D75A08 /* VCS */,
-				667087D824E5723400EDA2C5 /* VCS */,
 				666A53A924E7D3A500D75A08 /* Views */,
 			);
 			path = "我的竞拍品";
@@ -2279,6 +2278,7 @@
 		667087D724E5723400EDA2C5 /* 卖家我的 */ = {
 			isa = PBXGroup;
 			children = (
+				667087D824E5723400EDA2C5 /* VCS */,
 				66721FE224EECAA900EC65A8 /* 直播 */,
 				666A53ED24E9209200D75A08 /* 我的产品库 */,
 				666A53CF24E840F800D75A08 /* 我的视频 */,
@@ -2315,8 +2315,7 @@
 				66700CC124EB5AEA00442C1D /* SWTMJAddYouHuiQuanTVC.h */,
 				66700CC224EB5AEA00442C1D /* SWTMJAddYouHuiQuanTVC.m */,
 			);
-			name = VCS;
-			path = ../VCS;
+			path = VCS;
 			sourceTree = "<group>";
 		};
 		667087D924E5723400EDA2C5 /* Views */ = {

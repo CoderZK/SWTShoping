@@ -355,6 +355,7 @@
             }else {
                 //删除图片
                 [self.picArr removeObjectAtIndex:x.intValue - 200];
+                self.headV.picArr = self.picArr;
             }
         }
         
@@ -726,6 +727,16 @@
             self.headV.weightV.TF.text = self.dataModel.weight;
             self.picArr = [self.dataModel.thumbs componentsSeparatedByString:@","].mutableCopy;
             self.headV.picArr = self.picArr;
+            self.timeStr = self.dataModel.auction_start_time;
+            self.endTimeStr = self.dataModel.auction_end_time;
+            
+            NSArray * chanPinKuArr = [self.dataModel.warehouse componentsSeparatedByString:@","];
+            [self.selectCangKuArr removeAllObjects];
+            for (SWTModel * cm in self.chanPinKuArr) {
+                if ([chanPinKuArr containsObject:cm.ID]) {
+                    [self.selectCangKuArr addObject:cm];
+                }
+            }
             
             [self.tableView reloadData];
             

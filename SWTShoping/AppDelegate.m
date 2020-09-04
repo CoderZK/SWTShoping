@@ -50,6 +50,12 @@
     
     [PLStreamingEnv initEnv];
     
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+       manager.enable = YES;
+       manager.shouldResignOnTouchOutside = YES;
+       manager.shouldToolbarUsesTextFieldTintColor = YES;
+       manager.enableAutoToolbar = NO;
+    
     [WXApi registerApp:WXAppID universalLink:@"https://www.zftgame.com/huishou/"];
       [self initPush];
       [self initUMeng:launchOptions];

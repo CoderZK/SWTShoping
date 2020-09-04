@@ -35,6 +35,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self getData];
+    [self merchCheckOpen];
 }
 
 - (void)viewDidLoad {
@@ -54,7 +55,7 @@
     self.tableView.mj_header = [MJRefreshHeader headerWithRefreshingBlock:^{
         [self getData];
     }];
-    [self merchCheckOpen];
+   
     self.tabBarController.delegate = self;
     [self tongjiAction];
 }

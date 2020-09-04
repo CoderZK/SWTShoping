@@ -158,8 +158,6 @@
     
     if (anNiuBt.tag >=200) {
         //删除
-        [self.picArr removeObjectAtIndex:anNiuBt.tag - 200];
-        [self setPics];
         [self.delegateSignal sendNext: [NSString stringWithFormat:@"%ld",anNiuBt.tag]];
     }else {
         if (anNiuBt.tag - 100  == self.picArr.count) {
