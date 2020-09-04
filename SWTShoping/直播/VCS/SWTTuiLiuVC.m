@@ -42,7 +42,7 @@
 
 - (void)action {
     
-    NSURL *pushURL = [NSURL URLWithString:@"rtmp://pili-publish.xunshun.net/diyuxuan6188/11598953718395A?e=1599021506&token=KHCzbpIL_mUAG8Dh5MZxFb9ahViYoMiSnVbTqwvx:C9R_CsByspLsHedPDXRoCa0OeAw="];
+    NSURL *pushURL = [NSURL URLWithString:@"rtmp://pili-publish.xunshun.net/diyuxuan6188/2?e=1599195413&token=KHCzbpIL_mUAG8Dh5MZxFb9ahViYoMiSnVbTqwvx:IywzbmU0osFlatDE29sMZnsmCfs="];
     [self.session startStreamingWithPushURL:pushURL feedback:^(PLStreamStartStateFeedback feedback) {
            if (feedback == PLStreamStartStateSuccess) {
                NSLog(@"Streaming started.");

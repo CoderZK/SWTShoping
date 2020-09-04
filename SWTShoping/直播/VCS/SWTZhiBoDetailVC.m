@@ -450,6 +450,11 @@
 //发送消息
 - (void)sendMessage {
     
+    if ([self.dataModel.livegroupid isEqualToString:@"0"] ||  [[NSString stringWithFormat:@"%@",self.dataModel.livegroupid] isEqualToString:@"(null)"]) {
+        [SVProgressHUD showErrorWithStatus:@"直播间无效!"];
+        return;
+    }
+    
     V2TIMMessage * cusMsg = [[V2TIMManager sharedInstance] createCustomMessage:[@[@0,self.bottomV.TF.text] mj_JSONData]];
     
     
@@ -626,7 +631,7 @@
     [option setOptionValue:@1000 forKey:PLPlayerOptionKeyMaxL2BufferDuration];
     [option setOptionValue:@(NO) forKey:PLPlayerOptionKeyVideoToolbox];
     [option setOptionValue:@(kPLLogInfo) forKey:PLPlayerOptionKeyLogLevel];
-    NSURL *url = [NSURL URLWithString:self.dataModel.hlsurl];
+    NSURL *url = [NSURL URLWithString:self.dataModel.hdlurl];
     
     
     
@@ -721,7 +726,7 @@
  @since v1.0.0
  */
 - (void)player:(nonnull PLPlayer *)player stoppedWithError:(nullable NSError *)error{
-    NSLog(@"%@",error);
+    NSLog(@"error===%@",error);
     
     
 }

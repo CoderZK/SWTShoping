@@ -1897,6 +1897,7 @@
 			isa = PBXGroup;
 			children = (
 				666A53A824E7D3A500D75A08 /* VCS */,
+				667087D824E5723400EDA2C5 /* VCS */,
 				666A53A924E7D3A500D75A08 /* Views */,
 			);
 			path = "我的竞拍品";
@@ -2284,7 +2285,6 @@
 				666A53B924E8197300D75A08 /* 我的报表 */,
 				666A53A724E7D3A500D75A08 /* 我的竞拍品 */,
 				666A53A424E7D2E800D75A08 /* 我的订单 */,
-				667087D824E5723400EDA2C5 /* VCS */,
 				667087D924E5723400EDA2C5 /* Views */,
 			);
 			path = "卖家我的";
@@ -2315,7 +2315,8 @@
 				66700CC124EB5AEA00442C1D /* SWTMJAddYouHuiQuanTVC.h */,
 				66700CC224EB5AEA00442C1D /* SWTMJAddYouHuiQuanTVC.m */,
 			);
-			path = VCS;
+			name = VCS;
+			path = ../VCS;
 			sourceTree = "<group>";
 		};
 		667087D924E5723400EDA2C5 /* Views */ = {

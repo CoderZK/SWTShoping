@@ -356,7 +356,9 @@
         if ([responseObject[@"code"] intValue]== 200) {
             NSString * status = [NSString stringWithFormat:@"%@",responseObject[@"data"][@"status"]];
             if (status.intValue == 1) {
-                [SVProgressHUD showErrorWithStatus:@"直播未申请"];
+                SWTMJShenQingZhiBoVC * vc =[[SWTMJShenQingZhiBoVC alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
             }else if (status.intValue == 2) {
                 [SVProgressHUD showErrorWithStatus:@"直播间等待审核中"];
             }else if (status.intValue == 3) {

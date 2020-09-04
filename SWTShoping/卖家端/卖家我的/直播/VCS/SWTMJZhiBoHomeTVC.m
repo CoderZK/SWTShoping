@@ -9,8 +9,10 @@
 #import "SWTMJZhiBoHomeTVC.h"
 #import "SWTMineFaBuOneCell.h"
 #import "SWTMJAddZhiBoShangPinTVC.h"
+#import "SWTMJShenQingZhiBoVC.h"
 @interface SWTMJZhiBoHomeTVC ()
-
+@property(nonatomic , assign)NSInteger  index;
+@property(nonatomic , strong)NSString *liveID;
 @end
 
 @implementation SWTMJZhiBoHomeTVC
@@ -44,12 +46,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.row == 0) {
-        
-    }else {
-       
-        [self checkRoom];
-    }
+    self.index = indexPath.row;
+      [self checkRoom];
+    
     
 }
 
@@ -66,15 +65,29 @@
         if ([responseObject[@"code"] intValue]== 200) {
             NSString * status = [NSString stringWithFormat:@"%@",responseObject[@"data"][@"status"]];
             if (status.intValue == 1) {
-                [SVProgressHUD showErrorWithStatus:@"直播未申请"];
+            
+                
+                SWTMJShenQingZhiBoVC * vc =[[SWTMJShenQingZhiBoVC alloc] init];
+                               vc.hidesBottomBarWhenPushed = YES;
+                               [self.navigationController pushViewController:vc animated:YES];
+                
             }else if (status.intValue == 2) {
                 [SVProgressHUD showErrorWithStatus:@"直播等待审核中"];
             }else if (status.intValue == 3) {
                 
-                SWTMJAddZhiBoShangPinTVC * vc =[[SWTMJAddZhiBoShangPinTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-                vc.hidesBottomBarWhenPushed = YES;
-                vc.liveid = responseObject[@"data"][@"liveid"];
-                [self.navigationController pushViewController:vc animated:YES];
+                if (self.index == 0) {
+                    
+                    self.liveID = [NSString stringWithFormat:@"%@",responseObject[@"data"][@"liveid"]];
+                                   [self upDateLive];
+                    
+                }else {
+                    SWTMJAddZhiBoShangPinTVC * vc =[[SWTMJAddZhiBoShangPinTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    vc.liveid = responseObject[@"data"][@"liveid"];
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+                
+                
             }else if (status.intValue == 4) {
                 [SVProgressHUD showErrorWithStatus:@"直播间被禁用"];
             }
@@ -94,5 +107,38 @@
 
 }
 
+- (void)upDateLive {
+    
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"id"] = [zkSignleTool shareTool].selectShopID;
+    dict[@"type"] = @1;
+    [zkRequestTool networkingPOST:merchliveUpd_live_status_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        self.tableView.userInteractionEnabled = YES;
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+
+            SWTModel * model = [[SWTModel alloc] init];
+            model.ID =  self.liveID;
+            SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            vc.model = model;
+            vc.isTuiLiu = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        self.tableView.userInteractionEnabled = YES;
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+
+    
+}
 
 @end

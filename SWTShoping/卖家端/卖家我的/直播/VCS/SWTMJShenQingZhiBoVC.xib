@@ -19,7 +19,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bbdyx33" translatesAutoresizingMaskIntoConstraints="NO" id="oFX-XT-hbq">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dyx81" translatesAutoresizingMaskIntoConstraints="NO" id="oFX-XT-hbq">
                     <rect key="frame" x="0.0" y="44" width="414" height="200"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="200" id="nlj-gC-P4a"/>
@@ -106,7 +106,7 @@
     </objects>
     <resources>
         <image name="bbdyx27" width="308" height="41.5"/>
-        <image name="bbdyx33" width="375" height="211.5"/>
         <image name="bbdyx52" width="8" height="5.5"/>
+        <image name="dyx81" width="376" height="214"/>
     </resources>
 </document>

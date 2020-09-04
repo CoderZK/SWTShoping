@@ -78,6 +78,11 @@
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             
+            [SVProgressHUD showSuccessWithStatus:@"申请直播开通成功,请耐心等待审核"];
+
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
             
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
