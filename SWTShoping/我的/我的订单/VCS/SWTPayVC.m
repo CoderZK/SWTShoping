@@ -161,7 +161,13 @@
         
         [UMSPPPayUnifyPayPlugin payWithPayChannel:CHANNEL_ALIPAY payData:self.payDataJsonStr callbackBlock:^(NSString *resultCode, NSString *resultInfo) {
             if ([resultCode isEqualToString:@"1003"]) {
-                
+                [SVProgressHUD showErrorWithStatus:@"用户未安装客户端"];
+            }else if ([resultCode isEqualToString:@"0000"]) {
+                SWTPaySucessVC * vc =[[SWTPaySucessVC alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                vc.orderID = self.orderID;
+                vc.priceStr = self.priceStr;
+                [self.navigationController pushViewController:vc animated:YES];
             }
         }];
     }else {
@@ -169,9 +175,13 @@
         [UMSPPPayUnifyPayPlugin cloudPayWithURLSchemes:@"unifyPayDemo" payData:self.payDataJsonStr
         viewController:self
          callbackBlock:^(NSString *resultCode, NSString *resultInfo) {
-            
-            
-            
+            if ([resultCode isEqualToString:@"0000"]) {
+                SWTPaySucessVC * vc =[[SWTPaySucessVC alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                vc.orderID = self.orderID;
+                vc.priceStr = self.priceStr;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
          }];
         
     }

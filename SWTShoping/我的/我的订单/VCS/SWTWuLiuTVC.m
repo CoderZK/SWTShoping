@@ -39,6 +39,9 @@
     
 }
 
+
+
+
 - (void)getData {
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
@@ -72,6 +75,9 @@
         
     }];
 }
+
+
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataArray.count;

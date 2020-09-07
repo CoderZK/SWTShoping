@@ -3544,10 +3544,10 @@
 					"$(PROJECT_DIR)/SWTShoping/支付SDK/ThirdPartyPaySDK/UMSPosPayOnly",
 					"$(PROJECT_DIR)/SWTShoping/支付SDK/ThirdPartyPaySDK/WeChat",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zk.SWTShoping;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wink.livemall;
 				PRODUCT_NAME = "滴雨轩";
 				PROVISIONING_PROFILE = "3bdcf4b3-e396-4d7a-ab2b-739f2269ddaa";
-				PROVISIONING_PROFILE_SPECIFIER = swtcomxxxx;
+				PROVISIONING_PROFILE_SPECIFIER = shopLiveDev;
 				SWIFT_OBJC_BRIDGING_HEADER = "SWTShoping/SWTShoping-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -3587,9 +3587,9 @@
 					"$(PROJECT_DIR)/SWTShoping/支付SDK/ThirdPartyPaySDK/UMSPosPayOnly",
 					"$(PROJECT_DIR)/SWTShoping/支付SDK/ThirdPartyPaySDK/WeChat",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zk.SWTShoping;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wink.livemall;
 				PRODUCT_NAME = "滴雨轩";
-				PROVISIONING_PROFILE_SPECIFIER = swtcomxxxx;
+				PROVISIONING_PROFILE_SPECIFIER = shopLiveDev;
 				SWIFT_OBJC_BRIDGING_HEADER = "SWTShoping/SWTShoping-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

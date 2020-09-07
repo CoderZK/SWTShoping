@@ -310,10 +310,10 @@
                 [SVProgressHUD showSuccessWithStatus:@"取消关注店铺"];
                 self.dataModel.isfollow = @"no";
             }
-            if ([self.dataModel.isfollow isEqualToString:@"no"]) {
-                [self.headView.guanZhuBt setBackgroundImage:[UIImage imageNamed:@"Focus"] forState:UIControlStateNormal];
-            }else {
+            if ([self.dataModel.isfollow isEqualToString:@"yes"]) {
                 [self.headView.guanZhuBt setBackgroundImage:[UIImage imageNamed:@"dyx24"] forState:UIControlStateNormal];
+            }else {
+                [self.headView.guanZhuBt setBackgroundImage:[UIImage imageNamed:@"Focus"] forState:UIControlStateNormal];
             }
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];

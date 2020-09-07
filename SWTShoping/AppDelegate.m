@@ -25,7 +25,7 @@
 #define QQAppID @"1104758682"
 #define QQAppKey @"h97lgfazyRUzXJKy"
 #define TXIMAPPID 1400404340
-
+#define ppppppid @"1475345979444"
 
 
 
@@ -40,7 +40,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    
+    [PLStreamingEnv initEnv];
     [UMSPPPayPluginSettings sharedInstance].umspEnviroment = UMSP_TEST;
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -48,7 +48,8 @@
     [self.window makeKeyAndVisible];
     self.window.backgroundColor = BackgroundColor;
     
-    [PLStreamingEnv initEnv];
+  
+    [self updateNewAppWith:ppppppid];
     
     IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
        manager.enable = YES;
@@ -480,6 +481,61 @@
     //发送一个通知
     [[NSNotificationCenter defaultCenter] postNotificationName:@"WXPAY" object:resp];
 }
+
+
+- (void)updateNewAppWith:(NSString *)strOfAppid {
+    
+
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",strOfAppid]];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url];
+    [request setHTTPMethod:@"POST"];
+    
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request
+                                     completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        [SVProgressHUD dismiss];
+        if (data)
+        {
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            
+            if (dic)
+            {
+                NSArray * arr = [dic objectForKey:@"results"];
+                if (arr.count>0)
+                {
+                    NSDictionary * versionDict = arr.firstObject;
+                    
+                    NSString * version = [[versionDict objectForKey:@"version"] stringByReplacingOccurrencesOfString:@"." withString:@""];
+                    NSString * currentVersion = [[[NSBundle mainBundle].infoDictionary objectForKey:@"CFBundleShortVersionString"] stringByReplacingOccurrencesOfString:@"." withString:@""];
+                    
+                    if ([version integerValue]>[currentVersion integerValue])
+                    {
+                        
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"发现新版本" message:nil preferredStyle:UIAlertControllerStyleAlert];
+                            
+                            [alert addAction:[UIAlertAction actionWithTitle:@"更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                                
+                                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/cn/app/id%@?mt=8",strOfAppid]]];
+                                exit(0);
+                                
+                            }]];
+                            [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:nil];
+                        });
+                        
+                    }else {
+                        [SVProgressHUD showSuccessWithStatus:@"目前安装的已是最新版本"];
+                    }
+                    
+                    
+                }
+            }
+        }
+    }] resume];
+    
+    
+}
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {

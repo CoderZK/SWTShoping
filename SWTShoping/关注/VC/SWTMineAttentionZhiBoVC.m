@@ -147,10 +147,23 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
-    vc.hidesBottomBarWhenPushed = YES;
-    vc.model = self.dataArray[indexPath.row];
-    [self.navigationController pushViewController:vc animated:YES];
+    if  (self.isMineZuJi) {
+        
+        SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.goodID = self.dataArray[indexPath.row].ID;
+        [self.navigationController pushViewController:vc animated:YES];
+        
+        
+        
+    }else {
+        SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
+           vc.hidesBottomBarWhenPushed = YES;
+           vc.model = self.dataArray[indexPath.row];
+           [self.navigationController pushViewController:vc animated:YES];
+    }
+    
+   
 }
 
 

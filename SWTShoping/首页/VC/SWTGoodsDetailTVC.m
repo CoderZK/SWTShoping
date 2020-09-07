@@ -614,8 +614,10 @@
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             
-            [self getNewPirceAndAc];
-            
+            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"您出价:%@ 成功",@(self.zuiXinPrice.doubleValue + self.dataModel.stepprice.doubleValue)]];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self getNewPirceAndAc];
+            });
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }

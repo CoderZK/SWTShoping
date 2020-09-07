@@ -40,6 +40,7 @@
 
 //推流部分
 @property (nonatomic, strong) PLMediaStreamingSession *session;
+
 //播流部分
 @property (nonatomic, strong) PLPlayer  *player;
 
@@ -61,6 +62,14 @@
         [self upDateLive];
     }else {
         [self quitAVRoom];
+    }
+    if (self.player != nil) {
+        [self.player stop];
+        self.player = nil;
+    }
+    if (self.session != nil) {
+        [self.session stopStreaming];
+        self.session = nil;
     }
 }
 
@@ -91,10 +100,10 @@
     }];
     
     
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        self.comeInV.titleLB.text = @"欢迎134*****789进入直播间";
-//        [self.comeInV show];
-//    });
+    //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    //        self.comeInV.titleLB.text = @"欢迎134*****789进入直播间";
+    //        [self.comeInV show];
+    //    });
     
     
     //    self.huoDeShowView = [[SWTHuoDeShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
@@ -434,14 +443,14 @@
     } fail:^(int code, NSString *desc) {
         NSLog(@"%@",@"进入直播间失败");
     }];
-
+    
 }
 
 - (void)quitAVRoom{
     
     V2TIMManager * manager = [V2TIMManager sharedInstance];
     [manager quitGroup:self.dataModel.livegroupid succ:^{
-       NSLog(@"%@",@"退出直播间成功");
+        NSLog(@"%@",@"退出直播间成功");
     } fail:^(int code, NSString *desc) {
         NSLog(@"%@",@"退出直播间失败");
     }];
@@ -631,7 +640,7 @@
     [option setOptionValue:@1000 forKey:PLPlayerOptionKeyMaxL2BufferDuration];
     [option setOptionValue:@(NO) forKey:PLPlayerOptionKeyVideoToolbox];
     [option setOptionValue:@(kPLLogInfo) forKey:PLPlayerOptionKeyLogLevel];
-    NSURL *url = [NSURL URLWithString:self.dataModel.hdlurl];
+    NSURL *url = [NSURL URLWithString:self.dataModel.rtmpurl];
     
     
     
@@ -670,16 +679,44 @@
     [self.view addSubview:self.session.previewView];
     [self.view sendSubviewToBack:self.session.previewView];
     
-    
     NSURL *pushURL = [NSURL URLWithString:self.dataModel.pushurl];
     [self.session startStreamingWithPushURL:pushURL feedback:^(PLStreamStartStateFeedback feedback) {
         if (feedback == PLStreamStartStateSuccess) {
             NSLog(@"Streaming started.");
+            
+            NSLog(@"%@",@"44444444444444444444");
+            
         }
         else {
             NSLog(@"Oops.");
         }
     }];
+    
+//    
+//    [PLMediaStreamingSession checkAuthentication:^(PLAuthenticationResult result) {
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            NSString *message;
+//            switch (result) {
+//                case PLAuthenticationResultNotDetermined:
+//                    message = @"还未授权！";
+//                    break;
+//                case PLAuthenticationResultDenied:
+//                    message = @"授权失败！";
+//                    break;
+//                case PLAuthenticationResultAuthorized:{
+//                    message = @"授权成功！";
+//                    
+//                    
+//                }
+//                    break;
+//                default:
+//                    break;
+//            }
+//        });
+//    }];
+    
+    
+    
 }
 
 
@@ -775,12 +812,12 @@
     dict[@"id"] = self.dataModel.merchid;
     dict[@"type"] = @2;
     [zkRequestTool networkingPOST:merchliveUpd_live_status_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
-
+        
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-      
+        
         
     }];
-
+    
     
 }
 

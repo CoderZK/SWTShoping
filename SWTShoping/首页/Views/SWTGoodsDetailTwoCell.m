@@ -33,9 +33,9 @@
     _model = model;
     self.titleLB.text = model.name;
     if ([model.isfav isEqualToString:@"yes"]) {
-        [self.collectionBt setImage:[UIImage imageNamed:@"praise2"] forState:UIControlStateNormal];
-    }else {
         [self.collectionBt setImage:[UIImage imageNamed:@"praise1"] forState:UIControlStateNormal];
+    }else {
+        [self.collectionBt setImage:[UIImage imageNamed:@"praise2"] forState:UIControlStateNormal];
     }
     
     self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",[model.price getPriceAllStr]];

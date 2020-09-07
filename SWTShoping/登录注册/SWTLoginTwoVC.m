@@ -155,22 +155,23 @@
         [self loginAction];
     }else if (sender.tag == 101) {
         
-        SWTTuiLiuVC * vc =[[SWTTuiLiuVC alloc] init];
+//        SWTTuiLiuVC * vc =[[SWTTuiLiuVC alloc] init];
+//        vc.hidesBottomBarWhenPushed = YES;
+//        [self.navigationController pushViewController:vc animated:YES];
+        
+        SWTRegistVC * vc =[[SWTRegistVC alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
         
-//        SWTRegistVC * vc =[[SWTRegistVC alloc] init];
-//        vc.hidesBottomBarWhenPushed = YES;
-//        [self.navigationController pushViewController:vc animated:YES];
     }else if (sender.tag == 102) {
-        SWTBoLiuVC * vc =[[SWTBoLiuVC alloc] init];
-        vc.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:vc animated:YES];
-        
-//        SWTRegistVC * vc =[[SWTRegistVC alloc] init];
+//        SWTBoLiuVC * vc =[[SWTBoLiuVC alloc] init];
 //        vc.hidesBottomBarWhenPushed = YES;
-//        vc.isForgetPassword = YES;
 //        [self.navigationController pushViewController:vc animated:YES];
+        
+        SWTRegistVC * vc =[[SWTRegistVC alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.isForgetPassword = YES;
+        [self.navigationController pushViewController:vc animated:YES];
     }
     
 }

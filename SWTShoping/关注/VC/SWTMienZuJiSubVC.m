@@ -120,7 +120,10 @@
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     SWTGuanZhuCollectionCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"SWTGuanZhuCollectionCell" forIndexPath:indexPath];
+    self.dataArray[indexPath.row].goodprice = self.dataArray[indexPath.row].price;
+    self.dataArray[indexPath.row].goodimg = self.dataArray[indexPath.row].img;
     cell.model = self.dataArray[indexPath.row];
+    cell.leftTopImgV.hidden = cell.zhiBoZhongLB.hidden = YES;
     return cell;
     
 }
@@ -131,6 +134,11 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
+    
+    SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+    vc.hidesBottomBarWhenPushed = YES;
+    vc.goodID = self.dataArray[indexPath.row].ID;
+    [self.navigationController pushViewController:vc animated:YES];
     
 }
 
