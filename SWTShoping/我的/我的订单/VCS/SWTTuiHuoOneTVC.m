@@ -203,10 +203,15 @@
 }
 
 - (void)tuihuoActionOne {
+    if (self.TV.text.length == 0) {
+        [SVProgressHUD showErrorWithStatus:@"请输入退款描述"];
+        return;
+    }
     if (self.picArr.count > 0) {
         [self updateImage];
     }else {
-        [self tuihuoActionTwo];
+        [SVProgressHUD showErrorWithStatus:@"请添加图片"];
+        return;
     }
 }
 

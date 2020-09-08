@@ -53,7 +53,7 @@
             
             if (n == 1024) {
                 
-                [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:[[SWTLoginTwoVC alloc] init] animated:YES completion:nil];
+                [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:[[BaseNavigationController alloc] initWithRootViewController:[[SWTLoginTwoVC alloc] init]] animated:YES completion:nil];
                 
             }
 

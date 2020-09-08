@@ -606,7 +606,7 @@
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"goodid"]= self.goodID;
-    dict[@"price"] =@(self.zuiXinPrice.doubleValue + self.dataModel.stepprice.doubleValue);
+    dict[@"price"] = [NSString stringWithFormat:@"%0.2f",self.zuiXinPrice.doubleValue + self.dataModel.stepprice.doubleValue];;
     dict[@"userid"] = [zkSignleTool shareTool].session_uid;
     [zkRequestTool networkingPOST:goodOffer_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
@@ -614,7 +614,7 @@
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             
-            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"您出价:%@ 成功",@(self.zuiXinPrice.doubleValue + self.dataModel.stepprice.doubleValue)]];
+            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"您出价:%0.2f 成功",self.zuiXinPrice.doubleValue + self.dataModel.stepprice.doubleValue]];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self getNewPirceAndAc];
             });
