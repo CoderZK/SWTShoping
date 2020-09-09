@@ -14,6 +14,8 @@
     [super awakeFromNib];
     self.imgV.layer.cornerRadius = 3;
     self.imgV.clipsToBounds = YES;
+    self.redV.layer.cornerRadius = 2;
+    self.redV.clipsToBounds = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

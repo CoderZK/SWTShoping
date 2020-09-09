@@ -269,6 +269,15 @@
             [zkSignleTool shareTool].nickname = self.nickName;
             [self.tableView reloadData];
             
+            V2TIMUserFullInfo * info = [[V2TIMUserFullInfo alloc] init];
+            info.nickName = [zkSignleTool shareTool].nickname;
+            [[V2TIMManager sharedInstance] setSelfInfo:info succ:^{
+                NSLog(@"%@",@"1111");
+            } fail:^(int code, NSString *desc) {
+                 NSLog(@"%@",@"2222");
+            }];
+            
+            
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }

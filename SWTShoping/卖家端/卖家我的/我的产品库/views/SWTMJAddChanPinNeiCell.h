@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SWTMJAddChanPinNeiCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *leftLB;
 @property (weak, nonatomic) IBOutlet UIImageView *rightImgV;
+@property (weak, nonatomic) IBOutlet UIButton *leftBt;
 
 @end
 

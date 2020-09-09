@@ -21,7 +21,7 @@
 @property(nonatomic , strong)SWTAddChanPinHeadView *headV;
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *selectCangKuArr;
 @property(nonatomic , strong)NSMutableArray *picArr,*picStrArr;
-@property(nonatomic,assign)BOOL isBaoYou;
+@property(nonatomic,assign)BOOL isBaoYou,isPinMingSelectAll;
 @property(nonatomic , strong)SWTModel *dataModel;
 
 @end

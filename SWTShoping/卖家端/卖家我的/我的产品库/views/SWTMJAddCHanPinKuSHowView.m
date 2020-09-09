@@ -128,6 +128,8 @@
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SWTMJAddChanPinNeiCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     cell.leftLB.text = self.dataArray[indexPath.row].name;
+    cell.leftBt.tag = indexPath.row;
+    [cell.leftBt addTarget:self action:@selector(leftAction:) forControlEvents:UIControlEventTouchUpInside];
     cell.clipsToBounds = YES;
     return cell;
 }
@@ -180,6 +182,16 @@
     }
     
 }
+
+- (void)leftAction:(UIButton *)button {
+    SWTModel * model = self.dataArray[button.tag];
+    if (self.delegateSignal) {
+        [self.delegateSignal sendNext:@{@"idone":model.ID,@"idtwo":model.ID,@"name":model.name}];
+            [self dismiss];
+    }
+    
+}
+
 
 - (void)action:(UIButton *)button {
     if (self.delegateSignal) {

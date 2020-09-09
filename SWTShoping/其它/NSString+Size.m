@@ -789,6 +789,14 @@
     return time;
 }
 
++ (NSString *)getDateWithDate:(NSDate *)date {
+    NSDateFormatter* formater = [[NSDateFormatter alloc] init];
+       formater.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT+0800"];
+       [formater setDateFormat:@"yyyy-MM-dd HH:mm:ss"];//根据自己的需求定义格式
+    NSString *time = [formater stringFromDate:date];
+       return time;
+}
+
 + (NSTimeInterval)pleaseInsertEndTime:(NSString *)endTime {
     
    NSDateFormatter* formater = [[NSDateFormatter alloc] init];

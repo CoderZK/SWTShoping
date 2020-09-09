@@ -39,6 +39,8 @@
 //结束时间距当前时间的时间差 yyyy-MM-dd HH:mm:ss
 + (NSTimeInterval)pleaseInsertEndTime:(NSString *)endTime;
 
++ (NSString *)getDateWithDate:(NSDate *)date;
+
 /**
 获得字符串的大小
 */

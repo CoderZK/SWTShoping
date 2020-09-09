@@ -145,6 +145,15 @@
     } fail:^(int code, NSString *desc) {
         NSLog(@"%@",@"登录腾旭失败");
     }];
+    
+    V2TIMUserFullInfo * info = [[V2TIMUserFullInfo alloc] init];
+    info.nickName = [zkSignleTool shareTool].nickname;
+    
+    [[V2TIMManager sharedInstance] setSelfInfo:info succ:^{
+        
+    } fail:^(int code, NSString *desc) {
+        
+    }];
 }
 
 - (IBAction)clickAction:(UIButton *)sender {
