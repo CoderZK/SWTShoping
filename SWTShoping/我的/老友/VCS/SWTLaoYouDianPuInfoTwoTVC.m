@@ -19,6 +19,7 @@
 @property(nonatomic , strong)NSString *str1,*str2,*str3;
 @property(nonatomic , strong)NSString *imgStr1,*imgStr2,*imgStr3;
 @property(nonatomic , strong)UIImage *image;
+@property(nonatomic,assign)BOOL isGongSi;
 
 
 @end
@@ -187,6 +188,7 @@
       [button setBackgroundImage:[UIImage imageNamed:@"bg_href"] forState:UIControlStateNormal];
       button.layer.cornerRadius = 20;
       button.clipsToBounds = YES;
+ 
       [self.headView addSubview:button];
       
       @weakify(self);
@@ -225,18 +227,32 @@
         [SVProgressHUD showErrorWithStatus:@"请输入身份证号"];
         return;
     }
-    if (self.imgStr1.length == 0) {
-        [SVProgressHUD showErrorWithStatus:@"选择身份证正面照片"];
-        return;
+    
+    if (self.isGongSi) {
+        if (self.imgStr1.length == 0) {
+            [SVProgressHUD showErrorWithStatus:@"选择营业执照照片"];
+            return;
+        }
+        if (self.imgStr2.length == 0) {
+            [SVProgressHUD showErrorWithStatus:@"选择开户行照片"];
+            return;
+        }
+    }else {
+        if (self.imgStr1.length == 0) {
+            [SVProgressHUD showErrorWithStatus:@"选择身份证正面照片"];
+            return;
+        }
+        if (self.imgStr2.length == 0) {
+            [SVProgressHUD showErrorWithStatus:@"选择身份证反面照片"];
+            return;
+        }
+        if (self.imgStr3.length == 0) {
+            [SVProgressHUD showErrorWithStatus:@"选择手持身份证照片"];
+            return;
+        }
     }
-    if (self.imgStr2.length == 0) {
-        [SVProgressHUD showErrorWithStatus:@"选择身份证反面照片"];
-        return;
-    }
-    if (self.imgStr3.length == 0) {
-        [SVProgressHUD showErrorWithStatus:@"选择手持身份证照片"];
-        return;
-    }
+    
+    
     
     [self TwoSetpAction];
     
@@ -253,9 +269,15 @@
     dict[@"sellid"] = self.str3;
     dict[@"realname"] = self.shopNameV.rightTF.text;
     dict[@"idcard"] = self.shopNumberV.rightTF.text;
-    dict[@"idcard_front"] = self.imgStr1;
-    dict[@"idcard_back"] = self.imgStr2;
-    dict[@"idcard_hold"] = self.imgStr3;
+    if (self.isGongSi) {
+        dict[@"business_license"] = self.imgStr1;
+        dict[@"bank_account"] = self.imgStr2;
+    }else {
+        dict[@"idcard_front"] = self.imgStr1;
+        dict[@"idcard_back"] = self.imgStr2;
+        dict[@"idcard_hold"] = self.imgStr3;
+    }
+    
     [zkRequestTool networkingPOST:registerStep2_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         
         [SVProgressHUD dismiss];
@@ -347,6 +369,34 @@
     }else if (self.selectIndex == 1) {
         self.str2 = self.dataArrayOne[leftIndex].ID;
         self.shopOwnerV.rightTF.text = self.dataArrayOne[leftIndex].name;
+        if ([self.dataArrayOne[leftIndex].name isEqualToString:@"公司"]) {
+            self.isGongSi = YES;
+            self.zhengV.titleLB.text = @"请上传营业执照";
+            self.zhengV.rigthImgV.image = [UIImage imageNamed:@"dyx56"];
+            
+            self.fanV.titleLB.text = @"请上传开户行许可证";
+            self.fanV.rigthImgV.image = [UIImage imageNamed:@"dyx57"];
+            
+            
+            self.shouChiV.hidden = YES;
+            self.nextBt.mj_y = CGRectGetMaxY(self.fanV.frame) + 40;
+            self.headView.mj_h = CGRectGetMaxY(self.nextBt.frame) + 40;
+            
+        }else {
+            self.isGongSi = NO;
+            
+            self.zhengV.titleLB.text = @"请上传营业执照";
+            self.zhengV.rigthImgV.image = [UIImage imageNamed:@"dyx56"];
+            
+            self.fanV.titleLB.text = @"请上传开户行许可证";
+            self.fanV.rigthImgV.image = [UIImage imageNamed:@"dyx57"];
+            
+            self.shouChiV.hidden = NO;
+            self.nextBt.mj_y = CGRectGetMaxY(self.shouChiV.frame) + 40;
+            self.headView.mj_h = CGRectGetMaxY(self.nextBt.frame) + 40;
+            
+            
+        }
     }else if (self.selectIndex == 2) {
         self.str3 = self.dataArrayThree[leftIndex].ID;
         self.shopLeiV.rightTF.text = self.dataArrayThree[leftIndex].name;

@@ -44,6 +44,7 @@
     
     [self getData];
     
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -293,7 +294,7 @@
         }
     }
     
-    if (indexPath.section == 2) {
+    if (indexPath.section == 1) {
         if (self.dataModel.auctionlist.count == 0) {
             return 0;
         }else {
@@ -398,11 +399,6 @@
             return cell;
             
         }else if (indexPath.section == 1) {
-            SWTGoodsDetailThreeCell  * cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTGoodsDetailThreeCell" forIndexPath:indexPath];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.clipsToBounds = YES;
-            return cell;
-        }else if (indexPath.section == 2) {
             //出价列表
             SWTGoodsDetailFourCell  * cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTGoodsDetailFourCell" forIndexPath:indexPath];
             cell.clipsToBounds = YES;
@@ -420,7 +416,7 @@
                 
             }];
             return cell;
-        }else if (indexPath.section == 3) {
+        }else if (indexPath.section == 2) {
             //介绍
             SWTGoodsDetailFiveCell  *cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTGoodsDetailFiveCell" forIndexPath:indexPath];
             cell.clipsToBounds = YES;
@@ -428,7 +424,7 @@
             cell.model = self.dataModel;
             [cell.gaunzhuBt addTarget:self action:@selector(gaunZhuAction) forControlEvents:UIControlEventTouchUpInside];
             return cell;
-        }else {
+        }else if (indexPath.section == 3) {
             SWTGoodsDetailTableViewContentCollCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
             cell.dataArray = self.dataArray;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -436,15 +432,22 @@
             @weakify(self);
             [cell.delegateSignal subscribeNext:^(NSString * x) {
                 @strongify(self);
-                
+
                 SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
                 vc.hidesBottomBarWhenPushed = YES;
                 vc.isYiKouJia = YES;
                 vc.goodID = x;
                 [self.navigationController pushViewController:vc animated:YES];
-                
+
             }];
+             return cell;
+        }else {
+            SWTGoodsDetailThreeCell  * cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTGoodsDetailThreeCell" forIndexPath:indexPath];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.clipsToBounds = YES;
             return cell;
+            
+           
         }
     }
     

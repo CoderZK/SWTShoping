@@ -26,6 +26,11 @@
 
 @implementation SWTTiJiaoOrderTVC
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -49,7 +54,7 @@
     [self initBview];
     
     
-    [self getData];
+//    [self getData];
    
    
     

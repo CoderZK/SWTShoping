@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -17,19 +17,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="441" height="189"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" tag="102" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8I7-2x-6mF">
-                        <rect key="frame" x="10" y="139" width="421" height="40"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="40" id="wD5-mG-R7z"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <state key="normal" title="出价" backgroundImage="rbg"/>
-                        <connections>
-                            <action selector="clickAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="eCW-lT-RyP"/>
-                        </connections>
-                    </button>
                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Zz-LB-lZe">
-                        <rect key="frame" x="10" y="0.0" width="421" height="129"/>
+                        <rect key="frame" x="10" y="0.0" width="421" height="114"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5YI-F4-24e">
                                 <rect key="frame" x="66.5" y="59" width="33" height="16"/>
@@ -117,12 +106,12 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="GZn-at-hcm" firstAttribute="leading" secondItem="d8L-ur-4DG" secondAttribute="leading" id="1Yh-d3-ezA"/>
-                            <constraint firstAttribute="bottom" secondItem="HNu-AF-Gun" secondAttribute="bottom" constant="10" id="2Ri-F3-7IR"/>
                             <constraint firstAttribute="trailing" secondItem="pRD-eA-i6U" secondAttribute="trailing" constant="5" id="8c4-6h-5kQ"/>
                             <constraint firstItem="9dz-cr-Muc" firstAttribute="trailing" secondItem="pRD-eA-i6U" secondAttribute="trailing" id="Btx-IB-Ksu"/>
                             <constraint firstItem="HNu-AF-Gun" firstAttribute="leading" secondItem="cwc-P8-uoq" secondAttribute="leading" id="Inz-8V-Qxh"/>
                             <constraint firstItem="cwc-P8-uoq" firstAttribute="leading" secondItem="GZn-at-hcm" secondAttribute="leading" id="JyD-dj-HqD"/>
                             <constraint firstItem="9dz-cr-Muc" firstAttribute="centerY" secondItem="GZn-at-hcm" secondAttribute="centerY" id="KgD-Xg-Hev"/>
+                            <constraint firstAttribute="bottom" secondItem="HNu-AF-Gun" secondAttribute="bottom" id="Lv1-UB-nqG"/>
                             <constraint firstItem="d8L-ur-4DG" firstAttribute="top" secondItem="0Zz-LB-lZe" secondAttribute="top" constant="10" id="Tao-hm-sTp"/>
                             <constraint firstItem="A1B-cb-Igc" firstAttribute="centerY" secondItem="HNu-AF-Gun" secondAttribute="centerY" id="Tdv-KW-ehy"/>
                             <constraint firstItem="GZn-at-hcm" firstAttribute="top" secondItem="d8L-ur-4DG" secondAttribute="bottom" constant="8" id="V9F-Kq-J4S"/>
@@ -137,18 +126,14 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="8I7-2x-6mF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="0Cw-Aa-z8M"/>
-                    <constraint firstAttribute="trailing" secondItem="8I7-2x-6mF" secondAttribute="trailing" constant="10" id="KqH-aJ-4Ka"/>
-                    <constraint firstItem="8I7-2x-6mF" firstAttribute="top" secondItem="0Zz-LB-lZe" secondAttribute="bottom" constant="10" id="N9u-T8-1Kk"/>
                     <constraint firstAttribute="trailing" secondItem="0Zz-LB-lZe" secondAttribute="trailing" constant="10" id="NAV-fk-pKJ"/>
-                    <constraint firstAttribute="bottom" secondItem="8I7-2x-6mF" secondAttribute="bottom" id="SvR-1W-pYE"/>
                     <constraint firstItem="0Zz-LB-lZe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="iMF-Yt-P4T"/>
+                    <constraint firstAttribute="bottom" secondItem="0Zz-LB-lZe" secondAttribute="bottom" constant="10" id="mF0-3S-yN3"/>
                     <constraint firstItem="0Zz-LB-lZe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="v30-Oa-cq3"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
-                <outlet property="chujiaBt" destination="8I7-2x-6mF" id="gPw-H0-znB"/>
                 <outlet property="collectionBt" destination="9dz-cr-Muc" id="wWP-nm-LUP"/>
                 <outlet property="desLB" destination="HNu-AF-Gun" id="tHh-1X-fYJ"/>
                 <outlet property="moneyLB" destination="5YI-F4-24e" id="c2J-3W-s6R"/>
@@ -162,7 +147,6 @@
     </objects>
     <resources>
         <image name="collection" width="15" height="14"/>
-        <image name="rbg" width="63" height="20.5"/>
         <image name="refresh" width="32" height="12.5"/>
     </resources>
 </document>

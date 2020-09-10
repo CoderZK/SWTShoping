@@ -178,7 +178,7 @@
         vc.model = model;
         [self.navigationController pushViewController:vc animated:YES];
         
-    }else if (model.status.intValue == 6) {
+    }else if ([button.titleLabel.text containsString:@"售后"]) {
         SWTTiJiaoTuiHuoTwoTVC * vc =[[SWTTiJiaoTuiHuoTwoTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
         vc.hidesBottomBarWhenPushed = YES;
         vc.model = model;
@@ -211,10 +211,21 @@
 //点击售后
 - (void)rightThreeAction:(UIButton *)button {
     
-    SWTTuiHuoOneTVC * vc =[[SWTTuiHuoOneTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-    vc.hidesBottomBarWhenPushed = YES;
-    vc.model = self.dataArray[button.tag];
-    [self.navigationController pushViewController:vc animated:YES];
+    SWTModel * model = self.dataArray[button.tag];
+    
+    if (model.backstatus.intValue == 1) {
+        SWTTiJiaoTuiHuoTwoTVC * vc =[[SWTTiJiaoTuiHuoTwoTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+           vc.hidesBottomBarWhenPushed = YES;
+           vc.model = self.dataArray[button.tag];
+           [self.navigationController pushViewController:vc animated:YES];
+    }else {
+        SWTTuiHuoOneTVC * vc =[[SWTTuiHuoOneTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+           vc.hidesBottomBarWhenPushed = YES;
+           vc.model = self.dataArray[button.tag];
+           [self.navigationController pushViewController:vc animated:YES];
+    }
+    
+   
     
     
 }

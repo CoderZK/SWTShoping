@@ -94,11 +94,11 @@
 
 - (void)setDataArray:(NSMutableArray<SWTModel *> *)dataArray {
     _dataArray = dataArray;
-    
+    self.collectionView.mj_h = 0;
     [self.collectionView reloadData];
     [self.collectionView layoutIfNeeded];
     [self.collectionView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.mas_equalTo(self.collectionView.collectionViewLayout.collectionViewContentSize.height + 40);
+        make.height.mas_equalTo(self.collectionView.collectionViewLayout.collectionViewContentSize.height+40);
     }];
     if (dataArray.count == 0) {
         self.lb.hidden = YES;

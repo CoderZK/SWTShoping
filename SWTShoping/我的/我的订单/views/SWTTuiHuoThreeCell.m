@@ -54,11 +54,10 @@
         }else if (model.backstatus.intValue == 2) {
             [self.leftBt setTitle:@"已完成" forState:UIControlStateNormal];
         }
-    }else {
+    } else {
         
         self.riCons.constant = 15;
         self.wdCons.constant = 90;
-        
         self.leftBt.hidden = YES;
        if (model.backstatus.intValue == -1) {
             [self.rightBt setTitle:@"失败" forState:UIControlStateNormal];
