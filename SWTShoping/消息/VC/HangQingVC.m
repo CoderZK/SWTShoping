@@ -154,11 +154,10 @@
         cell.contentLB.text = model.content;
         if (model.type.intValue == 2) {
             cell.nameLB.text = @"系统消息";
-            cell.imgV.image = [UIImage imageNamed:@"369"];
         }else {
             cell.nameLB.text = model.site_name;
-            [cell.imgV sd_setImageWithURL:[model.logo getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
         }
+        [cell.imgV sd_setImageWithURL:[model.logo getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
         cell.redV.hidden = YES;
     }else {
         V2TIMConversation * conVerSation = self.ListArr[indexPath.row];
@@ -186,6 +185,36 @@
     
 }
 
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+        return NO;
+    }
+    return YES;
+}
+
+-(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return UITableViewCellEditingStyleDelete;
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return @"删除";
+}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(editingStyle == UITableViewCellEditingStyleDelete){
+       
+        [[V2TIMManager sharedInstance] deleteConversation:self.ListArr[indexPath.row].conversationID succ:^{
+            [self.ListArr removeObjectAtIndex:indexPath.row];
+            [self.tableView reloadData];
+        } fail:^(int code, NSString *desc) {
+            
+        }];
+     
+        
+    }
+}
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 70;
 }
@@ -203,9 +232,16 @@
         
         TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:conVerSation.userID];
         TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
-        vc.navigationItem.title = conVerSation.showName;
+        vc.navigationItem.title = conVerSation.lastMessage.nickName;
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
+        
+        
+//        TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:conVerSation.conversationID];
+//        TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
+//        vc.navigationItem.title = conVerSation.lastMessage.nickName;
+//        vc.hidesBottomBarWhenPushed = YES;
+//        [self.navigationController pushViewController:vc animated:YES];
         
     }
     

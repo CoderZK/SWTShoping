@@ -88,11 +88,11 @@
     cell.contentLB.text = model.content;
     if (model.type.intValue == 2) {
         cell.nameLB.text = @"系统消息";
-        cell.imgV.image = [UIImage imageNamed:@"369"];
     }else {
         cell.nameLB.text = model.site_name;
-        [cell.imgV sd_setImageWithURL:[model.logo getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+       
     }
+     [cell.imgV sd_setImageWithURL:[model.logo getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
     return cell;
 }
 

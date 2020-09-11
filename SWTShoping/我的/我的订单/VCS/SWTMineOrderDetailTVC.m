@@ -323,12 +323,12 @@
             vc.hidesBottomBarWhenPushed = YES;
             vc.ID = model.ID;
             [self.navigationController pushViewController:vc animated:YES];
-        }else if ([button.titleLabel.text containsString:@"退款"]) {
+        }else if ([button.titleLabel.text isEqualToString:@"退款"] || [button.titleLabel.text containsString:@"完成"]) {
             //退款
-//            [self caozuoWithID:self.ID withType:2];
             [self mjTuiKuanAction];
-        }else if ([button.titleLabel.text containsString:@"同意买家退货"]) {
-            
+        }else if ([button.titleLabel.text containsString:@"同意退货退款"]) {
+            //退货退款的先同意
+            [self caozuoWithID:self.ID withType:2];
         }
     }else {
 

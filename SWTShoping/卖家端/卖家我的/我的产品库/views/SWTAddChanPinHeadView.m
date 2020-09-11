@@ -99,7 +99,12 @@
         self.picV.showsHorizontalScrollIndicator = NO;
         [self addSubview:self.picV];
         
-        self.HHHH = CGRectGetMaxY(self.picV.frame) + 10;
+        UILabel * lbd  =[[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.picV.frame) + 10, ScreenW - 30, 32)];
+        lbd.font = kFont(13);
+        lbd.numberOfLines = 2;
+        lbd.text = @"第一张是商品主图建议比例1:1, 后面的是商品的轮播图建议比例4:3";
+        [self addSubview:lbd];
+        self.HHHH = CGRectGetMaxY(lbd.frame) + 10;
         
     }
     self.backgroundColor = WhiteColor;

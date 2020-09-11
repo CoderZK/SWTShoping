@@ -402,7 +402,17 @@
         if (self.status.intValue == 0 || self.status.intValue == 1) {
             self.rightTwoBt.hidden = self.rightOneBt.hidden = NO;
             [self.rightOneBt setTitle:@" 拒绝 " forState:UIControlStateNormal];
-            [self.rightTwoBt setTitle:@" 退款 " forState:UIControlStateNormal];
+            if (mjModel.type.intValue == 1) {
+                [self.rightTwoBt setTitle:@"退款" forState:UIControlStateNormal];
+            }else {
+                if (mjModel.sn.length > 0) {
+                    [self.rightTwoBt setTitle:@" 完成 " forState:UIControlStateNormal];
+                }else {
+                   [self.rightTwoBt setTitle:@" 同意退货退款 " forState:UIControlStateNormal];
+                }
+                
+            }
+            
         }
     }else {
         
@@ -508,7 +518,7 @@
                     }else {
                         self.rightOneBt.hidden =  NO;
                         [self.rightOneBt setTitle:@" 查看物流 " forState:UIControlStateNormal];
-                        [self.rightTwoBt setTitle:@" 退款 " forState:UIControlStateNormal];
+                        [self.rightTwoBt setTitle:@"退款" forState:UIControlStateNormal];
                         self.rightThreeBt.hidden = YES;
                         [self.rightThreeBt mas_updateConstraints:^(MASConstraintMaker *make) {
                             make.right.equalTo(self.rightOneBt.mas_left).offset(-15);

@@ -177,8 +177,8 @@
         [SVProgressHUD showErrorWithStatus:@"请输入产品描述"];
         return;
     }
-    if (self.headV.picArr.count == 0) {
-        [SVProgressHUD showErrorWithStatus:@"请至少选择一张图片"];
+    if (self.headV.picArr.count < 1) {
+        [SVProgressHUD showErrorWithStatus:@"请至少选择一张商品主图和一张商品轮播图"];
         return;;
     }
     
@@ -247,7 +247,9 @@
     dict[@"warehouse"] = [arrOne componentsJoinedByString:@","];
     dict[@"productprice"] = self.diJiaStr;
     dict[@"freeshipping"] = self.isBaoYou?@"1":@"0";
-    dict[@"thumbs"] = [self.picStrArr componentsJoinedByString:@","];
+    NSArray * arrImgs  = [self.picStrArr subarrayWithRange:NSMakeRange(1, self.picArr.count - 1)];
+    dict[@"thumbs"] = [arrImgs componentsJoinedByString:@","];
+    dict[@"thumbs"] = [self.picStrArr firstObject];
     dict[@"weight"] = self.headV.weightV.TF.text;
     dict[@"stepprice"] = self.jiaJiaStr;
     
