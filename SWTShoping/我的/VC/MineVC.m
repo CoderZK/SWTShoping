@@ -132,6 +132,7 @@
                 return;
             }
             [zkSignleTool shareTool].nickname = responseObject[@"data"][@"nickname"];
+            NSString * str = [zkSignleTool shareTool].nickname;
             [zkSignleTool shareTool].level =  responseObject[@"data"][@"levelcode"];
             [zkSignleTool shareTool].avatar = responseObject[@"data"][@"headimg"];
             self.userDataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
@@ -291,6 +292,7 @@
                 }else if (index == 5) {
                     SWTMineZiLiaoVC * vc =[[SWTMineZiLiaoVC alloc] init];
                     vc.hidesBottomBarWhenPushed = YES;
+                    vc.genderStr = self.userDataModel.gender;
                     [self.navigationController pushViewController:vc animated:YES];
                 }else if (index == 6) {
                     SWTChengZhangShowView * chengzhangV = [[SWTChengZhangShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];

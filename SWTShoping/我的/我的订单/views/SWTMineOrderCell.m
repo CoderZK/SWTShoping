@@ -402,7 +402,7 @@
         if (self.status.intValue == 0 || self.status.intValue == 1) {
             self.rightTwoBt.hidden = self.rightOneBt.hidden = NO;
             [self.rightOneBt setTitle:@" 拒绝 " forState:UIControlStateNormal];
-            if (mjModel.type.intValue == 1) {
+            if (mjModel.refundtype.intValue == 1) {
                 [self.rightTwoBt setTitle:@"退款" forState:UIControlStateNormal];
             }else {
                 if (mjModel.sn.length > 0) {

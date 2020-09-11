@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTMineZiLiaoVC : BaseTableViewController
 @property(nonatomic , strong)NSString *genderStr;
+@property(nonatomic,strong)NSString  *faceStr;
 @end
 
 NS_ASSUME_NONNULL_END

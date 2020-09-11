@@ -167,8 +167,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *livegroupid;//聊天室room id
 @property(nonatomic,strong)NSString *pushurl;//推流地址
 @property(nonatomic,strong)NSString *commentstatus;
-//@property(nonatomic,strong)NSString *rtmpurl;
-//@property(nonatomic,strong)NSString *rtmpurl;
+@property(nonatomic,strong)NSString *gender;
+@property(nonatomic,strong)NSString *refundtype;
 //@property(nonatomic,strong)NSString *rtmpurl;
 //@property(nonatomic,strong)NSString *rtmpurl;
 @property(nonatomic,strong)NSArray *refundImgs;

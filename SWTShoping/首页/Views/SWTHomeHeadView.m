@@ -29,10 +29,10 @@
         self.whiteV = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.imgV.frame), ScreenW, 130)];
         [self addSubview:self.whiteV];
         
-        self.sdView = [[SDCycleScrollView alloc] initWithFrame:CGRectMake(15 ,sstatusHeight + 44 + 10 , ScreenW - 30 , (ScreenW - 30) / 345 * 150)];
+        self.sdView = [[SDCycleScrollView alloc] initWithFrame:CGRectMake(0 ,sstatusHeight + 44 + 10 , ScreenW  , (ScreenW) / 345 * 150)];
         self.sdView.delegate = self;
-        self.sdView.layer.cornerRadius = 5;
-        self.sdView.clipsToBounds = YES;
+//        self.sdView.layer.cornerRadius = 5;
+//        self.sdView.clipsToBounds = YES;
         self.sdView.pageControlDotSize = CGSizeMake(3, 3);
         self.sdView.currentPageDotColor = [UIColor orangeColor];
         self.sdView.pageDotColor = WhiteColor;

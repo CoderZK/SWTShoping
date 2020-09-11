@@ -270,8 +270,8 @@
 
 - (void)setheadViewVV{
     
-    self.collectionView.contentInset = UIEdgeInsetsMake(sstatusHeight + 44 + 10 + (ScreenW - 30) / 345 * 150 +110 ,0, 0, 0);
-    self.headView = [[SWTHomeHeadView alloc] initWithFrame:CGRectMake(0, -( sstatusHeight + 44 + 10 + (ScreenW - 30) / 345 * 150 +110), ScreenW, sstatusHeight + 44 + 10 + (ScreenW - 30) / 345 * 150 +110)];
+    self.collectionView.contentInset = UIEdgeInsetsMake(sstatusHeight + 44 + 10 + (ScreenW) / 345 * 150 +110 ,0, 0, 0);
+    self.headView = [[SWTHomeHeadView alloc] initWithFrame:CGRectMake(0, -( sstatusHeight + 44 + 10 + (ScreenW ) / 345 * 150 +110), ScreenW, sstatusHeight + 44 + 10 + (ScreenW ) / 345 * 150 +110)];
     self.headView.delegate = self;
     self.headView.sdView.delegate = self;
     [self.collectionView addSubview:self.headView];;
@@ -474,7 +474,7 @@
     CGFloat HH = 130 ;
     
     
-   CGFloat yy = -(sstatusHeight + 44 + 10 + (ScreenW - 30) / 345 * 150 +110 + 88*2);
+   CGFloat yy = -(sstatusHeight + 44 + 10 + (ScreenW) / 345 * 150 +110 + 88*2);
     
     CGFloat offsetY = point.y;
     

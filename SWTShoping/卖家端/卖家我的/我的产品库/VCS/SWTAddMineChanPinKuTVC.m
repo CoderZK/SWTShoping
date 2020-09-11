@@ -17,11 +17,13 @@
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *pingMingArr;
 @property(nonatomic , strong)NSMutableArray<SWTModel *>*caiZhiArr,*chanPinKuArr;
 @property(nonatomic , assign)NSInteger  selectIndex;
-@property(nonatomic , strong)NSString *typeStr,*OneID,*twoID,*caiZHiID;
+@property(nonatomic , strong)NSString *typeStr,*OneID,*twoID,*caiZHiID,*thumbStr;
 @property(nonatomic , strong)SWTAddChanPinHeadView *headV;
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *selectCangKuArr;
 @property(nonatomic , strong)NSMutableArray *picArr,*picStrArr;
-@property(nonatomic,assign)BOOL isBaoYou,isPinMingSelectAll;
+@property(nonatomic,assign)BOOL isBaoYou,isPinMingSelectAll,isAddThumbPic;
+@property(nonatomic,strong)UIImage *thumbImge;
+
 @property(nonatomic , strong)SWTModel *dataModel;
 
 @end
@@ -177,8 +179,12 @@
         [SVProgressHUD showErrorWithStatus:@"请输入产品描述"];
         return;
     }
-    if (self.headV.picArr.count < 1) {
-        [SVProgressHUD showErrorWithStatus:@"请至少选择一张商品主图和一张商品轮播图"];
+    if (self.thumbStr.length == 0) {
+        [SVProgressHUD showErrorWithStatus:@"请选择商品主图"];
+        return;
+    }
+    if (self.headV.picArr.count == 0) {
+        [SVProgressHUD showErrorWithStatus:@"请至少选择一张图片"];
         return;;
     }
     
@@ -217,7 +223,7 @@
             return;
         }
     }
-    
+    self.isAddThumbPic = NO;
     [self updateImage];
 }
 
@@ -247,9 +253,8 @@
     dict[@"warehouse"] = [arrOne componentsJoinedByString:@","];
     dict[@"productprice"] = self.diJiaStr;
     dict[@"freeshipping"] = self.isBaoYou?@"1":@"0";
-    NSArray * arrImgs  = [self.picStrArr subarrayWithRange:NSMakeRange(1, self.picArr.count - 1)];
-    dict[@"thumbs"] = [arrImgs componentsJoinedByString:@","];
-    dict[@"thumbs"] = [self.picStrArr firstObject];
+    dict[@"thumbs"] = [self.picStrArr componentsJoinedByString:@","];
+    dict[@"thumb"] = self.thumbStr;
     dict[@"weight"] = self.headV.weightV.TF.text;
     dict[@"stepprice"] = self.jiaJiaStr;
     
@@ -349,10 +354,17 @@
                 
             }
         }else {
-            if (x.intValue == 198) {
+            if (x.intValue == 197) {
+                //添加主图片图片
+                
+                self.isAddThumbPic = YES;
+                [self addPict];
+                
+            } else if (x.intValue == 198) {
                 //添加视频
             }else if (x.intValue == 199) {
                 //添加图片
+                self.isAddThumbPic = NO;
                 [self addPict];
             }else {
                 //删除图片
@@ -485,8 +497,15 @@
             
             [self showMXPhotoCameraAndNeedToEdit:YES completion:^(UIImage *image, UIImage *originImage, CGRect cutRect) {
                 
-                [self.picArr addObject:image];
-                self.headV.picArr = self.picArr;
+                if (self.isAddThumbPic) {
+                    self.thumbImge = image;
+                    [self updateImage];
+                }else {
+                    [self.picArr addObject:image];
+                    self.headV.picArr = self.picArr;
+                }
+                
+                
                 
             }];
             
@@ -499,7 +518,12 @@
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         if ([self isCanUsePicture]) {
-            [self showMXPickerWithMaximumPhotosAllow:4-self.picArr.count completion:^(NSArray *assets) {
+            NSInteger num = 4-self.picArr.count;
+            if (self.isAddThumbPic ) {
+                num = 1;
+            }
+            
+            [self showMXPickerWithMaximumPhotosAllow:num completion:^(NSArray *assets) {
                 
                 for (ALAsset *asset in assets) {
                     ALAssetRepresentation *assetRep = [asset defaultRepresentation];
@@ -518,8 +542,14 @@
                         CGImageRef thum = [asset aspectRatioThumbnail];
                         image = [UIImage imageWithCGImage:thum];
                     }
-                    [self.picArr addObject:image];
-                    self.headV.picArr = self.picArr;
+                    if (self.isAddThumbPic) {
+                        self.thumbImge = image;
+                        [self updateImage];
+                    }else {
+                        [self.picArr addObject:image];
+                        self.headV.picArr = self.picArr;
+                    }
+                    
                     
                 }
                 
@@ -667,25 +697,37 @@
     dict[@"type"] = @"comment";
     dict[@"userid"] = [zkSignleTool shareTool].session_uid;
     
+    
     NSMutableArray * arrTwo = @[].mutableCopy;
     NSMutableArray * arrOne = @[].mutableCopy;
-    for (int i = 0 ; i < self.picArr.count; i++) {
-        if ([self.picArr[i] isKindOfClass:[UIImage class]]) {
-            [arrOne addObject:self.picArr[i]];
-        }else {
-            [arrTwo addObject:self.picArr[i]];
+    
+    if (self.isAddThumbPic) {
+        [arrOne addObject:self.thumbImge];
+    }else {
+        for (int i = 0 ; i < self.picArr.count; i++) {
+            if ([self.picArr[i] isKindOfClass:[UIImage class]]) {
+                [arrOne addObject:self.picArr[i]];
+            }else {
+                [arrTwo addObject:self.picArr[i]];
+            }
         }
     }
-    
-    
+
     [zkRequestTool NetWorkingUpLoad:uploadfiles_SWT images:arrOne name:@"files" parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         
         if ([responseObject[@"code"] intValue] == 200) {
             NSArray * arr  = responseObject[@"data"];
-            self.picStrArr = @[].mutableCopy;
-            [self.picStrArr addObjectsFromArray:arrTwo];
-            [self.picStrArr addObjectsFromArray:arr];
-            [self tijaoTwoAction];
+            if (self.isAddThumbPic) {
+                [SVProgressHUD dismiss];
+                self.thumbStr = arr.count > 0? arr[0]:@"";
+                self.headV.thumbStr = self.thumbStr;
+            }else {
+                self.picStrArr = @[].mutableCopy;
+                [self.picStrArr addObjectsFromArray:arrTwo];
+                [self.picStrArr addObjectsFromArray:arr];
+                [self tijaoTwoAction];
+            }
+            
         }else {
             [self showAlertWithKey:responseObject[@"code"] message:responseObject[@"msg"] ];
         }
@@ -725,10 +767,12 @@
             self.kuCunStr = self.dataModel.stock;
             self.diJiaStr = self.dataModel.productprice;
             self.jiaJiaStr = self.dataModel.stepprice;
-            self.isBaoYou = [self.dataModel.is_free_freight intValue];
+            self.isBaoYou = [self.dataModel.freeshipping intValue];
             self.headV.weightV.TF.text = self.dataModel.weight;
             self.picArr = [self.dataModel.thumbs componentsSeparatedByString:@","].mutableCopy;
             self.headV.picArr = self.picArr;
+            self.thumbStr = self.dataModel.thumb;
+            self.headV.thumbStr = self.thumbStr;
             self.timeStr = self.dataModel.auction_start_time;
             self.endTimeStr = self.dataModel.auction_end_time;
             

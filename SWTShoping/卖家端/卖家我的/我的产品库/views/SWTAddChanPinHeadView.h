@@ -14,9 +14,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic , strong)SWTAddChnaPinTFV *leiBieV,*nameV,*addressV,*guiGeV,*caizhiV,*weightV;
 @property(nonatomic , strong)UITextField *chanPinNameTF;
 @property(nonatomic , strong)IQTextView *TV;
+@property(nonatomic,strong)UIButton *thumbBt;
 @property(nonatomic , strong)UIScrollView *picV;
 @property(nonatomic , strong)NSMutableArray  *picArr;
 @property(nonatomic , strong)NSString *videoStr;
+@property(nonatomic,strong)NSString *thumbStr;
 @property(nonatomic , strong)RACSubject *delegateSignal;
 @property(nonatomic , assign)CGFloat HHHH;
 @end

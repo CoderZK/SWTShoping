@@ -121,26 +121,11 @@
     if (indexPath.section == 0) {
         
         SWTTuiHuoThreeCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTTuiHuoThreeCell" forIndexPath:indexPath];
-        @weakify(self);
-        cell.model = self.detailModel;
-        [[cell.leftBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-            @strongify(self);
-            if ([cell.leftBt.titleLabel.text isEqualToString:@"撤销申请"]) {
-                [self cheHuiAction];
-            }
-            
-        }];
-        [[cell.rightBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-            @strongify(self);
-            if ([cell.rightBt.titleLabel.text isEqualToString:@"填写物流单号"] || [cell.rightBt.titleLabel.text isEqualToString:@"修改物流单号"] ) {
-                
-                SWTTuiHuoKuaiDiDanHaoVC * vc =[[SWTTuiHuoKuaiDiDanHaoVC alloc] init];
-                vc.hidesBottomBarWhenPushed = YES;
-                vc.model = self.model;
-                [self.navigationController pushViewController:vc animated:YES];
-            }
-            
-        }];
+       
+        
+        [cell.leftBt addTarget:self action:@selector(leftAction:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [cell.rightBt addTarget:self action:@selector(rightAction:) forControlEvents:UIControlEventTouchUpInside];
         cell.clipsToBounds = YES;
         return cell;
     }else {
@@ -167,6 +152,24 @@
     
     
     
+}
+
+//点击左侧按钮
+- (void)leftAction:(UIButton *)button {
+    if ([button.titleLabel.text isEqualToString:@"撤销申请"]) {
+        [self cheHuiAction];
+    }
+}
+
+//点击右侧按钮
+- (void)rightAction:(UIButton *)button {
+    if ([button.titleLabel.text isEqualToString:@"填写物流单号"] || [button.titleLabel.text isEqualToString:@"修改物流单号"] ) {
+                   
+                   SWTTuiHuoKuaiDiDanHaoVC * vc =[[SWTTuiHuoKuaiDiDanHaoVC alloc] init];
+                   vc.hidesBottomBarWhenPushed = YES;
+                   vc.model = self.model;
+                   [self.navigationController pushViewController:vc animated:YES];
+               }
 }
 
 

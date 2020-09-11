@@ -147,7 +147,7 @@
     }];
     
     V2TIMUserFullInfo * info = [[V2TIMUserFullInfo alloc] init];
-    info.nickName = [zkSignleTool shareTool].nickname;
+    info.nickName = [zkSignleTool shareTool].nickname.length>0?[zkSignleTool shareTool].nickname:@"??";
     
     [[V2TIMManager sharedInstance] setSelfInfo:info succ:^{
         

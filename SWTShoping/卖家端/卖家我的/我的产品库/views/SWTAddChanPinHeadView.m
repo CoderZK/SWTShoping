@@ -94,21 +94,42 @@
         self.TV.font = kFont(14);
         [self addSubview:self.TV];
         CGFloat ww = (ScreenW - 60)/4;
-        self.picV = [[UIScrollView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.TV.frame) + 10, ScreenW - 20, ww)];
+        
+        self.thumbBt = [[UIButton alloc]  initWithFrame:CGRectMake(15, CGRectGetMaxY(self.TV.frame) + 10, ww, ww)];
+        [self addSubview:self.thumbBt];
+        [self.thumbBt setBackgroundImage:[UIImage imageNamed:@"bbdyx72"] forState:UIControlStateNormal];
+        self.thumbBt.tag = 197;
+        
+        [self.thumbBt addTarget:self action:@selector(addThumbAction:) forControlEvents:UIControlEventTouchUpInside];
+        
+        UILabel * lbd1  =[[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.thumbBt.frame) + 5, ScreenW - 30, 32)];
+        lbd1.font = kFont(13);
+        lbd1.numberOfLines = 2;
+        lbd1.text = @"商品主图建议比例1:1";
+        [self addSubview:lbd1];
+ 
+        
+        self.picV = [[UIScrollView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(lbd1.frame) + 10, ScreenW - 20, ww)];
         self.picV.showsVerticalScrollIndicator = NO;
         self.picV.showsHorizontalScrollIndicator = NO;
         [self addSubview:self.picV];
         
-        UILabel * lbd  =[[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.picV.frame) + 10, ScreenW - 30, 32)];
+        UILabel * lbd  =[[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.picV.frame) + 5, ScreenW - 30, 32)];
         lbd.font = kFont(13);
         lbd.numberOfLines = 2;
-        lbd.text = @"第一张是商品主图建议比例1:1, 后面的是商品的轮播图建议比例4:3";
+        lbd.text = @"商品的轮播图建议比例4:3";
         [self addSubview:lbd];
         self.HHHH = CGRectGetMaxY(lbd.frame) + 10;
         
     }
     self.backgroundColor = WhiteColor;
     return self;
+}
+
+- (void)setThumbStr:(NSString *)thumbStr {
+    _thumbStr = thumbStr;
+    [self.thumbBt sd_setBackgroundImageWithURL:[thumbStr getPicURL] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"bbdyx72"]];
+    
 }
 
 - (void)setPics {
@@ -157,6 +178,13 @@
     
     [self setPics];
     
+}
+
+- (void)addThumbAction:(UIButton *)button {
+    //添加图片
+               if (self.delegateSignal) {
+                   [self.delegateSignal sendNext:@(197)];
+               }
 }
 
 - (void)hitAction:(UIButton *)anNiuBt {

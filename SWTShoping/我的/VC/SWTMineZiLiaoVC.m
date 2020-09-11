@@ -70,7 +70,11 @@
     cell.rightLB.hidden = YES;
     if (indexPath.row == 0) {
         cell.rightImgV.hidden = NO;
-        cell.rightImgV.image = self.image;
+        if(self.image) {
+            cell.rightImgV.image = self.image;
+        }else {
+            [cell.rightImgV sd_setImageWithURL:[[zkSignleTool shareTool].avatar getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+        }
     }else if (indexPath.row == 1){
         cell.rightLB.hidden = NO;
         cell.rightLB.text = [zkSignleTool shareTool].nickname;
@@ -256,26 +260,39 @@
 - (void)getEditData {
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    dict[@"avatar"] = self.headImgStr;
-    dict[@"gender"] = self.genderStr;
+    if (self.headImgStr.length > 0) {
+        dict[@"avatar"] = self.headImgStr;
+    }
+    if (self.genderStr.length > 0) {
+       dict[@"gender"] = self.genderStr;
+    }
+    if (self.nickName.length > 0) {
+       dict[@"nickname"] = self.nickName;
+    }
+    
     dict[@"id"] = [zkSignleTool shareTool].session_uid;
-    dict[@"nickname"] = self.nickName;
+    
     [zkRequestTool networkingPOST:userEdit_SWT  parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
-            
-            [zkSignleTool shareTool].nickname = self.nickName;
+            if (self.nickName.length > 0) {
+                [zkSignleTool shareTool].nickname = self.nickName;
+                
+                V2TIMUserFullInfo * info = [[V2TIMUserFullInfo alloc] init];
+                NSString * str = [zkSignleTool shareTool].nickname;
+                info.nickName = [zkSignleTool shareTool].nickname;
+                [[V2TIMManager sharedInstance] setSelfInfo:info succ:^{
+                    NSLog(@"%@",@"1111");
+                } fail:^(int code, NSString *desc) {
+                     NSLog(@"%@",@"2222");
+                }];
+                
+            }
             [self.tableView reloadData];
             
-            V2TIMUserFullInfo * info = [[V2TIMUserFullInfo alloc] init];
-            info.nickName = [zkSignleTool shareTool].nickname;
-            [[V2TIMManager sharedInstance] setSelfInfo:info succ:^{
-                NSLog(@"%@",@"1111");
-            } fail:^(int code, NSString *desc) {
-                 NSLog(@"%@",@"2222");
-            }];
+            
             
             
         }else {

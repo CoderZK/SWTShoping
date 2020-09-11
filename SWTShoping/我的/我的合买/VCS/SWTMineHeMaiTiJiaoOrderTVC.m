@@ -285,14 +285,8 @@
             
             cell.leftOneLB.text = @"预付定金";
             cell.leftTwoLB.text = @"尾款支付, 不支持退款";
-            
-          @weakify(self);
-            [[cell.yiwenbt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-               
-                SWTDingJinShowView  * showV  =[[SWTDingJinShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
-                [showV show];
-                
-            }];
+
+            [cell.yiwenbt  addTarget:self action:@selector(TTTTAction:) forControlEvents:UIControlEventTouchUpInside];
             
         }else if (indexPath.row == 4) {
             cell.leftOneLB.text = @"私人定制费";
@@ -305,6 +299,10 @@
   
 }
 
+- (void)TTTTAction:(UIButton *)button {
+    SWTDingJinShowView  * showV  =[[SWTDingJinShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+                   [showV show];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
