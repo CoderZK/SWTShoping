@@ -31,7 +31,7 @@
     self.chongZhiBt.layer.borderColor = CharacterColor70.CGColor;
     self.chongZhiBt.layer.borderWidth = 0.5;
     
-    self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",self.money];
+    self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",self.money.getPriceAllStr];
     
 }
 

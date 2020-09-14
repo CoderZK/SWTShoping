@@ -87,6 +87,11 @@
         
     }];
     
+
+    [LSTTimer addTimerForTime:7200 identifier:@"listTimer" handle:nil];
+       //配置通知发送和计时任务绑定 没有配置 就不会有通知发送
+    [LSTTimer setNotificationForName:@"ListChangeNF" identifier:@"listTimer" changeNFType:LSTTimerSecondChangeNFTypeMS];
+    
     
 }
 
@@ -373,6 +378,7 @@
             SWTGoodsDetailTwoCell  * cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTGoodsDetailTwoCell" forIndexPath:indexPath];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.model = self.dataModel;
+            cell.timeInterval = [NSString pleaseInsertEndTime:self.dataModel.endtime] > 0 ?  [NSString pleaseInsertEndTime:self.dataModel.endtime] : 0;
             cell.delegateSignal = [[RACSubject alloc] init];
             @weakify(self);
             [cell.delegateSignal subscribeNext:^(NSNumber * x) {
@@ -585,7 +591,7 @@
             
             if (self.chuJiaView != nil) {
                 
-                self.chuJiaView.moneyLB.text =  [NSString stringWithFormat:@"￥%@",self.zuiXinPrice];
+                self.chuJiaView.moneyLB.text =  [NSString stringWithFormat:@"￥%@",self.zuiXinPrice.getPriceAllStr];
                 [self.chuJiaView.moneyBt setTitle:[self.dataModel.stepprice getPriceStr] forState:UIControlStateNormal];
             }
             

@@ -43,7 +43,7 @@
     
     
     [self.headImgV sd_setImageWithURL:[model.avatar getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
-    self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",model.price];
+    self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",model.price.getPriceAllStr];
     self.phoneLB.text = model.nickname;
     
     

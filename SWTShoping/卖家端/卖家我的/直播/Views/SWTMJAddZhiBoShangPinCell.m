@@ -24,7 +24,7 @@
 - (void)setModel:(SWTModel *)model {
     _model = model;
     self.leftLB.text = model.title;
-    self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",model.productprice];
+    self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",model.productprice.getPriceAllStr];
     [self.leftImgV sd_setImageWithURL:model.thumb.getPicURL placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
 }
 

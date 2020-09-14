@@ -26,7 +26,7 @@
     [self.imgV sd_setImageWithURL:[model.thumb getPicURL] placeholderImage:[UIImage imageNamed:@"369"]];
     self.titleLB.text = model.title;
     self.chanDiLB.text = model.place;
-    self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",model.productprice];;
+    self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",model.productprice.getPriceAllStr];;
     self.guiGeLB.text = model.spec;
     self.caiZhiLB.text = model.material;
     self.kuCunLB.text = model.stock;

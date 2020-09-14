@@ -280,14 +280,18 @@
             if (self.nickName.length > 0) {
                 [zkSignleTool shareTool].nickname = self.nickName;
                 
-                V2TIMUserFullInfo * info = [[V2TIMUserFullInfo alloc] init];
-                NSString * str = [zkSignleTool shareTool].nickname;
-                info.nickName = [zkSignleTool shareTool].nickname;
-                [[V2TIMManager sharedInstance] setSelfInfo:info succ:^{
-                    NSLog(@"%@",@"1111");
-                } fail:^(int code, NSString *desc) {
-                     NSLog(@"%@",@"2222");
-                }];
+//                   V2TIMUserFullInfo * info = [[V2TIMUserFullInfo alloc] init];
+//                   NSMutableDictionary * dict  = @{}.mutableCopy;
+//                   dict[@"nickname"] = [zkSignleTool shareTool].nickname;
+//                   dict[@"levelname"] = [zkSignleTool shareTool].levelname;
+//                   dict[@"levelcode"] = [zkSignleTool shareTool].level;
+//                   info.nickName = [dict mj_JSONString];
+//
+//                   [[V2TIMManager sharedInstance] setSelfInfo:info succ:^{
+//
+//                   } fail:^(int code, NSString *desc) {
+//
+//                   }];
                 
             }
             [self.tableView reloadData];

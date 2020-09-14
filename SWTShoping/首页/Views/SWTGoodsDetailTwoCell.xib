@@ -142,7 +142,7 @@
                 <outlet property="titleLB" destination="GZn-at-hcm" id="AgG-yW-rHy"/>
                 <outlet property="typeLB" destination="d8L-ur-4DG" id="8p8-pT-JkQ"/>
             </connections>
-            <point key="canvasLocation" x="32.608695652173914" y="33.816964285714285"/>
+            <point key="canvasLocation" x="122" y="29"/>
         </tableViewCell>
     </objects>
     <resources>

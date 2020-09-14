@@ -171,7 +171,12 @@
         }else if (lastM.elemType == V2TIM_ELEM_TYPE_IMAGE) {
             cell.contentLB.text = @"图片";
         }
-        cell.nameLB.text = lastM.nickName;
+        NSDictionary * dict = [conVerSation.showName mj_JSONObject];
+        if ([dict.allKeys containsObject:@"nickname"]) {
+            cell.nameLB.text = dict[@"nickname"];
+        }else {
+            cell.nameLB.text = @"";
+        }
         [cell.imgV sd_setImageWithURL:[lastM.faceURL getPicURL] placeholderImage:[UIImage imageNamed:@"369"] completed:nil];
         if (conVerSation.unreadCount >  0) {
             cell.redV.hidden = NO;
@@ -232,7 +237,10 @@
         
         TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:conVerSation.userID];
         TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
-        vc.navigationItem.title = conVerSation.lastMessage.nickName;
+        NSDictionary * dict = [conVerSation.showName mj_JSONObject];
+        if ([dict.allKeys containsObject:@"nickname"]) {
+            vc.navigationItem.title = dict[@"nickname"];
+        }
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
         

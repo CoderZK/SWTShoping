@@ -134,7 +134,23 @@
             [zkSignleTool shareTool].nickname = responseObject[@"data"][@"nickname"];
             NSString * str = [zkSignleTool shareTool].nickname;
             [zkSignleTool shareTool].level =  responseObject[@"data"][@"levelcode"];
+            [zkSignleTool shareTool].levelname = responseObject[@"data"][@"levelname"];
             [zkSignleTool shareTool].avatar = responseObject[@"data"][@"headimg"];
+            
+            V2TIMUserFullInfo * info = [[V2TIMUserFullInfo alloc] init];
+               NSMutableDictionary * dict  = @{}.mutableCopy;
+               dict[@"nickname"] = [zkSignleTool shareTool].nickname;
+               dict[@"levelname"] = [zkSignleTool shareTool].levelname;
+               dict[@"levelcode"] = [zkSignleTool shareTool].level;
+            NSLog(@"\n nickName ====%@",[dict mj_JSONString]);
+               info.nickName = [dict mj_JSONString];
+               
+               [[V2TIMManager sharedInstance] setSelfInfo:info succ:^{
+                  NSLog(@"%@",@"修改逆臣成功");
+               } fail:^(int code, NSString *desc) {
+                    NSLog(@"%@",@"修改逆臣失败");
+               }];
+            
             self.userDataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
             [self.collectionView reloadData];
         }else {

@@ -248,13 +248,13 @@
         self.leftTwoLb.hidden =self.numberAndMoneyLB.hidden = NO;
         self.leftThreeLB.textColor = CharacterColor70;
         self.leftTwoLb.text = @"x1份";
-        self.numberAndMoneyLB.text =  [NSString stringWithFormat:@"￥%@",model.goodprice];
+        self.numberAndMoneyLB.text =  [NSString stringWithFormat:@"￥%@",model.goodprice.getPriceAllStr];
     } else {
         self.rightImgV.hidden =self.typeTwoLB.hidden  = NO;
         self.leftTwoLb.hidden =self.numberAndMoneyLB.hidden = YES;
         self.typeTwoLB.text = @" 2号签 ";
         self.leftThreeLB.textColor = RedLightColor;
-        self.leftThreeLB.text = [NSString stringWithFormat:@"￥%@",model.goodprice];
+        self.leftThreeLB.text = [NSString stringWithFormat:@"￥%@",model.goodprice.getPriceAllStr];
         
     }
     

@@ -30,8 +30,8 @@
     // Do any additional setup after loading the view from its nib.
     self.navigationItem.title = @"支付";
     
-    self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",self.priceStr];
-    [self.payBt setTitle:[NSString stringWithFormat:@"支付￥%@",self.priceStr] forState:UIControlStateNormal];
+    self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",self.priceStr.getPriceAllStr];
+    [self.payBt setTitle:[NSString stringWithFormat:@"支付￥%@",self.priceStr.getPriceAllStr] forState:UIControlStateNormal];
     Weak(weakSelf);
     [LTSCEventBus registerEvent:@"foreground" block:^(id data) {
         [weakSelf getOrderStatus];

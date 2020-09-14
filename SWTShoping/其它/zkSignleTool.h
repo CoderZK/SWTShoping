@@ -17,6 +17,7 @@
 //用户ID
 @property(nonatomic,strong)NSString * session_uid;
 @property(nonatomic,strong)NSString * nickname;
+@property(nonatomic,strong)NSString * levelname;
 @property(nonatomic,strong)NSString * avatar;
 @property(nonatomic,strong)NSString * level;
 @property(nonatomic,strong)NSString * phone;

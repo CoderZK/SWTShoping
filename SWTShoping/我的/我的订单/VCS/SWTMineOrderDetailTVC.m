@@ -227,17 +227,17 @@
                 cell.leftLB.textColor = CharacterColor50;
                 cell.leftLB.font =  kFont(15);
                 cell.leftLB.text = @"实付:";
-                cell.rightLB.text =  [NSString stringWithFormat:@"￥%@",self.dataModel.realprice];
+                cell.rightLB.text =  [NSString stringWithFormat:@"￥%@",self.dataModel.realprice.getPriceAllStr];
                 cell.rightLB.textColor = RedLightColor ;
             }else if (indexPath.row == 1) {
                 cell.leftLB.text = @"商品总价:";
-                cell.rightLB.text =  [NSString stringWithFormat:@"￥%@",self.dataModel.price];
+                cell.rightLB.text =  [NSString stringWithFormat:@"￥%@",self.dataModel.price.getPriceAllStr];
             }else if (indexPath.row == 2) {
                 cell.leftLB.text =  @"运费";
                 cell.rightLB.text = @"￥0.00";
             }else if (indexPath.row == 3) {
                 cell.leftLB.text =  @"店铺优惠:";
-                cell.rightLB.text =  [NSString stringWithFormat:@"-￥%@",self.dataModel.coupons];
+                cell.rightLB.text =  [NSString stringWithFormat:@"-￥%@",self.dataModel.coupons.getPriceAllStr];
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;

@@ -183,7 +183,7 @@
     SWTModel * model = self.dataArray[indexPath.row];
     [cell.imgV sd_setImageWithURL:[model.img getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
     cell.titleLB.text = model.goodname;
-    cell.jiaJiaLB.text =  [NSString stringWithFormat:@"￥%@",model.goodprice];
+    cell.jiaJiaLB.text =  [NSString stringWithFormat:@"￥%@",model.goodprice.getPriceAllStr];
     cell.numberLB.text =  [NSString stringWithFormat:@"%@/%@",model.goodnum,model.lot_no];
     cell.rightBt.hidden = YES;
     [cell.timeBt setTitle: @"已完成" forState:UIControlStateNormal];

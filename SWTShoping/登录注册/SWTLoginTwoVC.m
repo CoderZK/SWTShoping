@@ -117,6 +117,7 @@
             [zkSignleTool shareTool].userSig = responseObject[@"data"][@"usersig"];
             [zkSignleTool shareTool].avatar = responseObject[@"data"][@"avatar"];
             [zkSignleTool shareTool].nickname =  responseObject[@"data"][@"nickname"];
+            [zkSignleTool shareTool].levelname =  responseObject[@"data"][@"levelname"];
             [zkSignleTool shareTool].level =  responseObject[@"data"][@"levelcode"];
             
             [self loginIM];
@@ -147,7 +148,11 @@
     }];
     
     V2TIMUserFullInfo * info = [[V2TIMUserFullInfo alloc] init];
-    info.nickName = [zkSignleTool shareTool].nickname.length>0?[zkSignleTool shareTool].nickname:@"??";
+    NSMutableDictionary * dict  = @{}.mutableCopy;
+    dict[@"nickname"] = [zkSignleTool shareTool].nickname;
+    dict[@"levelname"] = [zkSignleTool shareTool].levelname;
+    dict[@"levelcode"] = [zkSignleTool shareTool].level;
+    info.nickName = [dict mj_JSONString];
     
     [[V2TIMManager sharedInstance] setSelfInfo:info succ:^{
         

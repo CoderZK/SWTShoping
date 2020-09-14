@@ -25,8 +25,8 @@
     _model = model;
     [self.imgV sd_setImageWithURL:[model.img getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
     self.titleLB.text = model.name;
-    self.jiaJiaLB.text =  [NSString stringWithFormat:@"加价幅度:%@",model.stepprice];
-    self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",model.startprice];
+    self.jiaJiaLB.text =  [NSString stringWithFormat:@"加价幅度:%@",model.stepprice.getPriceAllStr];
+    self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",model.startprice.getPriceAllStr];
 }
 
 - (IBAction)shuaXin:(id)sender {
@@ -41,7 +41,7 @@
             [SVProgressHUD dismiss];
             self.model.startprice = responseObject[@"data"];
             dispatch_async(dispatch_get_main_queue(), ^{
-               self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",self.model.startprice];
+                self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",self.model.startprice.getPriceAllStr];
             });
             
         }else {

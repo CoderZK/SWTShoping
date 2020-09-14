@@ -37,7 +37,16 @@ static zkSignleTool * tool = nil;
 }
 
 - (NSString *)level {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:@"level"];
+    return [[[NSUserDefaults standardUserDefaults] objectForKey:@"level"] length] == 0?@"0":[[NSUserDefaults standardUserDefaults] objectForKey:@"level"];
+}
+
+- (void)setLevelname:(NSString *)levelname {
+    [[NSUserDefaults standardUserDefaults] setObject:levelname forKey:@"levelname"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (NSString *)levelname {
+    return [[[NSUserDefaults standardUserDefaults] objectForKey:@"levelname"] length] == 0?@"??":[[NSUserDefaults standardUserDefaults] objectForKey:@"levelname"];
 }
 
 - (void)setPhone:(NSString *)phone {
@@ -64,7 +73,7 @@ static zkSignleTool * tool = nil;
 }
 
 - (NSString *)nickname {
-     return [[NSUserDefaults standardUserDefaults] objectForKey:@"nickname"];
+     return [[[NSUserDefaults standardUserDefaults] objectForKey:@"nickname"] length] == 0?@"??":[[NSUserDefaults standardUserDefaults] objectForKey:@"nickname"];
 }
 
 - (void)setSelectShopID:(NSString *)selectShopID {

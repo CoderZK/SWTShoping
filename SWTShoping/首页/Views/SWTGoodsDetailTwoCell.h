@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *moneyLB;
 @property(nonatomic , strong)RACSubject *delegateSignal;
 @property(nonatomic , strong)SWTModel *model;
+@property (nonatomic, assign)NSTimeInterval timeInterval;
 @end
 
 NS_ASSUME_NONNULL_END

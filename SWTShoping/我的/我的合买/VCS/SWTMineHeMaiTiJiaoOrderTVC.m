@@ -38,7 +38,7 @@
     
     [LSTTimer addTimerForTime:7200 identifier:@"listTimer" handle:nil];
               //配置通知发送和计时任务绑定 没有配置 就不会有通知发送
-              [LSTTimer setNotificationForName:@"ListChangeNF" identifier:@"listTimer" changeNFType:LSTTimerSecondChangeNFTypeMS];
+    [LSTTimer setNotificationForName:@"ListChangeNF" identifier:@"listTimer" changeNFType:LSTTimerSecondChangeNFTypeMS];
     
 }
 
