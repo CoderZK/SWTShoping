@@ -56,9 +56,9 @@
             self.timeLB.text = @"已结束";
         }else {
             if (day > 0) {
-               self.timeLB.text = [NSString stringWithFormat:@"%@天%@:%@:%@",day,hour,minute,second];
+               self.timeLB.text = [NSString stringWithFormat:@"剩余时间: %@天%@:%@:%@",day,hour,minute,second];
             }else {
-               self.timeLB.text = [NSString stringWithFormat:@"%@:%@:%@",hour,minute,second];
+               self.timeLB.text = [NSString stringWithFormat:@"剩余时间: %@:%@:%@",hour,minute,second];
             }
             
         }

@@ -23,6 +23,17 @@
 
 @implementation SWTMineHeMaiTiJiaoOrderTVC
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [LSTTimer addTimerForTime:7200 identifier:@"listTimer" handle:nil];
+              //配置通知发送和计时任务绑定 没有配置 就不会有通知发送
+    [LSTTimer setNotificationForName:@"ListChangeNF" identifier:@"listTimer" changeNFType:LSTTimerSecondChangeNFTypeMS];
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [LSTTimer removeTimerForIdentifier:@"listTimer"];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"提交订单";
@@ -36,9 +47,7 @@
     [self initBottomView];
     [self getData];
     
-    [LSTTimer addTimerForTime:7200 identifier:@"listTimer" handle:nil];
-              //配置通知发送和计时任务绑定 没有配置 就不会有通知发送
-    [LSTTimer setNotificationForName:@"ListChangeNF" identifier:@"listTimer" changeNFType:LSTTimerSecondChangeNFTypeMS];
+    
     
 }
 
