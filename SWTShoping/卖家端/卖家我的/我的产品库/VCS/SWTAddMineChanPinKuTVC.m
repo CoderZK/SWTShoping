@@ -252,6 +252,7 @@
     }
     dict[@"warehouse"] = [arrOne componentsJoinedByString:@","];
     dict[@"productprice"] = self.diJiaStr;
+    dict[@"startprice"] = self.diJiaStr;
     dict[@"freeshipping"] = self.isBaoYou?@"1":@"0";
     dict[@"thumbs"] = [self.picStrArr componentsJoinedByString:@","];
     dict[@"thumb"] = self.thumbStr;

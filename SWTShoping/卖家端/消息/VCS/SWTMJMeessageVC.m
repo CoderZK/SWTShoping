@@ -134,15 +134,20 @@
 
 - (UIViewController *)pagerController:(TYPagerController *)pagerController controllerForIndex:(NSInteger)index prefetching:(BOOL)prefetching {
     
-    if (index == 0) {
-        SWTMJMessageSubTVC * vc1 = [[SWTMJMessageSubTVC alloc] init];
-           vc1.type = index;
-           return vc1;
-    }else {
-        TUIConversationListController *vc = [[TUIConversationListController alloc] init];
-        vc.delegate = self;
-        return vc;
-    }
+    
+    SWTMJMessageSubTVC * vc1 = [[SWTMJMessageSubTVC alloc] init];
+    vc1.type = index;
+    return vc1;
+    
+//    if (index == 0) {
+//        SWTMJMessageSubTVC * vc1 = [[SWTMJMessageSubTVC alloc] init];
+//           vc1.type = index;
+//           return vc1;
+//    }else {
+//        TUIConversationListController *vc = [[TUIConversationListController alloc] init];
+//        vc.delegate = self;
+//        return vc;
+//    }
    
    
 

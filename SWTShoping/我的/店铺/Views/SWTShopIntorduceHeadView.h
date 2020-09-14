@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SWTShopIntorduceHeadView : UIView
 @property(nonatomic , strong)SWTModel *model;
 @property(nonatomic , strong)RACSubject *delegateSignal;
+@property(nonatomic,strong)UIButton *lianxieBt,*gaunZhuBt;
 @end
 
 NS_ASSUME_NONNULL_END

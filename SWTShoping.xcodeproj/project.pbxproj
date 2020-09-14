@@ -85,6 +85,8 @@
 		66689F3C24B4250200C49A2E /* SWTTongYongTwoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66689F3A24B4250200C49A2E /* SWTTongYongTwoCell.xib */; };
 		66689F3F24B4258300C49A2E /* SWTHelpFarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 66689F3E24B4258300C49A2E /* SWTHelpFarVC.m */; };
 		66689F4224B4259B00C49A2E /* SWTHelpSubTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 66689F4124B4259B00C49A2E /* SWTHelpSubTVC.m */; };
+		6668BF3E250FC39100BD52D1 /* SWTDianPuYinXiangCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6668BF3C250FC39100BD52D1 /* SWTDianPuYinXiangCell.m */; };
+		6668BF3F250FC39100BD52D1 /* SWTDianPuYinXiangCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6668BF3D250FC39100BD52D1 /* SWTDianPuYinXiangCell.xib */; };
 		6669F5C024AB68850013675E /* SWTHomeCollectionThreeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6669F5BE24AB68850013675E /* SWTHomeCollectionThreeCell.m */; };
 		6669F5C124AB68850013675E /* SWTHomeCollectionThreeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6669F5BF24AB68850013675E /* SWTHomeCollectionThreeCell.xib */; };
 		6669F5C524AB7BBE0013675E /* SWTMineOneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6669F5C324AB7BBE0013675E /* SWTMineOneCell.m */; };
@@ -571,6 +573,9 @@
 		66689F3E24B4258300C49A2E /* SWTHelpFarVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTHelpFarVC.m; sourceTree = "<group>"; };
 		66689F4024B4259B00C49A2E /* SWTHelpSubTVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTHelpSubTVC.h; sourceTree = "<group>"; };
 		66689F4124B4259B00C49A2E /* SWTHelpSubTVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTHelpSubTVC.m; sourceTree = "<group>"; };
+		6668BF3B250FC39100BD52D1 /* SWTDianPuYinXiangCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTDianPuYinXiangCell.h; sourceTree = "<group>"; };
+		6668BF3C250FC39100BD52D1 /* SWTDianPuYinXiangCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTDianPuYinXiangCell.m; sourceTree = "<group>"; };
+		6668BF3D250FC39100BD52D1 /* SWTDianPuYinXiangCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTDianPuYinXiangCell.xib; sourceTree = "<group>"; };
 		6669F5BD24AB68850013675E /* SWTHomeCollectionThreeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTHomeCollectionThreeCell.h; sourceTree = "<group>"; };
 		6669F5BE24AB68850013675E /* SWTHomeCollectionThreeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTHomeCollectionThreeCell.m; sourceTree = "<group>"; };
 		6669F5BF24AB68850013675E /* SWTHomeCollectionThreeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTHomeCollectionThreeCell.xib; sourceTree = "<group>"; };
@@ -2080,6 +2085,9 @@
 				667D506824C499DF00A59726 /* SWTShopIntroduceThreeCell.xib */,
 				667D506B24C49ED100A59726 /* SWTShopIntroducePingJiaCell.h */,
 				667D506C24C49ED100A59726 /* SWTShopIntroducePingJiaCell.m */,
+				6668BF3B250FC39100BD52D1 /* SWTDianPuYinXiangCell.h */,
+				6668BF3C250FC39100BD52D1 /* SWTDianPuYinXiangCell.m */,
+				6668BF3D250FC39100BD52D1 /* SWTDianPuYinXiangCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2909,6 +2917,7 @@
 				667D505D24C48C5900A59726 /* SWTShopIntroduceCell.xib in Resources */,
 				66732CEC24BAA1EF00452F21 /* SWTLoginTwoVC.xib in Resources */,
 				666D395E24E1386E0023776B /* README.txt in Resources */,
+				6668BF3F250FC39100BD52D1 /* SWTDianPuYinXiangCell.xib in Resources */,
 				666BCBF824C56C3700FFAC91 /* SWTYiKouJiaGoodDetailCell.xib in Resources */,
 				6678B7E724B0B49500EA3A56 /* SWTGoodsDetailThreeCell.xib in Resources */,
 				6669F5C624AB7BBE0013675E /* SWTMineOneCell.xib in Resources */,
@@ -3282,6 +3291,7 @@
 				666A39FC24B74B3C00318075 /* MXImageEditController.m in Sources */,
 				666BB1B424AF6EF400341CE8 /* SWTFenLeiCollectTwoCell.m in Sources */,
 				666B3B8824C969150036DE4D /* SWTChuJiaListTVC.m in Sources */,
+				6668BF3E250FC39100BD52D1 /* SWTDianPuYinXiangCell.m in Sources */,
 				337F3EAE20EA014600C5526A /* BaseCollectionReusableView.m in Sources */,
 				666A39FE24B74B3C00318075 /* MXPhotoPickerController.m in Sources */,
 				335010DD20EDF9AE00F8486B /* zkRequestTool.m in Sources */,

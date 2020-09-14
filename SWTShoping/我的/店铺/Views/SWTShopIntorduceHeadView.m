@@ -10,7 +10,7 @@
 
 @interface SWTShopIntorduceHeadView()
 @property(nonatomic , strong)UIImageView *headImgV;
-@property(nonatomic , strong)UIButton *leveBt,*gaunFangBt,*baoZhengJinBt,*lianxieBt,*gaunZhuBt,*lebftBt,*rightBt;;
+@property(nonatomic , strong)UIButton *leveBt,*gaunFangBt,*baoZhengJinBt,*lebftBt,*rightBt;
 @property(nonatomic , strong)UIView *redView;
 @property(nonatomic , strong)UILabel *shopNameLB;
 
@@ -71,6 +71,9 @@
 //        self.lianxieBt.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         self.lianxieBt.layer.borderColor = CharacterColor70.CGColor;
         self.lianxieBt.layer.borderWidth = 0.5;
+        self.lianxieBt.tag = 100;
+        [self.lianxieBt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
+        
         [self addSubview:self.lianxieBt];
         
         self.gaunZhuBt = [[UIButton alloc] init];
@@ -79,6 +82,8 @@
         self.gaunZhuBt.titleLabel.font = kFont(12);
         [self.gaunZhuBt setTitle:@" 关注卖家" forState:UIControlStateNormal];
         self.gaunZhuBt.layer.cornerRadius = 8;
+        self.gaunZhuBt.tag = 101;
+        [self.gaunZhuBt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
         self.gaunZhuBt.clipsToBounds = YES;
         self.gaunZhuBt.layer.borderColor = CharacterColor70.CGColor;
         self.gaunZhuBt.layer.borderWidth = 0.5;

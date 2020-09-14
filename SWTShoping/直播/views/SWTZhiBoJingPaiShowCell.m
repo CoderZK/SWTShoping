@@ -27,7 +27,7 @@
     self.titleLB.text = model.name;
     if (model.isJiPai) {
         self.jiaJiaLB.text =  [NSString stringWithFormat:@"加价幅度:%@",model.stepprice.getPriceAllStr];
-        self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",model.startprice.getPriceAllStr];
+        self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",model.productprice.getPriceAllStr];
         self.jiaJiaLB.hidden = self.shuaXinAction.hidden = NO;
         
     }else {
@@ -39,27 +39,11 @@
 
 - (IBAction)shuaXin:(id)sender {
     
-    [SVProgressHUD show];
-    NSMutableDictionary * dict = @{}.mutableCopy;
-    dict[@"goodid"] = self.model.ID;
-    [zkRequestTool networkingPOST:liveNowgoodprice_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
-        if ([responseObject[@"code"] intValue]== 200) {
-            [SVProgressHUD dismiss];
-//            self.model.startprice = responseObject[@"data"];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",self.model.startprice.getPriceAllStr];
-            });
-            
-        }else {
-            [SVProgressHUD showErrorWithStatus: [NSString stringWithFormat:@"%@",responseObject[@"msg"]]];
-        }
-        
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
-       
-        
-    }];
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(didSelectShuaXinWithCell:)]) {
+        [self.delegate didSelectShuaXinWithCell:self];
+    }
 
+   
     
 }
 

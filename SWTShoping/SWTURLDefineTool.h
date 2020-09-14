@@ -464,8 +464,8 @@
 #define getimid_SWT URLOne@"getimid"
 ///** 首页搜索*/
 #define search_SWT URLOne@"search"
-///**合买抽签*/
-//#define mmerchcouponAdd_coupon_SWT URLOne@"merchcoupon/add_coupon"
+/**删除系统消息*/
+#define pushmsgDeletethis_SWT URLOne@"pushmsg/deletethis"
 ///** 获取抽签订单信息*/
 //#define merchcouponGet_coupon_list_SWT URLOne@"merchcoupon/get_coupon_list"
 

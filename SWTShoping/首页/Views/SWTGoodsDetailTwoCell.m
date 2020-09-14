@@ -32,6 +32,8 @@
     // Configure the view for the selected state
 }
 
+
+
 //距离结束多少时多少秒
 - (void)setTimeInterval:(NSTimeInterval)timeInterval {
     _timeInterval = timeInterval;

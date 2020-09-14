@@ -8,7 +8,7 @@
 
 #import "SWTZhiBoJingPaiShowView.h"
 #import "SWTZhiBoJingPaiShowCell.h"
-@interface SWTZhiBoJingPaiShowView()<UITableViewDelegate,UITableViewDataSource>
+@interface SWTZhiBoJingPaiShowView()<UITableViewDelegate,UITableViewDataSource,SWTZhiBoJingPaiShowCellDelegate>
 @property(nonatomic , strong)UIView *whiteV;
 @property(nonatomic , strong)UIView *redV;
 @property(nonatomic , strong)UITableView *tableView;
@@ -170,11 +170,38 @@
     return self;
 }
 
+- (void)didSelectShuaXinWithCell:(SWTZhiBoJingPaiShowCell *)cell {
+    NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
+    SWTModel * model = self.dataArray[indexPath.row];
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"goodid"] = model.ID;
+    [zkRequestTool networkingPOST:liveNowgoodprice_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        if ([responseObject[@"code"] intValue]== 200) {
+            [SVProgressHUD dismiss];
+            model.productprice = [NSString stringWithFormat:@"%@",responseObject[@"data"]];
+            
+            [self.tableView reloadData];
+            
+            
+        }else {
+            [SVProgressHUD showErrorWithStatus: [NSString stringWithFormat:@"%@",responseObject[@"msg"]]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        
+        
+    }];
+    
+    
+}
+
 - (void)clickAction:(UIButton *)button  {
-     if (button.tag == 100) {
+    if (button.tag == 100) {
         self.leftBtBt.selected = YES;
         self.rightBt.selected = NO;
-         self.type = 0;
+        self.type = 0;
     }else if (button.tag == 101){
         self.leftBtBt.selected = NO;
         self.rightBt.selected = YES;
@@ -218,6 +245,7 @@
     SWTZhiBoJingPaiShowCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     self.dataArray[indexPath.row].isJiPai = self.isJiPai;
     cell.model= self.dataArray[indexPath.row];
+    cell.delegate = self;
     if (self.type == 0) {
         [cell.rightBt setTitle:@"出个价" forState:UIControlStateNormal];
     }else {
@@ -232,8 +260,8 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (self.delegateSignal) {
-           [self.delegateSignal sendNext:@(indexPath.row + 200)];
-       }
+        [self.delegateSignal sendNext:@(indexPath.row + 200)];
+    }
     
 }
 

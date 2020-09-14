@@ -104,14 +104,56 @@
     
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+//-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+//   
+//    return YES;
+//}
+//
+//-(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    return UITableViewCellEditingStyleDelete;
+//}
+//
+//-(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    return @"删除";
+//}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+    if(editingStyle == UITableViewCellEditingStyleDelete){
+       
+            
+            
+            [SVProgressHUD show];
+            NSMutableDictionary * dict = @{}.mutableCopy;
+            dict[@"sendid"] = self.dataArray[indexPath.row].sendid;
+            dict[@"receiveid"] = [zkSignleTool shareTool].session_uid;
+            [zkRequestTool networkingPOST:pushmsgDeletethis_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+                [self.tableView.mj_header endRefreshing];
+                [self.tableView.mj_footer endRefreshing];
+                [SVProgressHUD dismiss];
+                if ([responseObject[@"key"] intValue]== 1) {
+
+                    [self.dataArray removeObjectAtIndex:indexPath.row];
+                    [self.tableView reloadData];
+
+                }else {
+                    [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"key"]] message:responseObject[@"message"]];
+                }
+
+            } failure:^(NSURLSessionDataTask *task, NSError *error) {
+
+                [self.tableView.mj_header endRefreshing];
+                [self.tableView.mj_footer endRefreshing];
+
+            }];
+           
+        
+        
+     
+        
+    }
+}
+
 
 @end

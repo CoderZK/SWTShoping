@@ -166,6 +166,12 @@
             SWTShopIntroduceTVC * vc =[[SWTShopIntroduceTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
             vc.hidesBottomBarWhenPushed = YES;
             vc.ID = self.dataModel.ID;
+            vc.model = self.dataModel;
+            Weak(weakSelf);
+            vc.sendDataModelBlock = ^(SWTModel * _Nonnull model) {
+                weakSelf.dataModel = model;
+                weakSelf.headView.model = model;
+            };
             [self.navigationController pushViewController:vc animated:YES];
         }else if (x.intValue == 101) {
             //点击关注

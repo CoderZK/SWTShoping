@@ -36,7 +36,7 @@
 }
 
 - (void)clickAction:(UIButton *)button {
-    self.score = button.tag - 100;
+    
     for (int i = 100 ; i < 105; i++) {
         UIButton * buNei  = [self viewWithTag:i];
         if (buNei.tag <= button.tag ) {
@@ -50,6 +50,31 @@
     }
 }
 
+- (void)setScore:(NSInteger)score {
+    
+   for (int i = 100 ; i < 105; i++) {
+        UIButton * buNei  = [self viewWithTag:i];
+       if (buNei.tag - 100 < score) {
+           buNei.selected = YES;
+       }else {
+           buNei.selected = NO;
+       }
+        
+    }
+    
+    
+}
 
+- (NSInteger)score {
+    NSInteger  number = 0;
+    for (int i = 100 ; i < 105; i++) {
+        UIButton * buNei  = [self viewWithTag:i];
+        if (buNei.selected) {
+            number = buNei.tag - 99;
+        }
+        
+    }
+    return number;
+}
 
 @end

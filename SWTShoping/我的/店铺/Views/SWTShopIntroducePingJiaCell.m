@@ -44,13 +44,13 @@
         self.xingV.userInteractionEnabled = NO;
         [self addSubview:self.xingV];
         
-        self.contentLB = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxX(self.headImgV.frame) + 15, ScreenW - 30, 20)];
+        self.contentLB = [[UILabel alloc] initWithFrame:CGRectMake(15, 65, ScreenW - 30, 20)];
         self.contentLB.numberOfLines = 0;
         [self addSubview:self.contentLB];
         self.contentLB.text = @"恶违法群殴文件佛群殴群殴金融界区日哦金佛期间我放假哦亲王嘉尔佛几千万";
         
         
-        self.picV =[[UIScrollView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxX(self.contentLB.frame) + 15, ScreenW - 30, (ScreenW - 30 - 30)/4)];
+        self.picV =[[UIScrollView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.contentLB.frame) + 15, ScreenW - 30, (ScreenW - 30 - 30)/4)];
         [self addSubview:self.picV];
 
     
@@ -67,6 +67,7 @@
     [self.picV.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
 
     if (arr.count== 0 || self.model.img.length == 0) {
+        
         return;
     }
     

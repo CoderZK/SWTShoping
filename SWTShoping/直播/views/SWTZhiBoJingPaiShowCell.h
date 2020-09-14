@@ -10,6 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class SWTZhiBoJingPaiShowCell;
+@protocol SWTZhiBoJingPaiShowCellDelegate <NSObject>
+
+- (void)didSelectShuaXinWithCell:(SWTZhiBoJingPaiShowCell *)cell;
+
+@end
+
 @interface SWTZhiBoJingPaiShowCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titleLB;
 @property (weak, nonatomic) IBOutlet UILabel *jiaJiaLB;
@@ -19,6 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic , strong)SWTModel *model;
 @property (weak, nonatomic) IBOutlet UIButton *rightBt;
 @property(nonatomic,assign)BOOL isJiPai;
+
+@property(nonatomic,assign)id<SWTZhiBoJingPaiShowCellDelegate>delegate;
 
 @end
 
