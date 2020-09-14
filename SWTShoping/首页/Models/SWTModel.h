@@ -229,7 +229,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,assign)BOOL defaults_open;
 @property(nonatomic,assign)BOOL autodeduct;
 @property(nonatomic,assign)BOOL isSelect;
-//@property(nonatomic,assign)BOOL level_open;
+@property(nonatomic,assign)BOOL isJiPai;
 //@property(nonatomic,assign)BOOL refund_open;
 
 ////

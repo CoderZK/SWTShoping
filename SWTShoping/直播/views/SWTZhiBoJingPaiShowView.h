@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic , strong)RACSubject *delegateSignal;
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *dataArray;
 @property(nonatomic , strong)SWTModel *dataModel;
+@property(nonatomic,assign)BOOL isJiPai;
 
 @end
 

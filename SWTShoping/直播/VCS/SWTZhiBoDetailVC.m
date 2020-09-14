@@ -120,7 +120,7 @@
         [self getMineHeMaiDingZhiListWithType:0];//获取我的合买列表
         [self getGoodsListData]; //店铺合买列表
     }else {
-        [self getLivegoodListDataWithType:0]; //获取竞拍和一口价列表
+        [self getLivegoodListDataWithType:1]; //获取竞拍和一口价列表
     }
     
     if (self.isTuiLiu) {
@@ -231,6 +231,7 @@
                 SWTZhiBoJingPaiShowView *  jingPaiV  =[[SWTZhiBoJingPaiShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
                 jingPaiV.delegateSignal = [[RACSubject alloc] init];
                 self.jingPaiV = jingPaiV;
+                [self getLivegoodListDataWithType:1];
                 @weakify(self);
                 [jingPaiV.delegateSignal subscribeNext:^(NSNumber * x) {
                     @strongify(self);
@@ -354,6 +355,11 @@
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             self.zhiBoArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            if (type == 1) {
+                self.jingPaiV.isJiPai = YES;
+            }else {
+                self.jingPaiV.isJiPai = NO;
+            }
             self.jingPaiV.dataArray = self.zhiBoArr;
         }
         

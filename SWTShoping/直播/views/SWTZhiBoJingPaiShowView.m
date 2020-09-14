@@ -216,6 +216,7 @@
 }
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SWTZhiBoJingPaiShowCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    self.dataArray[indexPath.row].isJiPai = self.isJiPai;
     cell.model= self.dataArray[indexPath.row];
     if (self.type == 0) {
         [cell.rightBt setTitle:@"出个价" forState:UIControlStateNormal];

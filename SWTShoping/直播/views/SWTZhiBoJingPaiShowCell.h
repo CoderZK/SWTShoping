@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIButton *shuaXinAction;
 @property(nonatomic , strong)SWTModel *model;
 @property (weak, nonatomic) IBOutlet UIButton *rightBt;
+@property(nonatomic,assign)BOOL isJiPai;
 
 @end
 
