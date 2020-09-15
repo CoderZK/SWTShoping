@@ -40,6 +40,10 @@
 
 //推流部分
 @property (nonatomic, strong) PLMediaStreamingSession *session;
+@property(nonatomic,strong)PLVideoCaptureConfiguration *videoPL;
+@property(nonatomic,strong)UIButton *qieHuanCarmerBt;
+
+@property(nonatomic,assign)BOOL isPushVC;
 
 //播流部分
 @property (nonatomic, strong) PLPlayer  *player;
@@ -52,25 +56,32 @@
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     [[V2TIMManager sharedInstance] addAdvancedMsgListener:self];
+    
+   
+    self.isPushVC = NO;
+ 
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [[V2TIMManager sharedInstance] removeAdvancedMsgListener:self];
-    if (self.isTuiLiu) {
-        [self upDateLive];
-    }else {
-        [self quitAVRoom];
+    if (!self.isPushVC) {
+        if (self.isTuiLiu) {
+               [self upDateLive];
+           }else {
+               [self quitAVRoom];
+           }
+           if (self.player != nil) {
+               [self.player stop];
+               self.player = nil;
+           }
+           if (self.session != nil) {
+               [self.session destroy];
+               self.session = nil;
+           }
     }
-    if (self.player != nil) {
-        [self.player stop];
-        self.player = nil;
-    }
-    if (self.session != nil) {
-        [self.session stopStreaming];
-        self.session = nil;
-    }
+   
 }
 
 -(SWTZhiBoPeopleComeInView *)comeInV {
@@ -89,6 +100,9 @@
     [self addBottomV];
     [self addChuJiaBottomV];
     [self initChatRoomV];
+    
+    
+    
     self.chuJiaBottomV.hidden = YES;
     [self.view addSubview:self.comeInV];
     self.comeInV.hidden = YES;
@@ -99,6 +113,8 @@
         make.bottom.equalTo(self.avChatRoomView.mas_top);
     }];
     
+    
+     [self getLiveData];//获取合买商品列表
     
     //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
     //        self.comeInV.titleLB.text = @"欢迎134*****789进入直播间";
@@ -115,7 +131,7 @@
     self.heMaiArr = @[].mutableCopy;
     self.mineHeMaiArr = @[].mutableCopy;
     self.AVCharRoomArr = @[].mutableCopy;
-    [self getLiveData];//获取合买商品列表
+    
     if (self.isHeMai) {
         [self getMineHeMaiDingZhiListWithType:0];//获取我的合买列表
         [self getGoodsListData]; //店铺合买列表
@@ -125,9 +141,11 @@
     
     if (self.isTuiLiu) {
         self.headV.guanzhuBt.hidden = YES;
+        self.qieHuanCarmerBt.hidden = NO;
         
     }else {
         self.headV.guanzhuBt.hidden = NO;
+        self.qieHuanCarmerBt.hidden = YES;
     }
     
     
@@ -157,6 +175,18 @@
         make.right.equalTo(self.view).offset(-45);
         make.height.equalTo(@45);
     }];
+    
+    self.qieHuanCarmerBt = [[UIButton alloc] init];
+    [self.qieHuanCarmerBt setBackgroundImage:[UIImage imageNamed:@"dyx83"] forState:UIControlStateNormal];
+    [self.view addSubview:self.qieHuanCarmerBt];
+    [self.qieHuanCarmerBt addTarget:self action:@selector(qieHuanAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.qieHuanCarmerBt mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.view).offset(-15);
+        make.width.width.equalTo(@50);
+        make.top.equalTo(self.headV.mas_bottom).offset(10);
+    }];
+    
+    
     [[self.headV.guanzhuBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         [self gaunZhuActionwithType:0];
     }];
@@ -203,6 +233,7 @@
                         SWTShopHomeVC * vc =[[SWTShopHomeVC alloc] init];
                         vc.hidesBottomBarWhenPushed = YES;
                         vc.shopId = self.dataModel.merchid;
+                        self.isPushVC = YES;
                         [self.navigationController pushViewController:vc animated:YES];
                         return;
                     }
@@ -219,6 +250,7 @@
                     SWTMineHeMaiTiJiaoOrderTVC * vc =[[SWTMineHeMaiTiJiaoOrderTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
                     vc.hidesBottomBarWhenPushed = YES;
                     vc.model = model;
+                    self.isPushVC = YES;
                     [self.navigationController pushViewController:vc animated:YES];
                     
                     
@@ -242,6 +274,7 @@
                         SWTShopHomeVC * vc =[[SWTShopHomeVC alloc] init];
                         vc.hidesBottomBarWhenPushed = YES;
                         vc.shopId = self.dataModel.merchid;
+                        self.isPushVC = YES;
                         [self.navigationController pushViewController:vc animated:YES];
                         
                         
@@ -254,6 +287,7 @@
                         if (x.intValue - 200 < self.zhiBoArr.count) {
                             vc.goodID = self.zhiBoArr[x.intValue - 200].ID;
                         }
+                        self.isPushVC = YES;
                         [self.navigationController pushViewController:vc animated:YES];
                         
                     }
@@ -312,7 +346,7 @@
             self.bottomV.model = self.dataModel;
             [self jionAVRoom];
             if (self.isTuiLiu) {
-                [self addTuiLiu];
+                [self addTuiLiuWithType:0];
             }else {
                 [self addBoLiu];
             }
@@ -666,21 +700,26 @@
 
 
 //添加推流
-- (void)addTuiLiu {
+- (void)addTuiLiuWithType:(NSInteger)type {
     
     PLVideoCaptureConfiguration *videoCaptureConfiguration = [PLVideoCaptureConfiguration defaultConfiguration];
-    
-    videoCaptureConfiguration.position = AVCaptureDevicePositionFront;
+    if (type == 1) {
+        self.videoPL.streamMirrorFrontFacing = YES;
+        self.videoPL.streamMirrorRearFacing = NO;
+        videoCaptureConfiguration.position = AVCaptureDevicePositionFront;
+    }else {
+         self.videoPL.streamMirrorRearFacing = YES;
+        self.videoPL.streamMirrorFrontFacing = NO;
+        videoCaptureConfiguration.position = AVCaptureDevicePositionBack;
+    }
+//    self.videoPL = videoCaptureConfiguration;
     PLAudioCaptureConfiguration *audioCaptureConfiguration = [PLAudioCaptureConfiguration defaultConfiguration];
-    
-    
-    
     PLVideoStreamingConfiguration *videoStreamingConfiguration = [PLVideoStreamingConfiguration defaultConfiguration];
     PLAudioStreamingConfiguration *audioStreamingConfiguration = [PLAudioStreamingConfiguration defaultConfiguration];
     
     
     self.session = [[PLMediaStreamingSession alloc] initWithVideoCaptureConfiguration:videoCaptureConfiguration audioCaptureConfiguration:audioCaptureConfiguration videoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:nil];
-    
+    self.session.autoReconnectEnable = YES;
     
     [self.view addSubview:self.session.previewView];
     [self.view sendSubviewToBack:self.session.previewView];
@@ -723,6 +762,24 @@
     
     
     
+}
+
+- (void)qieHuanAction:(UIButton *)button {
+    button.selected = !button.selected;
+    [self.session destroy];
+    if (button.selected) {
+        [self addTuiLiuWithType:1];
+//         self.videoPL.position = AVCaptureDevicePositionBack;
+//        [self.session startCaptureSession];
+//        self.videoPL.streamMirrorRearFacing = YES;
+//        self.videoPL.streamMirrorFrontFacing = NO;
+    }else {
+       [self addTuiLiuWithType:0];
+//        self.videoPL.position = AVCaptureDevicePositionFront;
+//        [self.session startCaptureSession];
+//        self.videoPL.streamMirrorFrontFacing = YES;
+//        self.videoPL.streamMirrorRearFacing = NO;
+    }
 }
 
 
