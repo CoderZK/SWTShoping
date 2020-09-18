@@ -54,8 +54,8 @@
     NSLog(@"%zd",timeMS);
     [LSTTimer formatDateForTime:resTimeMS handle:^(NSString * _Nonnull day, NSString * _Nonnull hour, NSString * _Nonnull minute, NSString * _Nonnull second, NSString * _Nonnull ms) {
         if (day.intValue + hour.intValue + minute.intValue + second.intValue == 0) {
-
             self.timeLB.text = @"已结束";
+            [LTSCEventBus sendEvent:@"timeover" data:@""];
         }else {
             if (day > 0) {
                self.timeLB.text = [NSString stringWithFormat:@"剩余时间: %@天%@:%@:%@",day,hour,minute,second];

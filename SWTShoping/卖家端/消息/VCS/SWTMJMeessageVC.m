@@ -82,6 +82,8 @@
     TYPagerController *pagerController = [[TYPagerController alloc] init];
     pagerController.view.backgroundColor = CharacterColor50;
     pagerController.layout.prefetchItemCount = 1;
+    pagerController.scrollView.scrollEnabled = NO;
+    pagerController.scrollView.bounces = NO;
     //pagerController.layout.autoMemoryCache = NO;
     // 只有当scroll滚动动画停止时才加载pagerview，用于优化滚动时性能
     pagerController.layout.addVisibleItemOnlyWhenScrollAnimatedEnd = YES;
@@ -144,9 +146,9 @@
 //           vc1.type = index;
 //           return vc1;
 //    }else {
-//        TUIConversationListController *vc = [[TUIConversationListController alloc] init];
-//        vc.delegate = self;
-//        return vc;
+        TUIConversationListController *vc = [[TUIConversationListController alloc] init];
+        vc.delegate = self;
+        return vc;
 //    }
    
    

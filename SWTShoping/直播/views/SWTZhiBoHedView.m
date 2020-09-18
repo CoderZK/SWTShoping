@@ -138,14 +138,14 @@
     self.shopIdLB.text =  [NSString stringWithFormat:@"ID:%@",model.liveid];
     NSString * str = @"";
     if (model.focusnum.intValue > 10000) {
-        str =  [NSString stringWithFormat:@"%0.2f万",model.focusnum.floatValue];
+        str =  [NSString stringWithFormat:@"%0.2f万",model.focusnum.floatValue/10000];
     }else{
         str = model.focusnum;
     }
     
     NSString * str1 = @"";
        if (model.watchnum.intValue > 10000) {
-           str1 =  [NSString stringWithFormat:@"%0.2f万",model.watchnum.floatValue];
+           str1 =  [NSString stringWithFormat:@"%0.2f万",model.watchnum.floatValue/10000];
        }else{
            str1 = model.watchnum;
        }

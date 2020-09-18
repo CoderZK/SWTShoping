@@ -20,6 +20,9 @@
 @property(nonatomic , strong)NSString *imgStr1,*imgStr2,*imgStr3;
 @property(nonatomic , strong)UIImage *image;
 @property(nonatomic,assign)BOOL isGongSi;
+@property(nonatomic,strong)NSMutableArray *moneyArr;
+@property(nonatomic,strong)NSString *moneyStr;
+@property(nonatomic,assign)BOOL isMoney;
 
 
 @end
@@ -33,6 +36,7 @@
     self.dataArrayOne = @[].mutableCopy;
     self.dataArrayTwo = @[].mutableCopy;
     self.dataArrayThree = @[].mutableCopy;
+    self.moneyArr = @[].mutableCopy;
     [self getData];
     [self getDataTwo];
     [self getDataThree];
@@ -204,6 +208,9 @@
     self.nextBt = button;
     
     self.headView.mj_h = CGRectGetMaxY(self.nextBt.frame) + 40;
+    
+
+    
 }
 
 - (void)renZhengAction {
@@ -282,11 +289,45 @@
         
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
+            if ([self.shopTyepV.rightTF.text isEqualToString:@"普通店铺"]) {
+                self.moneyArr = @[@"5000"].mutableCopy;
+            }else if ([self.shopTyepV.rightTF.text isEqualToString:@"优选店铺"]) {
+                self.moneyArr = @[@"10000"].mutableCopy;
+            }else if ([self.shopTyepV.rightTF.text isEqualToString:@"直播店铺"]) {
+                self.moneyArr = @[@"10000",@"20000",@"50000"].mutableCopy;
+            }else if ([self.shopTyepV.rightTF.text isEqualToString:@"合买店铺"]) {
+                self.moneyArr = @[@"20000",@"50000",@"100000",@"200000"].mutableCopy;
+            }
             
-            [SVProgressHUD showSuccessWithStatus:@"申请店铺成功,等待审核"];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self.navigationController popToRootViewControllerAnimated:YES];
-            });
+            self.isMoney = YES;
+            zkPickView * pickV = [[zkPickView alloc] init];
+            pickV.arrayType = titleArray;
+            pickV.array = self.moneyArr;
+            [pickV show];
+            pickV.delegate = self;
+            
+            
+//            [SVProgressHUD showSuccessWithStatus:@"申请店铺成功,等待审核"];
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                [self.navigationController popToRootViewControllerAnimated:YES];
+//            });
+            
+//            SWTMJDianPuBaoZhengJinShowView * showV  = [[SWTMJDianPuBaoZhengJinShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+//            showV.dataArray = @[@"10",@"20",@"40",@"50",@"60",@"60",@"600"];
+//            
+//            showV.delegateSignal = [[RACSubject alloc] init];
+//            @weakify(self);
+//            [showV.delegateSignal subscribeNext:^(NSNumber * x) {
+//                @strongify(self);
+//                //点击
+//                
+//                
+//                
+//                
+//            }];
+//            
+//            [showV show];
+            
             
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
@@ -316,6 +357,7 @@
         for (SWTModel * model in self.dataArrayTwo) {
             [arr addObject:model.name];
         }
+        self.isMoney = NO;
         zkPickView * pickV = [[zkPickView alloc] init];
         pickV.arrayType = titleArray;
         pickV.array = arr;
@@ -335,6 +377,7 @@
         for (SWTModel * model in self.dataArrayOne) {
             [arr addObject:model.name];
         }
+        self.isMoney = NO;
         zkPickView * pickV = [[zkPickView alloc] init];
         pickV.arrayType = titleArray;
         pickV.array = arr;
@@ -352,6 +395,7 @@
         for (SWTModel * model in self.dataArrayThree) {
             [arr addObject:model.name];
         }
+        self.isMoney = NO;
         zkPickView * pickV = [[zkPickView alloc] init];
         pickV.arrayType = titleArray;
         pickV.array = arr;
@@ -363,44 +407,59 @@
 }
 
 - (void)didSelectLeftIndex:(NSInteger)leftIndex centerIndex:(NSInteger)centerIndex rightIndex:(NSInteger)rightIndex {
-    if (self.selectIndex == 0) {
-        self.str1 = self.dataArrayTwo[leftIndex].ID;
-        self.shopTyepV.rightTF.text = self.dataArrayTwo[leftIndex].name;
-    }else if (self.selectIndex == 1) {
-        self.str2 = self.dataArrayOne[leftIndex].ID;
-        self.shopOwnerV.rightTF.text = self.dataArrayOne[leftIndex].name;
-        if ([self.dataArrayOne[leftIndex].name isEqualToString:@"公司"]) {
-            self.isGongSi = YES;
-            self.zhengV.titleLB.text = @"请上传营业执照";
-            self.zhengV.rigthImgV.image = [UIImage imageNamed:@"dyx56"];
-            
-            self.fanV.titleLB.text = @"请上传开户行许可证";
-            self.fanV.rigthImgV.image = [UIImage imageNamed:@"dyx57"];
-            
-            
-            self.shouChiV.hidden = YES;
-            self.nextBt.mj_y = CGRectGetMaxY(self.fanV.frame) + 40;
-            self.headView.mj_h = CGRectGetMaxY(self.nextBt.frame) + 40;
-            
-        }else {
-            self.isGongSi = NO;
-            
-            self.zhengV.titleLB.text = @"请上传营业执照";
-            self.zhengV.rigthImgV.image = [UIImage imageNamed:@"dyx56"];
-            
-            self.fanV.titleLB.text = @"请上传开户行许可证";
-            self.fanV.rigthImgV.image = [UIImage imageNamed:@"dyx57"];
-            
-            self.shouChiV.hidden = NO;
-            self.nextBt.mj_y = CGRectGetMaxY(self.shouChiV.frame) + 40;
-            self.headView.mj_h = CGRectGetMaxY(self.nextBt.frame) + 40;
-            
-            
+    
+    if(self.isMoney) {
+        self.moneyStr = self.moneyArr[leftIndex];
+        SWTPayVC * vc =[[SWTPayVC alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.isComeBaoZhengJin = YES;
+        vc.priceStr = self.moneyStr;
+        vc.merchID = self.firstID;
+        [self.navigationController pushViewController:vc animated:YES];
+        
+    }else {
+        if (self.selectIndex == 0) {
+            self.str1 = self.dataArrayTwo[leftIndex].ID;
+            self.shopTyepV.rightTF.text = self.dataArrayTwo[leftIndex].name;
+        }else if (self.selectIndex == 1) {
+            self.str2 = self.dataArrayOne[leftIndex].ID;
+            self.shopOwnerV.rightTF.text = self.dataArrayOne[leftIndex].name;
+            if ([self.dataArrayOne[leftIndex].name isEqualToString:@"公司"]) {
+                self.isGongSi = YES;
+                self.zhengV.titleLB.text = @"请上传营业执照";
+                self.zhengV.rigthImgV.image = [UIImage imageNamed:@"dyx56"];
+                
+                self.fanV.titleLB.text = @"请上传开户行许可证";
+                self.fanV.rigthImgV.image = [UIImage imageNamed:@"dyx57"];
+                
+                
+                self.shouChiV.hidden = YES;
+                self.zhengV.hidden = self.fanV.hidden = NO;
+                self.nextBt.mj_y = CGRectGetMaxY(self.fanV.frame) + 40;
+                self.headView.mj_h = CGRectGetMaxY(self.nextBt.frame) + 40;
+                
+            }else {
+               self.zhengV.hidden = self.fanV.hidden =  self.isGongSi = NO;
+                
+                self.zhengV.titleLB.text = @"请上传身份证正面";
+                self.zhengV.rigthImgV.image = [UIImage imageNamed:@"dyx11"];
+                
+                self.fanV.titleLB.text = @"请上传身份证反面";
+                self.fanV.rigthImgV.image = [UIImage imageNamed:@"dyx12"];
+                
+                self.shouChiV.hidden = NO;
+                self.nextBt.mj_y = CGRectGetMaxY(self.shouChiV.frame) + 40;
+                self.headView.mj_h = CGRectGetMaxY(self.nextBt.frame) + 40;
+                
+                
+            }
+        }else if (self.selectIndex == 2) {
+            self.str3 = self.dataArrayThree[leftIndex].ID;
+            self.shopLeiV.rightTF.text = self.dataArrayThree[leftIndex].name;
         }
-    }else if (self.selectIndex == 2) {
-        self.str3 = self.dataArrayThree[leftIndex].ID;
-        self.shopLeiV.rightTF.text = self.dataArrayThree[leftIndex].name;
     }
+    
+    
     
     
 }

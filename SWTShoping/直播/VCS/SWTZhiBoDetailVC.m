@@ -177,15 +177,15 @@
     }];
     
     self.qieHuanCarmerBt = [[UIButton alloc] init];
-    [self.qieHuanCarmerBt setBackgroundImage:[UIImage imageNamed:@"dyx83"] forState:UIControlStateNormal];
+    
     [self.view addSubview:self.qieHuanCarmerBt];
     [self.qieHuanCarmerBt addTarget:self action:@selector(qieHuanAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.qieHuanCarmerBt mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.view).offset(-15);
-        make.width.width.equalTo(@50);
+        make.width.height.equalTo(@50);
         make.top.equalTo(self.headV.mas_bottom).offset(10);
     }];
-    
+    [self.qieHuanCarmerBt setBackgroundImage:[UIImage imageNamed:@"dyx83"] forState:UIControlStateNormal];
     
     [[self.headV.guanzhuBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         [self gaunZhuActionwithType:0];
@@ -476,10 +476,27 @@
 //加入直播室
 - (void)jionAVRoom {
     
-    V2TIMManager * manager = [V2TIMManager sharedInstance];
-    [manager setGroupListener:self];
-    [manager joinGroup:self.dataModel.livegroupid msg:@"333" succ:^{
+    if (self.isTuiLiu) {
+        
+    }else {
+        
+    }
+    V2TIMGroupInfo * groupInfo = [[V2TIMGroupInfo alloc] init];
+    groupInfo.groupID = self.dataModel.livegroupid;
+    groupInfo.groupType = @"ChatRoom";
+    groupInfo.groupAddOpt = V2TIM_GROUP_ADD_ANY;
+    [[V2TIMManager sharedInstance] createGroup:groupInfo memberList:nil succ:^(NSString *groupID) {
+        
+        NSLog(@"%@",@"创建直播间成功");
+        
+        
+    } fail:^(int code, NSString *desc) {
+        NSLog(@"%@",@"创建直播间失败");
+    }];
+    [[V2TIMManager sharedInstance] setGroupListener:self];
+    [[V2TIMManager sharedInstance] joinGroup:self.dataModel.livegroupid msg:@"333" succ:^{
         NSLog(@"%@",@"进入直播间成功");
+        
     } fail:^(int code, NSString *desc) {
         NSLog(@"%@",@"进入直播间失败");
     }];
@@ -504,7 +521,7 @@
         return;
     }
     
-    V2TIMMessage * cusMsg = [[V2TIMManager sharedInstance] createCustomMessage:[@[@0,self.bottomV.TF.text] mj_JSONData]];
+    V2TIMMessage * cusMsg = [[V2TIMManager sharedInstance] createCustomMessage:[@{@"type":@"0",@"data":self.bottomV.TF.text} mj_JSONData]];
     
     
     [[V2TIMManager sharedInstance] sendMessage:cusMsg receiver:nil groupID:self.dataModel.livegroupid priority:(V2TIM_PRIORITY_DEFAULT) onlineUserOnly:NO offlinePushInfo:nil progress:^(uint32_t progress) {
@@ -520,7 +537,7 @@
         model.levelcode = [zkSignleTool shareTool].level;
         [self.AVCharRoomArr addObject:model];
         self.avChatRoomView.dataArr = self.AVCharRoomArr;
-        
+        self.bottomV.TF.text = @"";
         
     } fail:^(int code, NSString *desc) {
         NSLog(@"%@",@"发送失败");
@@ -536,17 +553,15 @@
     model.avatar = msg.faceURL;
     NSDictionary * userDict = [msg.nickName mj_JSONObject];
     NSData * data  = msg.customElem.data;
-    NSArray * arr = [data mj_JSONObject];
+    NSDictionary * dict = [data mj_JSONObject];
     model.nickname = [userDict.allKeys containsObject:@"nickname"] ? userDict[@"nickname"]:@"??";
     model.levelcode = [userDict.allKeys containsObject:@"levelcode"] ? userDict[@"levelcode"]:@"0";
-    if (arr.count > 0) {
-        if ( [[NSString stringWithFormat:@"%@",arr[0]] isEqualToString:@"0"]) {
-            model.type = @"0";
-        }else {
-            model.type = @"1";
-        }
-        if (arr.count > 1 ) {
-            model.content = arr[1];
+    if ([dict.allKeys containsObject:@"type"]) {
+     
+        model.type = [NSString stringWithFormat:@"%@",dict[@"type"]];
+        if ([dict.allKeys containsObject:@"data"]) {
+            if ([NSString stringWithFormat:@"%@",dict[@"type"]].intValue == 0 || [NSString stringWithFormat:@"%@",dict[@"type"]].intValue == 1)
+            model.content = dict[@"data"];
         }
     }
     [self.AVCharRoomArr addObject:model];
@@ -557,6 +572,9 @@
 //有新成员进入到群里面
 - (void)onMemberEnter:(NSString *)groupID memberList:(NSArray<V2TIMGroupMemberInfo *>*)memberList {
     
+    
+    self.comeInV.titleLB.text =  [NSString stringWithFormat:@"欢迎%@进入直播间",@"123"];
+    [self.comeInV show];
     
     NSLog(@"===list\n%@",memberList);
     
@@ -574,6 +592,26 @@
 //有成员离开
 -(void)onMemberLeave:(NSString *)groupID member:(V2TIMGroupMemberInfo *)member {
     
+//    //获取成员
+//    [[V2TIMManager sharedInstance] getJoinedGroupList:^(NSArray<V2TIMGroupInfo *> *groupList) {
+//        
+//        NSString * str = @"";
+//        if (self.dataModel.focusnum.intValue > 10000) {
+//            str =  [NSString stringWithFormat:@"%0.2f万",self.dataModel.focusnum.floatValue/10000];
+//        }else{
+//            str = self.dataModel.focusnum;
+//        }
+//        
+//        NSString * str1 = @"";
+//           if (groupList.count > 10000) {
+//               str1 =  [NSString stringWithFormat:@"%0.2f万",groupList.count/10000.0];
+//           }else{
+//               str1 = [NSString stringWithFormat:@"%d",groupList.count];;
+//           }
+//        self.headV.fanAndSeeLB.text =  [NSString stringWithFormat:@"粉丝:%@  %@人观看",str,str1];
+//    } fail:^(int code, NSString *desc) {
+//        
+//    }];
     
     NSLog(@"%@",@"成员离开了");
     
@@ -702,17 +740,18 @@
 //添加推流
 - (void)addTuiLiuWithType:(NSInteger)type {
     
-    PLVideoCaptureConfiguration *videoCaptureConfiguration = [PLVideoCaptureConfiguration defaultConfiguration];
-    if (type == 1) {
-        self.videoPL.streamMirrorFrontFacing = YES;
-        self.videoPL.streamMirrorRearFacing = NO;
-        videoCaptureConfiguration.position = AVCaptureDevicePositionFront;
-    }else {
-         self.videoPL.streamMirrorRearFacing = YES;
-        self.videoPL.streamMirrorFrontFacing = NO;
-        videoCaptureConfiguration.position = AVCaptureDevicePositionBack;
-    }
+    PLVideoCaptureConfiguration * videoCaptureConfiguration = [PLVideoCaptureConfiguration defaultConfiguration];
+//    if (type == 1) {
+//        self.videoPL.streamMirrorFrontFacing = YES;
+//        self.videoPL.streamMirrorRearFacing = NO;
+//        videoCaptureConfiguration.position = AVCaptureDevicePositionFront;
+//    }else {
+//         self.videoPL.streamMirrorRearFacing = YES;
+//        self.videoPL.streamMirrorFrontFacing = NO;
+//        videoCaptureConfiguration.position = AVCaptureDevicePositionBack;
+//    }
 //    self.videoPL = videoCaptureConfiguration;
+    videoCaptureConfiguration.position = AVCaptureDevicePositionFront;
     PLAudioCaptureConfiguration *audioCaptureConfiguration = [PLAudioCaptureConfiguration defaultConfiguration];
     PLVideoStreamingConfiguration *videoStreamingConfiguration = [PLVideoStreamingConfiguration defaultConfiguration];
     PLAudioStreamingConfiguration *audioStreamingConfiguration = [PLAudioStreamingConfiguration defaultConfiguration];
@@ -720,6 +759,9 @@
     
     self.session = [[PLMediaStreamingSession alloc] initWithVideoCaptureConfiguration:videoCaptureConfiguration audioCaptureConfiguration:audioCaptureConfiguration videoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:nil];
     self.session.autoReconnectEnable = YES;
+    
+    
+  
     
     [self.view addSubview:self.session.previewView];
     [self.view sendSubviewToBack:self.session.previewView];
@@ -766,15 +808,22 @@
 
 - (void)qieHuanAction:(UIButton *)button {
     button.selected = !button.selected;
-    [self.session destroy];
+//    [self.session destroy];
     if (button.selected) {
-        [self addTuiLiuWithType:1];
+//        [self addTuiLiuWithType:1];
 //         self.videoPL.position = AVCaptureDevicePositionBack;
 //        [self.session startCaptureSession];
 //        self.videoPL.streamMirrorRearFacing = YES;
 //        self.videoPL.streamMirrorFrontFacing = NO;
+//        [self.session stopStreaming];
+        self.session.captureDevicePosition = AVCaptureDevicePositionBack;
+        
+        
     }else {
-       [self addTuiLiuWithType:0];
+        
+        self.session.captureDevicePosition = AVCaptureDevicePositionFront;
+        
+//       [self addTuiLiuWithType:0];
 //        self.videoPL.position = AVCaptureDevicePositionFront;
 //        [self.session startCaptureSession];
 //        self.videoPL.streamMirrorFrontFacing = YES;

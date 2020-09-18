@@ -106,7 +106,7 @@
     dict[@"pageindex"] = @(1);
     dict[@"pagesize"] = @(1000);
     dict[@"merchid"] = [zkSignleTool shareTool].selectShopID;
-    [zkRequestTool networkingPOST:merchgoodsGet_goods_list_merch_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+    [zkRequestTool networkingPOST:merchgoodsSer_goods_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         
         [SVProgressHUD dismiss];
         if ([[NSString stringWithFormat:@"%@",responseObject[@"code"]] integerValue] == 200) {

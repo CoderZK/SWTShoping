@@ -369,6 +369,8 @@
 		66751D0C24E43FD000B40B58 /* SWTOrderThreeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66751D0A24E43FD000B40B58 /* SWTOrderThreeCell.xib */; };
 		66751D1024E43FE600B40B58 /* SWTOrderDetailFourCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66751D0E24E43FE600B40B58 /* SWTOrderDetailFourCell.m */; };
 		66751D1124E43FE600B40B58 /* SWTOrderDetailFourCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66751D0F24E43FE600B40B58 /* SWTOrderDetailFourCell.xib */; };
+		667582F425134AF2005ECB36 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 667582F325134AF2005ECB36 /* MediaPlayer.framework */; };
+		667582F625134B21005ECB36 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 667582F525134B21005ECB36 /* VideoToolbox.framework */; };
 		6675B38324DD4A42002D3671 /* SWTPayVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6675B38124DD4A42002D3671 /* SWTPayVC.m */; };
 		6675B38424DD4A42002D3671 /* SWTPayVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6675B38224DD4A42002D3671 /* SWTPayVC.xib */; };
 		6678B7E124B0AE2B00EA3A56 /* SWTGoodsDetailTwoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6678B7DF24B0AE2B00EA3A56 /* SWTGoodsDetailTwoCell.m */; };
@@ -406,6 +408,9 @@
 		667D506924C499DF00A59726 /* SWTShopIntroduceThreeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 667D506724C499DF00A59726 /* SWTShopIntroduceThreeCell.m */; };
 		667D506A24C499DF00A59726 /* SWTShopIntroduceThreeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 667D506824C499DF00A59726 /* SWTShopIntroduceThreeCell.xib */; };
 		667D506D24C49ED100A59726 /* SWTShopIntroducePingJiaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 667D506C24C49ED100A59726 /* SWTShopIntroducePingJiaCell.m */; };
+		6696661E2514590100D32875 /* UITabBarItem+RedBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 6696661B2514590100D32875 /* UITabBarItem+RedBadge.m */; };
+		6696661F2514590100D32875 /* UIView+RedBadege.m in Sources */ = {isa = PBXBuildFile; fileRef = 6696661C2514590100D32875 /* UIView+RedBadege.m */; };
+		669666202514590100D32875 /* UITabBar+RedTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 6696661D2514590100D32875 /* UITabBar+RedTabBar.m */; };
 		669683D724F944AB006675DF /* SWTSearchFatherVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 669683D624F944AB006675DF /* SWTSearchFatherVC.m */; };
 		669683DA24F944FD006675DF /* SWTSearchSubVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 669683D924F944FD006675DF /* SWTSearchSubVC.m */; };
 		669683DD24F945A4006675DF /* SWTSeachSubTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 669683DC24F945A4006675DF /* SWTSeachSubTVC.m */; };
@@ -1078,6 +1083,8 @@
 		66751D0D24E43FE600B40B58 /* SWTOrderDetailFourCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTOrderDetailFourCell.h; sourceTree = "<group>"; };
 		66751D0E24E43FE600B40B58 /* SWTOrderDetailFourCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTOrderDetailFourCell.m; sourceTree = "<group>"; };
 		66751D0F24E43FE600B40B58 /* SWTOrderDetailFourCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTOrderDetailFourCell.xib; sourceTree = "<group>"; };
+		667582F325134AF2005ECB36 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		667582F525134B21005ECB36 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		6675B38024DD4A42002D3671 /* SWTPayVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTPayVC.h; sourceTree = "<group>"; };
 		6675B38124DD4A42002D3671 /* SWTPayVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTPayVC.m; sourceTree = "<group>"; };
 		6675B38224DD4A42002D3671 /* SWTPayVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTPayVC.xib; sourceTree = "<group>"; };
@@ -1141,6 +1148,12 @@
 		667D506824C499DF00A59726 /* SWTShopIntroduceThreeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTShopIntroduceThreeCell.xib; sourceTree = "<group>"; };
 		667D506B24C49ED100A59726 /* SWTShopIntroducePingJiaCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTShopIntroducePingJiaCell.h; sourceTree = "<group>"; };
 		667D506C24C49ED100A59726 /* SWTShopIntroducePingJiaCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTShopIntroducePingJiaCell.m; sourceTree = "<group>"; };
+		669666182514590000D32875 /* UITabBar+RedTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBar+RedTabBar.h"; sourceTree = "<group>"; };
+		669666192514590000D32875 /* UITabBarItem+RedBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarItem+RedBadge.h"; sourceTree = "<group>"; };
+		6696661A2514590000D32875 /* UIView+RedBadege.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RedBadege.h"; sourceTree = "<group>"; };
+		6696661B2514590100D32875 /* UITabBarItem+RedBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarItem+RedBadge.m"; sourceTree = "<group>"; };
+		6696661C2514590100D32875 /* UIView+RedBadege.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RedBadege.m"; sourceTree = "<group>"; };
+		6696661D2514590100D32875 /* UITabBar+RedTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBar+RedTabBar.m"; sourceTree = "<group>"; };
 		669683D524F944AB006675DF /* SWTSearchFatherVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTSearchFatherVC.h; sourceTree = "<group>"; };
 		669683D624F944AB006675DF /* SWTSearchFatherVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTSearchFatherVC.m; sourceTree = "<group>"; };
 		669683D824F944FD006675DF /* SWTSearchSubVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTSearchSubVC.h; sourceTree = "<group>"; };
@@ -1165,6 +1178,7 @@
 			files = (
 				33DC822E20EA1CA700D1C283 /* libc++.1.tbd in Frameworks */,
 				33DC822B20EA1C4600D1C283 /* Foundation.framework in Frameworks */,
+				667582F625134B21005ECB36 /* VideoToolbox.framework in Frameworks */,
 				33DC822920EA1BEC00D1C283 /* libsqlite3.0.tbd in Frameworks */,
 				33DC822720EA182500D1C283 /* CoreMotion.framework in Frameworks */,
 				666D395F24E1386E0023776B /* libWeChatSDK.a in Frameworks */,
@@ -1173,6 +1187,7 @@
 				33DC822120EA180100D1C283 /* libz.1.1.3.tbd in Frameworks */,
 				666D395A24E1386E0023776B /* libPaymentControl.a in Frameworks */,
 				33DC821D20EA17E900D1C283 /* UserNotifications.framework in Frameworks */,
+				667582F425134AF2005ECB36 /* MediaPlayer.framework in Frameworks */,
 				337F3EBE20EA136800C5526A /* CoreFoundation.framework in Frameworks */,
 				AE1A7CF29DF9D6E7166E507C /* libPods-SWTShoping.a in Frameworks */,
 				666D395B24E1386E0023776B /* libUMSPosPayOnly.a in Frameworks */,
@@ -1379,6 +1394,7 @@
 		337F3EB120EA040400C5526A /* 其它 */ = {
 			isa = PBXGroup;
 			children = (
+				66966617251458E700D32875 /* tabbarRed */,
 				666A3A0124B74D1500318075 /* lunBoV */,
 				66700CD024EBB13F00442C1D /* LSTTimer.h */,
 				66700CD124EBB14000442C1D /* LSTTimer.m */,
@@ -1644,6 +1660,8 @@
 		527B5D99162EB1A60EB7D17D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				667582F525134B21005ECB36 /* VideoToolbox.framework */,
+				667582F325134AF2005ECB36 /* MediaPlayer.framework */,
 				33DC822C20EA1C9D00D1C283 /* libstdc++.6.0.9.tbd */,
 				33DC822A20EA1C4600D1C283 /* Foundation.framework */,
 				33DC822820EA1BEC00D1C283 /* libsqlite3.0.tbd */,
@@ -2760,6 +2778,19 @@
 			path = VCS;
 			sourceTree = "<group>";
 		};
+		66966617251458E700D32875 /* tabbarRed */ = {
+			isa = PBXGroup;
+			children = (
+				669666182514590000D32875 /* UITabBar+RedTabBar.h */,
+				6696661D2514590100D32875 /* UITabBar+RedTabBar.m */,
+				669666192514590000D32875 /* UITabBarItem+RedBadge.h */,
+				6696661B2514590100D32875 /* UITabBarItem+RedBadge.m */,
+				6696661A2514590000D32875 /* UIView+RedBadege.h */,
+				6696661C2514590100D32875 /* UIView+RedBadege.m */,
+			);
+			path = tabbarRed;
+			sourceTree = "<group>";
+		};
 		66C8F79924AB1E0B008C7A3A /* LTSCNoneView */ = {
 			isa = PBXGroup;
 			children = (
@@ -3169,6 +3200,7 @@
 				66732D1C24BB071400452F21 /* SWTZhiBoBottomView.m in Sources */,
 				666A3A1624B74D1500318075 /* zkPhotoShowVC.m in Sources */,
 				667A44E024B23D2D006C9072 /* SWTLaoYouDesNeiTwoCell.m in Sources */,
+				6696661E2514590100D32875 /* UITabBarItem+RedBadge.m in Sources */,
 				6673BA9324B368D500037A14 /* SWTHeMaiOneCell.m in Sources */,
 				66751D0B24E43FD000B40B58 /* SWTOrderThreeCell.m in Sources */,
 				66C8F7A124AB1E0B008C7A3A /* LTSCNoneView.m in Sources */,
@@ -3227,6 +3259,7 @@
 				6674243924B4C647007A6A56 /* SWTVideoDetailTVC.m in Sources */,
 				66732CF024BAA1EF00452F21 /* SWTLoginOneVC.m in Sources */,
 				666A3A1524B74D1500318075 /* TYCyclePagerTransformLayout.m in Sources */,
+				6696661F2514590100D32875 /* UIView+RedBadege.m in Sources */,
 				66689F1424B4016F00C49A2E /* SWTCanPaiSubTVC.m in Sources */,
 				6674244324B4CBCF007A6A56 /* SWTVideoDetailOneCell.m in Sources */,
 				66C8F7A324AB1E0B008C7A3A /* LTSCEventBus.m in Sources */,
@@ -3250,6 +3283,7 @@
 				666A3A1124B74D1500318075 /* zkLunBoCell.m in Sources */,
 				667A44C224B217AF006C9072 /* SWTGouMaiShowView.m in Sources */,
 				666D392F24E0F0C60023776B /* SWTAVChatRoomView.m in Sources */,
+				669666202514590100D32875 /* UITabBar+RedTabBar.m in Sources */,
 				6669F5D324AB7FEC0013675E /* SWTMineHomeButton.m in Sources */,
 				666A5BB924FFA0BC006FB789 /* SWTShowLoginView.m in Sources */,
 				6670881824E57D1700EDA2C5 /* SWTMJMessageOneCell.m in Sources */,

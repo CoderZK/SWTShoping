@@ -54,7 +54,7 @@
            }];
            
            self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-               if (self.ListArr.count < 20) {
+               if (self.ListArr.count < 50) {
                    [self.tableView.mj_footer endRefreshing];
                    return;
                }
@@ -64,13 +64,17 @@
         
     }
     
-    
-    
+    [LTSCEventBus registerEvent:@"cmessage" block:^(id data) {
+            if (self.type == 1) {
+                self.stepNext = 0;
+                [self getList];
+            }
+       }];
 }
 
 - (void)getList  {
     
-    [[V2TIMManager sharedInstance] getConversationList:(self.stepNext) count:20 succ:^(NSArray<V2TIMConversation *> *list, uint64_t nextSeq, BOOL isFinished) {
+    [[V2TIMManager sharedInstance] getConversationList:(self.stepNext) count:50 succ:^(NSArray<V2TIMConversation *> *list, uint64_t nextSeq, BOOL isFinished) {
         
        [self.tableView.mj_header endRefreshing];
        [self.tableView.mj_footer endRefreshing];
@@ -206,6 +210,66 @@
     }
     
 }
+
+
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+   
+    return YES;
+}
+
+-(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return UITableViewCellEditingStyleDelete;
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return @"删除";
+}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+    if(editingStyle == UITableViewCellEditingStyleDelete){
+        if (self.type == 1) {
+            [[V2TIMManager sharedInstance] deleteConversation:self.ListArr[indexPath.row].conversationID succ:^{
+                [self.ListArr removeObjectAtIndex:indexPath.row];
+                [self.tableView reloadData];
+            } fail:^(int code, NSString *desc) {
+                
+            }];
+        }else {
+            
+            
+            [SVProgressHUD show];
+            NSMutableDictionary * dict = @{}.mutableCopy;
+            dict[@"sendid"] = self.dataArray[indexPath.row].sendid;
+            dict[@"receiveid"] = [zkSignleTool shareTool].session_uid;
+            [zkRequestTool networkingPOST:pushmsgDeletethis_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+                [self.tableView.mj_header endRefreshing];
+                [self.tableView.mj_footer endRefreshing];
+                [SVProgressHUD dismiss];
+                if ([responseObject[@"code"] intValue]== 200) {
+
+                    [self.dataArray removeObjectAtIndex:indexPath.row];
+                    [self.tableView reloadData];
+
+                }else {
+                    [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"key"]] message:responseObject[@"message"]];
+                }
+
+            } failure:^(NSURLSessionDataTask *task, NSError *error) {
+
+                [self.tableView.mj_header endRefreshing];
+                [self.tableView.mj_footer endRefreshing];
+
+            }];
+           
+        }
+        
+     
+        
+    }
+}
+
 
 
 @end

@@ -34,6 +34,10 @@
         self.typeLB.text = @"领先";
         self.typeLB.layer.borderWidth = 0.5;
         self.typeLB.layer.borderColor = RedLightColor.CGColor;
+    }else if (model.status.intValue == 2){
+        self.typeLB.text = @"已拍中";
+        self.typeLB.layer.borderWidth = 0.5;
+        self.typeLB.layer.borderColor = RedLightColor.CGColor;
     }else {
         self.typeLB.text = @"出局";
         self.typeLB.layer.borderWidth = 0.5;

@@ -75,7 +75,9 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.estimatedRowHeight = 40;
     
-    
+    [LTSCEventBus registerEvent:@"timeover" block:^(id data) {
+        [self.bottomView.chujiaBt setTitle:@"已结束" forState:UIControlStateNormal];
+    }];
     
     
     self.page = 1;
@@ -173,6 +175,10 @@
                 [gouMaiV show];
             }else {
                 //点击出价
+                if ([self.bottomView.chujiaBt.titleLabel.text isEqualToString:@"已结束"]) {
+                    [SVProgressHUD showSuccessWithStatus:@"竞拍已结束"];
+                    return;
+                }
                 [self getNewPirceAndAc];
                 self.chuJiaView  = [[SWTGoodsDetailChuJiaView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
                 [self.chuJiaView.chujiaBt addTarget:self action:@selector(chuJiaAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -232,8 +238,11 @@
                 [self.bottomView.chujiaBt setTitle:@"立即购买" forState:UIControlStateNormal];
             }else {
                 [self.bottomView.chujiaBt setTitle:@"出个价" forState:UIControlStateNormal];
+                if (self.dataModel.resttimes.length == 0) {
+                   [self.bottomView.chujiaBt setTitle:@"已结束" forState:UIControlStateNormal];
+                }
             }
-            
+        
             [self.tableView reloadData];
             
             [self getJingXuanData];
@@ -381,7 +390,7 @@
             SWTGoodsDetailTwoCell  * cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTGoodsDetailTwoCell" forIndexPath:indexPath];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.model = self.dataModel;
-            cell.timeInterval = [NSString pleaseInsertEndTime:self.dataModel.endtime] > 0 ?  [NSString pleaseInsertEndTime:self.dataModel.endtime] : 0;
+            cell.timeInterval = self.dataModel.resttimes > 0 ?  self.dataModel.resttimes.doubleValue /1000.0 : 0;
             cell.delegateSignal = [[RACSubject alloc] init];
             @weakify(self);
             [cell.delegateSignal subscribeNext:^(NSNumber * x) {
@@ -397,6 +406,12 @@
                     [self getData];
                 }else {
                     //出价
+                    
+                    if ([self.bottomView.chujiaBt.titleLabel.text isEqualToString:@"已结束"]) {
+                        [SVProgressHUD showSuccessWithStatus:@"竞拍已结束"];
+                        return;
+                    }
+                    
                     [self getNewPirceAndAc];
                     self.chuJiaView  = [[SWTGoodsDetailChuJiaView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
                     [self.chuJiaView.chujiaBt addTarget:self action:@selector(chuJiaAction:) forControlEvents:UIControlEventTouchUpInside];

@@ -18,39 +18,39 @@
     [super viewDidLoad];
     
     
-    UIButton * button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    button.backgroundColor = [UIColor redColor];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    [button addTarget:self action:@selector(action) forControlEvents:UIControlEventTouchUpInside];
-    
-    PLVideoCaptureConfiguration *videoCaptureConfiguration = [PLVideoCaptureConfiguration defaultConfiguration];
-    
-    videoCaptureConfiguration.position = AVCaptureDevicePositionFront;
-    PLAudioCaptureConfiguration *audioCaptureConfiguration = [PLAudioCaptureConfiguration defaultConfiguration];
-    
-
-    
-    PLVideoStreamingConfiguration *videoStreamingConfiguration = [PLVideoStreamingConfiguration defaultConfiguration];
-    PLAudioStreamingConfiguration *audioStreamingConfiguration = [PLAudioStreamingConfiguration defaultConfiguration];
- 
-    
-    self.session = [[PLMediaStreamingSession alloc] initWithVideoCaptureConfiguration:videoCaptureConfiguration audioCaptureConfiguration:audioCaptureConfiguration videoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:nil];
-    
-    
-    [self.view addSubview:self.session.previewView];
+//    UIButton * button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+//    button.backgroundColor = [UIColor redColor];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+//    [button addTarget:self action:@selector(action) forControlEvents:UIControlEventTouchUpInside];
+//
+//    PLVideoCaptureConfiguration *videoCaptureConfiguration = [PLVideoCaptureConfiguration defaultConfiguration];
+//
+//    videoCaptureConfiguration.position = AVCaptureDevicePositionFront;
+//    PLAudioCaptureConfiguration *audioCaptureConfiguration = [PLAudioCaptureConfiguration defaultConfiguration];
+//
+//
+//
+//    PLVideoStreamingConfiguration *videoStreamingConfiguration = [PLVideoStreamingConfiguration defaultConfiguration];
+//    PLAudioStreamingConfiguration *audioStreamingConfiguration = [PLAudioStreamingConfiguration defaultConfiguration];
+//
+//
+//    self.session = [[PLMediaStreamingSession alloc] initWithVideoCaptureConfiguration:videoCaptureConfiguration audioCaptureConfiguration:audioCaptureConfiguration videoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:nil];
+//
+//
+//    [self.view addSubview:self.session.previewView];
 }
 
 - (void)action {
     
-    NSURL *pushURL = [NSURL URLWithString:@"rtmp://pili-publish.xunshun.net/diyuxuan6188/2?e=1599195413&token=KHCzbpIL_mUAG8Dh5MZxFb9ahViYoMiSnVbTqwvx:IywzbmU0osFlatDE29sMZnsmCfs="];
-    [self.session startStreamingWithPushURL:pushURL feedback:^(PLStreamStartStateFeedback feedback) {
-           if (feedback == PLStreamStartStateSuccess) {
-               NSLog(@"Streaming started.");
-           }
-           else {
-               NSLog(@"Oops.");
-           }
-    }];
+//    NSURL *pushURL = [NSURL URLWithString:@"rtmp://pili-publish.xunshun.net/diyuxuan6188/2?e=1599195413&token=KHCzbpIL_mUAG8Dh5MZxFb9ahViYoMiSnVbTqwvx:IywzbmU0osFlatDE29sMZnsmCfs="];
+//    [self.session startStreamingWithPushURL:pushURL feedback:^(PLStreamStartStateFeedback feedback) {
+//           if (feedback == PLStreamStartStateSuccess) {
+//               NSLog(@"Streaming started.");
+//           }
+//           else {
+//               NSLog(@"Oops.");
+//           }
+//    }];
     
 }
 

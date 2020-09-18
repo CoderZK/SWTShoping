@@ -134,7 +134,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *num;
 @property(nonatomic,strong)NSString *levelcode;
 @property(nonatomic,strong)NSString *orderid;
-
+@property(nonatomic,strong)NSString *resttimes;
 @property(nonatomic,strong)NSString *realprice;
 @property(nonatomic,strong)NSString *coupons;
 @property(nonatomic,strong)NSString *expressinfo;
@@ -172,8 +172,28 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *allnum;
 @property(nonatomic,strong)NSString *imgnum;
 @property(nonatomic,strong)NSArray *refundImgs;
-
-
+@property(nonatomic,strong)NSArray *delaytime;
+//@property(nonatomic,strong)NSString *commentstatus;
+//@property(nonatomic,strong)NSString *gender;
+//@property(nonatomic,strong)NSString *refundtype;
+//@property(nonatomic,strong)NSString *allnum;
+//@property(nonatomic,strong)NSString *imgnum;
+//@property(nonatomic,strong)NSArray *refundImgs;
+//@property(nonatomic,strong)NSArray *delaytime;
+//@property(nonatomic,strong)NSString *commentstatus;
+//@property(nonatomic,strong)NSString *gender;
+//@property(nonatomic,strong)NSString *refundtype;
+//@property(nonatomic,strong)NSString *allnum;
+//@property(nonatomic,strong)NSString *imgnum;
+//@property(nonatomic,strong)NSArray *refundImgs;
+//@property(nonatomic,strong)NSArray *delaytime;
+//@property(nonatomic,strong)NSString *commentstatus;
+//@property(nonatomic,strong)NSString *gender;
+//@property(nonatomic,strong)NSString *refundtype;
+//@property(nonatomic,strong)NSString *allnum;
+//@property(nonatomic,strong)NSString *imgnum;
+//@property(nonatomic,strong)NSArray *refundImgs;
+//@property(nonatomic,strong)NSArray *delaytime;
 
 ////转化成模型
 @property(nonatomic,strong)SWTModel *merchinfo;

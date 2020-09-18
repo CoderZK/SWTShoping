@@ -30,7 +30,7 @@
 
 
 //苹果账号 shanghaixunshun@163.com 密码 Ma730620
-@interface AppDelegate ()<V2TIMSDKListener>
+@interface AppDelegate ()<V2TIMSDKListener,V2TIMAdvancedMsgListener>
 
 @end
 
@@ -80,6 +80,7 @@
     
      [[TUIKit sharedInstance] setupWithAppId:TXIMAPPID];
     
+    [[V2TIMManager sharedInstance] addAdvancedMsgListener:self];
     
     [self initTengXunIM];
     
@@ -89,6 +90,22 @@
     
     return YES;
 }
+
+/// 收到新消息
+- (void)onRecvNewMessage:(V2TIMMessage *)msg{
+    
+    [LTSCEventBus sendEvent:@"cmessage" data:nil];
+    
+}
+
+/// 收到消息已读回执（仅单聊有效）
+- (void)onRecvC2CReadReceipt:(NSArray<V2TIMMessageReceipt *> *)receiptList{
+    
+    
+    
+    
+}
+
 
 - (void)initTengXunIM {
     // 1. 从 IM 控制台获取应用 SDKAppID，详情请参考 SDKAppID。

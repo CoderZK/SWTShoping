@@ -332,6 +332,9 @@
 #pragma mark ---- 支付模块 -----
 /**下单请求模块 */
 #define payOrder_SWT URLOne@"pay/order"
+/**支付保障金 */
+#define paypaymoney_SWT URLOne@"pay/paymoney"
+
 /** 账单查询 */
 #define payOrderQuery_SWT URLOne@"pay/orderQuery"
 /**  */
@@ -407,6 +410,10 @@
 #define merchgoodsUpd_goods_SWT URLOne@"merchgoods/upd_goods"
 /** 获取商品列表 */
 #define merchgoodsGet_goods_list_merch_SWT URLOne@"merchgoods/get_goods_list_merch"
+
+/** 搜索商品 */
+#define merchgoodsSer_goods_SWT URLOne@"merchgoods/ser_goods"
+
 /** 删除商品*/
 #define merchgoodsDel_goods_SWT URLOne@"merchgoods/del_goods"
 /** 搜索商品*/

@@ -36,6 +36,24 @@
     [LTSCEventBus registerEvent:@"foreground" block:^(id data) {
         [weakSelf getOrderStatus];
     }];
+    
+    [self setLeftNagate];
+    
+}
+
+- (void)setLeftNagate {
+    
+    UIButton * leftBt  =[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    leftBt.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [leftBt setImage:[UIImage imageNamed:@"bback"] forState:UIControlStateNormal];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftBt];
+    @weakify(self);
+    [[leftBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        @strongify(self);
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }];
+    
+    
 }
 
 - (void)getOrderStatus {
@@ -43,25 +61,31 @@
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"merOrderId"] = self.orderID;
     [zkRequestTool networkingPOST:payOrderquery_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
-       
+        
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
-            if ([responseObject[@"data"][@"status"] isEqualToString:@"SUCCESS"]) {
-                //支付成功
-                SWTPaySucessVC * vc =[[SWTPaySucessVC alloc] init];
-                vc.hidesBottomBarWhenPushed = YES;
-                vc.orderID = self.orderID;
-                vc.priceStr = self.priceStr;
-                [self.navigationController pushViewController:vc animated:YES];
+            if (self.isComeBaoZhengJin) {
+                [SVProgressHUD showSuccessWithStatus:@"店铺保证金支付成功"];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.navigationController popToRootViewControllerAnimated:YES];
+                });
+            }else {
+                if ([responseObject[@"data"][@"status"] isEqualToString:@"SUCCESS"]) {
+                    //支付成功
+                    SWTPaySucessVC * vc =[[SWTPaySucessVC alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    vc.orderID = self.orderID;
+                    vc.priceStr = self.priceStr;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
             }
             
-        }else {
-            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+            
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
- 
+        
         
     }];
 }
@@ -84,12 +108,12 @@
         self.imgV3.image = [UIImage imageNamed:@"dyx43"];
         self.payType = sender.tag;
     }else if (sender.tag == 103) {
-//        [self payAction];
+        //        [self payAction];
         [self getOrderWityType:self.payType];
     }
     
     
-     
+    
 }
 
 //获取支付信息
@@ -106,8 +130,13 @@
     }else {
         dict[@"type"] = @"uac.appOrder";
     }
-    [zkRequestTool networkingPOST:payOrder_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
-
+    NSString * url = payOrder_SWT;
+    if (self.isComeBaoZhengJin) {
+        url = paypaymoney_SWT;
+        dict[@"merchid"] = self.merchID;
+    }
+    [zkRequestTool networkingPOST:url parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        
         [SVProgressHUD dismiss];
         
         
@@ -118,25 +147,28 @@
             if ( dict2 != nil && [dict2.allKeys containsObject:@"appPayRequest"]) {
                 
                 self.payDataJsonStr = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:dict2[@"appPayRequest"] options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
+                self.orderID = responseObject[@"merOrderId"];
                 [self payAction];
+                
+                
             }
         }
         
-//        if ([responseObject[@"code"] intValue]== 200) {
-//
-//
-//
-//
-//        }else {
-//            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
-//        }
+        //        if ([responseObject[@"code"] intValue]== 200) {
+        //
+        //
+        //
+        //
+        //        }else {
+        //            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        //        }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
         
         
     }];
-
+    
     
 }
 
@@ -147,42 +179,59 @@
     
     if (self.payType == 100) {
         [UMSPPPayUnifyPayPlugin payWithPayChannel:CHANNEL_WEIXIN
-              payData:self.payDataJsonStr
-        callbackBlock:^(NSString *resultCode, NSString *resultInfo) {
+                                          payData:self.payDataJsonStr
+                                    callbackBlock:^(NSString *resultCode, NSString *resultInfo) {
             
             
             
         }];
     }else if (self.payType == 101) {
         
-//        NSDictionary * dictionary = @{@"qrCode": @"https://qr.alipay.com/bax09163hdue268uttgh005b"};
-//
-//        NSString *payDataJsonStr = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
+        //        NSDictionary * dictionary = @{@"qrCode": @"https://qr.alipay.com/bax09163hdue268uttgh005b"};
+        //
+        //        NSString *payDataJsonStr = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
         
         [UMSPPPayUnifyPayPlugin payWithPayChannel:CHANNEL_ALIPAY payData:self.payDataJsonStr callbackBlock:^(NSString *resultCode, NSString *resultInfo) {
             if ([resultCode isEqualToString:@"1003"]) {
                 [SVProgressHUD showErrorWithStatus:@"用户未安装客户端"];
             }else if ([resultCode isEqualToString:@"0000"]) {
-                SWTPaySucessVC * vc =[[SWTPaySucessVC alloc] init];
-                vc.hidesBottomBarWhenPushed = YES;
-                vc.orderID = self.orderID;
-                vc.priceStr = self.priceStr;
-                [self.navigationController pushViewController:vc animated:YES];
+                
+                if (self.isComeBaoZhengJin) {
+                    [SVProgressHUD showSuccessWithStatus:@"店铺保证金支付成功"];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [self.navigationController popToRootViewControllerAnimated:YES];
+                    });
+                }else {
+                    SWTPaySucessVC * vc =[[SWTPaySucessVC alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    vc.orderID = self.orderID;
+                    vc.priceStr = self.priceStr;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+                
+                
             }
         }];
     }else {
         
         [UMSPPPayUnifyPayPlugin cloudPayWithURLSchemes:@"unifyPayDemo" payData:self.payDataJsonStr
-        viewController:self
-         callbackBlock:^(NSString *resultCode, NSString *resultInfo) {
+                                        viewController:self
+                                         callbackBlock:^(NSString *resultCode, NSString *resultInfo) {
             if ([resultCode isEqualToString:@"0000"]) {
-                SWTPaySucessVC * vc =[[SWTPaySucessVC alloc] init];
-                vc.hidesBottomBarWhenPushed = YES;
-                vc.orderID = self.orderID;
-                vc.priceStr = self.priceStr;
-                [self.navigationController pushViewController:vc animated:YES];
+                if (self.isComeBaoZhengJin) {
+                    [SVProgressHUD showSuccessWithStatus:@"店铺保证金支付成功"];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [self.navigationController popToRootViewControllerAnimated:YES];
+                    });
+                }else {
+                    SWTPaySucessVC * vc =[[SWTPaySucessVC alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    vc.orderID = self.orderID;
+                    vc.priceStr = self.priceStr;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
             }
-         }];
+        }];
         
     }
     

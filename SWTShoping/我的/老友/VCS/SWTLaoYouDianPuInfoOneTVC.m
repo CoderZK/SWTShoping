@@ -127,16 +127,17 @@
     self.shopDesV.rightTF.placeholder = @"请填写店铺介绍(40字以内)";
     [self.headView addSubview:self.shopDesV];
     
-    self.shopWinXinV = [[SWTDianPuInfoView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.shopDesV.frame), ScreenW, hh) withIsJianTou:NO withMaxNumber:40];
-    self.shopWinXinV.leftLB.text = @"店铺微信号";
-    self.shopWinXinV.rightTF.placeholder = @"请填写微信号";
-    self.shopWinXinV.rightTF.tag = 100;
-//    self.shopWinXinV.rightTF.keyboardType = UIKeyboardTypePhonePad;
-    [self.headView addSubview:self.shopWinXinV];
+//    self.shopWinXinV = [[SWTDianPuInfoView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.shopDesV.frame), ScreenW, hh) withIsJianTou:NO withMaxNumber:40];
+//    self.shopWinXinV.leftLB.text = @"店铺微信号";
+//    self.shopWinXinV.rightTF.placeholder = @"请填写微信号";
+//    self.shopWinXinV.rightTF.tag = 100;
+////    self.shopWinXinV.rightTF.keyboardType = UIKeyboardTypePhonePad;
+//    [self.headView addSubview:self.shopWinXinV];
     
-    self.shopPhoneV = [[SWTDianPuInfoView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.shopWinXinV.frame), ScreenW, hh) withIsJianTou:NO withMaxNumber:40];
+    self.shopPhoneV = [[SWTDianPuInfoView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.shopDesV.frame), ScreenW, hh) withIsJianTou:NO withMaxNumber:40];
     self.shopPhoneV.leftLB.text = @"联系手机号";
     self.shopPhoneV.rightTF.placeholder = @"请输入手机号";
+    self.shopPhoneV.rightTF.keyboardType = UIKeyboardTypePhonePad;
     [self.headView addSubview:self.shopPhoneV];
     
     
@@ -195,11 +196,11 @@
             return;
         }
         
-        if (self.shopWinXinV.rightTF.text.length == 0) {
-            [SVProgressHUD showErrorWithStatus:@"请输入商铺微信号"];
-            return;
-        }
-        
+//        if (self.shopWinXinV.rightTF.text.length == 0) {
+//            [SVProgressHUD showErrorWithStatus:@"请输入商铺微信号"];
+//            return;
+//        }
+//
         if (self.shopPhoneV.rightTF.text.length == 0) {
             [SVProgressHUD showErrorWithStatus:@"请输入商铺联系手机号"];
             return;
@@ -229,7 +230,7 @@
     dict[@"avatar"] = self.headImgStr;
     dict[@"store_name"] = self.shopNameV.rightTF.text;
     dict[@"description"] = self.shopDesV.rightTF.text;
-    dict[@"weixin"] = self.shopWinXinV.rightTF.text;
+//    dict[@"weixin"] = self.shopWinXinV.rightTF.text;
     dict[@"mobile"] = self.shopPhoneV.rightTF.text;
     dict[@"bg_image"] = self.shopBackImagStr;
     dict[@"memberid"] = [zkSignleTool shareTool].session_uid;

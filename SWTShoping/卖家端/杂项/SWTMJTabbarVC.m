@@ -31,6 +31,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    Weak(weakSelf);
+    [LTSCEventBus registerEvent:@"showmessage" block:^(NSNumber * data) {
+        if (data.intValue == 1) {
+            [weakSelf.tabBar showBadgeIndex:2];
+        }else {
+            [weakSelf.tabBar hideBadgeIndex:2];
+        }
+    }];
+    
     NSArray *imgArr=@[@"bbdyx18",@"bbdyx20",@"bbdyx22",@"bbdyx24"];
     NSArray *selectedImgArr=@[@"bbdyx19",@"bbdyx21",@"bbdyx23",@"bbdyx25"];
     NSArray *barTitleArr=@[@"首页",@"发布",@"消息",@"我的"];

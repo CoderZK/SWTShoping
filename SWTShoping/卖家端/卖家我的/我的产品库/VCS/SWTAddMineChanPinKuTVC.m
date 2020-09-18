@@ -13,7 +13,7 @@
 #import "SWTMJAddCHanPinKuSHowView.h"
 #import "SWTMJCangKuSelectView.h"
 @interface SWTAddMineChanPinKuTVC ()<UITextFieldDelegate,zkPickViewDelelgate>
-@property(nonatomic , strong)NSString *bianHaoStr,*kuCunStr,*diJiaStr,*jiaJiaStr,*timeStr,*endTimeStr;
+@property(nonatomic , strong)NSString *bianHaoStr,*kuCunStr,*diJiaStr,*jiaJiaStr,*timeStr,*endTimeStr,*youFeiStr,*yanShiTime;
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *pingMingArr;
 @property(nonatomic , strong)NSMutableArray<SWTModel *>*caiZhiArr,*chanPinKuArr;
 @property(nonatomic , assign)NSInteger  selectIndex;
@@ -21,7 +21,7 @@
 @property(nonatomic , strong)SWTAddChanPinHeadView *headV;
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *selectCangKuArr;
 @property(nonatomic , strong)NSMutableArray *picArr,*picStrArr;
-@property(nonatomic,assign)BOOL isBaoYou,isPinMingSelectAll,isAddThumbPic;
+@property(nonatomic,assign)BOOL isBaoYou,isPinMingSelectAll,isAddThumbPic,isHeMai;
 @property(nonatomic,strong)UIImage *thumbImge;
 
 @property(nonatomic , strong)SWTModel *dataModel;
@@ -69,7 +69,7 @@
         [self getGetGoodDetail];
     }
     
-    
+    self.yanShiTime = @"10";
 }
 
 
@@ -223,6 +223,14 @@
             return;
         }
     }
+    
+    if (self.isBaoYou == NO) {
+        if (self.youFeiStr.length == 0) {
+            [SVProgressHUD showErrorWithStatus:@"请输入邮费"];
+            return;
+        }
+    }
+    
     self.isAddThumbPic = NO;
     [self updateImage];
 }
@@ -258,6 +266,11 @@
     dict[@"thumb"] = self.thumbStr;
     dict[@"weight"] = self.headV.weightV.TF.text;
     dict[@"stepprice"] = self.jiaJiaStr;
+    dict[@"ischipped"] = self.isHeMai?@"1":@"0";
+    dict[@"delaytime"] = self.yanShiTime;
+    if (self.isBaoYou == NO) {
+        dict[@"expressprice"] = self.youFeiStr;
+    }
     
     NSString * urlstr  = merchgoodsAdd_goods_SWT;
     if (self.isEdit) {
@@ -313,7 +326,7 @@
     @weakify(self);
     [headV.delegateSignal subscribeNext:^(NSNumber * x) {
         @strongify(self);
-        
+        [self.tableView endEditing:YES];
         if (x.intValue < 150) {
             self.selectIndex = x.integerValue;
             if (x.intValue == 100) {
@@ -387,7 +400,7 @@
     }else if (section == 1) {
         return 2 + self.selectCangKuArr.count;
     }else {
-        return 5;
+        return 8;
     }
     
 }
@@ -398,8 +411,15 @@
         }
         return 40;
     }
-    if (indexPath.section == 2 && (indexPath.row == 1 || indexPath.row == 2 || indexPath.row == 1 || indexPath.row == 3)) {
+    if (indexPath.section == 2 && (indexPath.row == 1 || indexPath.row == 2  || indexPath.row == 3 || indexPath.row == 4)) {
         if (self.typeStr.intValue == 0) {
+            return 0;
+        }else {
+            return 50;
+        }
+    }
+    if (indexPath.section == 2 && indexPath.row == 7) {
+        if (self.isBaoYou) {
             return 0;
         }else {
             return 50;
@@ -471,13 +491,29 @@
             cell.rightTF.placeholder = @"请选择";
             cell.rightTF.userInteractionEnabled = NO;
             cell.rightTF.text = self.endTimeStr;
-        }else if (indexPath.row == 4){
+        }else if  (indexPath.row == 4){
+            cell.leftLB.text = @"延时拍";
+            cell.rightTF.placeholder = @"请选择";
+            cell.rightTF.userInteractionEnabled = NO;
+            cell.rightTF.text = [NSString stringWithFormat:@"%@秒",self.yanShiTime];;
+        } else if (indexPath.row == 5){
+            cell.rightTF.userInteractionEnabled = NO;
+            cell.rightTF.placeholder = @"";
+            cell.leftLB.text = @"合买";
+            cell.swithBt.hidden = NO;
+            cell.swithBt.on = self.isHeMai;
+            cell.swithBt.userInteractionEnabled = NO;
+        }else if (indexPath.row == 6) {
             cell.rightTF.userInteractionEnabled = NO;
             cell.rightTF.placeholder = @"";
             cell.leftLB.text = @"包邮";
             cell.swithBt.hidden = NO;
             cell.swithBt.on = self.isBaoYou;
             cell.swithBt.userInteractionEnabled = NO;
+        }else if (indexPath.row == 7) {
+            
+            cell.leftLB.text = @"邮费";
+            cell.rightTF.text = self.youFeiStr;
         }
         cell.rightTF.delegate = self;
         cell.clipsToBounds = YES;
@@ -593,6 +629,8 @@
             self.diJiaStr = textField.text;
         }else if (indexPath.row == 1) {
             self.jiaJiaStr = textField.text;
+        }else if (indexPath.row == 6) {
+            self.youFeiStr = textField.text;
         }
     }
 }
@@ -615,11 +653,18 @@
             
         }];
     }
-    if (indexPath.section == 2 && indexPath.row == 4) {
+    if (indexPath.section == 2 && indexPath.row == 5) {
         [self.tableView endEditing:YES];
         self.isBaoYou = !self.isBaoYou;
         [self.tableView reloadData];
     }
+    
+    if (indexPath.section == 2 && indexPath.row == 4) {
+           [self.tableView endEditing:YES];
+           self.isHeMai = !self.isHeMai;
+           [self.tableView reloadData];
+       }
+    
     
     if (indexPath.section == 2) {
         
@@ -674,6 +719,13 @@
                 
             };
             [[UIApplication sharedApplication].keyWindow addSubview:selectTimeV];
+        }else if (indexPath.row == 4) {
+            self.selectIndex = 103;
+            zkPickView * pickV = [[zkPickView alloc] init];
+            pickV.arrayType = titleArray;
+            pickV.array = @[@"10",@"30"].mutableCopy;
+            [pickV show];
+            pickV.delegate = self;
         }
     }
     
@@ -688,6 +740,8 @@
     }else if (self.selectIndex == 102) {
         self.caiZHiID = self.caiZhiArr[leftIndex].ID;
         self.headV.caizhiV.TF.text = self.caiZhiArr[leftIndex].name;
+    }else if (self.selectIndex == 103) {
+        self.yanShiTime = @[@"10",@"30"][leftIndex];
     }
 }
 
@@ -776,7 +830,9 @@
             self.headV.thumbStr = self.thumbStr;
             self.timeStr = self.dataModel.auction_start_time;
             self.endTimeStr = self.dataModel.auction_end_time;
-            
+            self.youFeiStr = self.dataModel.expressprice;
+            self.isHeMai = self.dataModel.ischipped;
+            self.yanShiTime = self.dataModel.delaytime;
             NSArray * chanPinKuArr = [self.dataModel.warehouse componentsSeparatedByString:@","];
             [self.selectCangKuArr removeAllObjects];
             for (SWTModel * cm in self.chanPinKuArr) {

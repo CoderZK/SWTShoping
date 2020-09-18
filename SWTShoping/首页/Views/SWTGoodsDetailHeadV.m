@@ -33,21 +33,21 @@
         }];
         
         
-        self.jinRuBt  =[[UIButton alloc] init];
-        [self.jinRuBt setBackgroundImage:[UIImage imageNamed:@"live_cj_bgleft"] forState:UIControlStateNormal];
-        [self.imgV addSubview:self.jinRuBt];
-        [self.jinRuBt setTitleColor:WhiteColor forState:UIControlStateNormal];
-        [self.jinRuBt setTitle:@" 进入直播间" forState:UIControlStateNormal];
-        self.jinRuBt.titleLabel.font = kFont(9);
+//        self.jinRuBt  =[[UIButton alloc] init];
+//        [self.jinRuBt setBackgroundImage:[UIImage imageNamed:@"live_cj_bgleft"] forState:UIControlStateNormal];
+//        [self.imgV addSubview:self.jinRuBt];
+//        [self.jinRuBt setTitleColor:WhiteColor forState:UIControlStateNormal];
+//        [self.jinRuBt setTitle:@" 进入直播间" forState:UIControlStateNormal];
+//        self.jinRuBt.titleLabel.font = kFont(9);
+//        
+//        [self.jinRuBt mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.bottom.equalTo(self.imgV).offset(-5);
+//            make.width.equalTo(@(56));
+//            make.height.equalTo(@21);
+//            make.right.equalTo(self.imgV);
+//        }];
         
-        [self.jinRuBt mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self.imgV).offset(-5);
-            make.width.equalTo(@(56));
-            make.height.equalTo(@21);
-            make.right.equalTo(self.imgV);
-        }];
-        
-        
+
         
         
         

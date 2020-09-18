@@ -14,6 +14,7 @@
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *dataArray;
 @property(nonatomic,strong)NSMutableArray<V2TIMConversation *> *ListArr;
 @property(nonatomic,assign)uint64_t stepNext;
+@property(nonatomic,assign)BOOL isShowRed;
 @end
 
 @implementation HangQingVC
@@ -36,7 +37,7 @@
     }];
     
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-        if (self.ListArr.count < 20) {
+        if (self.ListArr.count < 50) {
             [self.tableView.mj_footer endRefreshing];
             return;
         }
@@ -58,15 +59,34 @@
     }];
     
  
-    
+    [LTSCEventBus registerEvent:@"cmessage" block:^(id data) {
+        
+        self.stepNext = 0;
+        [self getList];
+        
+        
+    }];
     
     
     
 }
 
+- (void)showRedV {
+    for (V2TIMConversation * conVerSation  in self.ListArr) {
+        V2TIMMessage * lastM  = conVerSation.lastMessage;
+        if (lastM.isPeerRead == NO) {
+            self.isShowRed = YES;
+            return;
+        }else {
+            self.isShowRed = NO;
+        }
+    }
+    [LTSCEventBus sendEvent:@"showmessage" data:@(self.isShowRed)];
+}
+
 - (void)getList  {
     
-    [[V2TIMManager sharedInstance] getConversationList:(self.stepNext) count:20 succ:^(NSArray<V2TIMConversation *> *list, uint64_t nextSeq, BOOL isFinished) {
+    [[V2TIMManager sharedInstance] getConversationList:(self.stepNext) count:50 succ:^(NSArray<V2TIMConversation *> *list, uint64_t nextSeq, BOOL isFinished) {
         
        [self.tableView.mj_header endRefreshing];
        [self.tableView.mj_footer endRefreshing];
@@ -110,7 +130,7 @@
             
             
             self.dataArray = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
-            if (self.dataArray.count == 0) {
+            if (self.dataArray.count + self.ListArr.count == 0) {
                 [self.noneView showNoneDataViewAt:self.view img:[UIImage imageNamed:@"dyx47"] tips:@"暂无数据"];
             }else {
                 [self.noneView  dismiss];
