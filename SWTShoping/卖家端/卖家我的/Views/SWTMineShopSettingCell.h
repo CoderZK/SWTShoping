@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UITextField *rightTF;
 @property (weak, nonatomic) IBOutlet UIImageView *rightImgV;
 @property (weak, nonatomic) IBOutlet UISwitch *swithBt;
+@property (weak, nonatomic) IBOutlet UILabel *desLB;
 
 @end
 

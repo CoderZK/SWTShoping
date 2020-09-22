@@ -24,6 +24,7 @@
 #import "SWTMJZhiBoHomeTVC.h"
 #import "SWTMJShenQingZhiBoVC.h"
 #import "MJMineHeMaiFatherVC.h"
+#import "MJPublicHeMaiGoodsTVC.h"
 @interface SWTMJMineVC ()<UITabBarControllerDelegate>
 @property(nonatomic , strong)NSArray *leftArr;
 @property(nonatomic , strong)SWTModel *dataModel;
@@ -319,7 +320,9 @@
                     [self.navigationController pushViewController:vc animated:YES];
                 }else if (indexPath.row == 2) {
                     //发布合买
-                    
+                    MJPublicHeMaiGoodsTVC * vc =[[MJPublicHeMaiGoodsTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
                 }else if (indexPath.row == 3) {
                     if (self.dataModel.merchinfo.islive) {
                         //可以直播,检查直播间状态

@@ -38,6 +38,8 @@
     self.headV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 80)];
     self.tableView.tableHeaderView = self.headV;
     self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(15, 30, ScreenW - 30, 20)];
+    self.headV.backgroundColor = WhiteColor;
+    self.titleLB.text = str1;
     [self.headV addSubview:self.titleLB];
     
     self.footV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 200)];
@@ -50,7 +52,8 @@
     self.queRenBt.backgroundColor = RedColor;
     [self.footV  addSubview:self.queRenBt];
     
-    [self.tableView registerNib:[UINib nibWithNibName:@"MJHeMaiPicCell" bundle:nil] forCellReuseIdentifier:@"cell"];
+    [self.tableView registerClass:[MJHeMaiPicCell class] forCellReuseIdentifier:@"MJHeMaiPicCell"];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
