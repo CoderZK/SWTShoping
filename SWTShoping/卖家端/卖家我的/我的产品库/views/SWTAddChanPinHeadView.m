@@ -68,6 +68,19 @@
         self.weightV.leftLB.text = self.weightV.lestStr =  @"重量: ";
         [self addSubview:self.weightV];
         
+        self.shangjiaStatusV = [[SWTAddChnaPinTFV alloc] initWithFrame:CGRectMake(ScreenW/2+2.5, CGRectGetMinY(self.weightV.frame), (ScreenW - 35)/2, 25)];
+        self.shangjiaStatusV.leftLB.text = self.caizhiV.lestStr =  @"状态: ";
+        [self addSubview:self.shangjiaStatusV];
+        self.shangjiaStatusV.isChoose = YES;
+        self.shangjiaStatusV.delegateSignal = [[RACSubject alloc] init];
+        [self.shangjiaStatusV.delegateSignal subscribeNext:^(NSNumber * x) {
+            @strongify(self);
+            if (self.delegateSignal) {
+                [self.delegateSignal sendNext:@(104)];
+            }
+            
+            
+        }];
         
         
         UIView * backV =[[UIView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.weightV.frame), ScreenW - 30, 0.5)];

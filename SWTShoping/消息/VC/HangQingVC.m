@@ -58,7 +58,7 @@
         weakSelf.tabBarController.selectedIndex  = 0;
     }];
     
- 
+    
     [LTSCEventBus registerEvent:@"cmessage" block:^(id data) {
         
         self.stepNext = 0;
@@ -88,8 +88,8 @@
     
     [[V2TIMManager sharedInstance] getConversationList:(self.stepNext) count:50 succ:^(NSArray<V2TIMConversation *> *list, uint64_t nextSeq, BOOL isFinished) {
         
-       [self.tableView.mj_header endRefreshing];
-       [self.tableView.mj_footer endRefreshing];
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
         
         if (self.stepNext == 0) {
             [self.ListArr removeAllObjects];
@@ -100,6 +100,13 @@
             }
         }
         self.stepNext = nextSeq;
+        
+        if (self.dataArray.count + self.ListArr.count == 0) {
+            [self.noneView showNoneDataViewAt:self.view img:[UIImage imageNamed:@"dyx47"] tips:@"暂无数据"];
+        }else {
+            [self.noneView  dismiss];
+        }
+        
         [self.tableView reloadData];
         
     } fail:^(int code, NSString *desc) {
@@ -211,7 +218,7 @@
 }
 
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
-   
+    
     return YES;
 }
 
@@ -246,24 +253,24 @@
                 [self.tableView.mj_footer endRefreshing];
                 [SVProgressHUD dismiss];
                 if ([responseObject[@"code"] intValue]== 200) {
-
+                    
                     [self.dataArray removeObjectAtIndex:indexPath.row];
                     [self.tableView reloadData];
-
+                    
                 }else {
                     [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"key"]] message:responseObject[@"message"]];
                 }
-
+                
             } failure:^(NSURLSessionDataTask *task, NSError *error) {
-
+                
                 [self.tableView.mj_header endRefreshing];
                 [self.tableView.mj_footer endRefreshing];
-
+                
             }];
-           
+            
         }
         
-     
+        
         
     }
 }
@@ -294,11 +301,11 @@
         [self.navigationController pushViewController:vc animated:YES];
         
         
-//        TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:conVerSation.conversationID];
-//        TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
-//        vc.navigationItem.title = conVerSation.lastMessage.nickName;
-//        vc.hidesBottomBarWhenPushed = YES;
-//        [self.navigationController pushViewController:vc animated:YES];
+        //        TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:conVerSation.conversationID];
+        //        TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
+        //        vc.navigationItem.title = conVerSation.lastMessage.nickName;
+        //        vc.hidesBottomBarWhenPushed = YES;
+        //        [self.navigationController pushViewController:vc animated:YES];
         
     }
     

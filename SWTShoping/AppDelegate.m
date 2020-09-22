@@ -81,7 +81,7 @@
      [[TUIKit sharedInstance] setupWithAppId:TXIMAPPID];
     
     [[V2TIMManager sharedInstance] addAdvancedMsgListener:self];
-    
+    [[V2TIMManager sharedInstance] setGroupListener:self];
     [self initTengXunIM];
     
     if (ISLOGIN) {

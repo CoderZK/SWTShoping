@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTAddChanPinHeadView : UIView
-@property(nonatomic , strong)SWTAddChnaPinTFV *leiBieV,*nameV,*addressV,*guiGeV,*caizhiV,*weightV;
+@property(nonatomic , strong)SWTAddChnaPinTFV *leiBieV,*nameV,*addressV,*guiGeV,*caizhiV,*weightV,*shangjiaStatusV;
 @property(nonatomic , strong)UITextField *chanPinNameTF;
 @property(nonatomic , strong)IQTextView *TV;
 @property(nonatomic,strong)UIButton *thumbBt;

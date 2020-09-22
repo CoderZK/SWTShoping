@@ -481,18 +481,18 @@
     }else {
         
     }
-    V2TIMGroupInfo * groupInfo = [[V2TIMGroupInfo alloc] init];
-    groupInfo.groupID = self.dataModel.livegroupid;
-    groupInfo.groupType = @"ChatRoom";
-    groupInfo.groupAddOpt = V2TIM_GROUP_ADD_ANY;
-    [[V2TIMManager sharedInstance] createGroup:groupInfo memberList:nil succ:^(NSString *groupID) {
-        
-        NSLog(@"%@",@"创建直播间成功");
-        
-        
-    } fail:^(int code, NSString *desc) {
-        NSLog(@"%@",@"创建直播间失败");
-    }];
+//    V2TIMGroupInfo * groupInfo = [[V2TIMGroupInfo alloc] init];
+//    groupInfo.groupID = self.dataModel.livegroupid;
+//    groupInfo.groupType = @"ChatRoom";
+//    groupInfo.groupAddOpt = V2TIM_GROUP_ADD_ANY;
+//    [[V2TIMManager sharedInstance] createGroup:groupInfo memberList:nil succ:^(NSString *groupID) {
+//        
+//        NSLog(@"%@",@"创建直播间成功");
+//        
+//        
+//    } fail:^(int code, NSString *desc) {
+//        NSLog(@"%@",@"创建直播间失败");
+//    }];
     [[V2TIMManager sharedInstance] setGroupListener:self];
     [[V2TIMManager sharedInstance] joinGroup:self.dataModel.livegroupid msg:@"333" succ:^{
         NSLog(@"%@",@"进入直播间成功");
@@ -876,6 +876,14 @@
  */
 - (void)player:(nonnull PLPlayer *)player stoppedWithError:(nullable NSError *)error{
     NSLog(@"error===%@",error);
+    if (error.code == -1005) {
+        if (!self.isTuiLiu) {
+            [SVProgressHUD showErrorWithStatus:@"直播已关闭"];
+        }
+    }
+    
+    
+    
     
     
 }

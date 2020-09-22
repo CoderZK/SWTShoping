@@ -531,6 +531,11 @@
     SWTMJTabbarVC * vc =[[SWTMJTabbarVC alloc] init];
     vc.selectedIndex = 3;
     [zkSignleTool shareTool].selectShopID = self.userDataModel.merchlist[leftIndex].ID;
+    if ([self.userDataModel.merchlist[leftIndex].type isEqualToString:@"合买店铺"]) {
+        [zkSignleTool shareTool].isHeMaiDianPu = YES;
+    }else {
+        [zkSignleTool shareTool].isHeMaiDianPu = NO;
+    }
     [self presentViewController:vc  animated:YES completion:nil];
 
 }

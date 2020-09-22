@@ -31,6 +31,15 @@ static zkSignleTool * tool = nil;
     return [[NSUserDefaults standardUserDefaults] boolForKey:@"isLogin"];
 }
 
+- (void)setIsHeMaiDianPu:(BOOL)isHeMaiDianPu {
+    [[NSUserDefaults standardUserDefaults] setBool:isHeMaiDianPu forKey:@"isHeMaiDianPu"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (BOOL)isHeMaiDianPu {
+     return [[NSUserDefaults standardUserDefaults] boolForKey:@"isHeMaiDianPu"];
+}
+
 - (void)setLevel:(NSString *)level {
     [[NSUserDefaults standardUserDefaults] setObject:level forKey:@"level"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -124,8 +133,9 @@ static zkSignleTool * tool = nil;
 }
 
 - (void)setAvatar:(NSString *)avatar {
+    
      [[NSUserDefaults standardUserDefaults]setObject:avatar forKey:@"avatar"];
-       [[NSUserDefaults standardUserDefaults] synchronize];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (NSString *)avatar {

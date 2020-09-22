@@ -13,7 +13,7 @@
 #import "SWTMJAddCHanPinKuSHowView.h"
 #import "SWTMJCangKuSelectView.h"
 @interface SWTAddMineChanPinKuTVC ()<UITextFieldDelegate,zkPickViewDelelgate>
-@property(nonatomic , strong)NSString *bianHaoStr,*kuCunStr,*diJiaStr,*jiaJiaStr,*timeStr,*endTimeStr,*youFeiStr,*yanShiTime;
+@property(nonatomic , strong)NSString *bianHaoStr,*kuCunStr,*diJiaStr,*jiaJiaStr,*timeStr,*endTimeStr,*youFeiStr,*yanShiTime,*shangJiaStatus;
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *pingMingArr;
 @property(nonatomic , strong)NSMutableArray<SWTModel *>*caiZhiArr,*chanPinKuArr;
 @property(nonatomic , assign)NSInteger  selectIndex;
@@ -36,7 +36,7 @@
     self.isBaoYou = YES;
     self.picArr = @[].mutableCopy;
     self.picStrArr = @[].mutableCopy;
-    
+    self.shangJiaStatus = @"0";
     UIButton * button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
     button.titleLabel.font = kFont(13);
     [button setTitle:@"提交" forState:UIControlStateNormal];
@@ -84,7 +84,21 @@
         if ([responseObject[@"code"] intValue]== 200) {
             
             self.pingMingArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"][@"list"]];
-            
+            if (self.isEdit) {
+                for (SWTModel * pp in self.pingMingArr) {
+                    if ([pp.ID isEqualToString:self.twoID]) {
+                        self.headV.nameV.TF.text = pp.name;
+                        return;
+                    } else {
+                        for (SWTModel * pNei in pp.children) {
+                            if ([pNei.ID isEqualToString:self.twoID]) {
+                                self.headV.nameV.TF.text = pNei.name;
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
             
         }
         
@@ -131,7 +145,13 @@
         if ([responseObject[@"code"] intValue]== 200) {
             
             self.chanPinKuArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"][@"list"]];
-            
+            NSArray * chanPinKuArr = [self.dataModel.warehouse componentsSeparatedByString:@","];
+            [self.selectCangKuArr removeAllObjects];
+            for (SWTModel * cm in self.chanPinKuArr) {
+                if ([chanPinKuArr containsObject:cm.ID]) {
+                    [self.selectCangKuArr addObject:cm];
+                }
+            }
             
         }
         
@@ -276,6 +296,7 @@
     if (self.isEdit) {
         urlstr =  merchgoodsUpd_goods_SWT;
         dict[@"id"] = self.ID;
+        dict[@"state"] = self.shangJiaStatus;
     }
     [zkRequestTool networkingPOST:urlstr parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
@@ -323,6 +344,7 @@
     headV.mj_h = headV.HHHH;
     headV.picArr = @[].mutableCopy;
     headV.delegateSignal = [[RACSubject alloc] init];
+    
     @weakify(self);
     [headV.delegateSignal subscribeNext:^(NSNumber * x) {
         @strongify(self);
@@ -366,6 +388,13 @@
                 [pickV show];
                 pickV.delegate = self;
                 
+            }else if (x.intValue == 104) {
+                //上架状态
+                zkPickView * pickV = [[zkPickView alloc] init];
+                pickV.arrayType = titleArray;
+                pickV.array = @[@"下架",@"上架"].mutableCopy;
+                [pickV show];
+                pickV.delegate = self;
             }
         }else {
             if (x.intValue == 197) {
@@ -388,6 +417,11 @@
         }
         
     }];
+    if (self.isEdit) {
+        self.headV.shangjiaStatusV.hidden = NO;
+    }else {
+        self.headV.shangjiaStatusV.hidden = YES;
+    }
     self.tableView.tableHeaderView = headV;
 }
 
@@ -742,6 +776,13 @@
         self.headV.caizhiV.TF.text = self.caiZhiArr[leftIndex].name;
     }else if (self.selectIndex == 103) {
         self.yanShiTime = @[@"10",@"30"][leftIndex];
+    }else if (self.selectIndex == 104) {
+        self.shangJiaStatus = [NSString stringWithFormat:@"%ld",(long)leftIndex];
+        if (leftIndex == 0) {
+            self.headV.shangjiaStatusV.TF.text = @"下架";
+        }else {
+            self.headV.shangjiaStatusV.TF.text = @"上架";
+        }
     }
 }
 
@@ -813,6 +854,21 @@
             
             self.headV.nameV.TF.text = @"123";
             self.twoID = self.dataModel.category_id;
+            
+            for (SWTModel * pp in self.pingMingArr) {
+                if ([pp.ID isEqualToString:self.twoID]) {
+                    self.headV.nameV.TF.text = pp.name;
+                    break;
+                } else {
+                    for (SWTModel * pNei in pp.children) {
+                        if ([pNei.ID isEqualToString:self.twoID]) {
+                            self.headV.nameV.TF.text = pNei.name;
+                            break;
+                        }
+                    }
+                }
+            }
+            
             self.headV.addressV.TF.text = self.dataModel.place;
             self.headV.guiGeV.TF.text = self.dataModel.spec;
             self.headV.caizhiV.TF.text = self.dataModel.material;

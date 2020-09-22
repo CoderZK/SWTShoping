@@ -23,6 +23,7 @@
 #import "SWTMJHomeVC.h"
 #import "SWTMJZhiBoHomeTVC.h"
 #import "SWTMJShenQingZhiBoVC.h"
+#import "MJMineHeMaiFatherVC.h"
 @interface SWTMJMineVC ()<UITabBarControllerDelegate>
 @property(nonatomic , strong)NSArray *leftArr;
 @property(nonatomic , strong)SWTModel *dataModel;
@@ -41,8 +42,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"卖家中心";
-    self.leftArr = @[@"总资产",@"拍品管理",@"产品库",@"优惠券",@"直播",@"视频"];
     
+    self.leftArr = @[@"总资产",@"拍品管理",@"产品库",@"优惠券",@"直播",@"视频"];
+    if ([zkSignleTool shareTool].isHeMaiDianPu) {
+        self.leftArr = @[@"总资产",@"合买管理",@"发布合买",@"直播",@"添加管理员"];
+    }
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTMJMineOneCell" bundle:nil] forCellReuseIdentifier:@"SWTMJMineOneCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTMJMineThreeCell" bundle:nil] forCellReuseIdentifier:@"SWTMJMineThreeCell"];
     [self.tableView registerClass:[SWTMJMineTwoCell class] forCellReuseIdentifier:@"SWTMJMineTwoCell"];
@@ -240,15 +244,30 @@
         }
     }else {
         SWTMJMineThreeCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTMJMineThreeCell" forIndexPath:indexPath];
-        cell.leftLB.text = self.leftArr[indexPath.row];
-        cell.leftImgV.image = [UIImage imageNamed: [NSString stringWithFormat:@"bbdyx%d",11+indexPath.row]];
-        if (indexPath.row == 0) {
-            cell.rightLB.text =  [NSString stringWithFormat:@"%0.2f元",self.dataModel.credit.floatValue];
-        }else if (indexPath.row == 1) {
-            cell.rightLB.text =  [NSString stringWithFormat:@"竞拍中%d单",self.jingPaiNumebr.intValue];
+        if ([zkSignleTool shareTool].isHeMaiDianPu) {
+            cell.leftLB.text = self.leftArr[indexPath.row];
+            cell.leftImgV.image = [UIImage imageNamed: [NSString stringWithFormat:@"bbdyx%ld",11+indexPath.row]];
+            if (indexPath.row == 0) {
+                           cell.rightLB.text =  [NSString stringWithFormat:@"%0.2f元",self.dataModel.credit.floatValue];
+                       }else if (indexPath.row == 1) {
+                           cell.rightLB.text =  [NSString stringWithFormat:@"合买中%d单",self.jingPaiNumebr.intValue];
+                       }else {
+                           cell.rightLB.text = @"";
+                       }
         }else {
-            cell.rightLB.text = @"";
+            cell.leftLB.text = self.leftArr[indexPath.row];
+            cell.leftImgV.image = [UIImage imageNamed: [NSString stringWithFormat:@"bbdyx%ld",11+indexPath.row]];
+            if (indexPath.row == 0) {
+                cell.rightLB.text =  [NSString stringWithFormat:@"%0.2f元",self.dataModel.credit.floatValue];
+            }else if (indexPath.row == 1) {
+                cell.rightLB.text =  [NSString stringWithFormat:@"竞拍中%d单",self.jingPaiNumebr.intValue];
+            }else {
+                cell.rightLB.text = @"";
+            }
         }
+        
+        
+        
         cell.clipsToBounds = YES;
         return cell;
     }
@@ -285,62 +304,102 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.section == 1) {
-        if (indexPath.row == 0) {
-            //总资产
-            SWTMJMineMoneyVC * vc =[[SWTMJMineMoneyVC alloc] init];
-            vc.hidesBottomBarWhenPushed = YES;
-            vc.money = self.dataModel.credit;
-            [self.navigationController pushViewController:vc animated:YES];
-        }else if (indexPath.row == 1) {
-            SWTMJMineJingPaiFatherVC * vc =[[SWTMJMineJingPaiFatherVC alloc] init];
-            vc.hidesBottomBarWhenPushed = YES;
-            vc.model = self.dataModel.merchinfo;
-            [self.navigationController pushViewController:vc animated:YES];
-        }else if (indexPath.row == 2) {
-            if (self.isOpenChanPinKu) {
-                SWTMJMineChanPinKuTwoTVC * vc =[[SWTMJMineChanPinKuTwoTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-                vc.hidesBottomBarWhenPushed = YES;
-                vc.member_id = self.dataModel.merchinfo.merch_id;
-                vc.avatar = self.dataModel.merchinfo.avatar;
-                [self.navigationController pushViewController:vc animated:YES];
-            }else {
-                SWTMJMineChanPinKuOneVC * vc =[[SWTMJMineChanPinKuOneVC alloc] init];
-                vc.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:vc animated:YES];
+    if ([zkSignleTool shareTool].isHeMaiDianPu) {
+          if (indexPath.section == 1) {
+                if (indexPath.row == 0) {
+                    //总资产
+                    SWTMJMineMoneyVC * vc =[[SWTMJMineMoneyVC alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    vc.money = self.dataModel.credit;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else if (indexPath.row == 1) {
+                    //合买订单
+                    MJMineHeMaiFatherVC * vc =[[MJMineHeMaiFatherVC alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else if (indexPath.row == 2) {
+                    //发布合买
+                    
+                }else if (indexPath.row == 3) {
+                    if (self.dataModel.merchinfo.islive) {
+                        //可以直播,检查直播间状态
+                        [self checkRoom];
+                        
+                    }else {
+                        //不可以直播,去生情
+                        SWTMJShenQingZhiBoVC * vc =[[SWTMJShenQingZhiBoVC alloc] init];
+                        vc.hidesBottomBarWhenPushed = YES;
+                        [self.navigationController pushViewController:vc animated:YES];
+                        
+                    }
+                }else if (indexPath.row == 4) {
+                    //添加管理员
+                    
+                    
+                    
+                }
             }
             
-        }else if (indexPath.row == 3) {
-            SWTMJAddYouHuiQuanTVC * vc =[[SWTMJAddYouHuiQuanTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-            vc.hidesBottomBarWhenPushed = YES;
-            vc.merch_id = self.dataModel.merchinfo.merch_id;
-            [self.navigationController pushViewController:vc animated:YES];
-        }else if (indexPath.row == 4) {
-            
-//            SWTMJShenQingZhiBoVC * vc =[[SWTMJShenQingZhiBoVC alloc] init];
-//            vc.hidesBottomBarWhenPushed = YES;
-//            [self.navigationController pushViewController:vc animated:YES];
-            
-            if (self.dataModel.merchinfo.islive) {
-                //可以直播,检查直播间状态
-                [self checkRoom];
-                
-            }else {
-                //不可以直播,去生情
-                SWTMJShenQingZhiBoVC * vc =[[SWTMJShenQingZhiBoVC alloc] init];
-                vc.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:vc animated:YES];
-                
+    }else {
+          if (indexPath.section == 1) {
+                if (indexPath.row == 0) {
+                    //总资产
+                    SWTMJMineMoneyVC * vc =[[SWTMJMineMoneyVC alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    vc.money = self.dataModel.credit;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else if (indexPath.row == 1) {
+                    SWTMJMineJingPaiFatherVC * vc =[[SWTMJMineJingPaiFatherVC alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    vc.model = self.dataModel.merchinfo;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else if (indexPath.row == 2) {
+                    if (self.isOpenChanPinKu) {
+                        SWTMJMineChanPinKuTwoTVC * vc =[[SWTMJMineChanPinKuTwoTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                        vc.hidesBottomBarWhenPushed = YES;
+                        vc.member_id = self.dataModel.merchinfo.merch_id;
+                        vc.avatar = self.dataModel.merchinfo.avatar;
+                        [self.navigationController pushViewController:vc animated:YES];
+                    }else {
+                        SWTMJMineChanPinKuOneVC * vc =[[SWTMJMineChanPinKuOneVC alloc] init];
+                        vc.hidesBottomBarWhenPushed = YES;
+                        [self.navigationController pushViewController:vc animated:YES];
+                    }
+                    
+                }else if (indexPath.row == 3) {
+                    SWTMJAddYouHuiQuanTVC * vc =[[SWTMJAddYouHuiQuanTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    vc.merch_id = self.dataModel.merchinfo.merch_id;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else if (indexPath.row == 4) {
+                    
+        //            SWTMJShenQingZhiBoVC * vc =[[SWTMJShenQingZhiBoVC alloc] init];
+        //            vc.hidesBottomBarWhenPushed = YES;
+        //            [self.navigationController pushViewController:vc animated:YES];
+                    
+                    if (self.dataModel.merchinfo.islive) {
+                        //可以直播,检查直播间状态
+                        [self checkRoom];
+                        
+                    }else {
+                        //不可以直播,去生情
+                        SWTMJShenQingZhiBoVC * vc =[[SWTMJShenQingZhiBoVC alloc] init];
+                        vc.hidesBottomBarWhenPushed = YES;
+                        [self.navigationController pushViewController:vc animated:YES];
+                        
+                    }
+                    
+                    
+                }else if (indexPath.row == 5) {
+                    SWTMJMineVideoFatherVC * vc =[[SWTMJMineVideoFatherVC alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
             }
             
-            
-        }else if (indexPath.row == 5) {
-            SWTMJMineVideoFatherVC * vc =[[SWTMJMineVideoFatherVC alloc] init];
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
-        }
     }
     
+  
     
 }
 

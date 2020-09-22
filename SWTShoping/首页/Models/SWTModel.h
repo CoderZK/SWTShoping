@@ -85,6 +85,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *categoryid;
 @property(nonatomic,strong)NSString *readurl;
 @property(nonatomic,strong)NSString *watchnum;
+@property(nonatomic,strong)NSString *delaytime;
 
 
 @property(nonatomic,strong)NSString *showtype;// 类型 live 直播 good 商品
@@ -172,7 +173,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *allnum;
 @property(nonatomic,strong)NSString *imgnum;
 @property(nonatomic,strong)NSArray *refundImgs;
-@property(nonatomic,strong)NSArray *delaytime;
+
 //@property(nonatomic,strong)NSString *commentstatus;
 //@property(nonatomic,strong)NSString *gender;
 //@property(nonatomic,strong)NSString *refundtype;

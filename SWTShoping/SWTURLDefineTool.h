@@ -169,7 +169,8 @@
 
 #pragma mark ---- 直播功能 -----
 
-
+/**获取直播间人数 */
+#define livegetlivenum_SWT URLOne@"live/getlivenum"
 /**直播间详细信息 */
 #define liveDetail_SWT URLOne@"live/detail"
 /**获取所有顶级分类  */

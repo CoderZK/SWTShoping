@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="MJPicCollectNeiCell">
+            <rect key="frame" x="0.0" y="0.0" width="212" height="172"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="212" height="172"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bbdyx72" translatesAutoresizingMaskIntoConstraints="NO" id="2dS-RJ-fr5">
+                        <rect key="frame" x="0.0" y="5" width="212" height="167"/>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E3v-NZ-3pI">
+                        <rect key="frame" x="197" y="0.0" width="15" height="15"/>
+                        <color key="backgroundColor" red="0.99215686270000003" green="0.20392156859999999" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="QyJ-Fl-GzO"/>
+                            <constraint firstAttribute="width" constant="15" id="shP-g0-jxN"/>
+                        </constraints>
+                    </button>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="2dS-RJ-fr5" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="0Yb-Mc-xPK"/>
+                <constraint firstItem="2dS-RJ-fr5" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="LmH-Sv-9sh"/>
+                <constraint firstAttribute="bottom" secondItem="2dS-RJ-fr5" secondAttribute="bottom" id="bdA-Wr-gVA"/>
+                <constraint firstAttribute="trailing" secondItem="E3v-NZ-3pI" secondAttribute="trailing" id="f1E-wP-odr"/>
+                <constraint firstAttribute="trailing" secondItem="2dS-RJ-fr5" secondAttribute="trailing" id="gUd-EP-Xfg"/>
+                <constraint firstItem="E3v-NZ-3pI" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="hbs-eQ-WNa"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
+            <size key="customSize" width="212" height="172"/>
+            <connections>
+                <outlet property="chaBt" destination="E3v-NZ-3pI" id="SwC-ZA-QvQ"/>
+                <outlet property="imgV" destination="2dS-RJ-fr5" id="qQB-6y-y8B"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="101.78571428571428"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="bbdyx72" width="77" height="77"/>
+    </resources>
+</document>

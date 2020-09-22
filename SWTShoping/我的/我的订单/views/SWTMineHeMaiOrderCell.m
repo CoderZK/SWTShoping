@@ -78,7 +78,7 @@
         self.numberAndMoneyLB.text = @"￥1500";
         
         self.typeOneLB = [[UILabel alloc] init];
-        self.typeOneLB.text = @"  直营  ";
+        self.typeOneLB.text = @"直营";
         self.typeOneLB.textColor = RedLightColor;
         self.typeOneLB.font = kFont(10);
         self.typeOneLB.backgroundColor = RedBackColor;
@@ -87,7 +87,7 @@
         [self addSubview:self.typeOneLB];
         
         self.typeTwoLB = [[UILabel alloc] init];
-        self.typeTwoLB.text = @"  包邮  ";
+        self.typeTwoLB.text = @"包邮";
         self.typeTwoLB.textColor = WhiteColor;
         self.typeTwoLB.font = kFont(10);
         self.typeTwoLB.backgroundColor = RedLightColor;

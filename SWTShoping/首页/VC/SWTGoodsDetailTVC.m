@@ -76,7 +76,10 @@
     self.tableView.estimatedRowHeight = 40;
     
     [LTSCEventBus registerEvent:@"timeover" block:^(id data) {
-        [self.bottomView.chujiaBt setTitle:@"已结束" forState:UIControlStateNormal];
+        if (!self.isYiKouJia) {
+           [self.bottomView.chujiaBt setTitle:@"已结束" forState:UIControlStateNormal];
+        }
+        
     }];
     
     

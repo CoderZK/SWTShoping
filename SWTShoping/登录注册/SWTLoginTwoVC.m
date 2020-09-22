@@ -110,15 +110,15 @@
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             
-            [zkSignleTool shareTool].session_token = responseObject[@"data"][@"accessToken"];
-            [zkSignleTool shareTool].session_uid =  responseObject[@"data"][@"userid"];
+            [zkSignleTool shareTool].session_token = [NSString stringWithFormat:@"%@",responseObject[@"data"][@"accessToken"]];;
+            [zkSignleTool shareTool].session_uid =  [NSString stringWithFormat:@"%@",responseObject[@"data"][@"userid"]];;
             [zkSignleTool shareTool].isLogin = YES;
             [zkSignleTool shareTool].phone = self.phoneTF.text;
-            [zkSignleTool shareTool].userSig = responseObject[@"data"][@"usersig"];
-            [zkSignleTool shareTool].avatar = responseObject[@"data"][@"avatar"];
-            [zkSignleTool shareTool].nickname =  responseObject[@"data"][@"nickname"];
-            [zkSignleTool shareTool].levelname =  responseObject[@"data"][@"levelname"];
-            [zkSignleTool shareTool].level =  responseObject[@"data"][@"levelcode"];
+            [zkSignleTool shareTool].userSig = [NSString stringWithFormat:@"%@",responseObject[@"data"][@"usersig"]];;
+            [zkSignleTool shareTool].avatar = [NSString stringWithFormat:@"%@",responseObject[@"data"][@"avatar"]];;
+            [zkSignleTool shareTool].nickname =  [NSString stringWithFormat:@"%@",responseObject[@"data"][@"nickname"]];;
+            [zkSignleTool shareTool].levelname =  [NSString stringWithFormat:@"%@",responseObject[@"data"][@"levelname"]];;
+            [zkSignleTool shareTool].level =  [NSString stringWithFormat:@"%@",responseObject[@"data"][@"levelcode"]];;
             
             [self loginIM];
             

@@ -21,9 +21,9 @@
 - (UIPageControl *)pageControl{
     if (_pageControl == nil) {
         _pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake((ScreenW-50)/2, ScreenH-30, 50, 30)];
-        _pageControl.numberOfPages = 4;
-//        _pageControl.currentPageIndicatorTintColor = BlueColor;
-//        _pageControl.pageIndicatorTintColor = CellColor;
+        _pageControl.numberOfPages = 3;
+        _pageControl.currentPageIndicatorTintColor = RedColor;
+        _pageControl.pageIndicatorTintColor = [UIColor whiteColor];
     }
     return _pageControl;
 }
@@ -31,7 +31,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self config];
-//    [self.view addSubview:self.pageControl];
+    [self.view addSubview:self.pageControl];
     // Do any additional setup after loading the view.
 }
 
