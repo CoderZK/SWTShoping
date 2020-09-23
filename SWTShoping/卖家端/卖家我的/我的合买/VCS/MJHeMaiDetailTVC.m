@@ -75,13 +75,14 @@
         MJHeMaiQianHaoCell * cell =[tableView dequeueReusableCellWithIdentifier:@"MJHeMaiQianHaoCell" forIndexPath:indexPath];
         if (indexPath.row == 0) {
             cell.LB1.font = cell.LB2.font =cell.LB3.font =cell.LB4.font = kFont(14);
-            cell.LB1.textColor = cell.LB2.textColor =cell.LB3.textColor =cell.LB4.textColor = CharacterColor50;
-        }else {
-            cell.LB1.font = cell.LB2.font =cell.LB3.font =cell.LB4.font = kFont(13);
             cell.LB1.textColor = cell.LB2.textColor =cell.LB3.textColor = CharacterColor50;
-            cell.LB4.textColor = RedColor;
-            cell.LB4.layer.borderColor = RedColor.CGColor;
-            cell.LB4.layer.borderWidth = 0.5;
+            [cell.leftBt setTitleColor:CharacterColor50 forState:UIControlStateNormal];
+            [cell.rigthBt setTitleColor:CharacterColor50 forState:UIControlStateNormal];
+        }else {
+            cell.LB1.font = cell.LB2.font =cell.LB3.font = kFont(13);
+            cell.leftBt.titleLabel.font = cell.rigthBt.titleLabel.font = kFont(13);
+            cell.LB1.textColor = cell.LB2.textColor =cell.LB3.textColor = CharacterColor50;
+      
         }
         cell.backgroundColor = cell.contentView.backgroundColor = WhiteColor;
         return cell;

@@ -44,6 +44,7 @@
 @property(nonatomic,strong)UIButton *qieHuanCarmerBt;
 
 @property(nonatomic,assign)BOOL isPushVC;
+@property(nonatomic,strong)NSTimer *timer;
 
 //播流部分
 @property (nonatomic, strong) PLPlayer  *player;
@@ -57,6 +58,9 @@
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     [[V2TIMManager sharedInstance] addAdvancedMsgListener:self];
     
+    if (self.dataModel != nil) {
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(getNumberAction) userInfo:nil repeats:YES];
+    }
    
     self.isPushVC = NO;
  
@@ -64,6 +68,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [self.timer invalidate];
+    self.timer = nil;
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [[V2TIMManager sharedInstance] removeAdvancedMsgListener:self];
     if (!self.isPushVC) {
@@ -350,6 +356,7 @@
             }else {
                 [self addBoLiu];
             }
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(getNumberAction) userInfo:nil repeats:YES];
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
@@ -486,10 +493,10 @@
 //    groupInfo.groupType = @"ChatRoom";
 //    groupInfo.groupAddOpt = V2TIM_GROUP_ADD_ANY;
 //    [[V2TIMManager sharedInstance] createGroup:groupInfo memberList:nil succ:^(NSString *groupID) {
-//        
+//
 //        NSLog(@"%@",@"创建直播间成功");
-//        
-//        
+//
+//
 //    } fail:^(int code, NSString *desc) {
 //        NSLog(@"%@",@"创建直播间失败");
 //    }];
@@ -939,6 +946,28 @@
     }];
     
     
+}
+
+//获取直播人数
+- (void)getNumberAction {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    [zkRequestTool networkingPOST:livegetlivenum_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+    
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"key"] intValue]== 1) {
+            self.dataModel.watchnum = [NSString stringWithFormat:@"%@",responseObject[@"data"]];
+            self.headV.model = self.dataModel;
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"key"]] message:responseObject[@"message"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+       
+        
+    }];
 }
 
 @end

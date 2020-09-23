@@ -474,8 +474,14 @@
 #define search_SWT URLOne@"search"
 /**删除系统消息*/
 #define pushmsgDeletethis_SWT URLOne@"pushmsg/deletethis"
-///** 获取抽签订单信息*/
-//#define merchcouponGet_coupon_list_SWT URLOne@"merchcoupon/get_coupon_list"
+/** 管理员列表*/
+#define merchadmin_list_SWT URLOne@"merch/admin_list"
+/** 删除列表*/
+#define merchdelete_admin_SWT URLOne@"merch/delete_admin"
+/** 添加管理员*/
+#define merchset_admin_SWT URLOne@"merch/set_admin"
+/** 发布合买商品*/
+#define merchpublicshare_SWT URLOne@"merch/publicshare"
 
 
 #endif /* SWTURLDefineTool_h */

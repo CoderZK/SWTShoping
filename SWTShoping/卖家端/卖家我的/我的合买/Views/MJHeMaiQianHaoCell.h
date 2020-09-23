@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *LB2;
 @property (weak, nonatomic) IBOutlet UILabel *LB3;
 @property (weak, nonatomic) IBOutlet UILabel *LB4;
+@property (weak, nonatomic) IBOutlet UIButton *leftBt;
+@property (weak, nonatomic) IBOutlet UIButton *rigthBt;
 
 @end
 

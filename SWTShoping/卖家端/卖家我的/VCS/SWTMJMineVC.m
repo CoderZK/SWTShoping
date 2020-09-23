@@ -25,6 +25,7 @@
 #import "SWTMJShenQingZhiBoVC.h"
 #import "MJMineHeMaiFatherVC.h"
 #import "MJPublicHeMaiGoodsTVC.h"
+#import "MJAddGuanLiYuanTVC.h"
 @interface SWTMJMineVC ()<UITabBarControllerDelegate>
 @property(nonatomic , strong)NSArray *leftArr;
 @property(nonatomic , strong)SWTModel *dataModel;
@@ -61,6 +62,10 @@
         [self getData];
     }];
    
+    if ([zkSignleTool shareTool].isHeMaiDianPu) {
+        [self getHeMaiNumber];
+    }
+    
     self.tabBarController.delegate = self;
     [self tongjiAction];
 }
@@ -76,6 +81,31 @@
         @strongify(self);
         [self dismissViewControllerAnimated:YES completion:nil];
         [LTSCEventBus sendEvent:@"diss" data:nil];
+    }];
+    
+    
+}
+//获取合买数量
+- (void)getHeMaiNumber {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"goodsid"] = [zkSignleTool shareTool].selectShopID;
+    [zkRequestTool networkingPOST:merchlotsGet_main_order_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"key"] intValue]== 1) {
+            self.jingPaiNumebr = [NSString stringWithFormat:@"%@",responseObject[@"data"][@"payed_num"]];;
+            [self.tableView reloadData];
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"key"]] message:responseObject[@"message"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
     }];
     
     
@@ -220,6 +250,7 @@
                 
             }];
             cell.model = self.dataModel.merchinfo;
+            
             cell.clipsToBounds = YES;
             return cell;
         }else {
@@ -338,7 +369,9 @@
                 }else if (indexPath.row == 4) {
                     //添加管理员
                     
-                    
+                    MJAddGuanLiYuanTVC * vc =[[MJAddGuanLiYuanTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
                     
                 }
             }
