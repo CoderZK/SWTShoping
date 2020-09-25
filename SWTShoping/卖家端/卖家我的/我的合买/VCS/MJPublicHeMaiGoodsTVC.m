@@ -9,6 +9,7 @@
 #import "MJPublicHeMaiGoodsTVC.h"
 #import "SWTMineShopSettingCell.h"
 #import "SWTMJAddCHanPinKuSHowView.h"
+#import "SWTMineZiLiaoCell.h"
 @interface MJPublicHeMaiGoodsTVC ()<UITextFieldDelegate,zkPickViewDelelgate>
 @property(nonatomic,strong)NSString *nameStr,*caiLiaoStr,*fenShuStr,*pingjunMoney,*allMoneyStr,*twoID;
 @property(nonatomic,strong)UIView *footView;
@@ -16,6 +17,9 @@
 @property(nonatomic,strong)NSIndexPath *selctIndexPath;
 @property(nonatomic,strong)NSString *timeStr,*endTimeStr;
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *pingMingArr;
+@property(nonatomic,strong)NSString  *liveID,*imgStr;
+@property(nonatomic,strong)UIImage *image;
+
 @end
 
 @implementation MJPublicHeMaiGoodsTVC
@@ -24,6 +28,8 @@
     [super viewDidLoad];
     self.navigationItem.title = @"发布合买商品";
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTMineShopSettingCell" bundle:nil] forCellReuseIdentifier:@"SWTMineShopSettingCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"SWTMineZiLiaoCell" bundle:nil] forCellReuseIdentifier:@"cell"];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     
@@ -37,8 +43,8 @@
     lb.text = @"合买时间";
     [self.footView addSubview:lb];
     
-    self.timeEBt = [[UIButton alloc] initWithFrame:CGRectMake(ScreenW - 100, 10, 90, 30)];
-    self.timeEBt.titleLabel.font = kFont(12);
+    self.timeEBt = [[UIButton alloc] initWithFrame:CGRectMake(ScreenW - 120, 10, 110, 30)];
+    self.timeEBt.titleLabel.font = kFont(10);
     [self.timeEBt setTitle:@"合买结束时间" forState:UIControlStateNormal];
     [self.timeEBt setTitleColor:CharacterColor102 forState:UIControlStateNormal];
     [self.footView addSubview:self.timeEBt];
@@ -46,15 +52,15 @@
     [self.timeEBt addTarget:self action:@selector(timeAction:) forControlEvents:UIControlEventTouchUpInside];
     
     
-    self.timeSBt = [[UIButton alloc] initWithFrame:CGRectMake(ScreenW - 90 - 100 - 20, 10, 90, 30)];
-    self.timeSBt.titleLabel.font = kFont(12);
+    self.timeSBt = [[UIButton alloc] initWithFrame:CGRectMake(ScreenW - 110 - 120 - 20, 10, 110, 30)];
+    self.timeSBt.titleLabel.font = kFont(10);
     [self.timeSBt setTitle:@"合买开始时间" forState:UIControlStateNormal];
     [self.timeSBt setTitleColor:CharacterColor102 forState:UIControlStateNormal];
     [self.footView addSubview:self.timeSBt];
     self.timeSBt.tag = 101;
     [self.timeSBt addTarget:self action:@selector(timeAction:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIView * lineV = [[UIView alloc] initWithFrame:CGRectMake(ScreenW - 120, 24.5, 20, 1)];
+    UIView * lineV = [[UIView alloc] initWithFrame:CGRectMake(ScreenW - 140, 24.5, 20, 1)];
     lineV.backgroundColor = CharacterColor102;
     [self.footView addSubview:lineV];
     
@@ -69,7 +75,7 @@
     self.pingMingArr = @[].mutableCopy;
     [self.queRenBt addTarget:self action:@selector(faBuAction) forControlEvents:UIControlEventTouchUpInside];
     [self getPingMingData];
-    
+    [self checkRoom];
 }
 
 
@@ -100,18 +106,35 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return 6;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 3) {
         return 60;
     }
+    if (indexPath.row == 1) {
+        return 80;
+    }
     return 50;
     
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    
+    if (indexPath.row == 1) {
+        SWTMineZiLiaoCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+        cell.leftLB.text = @"商品图片";
+        cell.rightLB.hidden = NO;
+        cell.rightImgV.hidden = YES;
+        cell.rightLB.hidden = YES;
+        cell.rightImgV.hidden = NO;
+        cell.rightImgV.image = self.image;
+        return cell;
+    }
+    
    SWTMineShopSettingCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTMineShopSettingCell" forIndexPath:indexPath];
     cell.rightTF.userInteractionEnabled = YES;
     cell.rightImgV.hidden = YES;
@@ -122,22 +145,22 @@
     if (indexPath.row == 0) {
         cell.leftLB.text = @"合买物品";
         cell.rightTF.text = self.nameStr;
-    }else if (indexPath.row == 1){
+    }else if (indexPath.row == 2){
         cell.rightTF.text = self.caiLiaoStr;
         cell.leftLB.text = @"物品品种";
         cell.rightTF.placeholder = @"请选择";
         cell.rightTF.userInteractionEnabled = NO;
-    }else if (indexPath.row == 2){
+    }else if (indexPath.row == 3){
         cell.rightTF.text = self.fenShuStr;
         cell.leftLB.text = @"合买分数";
         cell.rightTF.placeholder = @"请选择";
         cell.rightTF.userInteractionEnabled = NO;
-    }else if (indexPath.row == 3){
+    }else if (indexPath.row == 4){
         cell.rightTF.text = self.allMoneyStr;
         cell.desLB.hidden = NO;
         cell.desLB.text = @"一人合买总价乘以1.05 (定制费)";
         cell.leftLB.text = @"合买总价";
-    }else if (indexPath.row == 4){
+    }else if (indexPath.row == 5){
         if ( self.fenShuStr.length > 0) {
             if (self.fenShuStr.intValue == 0) {
                 cell.rightTF.text = [NSString stringWithFormat:@"%.02f",self.allMoneyStr.floatValue  * 1.05];
@@ -151,6 +174,7 @@
         cell.rightTF.userInteractionEnabled = NO;
         cell.leftLB.text = @"平均价格";
     }
+    cell.rightTF.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     return cell;
@@ -160,6 +184,10 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     self.selctIndexPath = indexPath;
     if (indexPath.row == 1) {
+        
+        [self addPict];
+        
+    }else  if (indexPath.row == 2) {
         //点击品名
         SWTMJAddCHanPinKuSHowView * pinMingV  = [[SWTMJAddCHanPinKuSHowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];;
         pinMingV.dataArray = self.pingMingArr;
@@ -173,7 +201,7 @@
             
         }];
         [pinMingV show];
-    }else if (indexPath.row == 2) {
+    }else if (indexPath.row == 3) {
         zkPickView * pickV = [[zkPickView alloc] init];
         pickV.arrayType = titleArray;
         NSMutableArray * arr = @[].mutableCopy;
@@ -188,7 +216,7 @@
 }
 
 - (void)timeAction:(UIButton *)button {
-    if (button.tag == 100) {
+    if (button.tag == 101) {
         [self.tableView endEditing:YES];
         SelectTimeV *selectTimeV = [[SelectTimeV alloc] init];
         selectTimeV.isCanSelectOld = NO;
@@ -248,15 +276,152 @@
 }
 
 - (void)didSelectLeftIndex:(NSInteger)leftIndex centerIndex:(NSInteger)centerIndex rightIndex:(NSInteger)rightIndex{
-    if (self.selctIndexPath.row == 2) {
+    if (self.selctIndexPath.row == 3) {
         self.fenShuStr = [NSString stringWithFormat:@"%ld",leftIndex+1];
+        [self.tableView reloadData];
     }
 }
+
+- (void)checkRoom  {
+
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"id"] = [zkSignleTool shareTool].selectShopID;
+    [zkRequestTool networkingPOST:merchliveCheck_room_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+
+        if ([responseObject[@"code"] intValue]== 200) {
+            NSString * status = [NSString stringWithFormat:@"%@",responseObject[@"data"][@"status"]];
+            if (status.intValue == 3) {
+                self.liveID = [NSString stringWithFormat:@"%@",responseObject[@"data"][@"liveid"]];
+            }else if (status.intValue == 4) {
+                [SVProgressHUD showErrorWithStatus:@"直播间被禁用"];
+            }
+            
+            
+            
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+
+}
+
+
+- (void)addPict {
+    
+    UIAlertController *ac = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        if ([self isCanUsePhotos]) {
+            
+         
+            [self showMXPhotoCameraAndNeedToEdit:YES completion:^(UIImage *image, UIImage *originImage, CGRect cutRect) {
+                
+                self.image = image;
+                [self updateImage];
+
+            }];
+       
+        }else{
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相机" message:@"请在iPhone的""设置-隐私-相机""中允许访问相机" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+        
+    }];
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        if ([self isCanUsePicture]) {
+            [self showMXPickerWithMaximumPhotosAllow:1 completion:^(NSArray *assets) {
+                
+                for (ALAsset *asset in assets) {
+                    ALAssetRepresentation *assetRep = [asset defaultRepresentation];
+                    CGImageRef imgRef = [assetRep fullResolutionImage];
+                    UIImage *image = [[UIImage alloc] initWithCGImage:imgRef
+                                                                scale:assetRep.scale
+                                                          orientation:(UIImageOrientation)assetRep.orientation];
+                    
+                    if (!image) {
+                        image = [[UIImage alloc] initWithCGImage:[[asset defaultRepresentation] fullScreenImage]
+                                                           scale:assetRep.scale
+                                                     orientation:(UIImageOrientation)assetRep.orientation];
+                        
+                    }
+                    if (!image) {
+                        CGImageRef thum = [asset aspectRatioThumbnail];
+                        image = [UIImage imageWithCGImage:thum];
+                    }
+                    
+                    self.image = image;
+                    [self updateImage];
+                  
+                }
+                
+              
+                
+                
+            }];
+           
+        }else{
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }];
+    
+   
+    
+    UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [ac addAction:action1];
+    [ac addAction:action2];
+    [ac addAction:action3];
+    
+    [self.navigationController presentViewController:ac animated:YES completion:nil];
+    
+}
+
+- (void)updateImage {
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"type"] = @"head";
+    dict[@"userid"] = [zkSignleTool shareTool].session_uid;
+    [zkRequestTool NetWorkingUpLoad:uploadfile_SWT images:@[self.image] name:@"file" parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        if ([responseObject[@"code"] intValue] == 200) {
+            
+            [self.tableView reloadData];
+            self.imgStr = responseObject[@"data"];
+        }else {
+            [self showAlertWithKey:responseObject[@"code"] message:responseObject[@"msg"] ];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
+    
+    
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    SWTMineShopSettingCell * cell = (SWTMineShopSettingCell *)textField.superview.superview;
+    NSIndexPath * indexPth = [self.tableView indexPathForCell:cell];
+    if (indexPth.row == 4) {
+        self.allMoneyStr = textField.text;
+        
+    }else if (indexPth.row == 0) {
+        self.nameStr = textField.text;
+    }
+    [self.tableView reloadData];
+}
+
 //点击发布商品
 - (void)faBuAction{
     [self.tableView endEditing:YES];
     if (self.nameStr.length == 0) {
         [SVProgressHUD showErrorWithStatus:@"请输入商品名"];
+        return;
+    }
+    if (self.imgStr.length ==0) {
+        [SVProgressHUD showErrorWithStatus:@"请选择商品图片"];
         return;
     }
     if (self.caiLiaoStr.length == 0) {
@@ -290,20 +455,20 @@
         dict[@"chipped_price"] =  @(self.allMoneyStr.floatValue / self.fenShuStr.floatValue);
     }
     dict[@"material"] = self.caiLiaoStr;
-    dict[@"img"] = @"htpp://123";
+    dict[@"img"] = self.imgStr;
     dict[@"name"] = self.nameStr;
     dict[@"price"] = self.allMoneyStr;
-    dict[@"liveid"] = @"12";
+    dict[@"liveid"] = self.liveID;
      [zkRequestTool networkingPOST:merchpublicshare_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];
-        if ([responseObject[@"key"] intValue]== 1) {
+        if ([responseObject[@"code"] intValue]== 200) {
             
             [SVProgressHUD showSuccessWithStatus:@"添加合买商品成功"];
             
         }else {
-            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"key"]] message:responseObject[@"message"]];
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {

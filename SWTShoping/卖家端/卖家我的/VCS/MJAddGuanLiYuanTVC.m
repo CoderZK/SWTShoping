@@ -63,13 +63,13 @@
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];
-        if ([responseObject[@"key"] intValue]== 1) {
+        if ([responseObject[@"code"] intValue]== 200) {
             self.dataArray = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
             [self.tableView reloadData];
             self.titleLB.text = [NSString stringWithFormat:@"店铺管理员(%ld/5)",self.dataArray.count];
             
         }else {
-            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"key"]] message:responseObject[@"message"]];
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -121,13 +121,13 @@
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];
-        if ([responseObject[@"key"] intValue]== 1) {
+        if ([responseObject[@"code"] intValue]== 200) {
             [self.dataArray removeObjectAtIndex:button.tag];
             self.titleLB.text = [NSString stringWithFormat:@"店铺管理员(%ld/5)",self.dataArray.count];
             [self.tableView reloadData];
             
         }else {
-            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"key"]] message:responseObject[@"message"]];
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {

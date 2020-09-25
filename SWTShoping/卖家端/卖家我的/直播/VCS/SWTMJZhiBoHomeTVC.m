@@ -68,8 +68,8 @@
             
                 
                 SWTMJShenQingZhiBoVC * vc =[[SWTMJShenQingZhiBoVC alloc] init];
-                               vc.hidesBottomBarWhenPushed = YES;
-                               [self.navigationController pushViewController:vc animated:YES];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
                 
             }else if (status.intValue == 2) {
                 [SVProgressHUD showErrorWithStatus:@"直播等待审核中"];

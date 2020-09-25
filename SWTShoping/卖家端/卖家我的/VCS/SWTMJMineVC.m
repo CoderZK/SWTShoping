@@ -62,9 +62,9 @@
         [self getData];
     }];
    
-    if ([zkSignleTool shareTool].isHeMaiDianPu) {
-        [self getHeMaiNumber];
-    }
+//    if ([zkSignleTool shareTool].isHeMaiDianPu) {
+//        [self getHeMaiNumber];
+//    }
     
     self.tabBarController.delegate = self;
     [self tongjiAction];
@@ -94,11 +94,11 @@
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];
-        if ([responseObject[@"key"] intValue]== 1) {
+        if ([responseObject[@"code"] intValue]== 200) {
             self.jingPaiNumebr = [NSString stringWithFormat:@"%@",responseObject[@"data"][@"payed_num"]];;
             [self.tableView reloadData];
         }else {
-            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"key"]] message:responseObject[@"message"]];
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -122,7 +122,12 @@
         if ([responseObject[@"code"] intValue]== 200) {
             self.dataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
             self.dataModel.merchinfo.merch_id = [zkSignleTool shareTool].selectShopID;
+            
+            if ([zkSignleTool shareTool].isHeMaiDianPu) {
+                self.jingPaiNumebr = self.dataModel.merchinfo.shareorders;
+            }
             [self.tableView reloadData];
+            
             
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
@@ -211,14 +216,38 @@
         }
         return 95;
     }
-    if  (indexPath.row == 4) {
-        if (self.dataModel.merchinfo.islive) {
-            return 50;
-        }else {
-            return 0;
+    
+    if ([zkSignleTool shareTool].isHeMaiDianPu){
+        if  (indexPath.row == 4  ) {
+            if ([self.dataModel.merchinfo.member_id isEqualToString:[zkSignleTool shareTool].session_uid]) {
+                return 50;
+            }else {
+                return 0;
+            }
+            
+               
+           }
+        if (indexPath.row == 3) {
+            if (self.dataModel.merchinfo.islive) {
+                return 50;
+            }else {
+                return 0;
+            }
         }
+        
+           return 50;
+    }else {
+        if  (indexPath.row == 4) {
+               if (self.dataModel.merchinfo.islive) {
+                   return 50;
+               }else {
+                   return 0;
+               }
+           }
+           return 50;
     }
-    return 50;
+    
+   
 }
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {

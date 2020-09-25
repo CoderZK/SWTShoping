@@ -50,12 +50,57 @@
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     MJPicCollectNeiCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"MJPicCollectNeiCell" forIndexPath:indexPath];
-    
+    cell.playBt.hidden = YES;
+    if (indexPath.row == 0) {
+        if ([self.picArr[0] length] == 0) {
+            cell.chaBt.hidden = YES;
+            cell.imgV.image = [UIImage imageNamed:@"bbdyx73"];
+            
+        }else {
+            cell.chaBt.hidden = NO;
+            [cell.imgV sd_setImageWithURL:[self.picArr[0] getPicURL] placeholderImage:[UIImage imageNamed:@"369"]];
+            cell.playBt.hidden = NO;
+            [cell.playBt addTarget:self action:@selector(playAction) forControlEvents:UIControlEventTouchUpInside];
+            
+        }
+    }else {
+        if ([self.picArr[indexPath.row] length] == 0) {
+            cell.chaBt.hidden = YES;
+            cell.imgV.image = [UIImage imageNamed:@"bbdyx72"];
+        }else {
+            cell.chaBt.hidden = NO;
+            [cell.imgV sd_setImageWithURL:[self.picArr[indexPath.row] getPicURL] placeholderImage:[UIImage imageNamed:@"369"]];
+            
+        }
+    }
+    cell.chaBt.tag = indexPath.row;
+    [cell.chaBt addTarget:self action:@selector(delectAction:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
     
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.addPicBlock != nil) {
+        self.addPicBlock(indexPath.row);
+    }
+}
 
+- (void)delectAction:(UIButton *)button {
+    self.picArr[button.tag] = @"";
+    if (self.delectBlock != nil) {
+        self.delectBlock(button.tag);
+    }
+    [self.collectV reloadData];
+}
+
+- (void)playAction {
+    [PublicFuntionTool presentVideoVCWithNSString:self.picArr[0] isBenDiPath:NO];
+}
+
+- (void)setPicArr:(NSMutableArray *)picArr {
+    _picArr = picArr;
+    [self.collectV reloadData];
+}
 
 - (void)awakeFromNib {
     [super awakeFromNib];

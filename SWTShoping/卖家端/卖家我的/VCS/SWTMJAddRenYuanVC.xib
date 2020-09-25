@@ -53,7 +53,7 @@
                         <constraint firstAttribute="height" constant="35" id="xUH-tX-LAM"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" keyboardType="namePhonePad" secureTextEntry="YES"/>
+                    <textInputTraits key="textInputTraits" keyboardType="namePhonePad"/>
                 </textField>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xzD-Te-urc">
                     <rect key="frame" x="15" y="184.5" width="384" height="0.5"/>

@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MJPicCollectNeiCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIButton *chaBt;
 @property (weak, nonatomic) IBOutlet UIImageView *imgV;
+@property (weak, nonatomic) IBOutlet UIButton *playBt;
 
 @end
 

@@ -11,6 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MJHeMaiPicCell : UITableViewCell
+@property(nonatomic,strong)NSMutableArray *picArr;
+@property(nonatomic,copy)void(^delectBlock)(NSInteger index);
+@property(nonatomic,copy)void(^addPicBlock)(NSInteger index);
 
 @end
 

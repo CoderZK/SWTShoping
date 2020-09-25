@@ -204,7 +204,8 @@
 
 /** 直播开关 */
 #define merchliveUpd_live_status_SWT URLOne@"merchlive/upd_live_status"
-
+/** 商户合买订单列表 */
+#define merchsharelist_SWT URLOne@"merch/sharelist"
 
 
 #pragma mark ---- 视频信息接口 -----

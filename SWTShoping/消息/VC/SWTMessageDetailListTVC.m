@@ -132,13 +132,13 @@
                 [self.tableView.mj_header endRefreshing];
                 [self.tableView.mj_footer endRefreshing];
                 [SVProgressHUD dismiss];
-                if ([responseObject[@"key"] intValue]== 1) {
+                if ([responseObject[@"code"] intValue]== 200) {
 
                     [self.dataArray removeObjectAtIndex:indexPath.row];
                     [self.tableView reloadData];
 
                 }else {
-                    [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"key"]] message:responseObject[@"message"]];
+                    [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
                 }
 
             } failure:^(NSURLSessionDataTask *task, NSError *error) {

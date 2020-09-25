@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MJUpDatePicTVC : BaseTableViewController
 @property(nonatomic,assign)NSInteger type;
+@property(nonatomic,strong)NSString *goodsID;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -175,8 +175,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSArray *refundImgs;
 
 @property(nonatomic,strong)NSString *memberid;
-//@property(nonatomic,strong)NSString *gender;
-//@property(nonatomic,strong)NSString *refundtype;
+@property(nonatomic,strong)NSString *member_id;
+@property(nonatomic,strong)NSString *shareorders;
 //@property(nonatomic,strong)NSString *allnum;
 //@property(nonatomic,strong)NSString *imgnum;
 //@property(nonatomic,strong)NSArray *refundImgs;
