@@ -483,6 +483,12 @@
 #define merchset_admin_SWT URLOne@"merch/set_admin"
 /** 发布合买商品*/
 #define merchpublicshare_SWT URLOne@"merch/publicshare"
+/** 合买抽签*/
+#define merchlotsdraw_lots_SWT URLOne@"merchlots/draw_lots"
+
+/** 合买详情,商户*/
+#define merchsharedetail_SWT URLOne@"merch/sharedetail"
+
 
 
 #endif /* SWTURLDefineTool_h */

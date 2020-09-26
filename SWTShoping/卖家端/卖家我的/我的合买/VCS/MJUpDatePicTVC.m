@@ -8,6 +8,7 @@
 
 #import "MJUpDatePicTVC.h"
 #import "MJHeMaiPicCell.h"
+#import <AVKit/AVKit.h>
 @interface MJUpDatePicTVC ()<TZImagePickerControllerDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,AVAudioPlayerDelegate>
 @property(nonatomic,strong)UIView *headV,*footV;
 @property(nonatomic,strong)UIButton *queRenBt;
@@ -15,6 +16,8 @@
 @property(nonatomic,strong)NSMutableArray *picArr;
 @property(nonatomic,assign)NSInteger selectIndex;
 @property(nonatomic,strong)UIImage *image;
+@property(nonatomic , strong)AVPlayer *avPlayer;
+@property(nonatomic , strong)AVPlayerViewController *playVC;
 
 @end
 
@@ -92,7 +95,7 @@
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"goodsid"]  = self.goodsID;
     dict[@"merchid"] = [zkSignleTool shareTool].selectShopID;
-    dict[@"imgs"] = [self.picArr componentsJoinedByString:@","];
+    dict[@"imgs"] = [temArr componentsJoinedByString:@","];
     dict[@"videos"] = self.picArr[0];
     if (self.type == 0) {
         dict[@"type"] = @2;
@@ -101,11 +104,20 @@
     }else if (self.type == 2) {
         dict[@"type"] = @5;
     }
-     [zkRequestTool networkingPOST:merchlotsAdd_lots_info_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+    
+    NSString * url = merchlotsAdd_lots_info_SWT;
+    if (self.type == 3) {
+        url = merchlotsdraw_lots_SWT;
+    }
+    
+     [zkRequestTool networkingPOST:url parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 1) {
+            
+            [SVProgressHUD showSuccessWithStatus:@"上传成功"];
+            
             
             
         }else {
@@ -157,6 +169,22 @@
             [weakSelf addPicWithIndex:index];
         }
     };
+    
+    cell.clickPlayActionBlock = ^(NSInteger index) {
+        NSString * video = weakSelf.picArr[0];;
+            NSURL * url = [NSURL URLWithString:video];
+            
+            AVPlayer *avPlayer = [[AVPlayer alloc] initWithURL:url];
+            weakSelf.avPlayer = avPlayer;
+            weakSelf.playVC = [[AVPlayerViewController alloc] init];
+        //    [self addChildViewController:self.playVC];
+            weakSelf.playVC.view.frame = CGRectMake(0, 0, ScreenW, 0);
+            weakSelf.playVC.player = avPlayer;
+            [weakSelf.avPlayer play];
+            
+            [weakSelf presentViewController:weakSelf.playVC animated:YES completion:nil];
+    };
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
     

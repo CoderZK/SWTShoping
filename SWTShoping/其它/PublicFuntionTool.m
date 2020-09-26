@@ -12,6 +12,8 @@
 static PublicFuntionTool * tool = nil;
 @interface PublicFuntionTool()<AVAudioPlayerDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 @property(nonatomic,strong)AVAudioPlayer *player;
+@property(nonatomic,strong)AVPlayer *avPlayer;
+@property(nonatomic,strong)AVPlayerViewController *avPlayerVC;
 @property(nonatomic,strong)UIView *footV;
 
 @end
@@ -44,7 +46,7 @@ static PublicFuntionTool * tool = nil;
     return nil;
 }
 
-+ (void)presentVideoVCWithNSString:(NSString *)videoStr isBenDiPath:(BOOL)isBenDi{
+- (void)presentVideoVCWithNSString:(NSString *)videoStr isBenDiPath:(BOOL)isBenDi{
     
     //网络视频路径
     NSString *webVideoPath = videoStr;
@@ -57,7 +59,11 @@ static PublicFuntionTool * tool = nil;
     AVPlayer *avPlayer = [[AVPlayer alloc] initWithURL:webVideoUrl];
     //步骤3：使用AVPlayer创建AVPlayerViewController，并跳转播放界面
     AVPlayerViewController *avPlayerVC =[[AVPlayerViewController alloc] init];
+    avPlayerVC.view.frame = CGRectMake(0, 0, ScreenW, ScreenH);
     avPlayerVC.player = avPlayer;
+    self.avPlayer = avPlayer;
+    self.avPlayerVC = avPlayerVC;
+    
     [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:avPlayerVC animated:YES completion:nil];
     
 }

@@ -44,7 +44,38 @@
     self.tableView.backgroundColor = UIColor.groupTableViewBackgroundColor;
     
     self.picArr = @[@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@""].mutableCopy;
+
+    [self getData];
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+
+        [self getData];
+    }];
+
 }
+
+- (void)getData {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"orderid"] = self.orderID;
+    [zkRequestTool networkingPOST:merchsharedetail_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+}
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 3;
@@ -75,19 +106,27 @@
     if (indexPath.section == 0) {
         MJHeMaiOrderCell * cell =[tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         cell.backgroundColor = cell.contentView.backgroundColor = WhiteColor;
+        cell.model = self.model;
         return cell;
     }else if (indexPath.section == 1) {
         MJHeMaiQianHaoCell * cell =[tableView dequeueReusableCellWithIdentifier:@"MJHeMaiQianHaoCell" forIndexPath:indexPath];
         if (indexPath.row == 0) {
-            cell.LB1.font = cell.LB2.font =cell.LB3.font =cell.LB4.font = kFont(14);
+            cell.LB1.font = cell.LB2.font =cell.LB3.font = kFont(14);
             cell.LB1.textColor = cell.LB2.textColor =cell.LB3.textColor = CharacterColor50;
             [cell.leftBt setTitleColor:CharacterColor50 forState:UIControlStateNormal];
             [cell.rigthBt setTitleColor:CharacterColor50 forState:UIControlStateNormal];
+            cell.LB1.text = @"签号";
+            cell.LB2.text = @"用户名";
+            cell.LB3.text = @"说出阶段";
+            [cell.leftBt setTitle:@"联系买家" forState:UIControlStateNormal];
+            [cell.rigthBt setTitle:@"订单状态" forState:UIControlStateNormal];
+            cell.leftBt.layer.borderWidth = cell.rigthBt.layer.borderWidth = 0;
+            
         }else {
             cell.LB1.font = cell.LB2.font =cell.LB3.font = kFont(13);
             cell.leftBt.titleLabel.font = cell.rigthBt.titleLabel.font = kFont(13);
             cell.LB1.textColor = cell.LB2.textColor =cell.LB3.textColor = CharacterColor50;
-      
+            cell.leftBt.layer.borderWidth = cell.rigthBt.layer.borderWidth = 0.5;
         }
         cell.backgroundColor = cell.contentView.backgroundColor = WhiteColor;
         return cell;

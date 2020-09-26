@@ -28,4 +28,19 @@
     // Configure the view for the selected state
 }
 
+- (void)setModel:(SWTModel *)model {
+    
+    _model = model;
+    [self.imgV sd_setImageWithURL:model.thumb.getPicURL placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+    [self.shopNameBt setTitle:model.store_name forState:UIControlStateNormal];
+    self.nameLB.text = model.goodname;
+    self.caiZhiLB.text = model.material;
+    
+    self.moneyLB.text = [NSString stringWithFormat:@"￥%@",model.price.getPriceStr];
+
+    
+    
+    
+}
+
 @end

@@ -115,47 +115,47 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A2FE8CF8-A6CC-42C1-BA1B-415041DD542A"
+            uuid = "F7FD4730-8D07-47EE-9C87-C1ABCFF35B61"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SWTShoping/&#x5356;&#x5bb6;&#x7aef;/&#x5356;&#x5bb6;&#x6211;&#x7684;/&#x6211;&#x7684;&#x5408;&#x4e70;/VCS/MJUpDatePicTVC.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "153"
-            endingLineNumber = "153"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
+            landmarkName = "-queRenAction"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "A2FE8CF8-A6CC-42C1-BA1B-415041DD542A - c09580ff9dfddb0"
+                  uuid = "F7FD4730-8D07-47EE-9C87-C1ABCFF35B61 - 2c2452afc367580e"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "-[MJUpDatePicTVC tableView:cellForRowAtIndexPath:]"
+                  symbolName = "-[MJUpDatePicTVC queRenAction]"
                   moduleName = "&#x6ef4;&#x96e8;&#x8f69;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhangkun/Documents/SWT/SWTShoping/SWTShoping/%E5%8D%96%E5%AE%B6%E7%AB%AF/%E5%8D%96%E5%AE%B6%E6%88%91%E7%9A%84/%E6%88%91%E7%9A%84%E5%90%88%E4%B9%B0/VCS/MJUpDatePicTVC.m"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "92"
-                  endingLineNumber = "92"
-                  offsetFromSymbolStart = "452">
+                  startingLineNumber = "113"
+                  endingLineNumber = "113"
+                  offsetFromSymbolStart = "1668">
                </Location>
                <Location
-                  uuid = "A2FE8CF8-A6CC-42C1-BA1B-415041DD542A - efefc854e49789e7"
+                  uuid = "F7FD4730-8D07-47EE-9C87-C1ABCFF35B61 - 8e0f6e005d1d4d81"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__50-[MJUpDatePicTVC tableView:cellForRowAtIndexPath:]_block_invoke.107"
+                  symbolName = "__30-[MJUpDatePicTVC queRenAction]_block_invoke"
                   moduleName = "&#x6ef4;&#x96e8;&#x8f69;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhangkun/Documents/SWT/SWTShoping/SWTShoping/%E5%8D%96%E5%AE%B6%E7%AB%AF/%E5%8D%96%E5%AE%B6%E6%88%91%E7%9A%84/%E6%88%91%E7%9A%84%E5%90%88%E4%B9%B0/VCS/MJUpDatePicTVC.m"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "93"
-                  endingLineNumber = "93"
-                  offsetFromSymbolStart = "24">
+                  startingLineNumber = "113"
+                  endingLineNumber = "113"
+                  offsetFromSymbolStart = "16">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -163,16 +163,48 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C34D10CD-2B43-410E-ABCF-F70F1DACF461"
+            uuid = "8BE89F7D-B6A3-44ED-9347-AEE6C4105EC7"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SWTShoping/&#x5356;&#x5bb6;&#x7aef;/&#x5356;&#x5bb6;&#x6211;&#x7684;/&#x6211;&#x7684;&#x5408;&#x4e70;/Views/MJHeMaiPicCell.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
-            landmarkName = "-collectionView:didSelectItemAtIndexPath:"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
+            landmarkName = "-playAction"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "444EAAE5-1885-4466-AB05-E4F7017C2EB0"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SWTShoping/&#x5356;&#x5bb6;&#x7aef;/&#x5356;&#x5bb6;&#x6211;&#x7684;/&#x6211;&#x7684;&#x5408;&#x4e70;/VCS/MJHeMaiSubTVC.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
+            landmarkName = "-getData"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7B79EAB0-790A-4933-B8CA-CA4D115D4A97"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SWTShoping/&#x5356;&#x5bb6;&#x7aef;/&#x5356;&#x5bb6;&#x6211;&#x7684;/&#x6211;&#x7684;&#x5408;&#x4e70;/VCS/MJHeMaiDetailTVC.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "-getData"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

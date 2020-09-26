@@ -14,6 +14,7 @@
 @interface MJHeMaiSubTVC ()<zkPickViewDelelgate>
 
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *dataArray;
+@property(nonatomic,assign)NSInteger index;
 @end
 
 @implementation MJHeMaiSubTVC
@@ -22,7 +23,7 @@
     [super viewDidLoad];
     [self.tableView registerNib:[UINib nibWithNibName:@"MJHeMaiOrderCell" bundle:nil] forCellReuseIdentifier:@"Cell"];
     [self.tableView registerClass:[SWTMineHeMaiOrderCell class] forCellReuseIdentifier:@"cell"];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 40;
     self.dataArray = @[].mutableCopy;
@@ -92,14 +93,18 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.type == 0) {
         MJHeMaiOrderCell * cell =[tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+        cell.centerBt.tag = indexPath.row;
+        cell.leftBt.tag = indexPath.row;
         [cell.centerBt  addTarget:self action:@selector(upPicAction:) forControlEvents:UIControlEventTouchUpInside];
+         [cell.leftBt  addTarget:self action:@selector(upPicActionTwo:) forControlEvents:UIControlEventTouchUpInside];
+        cell.model = self.dataArray[indexPath.row];
         return cell;
     }else {
         SWTMineHeMaiOrderCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-        cell.rightOneBt.tag = indexPath.row;
-        [cell.rightOneBt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
-        cell.type = self.type;
-        cell.model = self.dataArray[indexPath.row];
+//        cell.rightOneBt.tag = indexPath.row;
+//        [cell.rightOneBt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
+//        cell.type = self.type;
+//        cell.model = self.dataArray[indexPath.row];
         return cell;
     }
     
@@ -109,6 +114,8 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     MJHeMaiDetailTVC * vc =[[MJHeMaiDetailTVC alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
+    vc.orderID = self.dataArray[indexPath.row].orderid;
+    vc.model = self.dataArray[indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];
     
     
@@ -120,6 +127,7 @@
 
 
 - (void)upPicAction:(UIButton *)button {
+    self.index = button.tag;
     zkPickView * pickV = [[zkPickView alloc] init];
     pickV.arrayType = titleArray;
     pickV.array = @[@"上传开料结果",@"上传毛坯结果",@"上传成品结果"].mutableCopy;
@@ -127,11 +135,23 @@
     pickV.delegate = self;
 }
 
+- (void)upPicActionTwo:(UIButton *)button {
+    
+    MJUpDatePicTVC * vc =[[MJUpDatePicTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+    vc.hidesBottomBarWhenPushed = YES;
+    vc.type = 3;
+    vc.goodsID = self.dataArray[button.tag].goodid;
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+
+
 - (void)didSelectLeftIndex:(NSInteger)leftIndex centerIndex:(NSInteger)centerIndex rightIndex:(NSInteger)rightIndex {
     
     MJUpDatePicTVC * vc =[[MJUpDatePicTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
     vc.hidesBottomBarWhenPushed = YES;
     vc.type = leftIndex;
+    vc.goodsID = self.dataArray[self.index].goodid;
     [self.navigationController pushViewController:vc animated:YES];
     
 }

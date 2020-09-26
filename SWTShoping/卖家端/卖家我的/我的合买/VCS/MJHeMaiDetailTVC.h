@@ -11,7 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MJHeMaiDetailTVC : BaseViewController
-
+@property(nonatomic,strong)NSString *orderID;
+@property(nonatomic,strong)SWTModel *model;
 @end
 
 NS_ASSUME_NONNULL_END

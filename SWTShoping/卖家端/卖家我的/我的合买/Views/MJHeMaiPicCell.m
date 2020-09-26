@@ -94,7 +94,10 @@
 }
 
 - (void)playAction {
-    [PublicFuntionTool presentVideoVCWithNSString:self.picArr[0] isBenDiPath:NO];
+//    [[PublicFuntionTool shareTool] presentVideoVCWithNSString:self.picArr[0] isBenDiPath:NO];
+    if (self.clickPlayActionBlock != nil) {
+        self.clickPlayActionBlock(0);
+    }
 }
 
 - (void)setPicArr:(NSMutableArray *)picArr {

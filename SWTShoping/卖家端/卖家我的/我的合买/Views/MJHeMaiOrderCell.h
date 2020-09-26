@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIButton *rightBt;
 @property (weak, nonatomic) IBOutlet UIButton *centerBt;
 @property (weak, nonatomic) IBOutlet UIButton *leftBt;
-
+@property(nonatomic,strong)SWTModel *model;
 @end
 
 NS_ASSUME_NONNULL_END
