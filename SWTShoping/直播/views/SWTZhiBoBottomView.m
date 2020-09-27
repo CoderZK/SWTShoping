@@ -150,6 +150,23 @@
     return self;
 }
 
+
+- (void)setIsShangHu:(BOOL)isShangHu {
+    [self.shareBt mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(@0);
+    }];
+    [self.collectBt mas_updateConstraints:^(MASConstraintMaker *make) {
+         make.width.equalTo(@0);
+    }];
+    [self.shareBt mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(@0);
+    }];
+    [self.gouWuBt setBackgroundImage:[UIImage imageNamed:@"ksfb"] forState:UIControlStateNormal];
+    
+    self.TF.placeholder = @"和用户聊聊";
+    
+}
+
 - (void)setIsHeMai:(BOOL)isHeMai {
     _isHeMai = isHeMai;
     
@@ -192,6 +209,7 @@
     }else {
         [self.collectBt setBackgroundImage:[UIImage imageNamed:@"collectN"] forState:UIControlStateNormal];
     }
+    
 }
 
 @end

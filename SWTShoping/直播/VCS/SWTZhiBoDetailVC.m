@@ -950,17 +950,14 @@
 
 //获取直播人数
 - (void)getNumberAction {
-    [SVProgressHUD show];
+
     NSMutableDictionary * dict = @{}.mutableCopy;
     [zkRequestTool networkingPOST:livegetlivenum_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
     
-        [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             self.dataModel.watchnum = [NSString stringWithFormat:@"%@",responseObject[@"data"]];
             self.headV.model = self.dataModel;
             
-        }else {
-            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {

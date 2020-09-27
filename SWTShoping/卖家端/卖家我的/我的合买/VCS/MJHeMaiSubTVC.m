@@ -130,7 +130,7 @@
     self.index = button.tag;
     zkPickView * pickV = [[zkPickView alloc] init];
     pickV.arrayType = titleArray;
-    pickV.array = @[@"上传开料结果",@"上传毛坯结果",@"上传成品结果"].mutableCopy;
+    pickV.array = @[@"上传原料结果",@"上传开料结果",@"上传毛坯结果"].mutableCopy;
     [pickV show];
     pickV.delegate = self;
 }
@@ -152,6 +152,7 @@
     vc.hidesBottomBarWhenPushed = YES;
     vc.type = leftIndex;
     vc.goodsID = self.dataArray[self.index].goodid;
+    vc.dataModel = self.dataArray[self.index];
     [self.navigationController pushViewController:vc animated:YES];
     
 }

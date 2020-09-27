@@ -74,7 +74,7 @@
                 self.topDataModel =[SWTModel mj_objectWithKeyValues:responseObject[@"data"][@"top"]];
             }
             [self.dataArray addObjectsFromArray:arr];
-            if (self.dataArray.count == 0) {
+            if (self.dataArray.count == 0 && self.topDataModel.ID.length == 0) {
                 [self.noneView showNoneDataViewAt:self.view img:[UIImage imageNamed:@"dyx47"] tips:@"暂无数据"];
             }else {
                 [self.noneView  dismiss];
@@ -129,6 +129,9 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     if (section == 0) {
+        if (self.topDataModel.ID.length == 0) {
+            return 0;
+        }
         return 1;
     }
 //    return 9;

@@ -76,6 +76,26 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.picArr = @[@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@""].mutableCopy;
+    
+    if (self.type != 3) {
+        NSString * videoStr = @"";
+        NSArray * arr = @[];
+        for (SWTModel * model  in self.dataModel.lotinfo) {
+            if (model.type.intValue == self.type+1) {
+                if (model.videos.length > 0) {
+                    videoStr = model.videos;
+                    arr = [model.imgs componentsSeparatedByString:@","];
+                }else {
+                    arr = [model.imgs componentsSeparatedByString:@","];
+                }
+            }
+        }
+        self.picArr[0] = videoStr;
+        for (int i = 1 ; i <= arr.count; i++) {
+            self.picArr[i] = arr[i-1];
+        }
+    }
+    
 }
 
 - (void)queRenAction {
@@ -97,14 +117,7 @@
     dict[@"merchid"] = [zkSignleTool shareTool].selectShopID;
     dict[@"imgs"] = [temArr componentsJoinedByString:@","];
     dict[@"videos"] = self.picArr[0];
-    if (self.type == 0) {
-        dict[@"type"] = @2;
-    }else if (self.type == 1) {
-        dict[@"type"] = @3;
-    }else if (self.type == 2) {
-        dict[@"type"] = @5;
-    }
-    
+    dict[@"type"] = @(self.type + 1);
     NSString * url = merchlotsAdd_lots_info_SWT;
     if (self.type == 3) {
         url = merchlotsdraw_lots_SWT;
@@ -114,7 +127,7 @@
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];
-        if ([responseObject[@"code"] intValue]== 1) {
+        if ([responseObject[@"code"] intValue]== 200) {
             
             [SVProgressHUD showSuccessWithStatus:@"上传成功"];
             
@@ -260,6 +273,8 @@
                 
                 
             }];
+            
+            
            
         }else{
             UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -267,12 +282,25 @@
         }
     }];
     
+    UIAlertAction *action4 = [UIAlertAction actionWithTitle:@"看大图" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        [[zkPhotoShowVC alloc] initWithArray:@[self.picArr[self.selectIndex]] index:0];
+       
+    }];
    
     
     UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-    [ac addAction:action1];
-    [ac addAction:action2];
-    [ac addAction:action3];
+    if ([self.picArr[self.selectIndex] length] > 0) {
+        [ac addAction:action1];
+        [ac addAction:action2];
+        [ac addAction:action4];
+        [ac addAction:action3];
+    }else {
+        [ac addAction:action1];
+        [ac addAction:action2];
+        [ac addAction:action3];
+    }
+    
     
     [self.navigationController presentViewController:ac animated:YES completion:nil];
     

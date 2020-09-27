@@ -12,6 +12,11 @@
 + (NSDictionary *)mj_replacedKeyFromPropertyName {
     return @{@"ID":@"id",@"des":@"description",@"merch_id":@"mer_id"};
 }
+
++ (NSDictionary *)mj_objectClassInArray {
+    return @{@"lotinfo":@"SWTModel",@"childorderinfo":@"SWTModel"};
+}
+
 - (void)setStorename:(NSString *)storename {
     _storename = storename;
     self.store_name = storename;

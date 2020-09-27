@@ -41,6 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *des;
 @property(nonatomic,strong)NSString *stock;
 @property(nonatomic,strong)NSString *video;
+@property(nonatomic,strong)NSString *videos;
 @property(nonatomic,strong)NSString *thumb;
 @property(nonatomic,strong)NSString *thumbs;
 @property(nonatomic,strong)NSString *hasoption;
@@ -221,8 +222,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *merchlist;
 
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *children;
-//@property(nonatomic,strong)NSMutableArray<SWTModel *> *articleList;
-//@property(nonatomic,strong)NSMutableArray<SWTModel *> *appoinmentHistory;
+@property(nonatomic,strong)NSMutableArray<SWTModel *> *lotinfo;
+@property(nonatomic,strong)NSMutableArray<SWTModel *> *childorderinfo;
 //@property(nonatomic,strong)NSMutableArray<SWTModel *> *doctors;
 //@property(nonatomic,strong)NSMutableArray<SWTModel *> *doctorAppoints;
 //@property(nonatomic,strong)NSMutableArray<SWTModel *> *weightNub;

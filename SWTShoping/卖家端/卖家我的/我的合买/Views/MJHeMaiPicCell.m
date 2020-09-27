@@ -43,7 +43,7 @@
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 12;
+    return self.picArr.count;
 }
 
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
@@ -51,30 +51,53 @@
     
     MJPicCollectNeiCell * cell =  [collectionView dequeueReusableCellWithReuseIdentifier:@"MJPicCollectNeiCell" forIndexPath:indexPath];
     cell.playBt.hidden = YES;
-    if (indexPath.row == 0) {
-        if ([self.picArr[0] length] == 0) {
-            cell.chaBt.hidden = YES;
-            cell.imgV.image = [UIImage imageNamed:@"bbdyx73"];
-            
-        }else {
-            cell.chaBt.hidden = NO;
-            [cell.imgV sd_setImageWithURL:[self.picArr[0] getPicURL] placeholderImage:[UIImage imageNamed:@"369"]];
-            cell.playBt.hidden = NO;
-            [cell.playBt addTarget:self action:@selector(playAction) forControlEvents:UIControlEventTouchUpInside];
-            
-        }
-    }else {
-        if ([self.picArr[indexPath.row] length] == 0) {
-            cell.chaBt.hidden = YES;
-            cell.imgV.image = [UIImage imageNamed:@"bbdyx72"];
-        }else {
-            cell.chaBt.hidden = NO;
-            [cell.imgV sd_setImageWithURL:[self.picArr[indexPath.row] getPicURL] placeholderImage:[UIImage imageNamed:@"369"]];
-            
-        }
-    }
+    
     cell.chaBt.tag = indexPath.row;
     [cell.chaBt addTarget:self action:@selector(delectAction:) forControlEvents:UIControlEventTouchUpInside];
+    if (self.isXiangQing) {
+        cell.chaBt.hidden = YES;
+        
+        if (self.isHaveVideo) {
+            if (indexPath.row == 0) {
+                cell.playBt.hidden = NO;
+                [cell.imgV sd_setImageWithURL:[self.picArr[0] getPicURL] placeholderImage:[UIImage imageNamed:@"369"]];
+                [cell.playBt addTarget:self action:@selector(playAction) forControlEvents:UIControlEventTouchUpInside];
+            }else {
+                cell.playBt.hidden = YES;
+                [cell.imgV sd_setImageWithURL:[self.picArr[indexPath.row] getPicURL] placeholderImage:[UIImage imageNamed:@"369"]];
+                
+            }
+            
+        }else {
+            cell.playBt.hidden = YES;
+            [cell.imgV sd_setImageWithURL:[self.picArr[indexPath.row] getPicURL] placeholderImage:[UIImage imageNamed:@"369"]];
+        }
+    }else {
+        
+        if (indexPath.row == 0) {
+            if ([self.picArr[0] length] == 0) {
+                cell.chaBt.hidden = YES;
+                cell.imgV.image = [UIImage imageNamed:@"bbdyx73"];
+                
+            }else {
+                cell.chaBt.hidden = NO;
+                [cell.imgV sd_setImageWithURL:[self.picArr[0] getPicURL] placeholderImage:[UIImage imageNamed:@"369"]];
+                cell.playBt.hidden = NO;
+                [cell.playBt addTarget:self action:@selector(playAction) forControlEvents:UIControlEventTouchUpInside];
+                
+            }
+        }else {
+            if ([self.picArr[indexPath.row] length] == 0) {
+                cell.chaBt.hidden = YES;
+                cell.imgV.image = [UIImage imageNamed:@"bbdyx72"];
+            }else {
+                cell.chaBt.hidden = NO;
+                [cell.imgV sd_setImageWithURL:[self.picArr[indexPath.row] getPicURL] placeholderImage:[UIImage imageNamed:@"369"]];
+                
+            }
+        }
+        
+    }
     return cell;
     
 }
