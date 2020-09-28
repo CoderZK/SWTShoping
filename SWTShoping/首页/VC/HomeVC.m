@@ -20,6 +20,7 @@
 #import "SWTHeMaiFatherVC.h"
 #import "SWTSearchFatherVC.h"
 #import "SWTShowLoginView.h"
+#import "SWTJiShiFaBuView.h"
 @interface HomeVC ()<UIScrollViewDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource,SWTHomeHeadViewDelegate,SDCycleScrollViewDelegate>
 @property(nonatomic , strong)SWTHomeHeadView *headView;
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
@@ -380,6 +381,10 @@
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    SWTJiShiFaBuView * view = [[SWTJiShiFaBuView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+    [view show];
+    return;
     
     
     SWTModel * model = self.recommendArr[indexPath.row];

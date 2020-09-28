@@ -27,11 +27,15 @@
     [super viewDidLoad];
     NSString * str1 = @"";
     NSString * str2 = @"";
-    if (self.type ==0) {
+    if (self.type == 1) {
+        self.navigationItem.title = @"上传抽签";
+        str1 = @"请上传抽签结果图片或视频";
+        str2 = @"确认发布抽签结果";
+    }else if (self.type == 2) {
         self.navigationItem.title = @"发布开料结果";
         str1 = @"请上传开料结果图片或视频";
         str2 = @"确认发布开料结果";
-    }else if (self.type == 1) {
+    }else if (self.type == 3) {
         self.navigationItem.title = @"发布毛坯结果";
         str1 = @"请上传毛坯结果图片或视频";
         str2 = @"确认发布毛坯结果";
@@ -77,7 +81,7 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.picArr = @[@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@""].mutableCopy;
     
-    if (self.type != 3) {
+    if (self.type != 1) {
         NSString * videoStr = @"";
         NSArray * arr = @[];
         for (SWTModel * model  in self.dataModel.lotinfo) {
@@ -117,7 +121,10 @@
     dict[@"merchid"] = [zkSignleTool shareTool].selectShopID;
     dict[@"imgs"] = [temArr componentsJoinedByString:@","];
     dict[@"videos"] = self.picArr[0];
-    dict[@"type"] = @(self.type + 1);
+    dict[@"type"] = @(self.type);
+    if (self.type == 4) {
+        dict[@"type"] = @"5";
+    }
     NSString * url = merchlotsAdd_lots_info_SWT;
     if (self.type == 3) {
         url = merchlotsdraw_lots_SWT;

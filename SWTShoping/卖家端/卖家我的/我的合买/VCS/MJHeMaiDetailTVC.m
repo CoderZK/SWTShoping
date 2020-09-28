@@ -73,7 +73,7 @@
             self.picArr = @[].mutableCopy;
             for (SWTModel * model  in self.dataModel.lotinfo) {
                 
-                if (model.type.intValue == 1) {
+                if (model.type.intValue == 2) {
                     self.isHaveVideo = NO;
                     if (model.videos.length > 0) {
                         [self.picArr insertObject:model.videos atIndex:0];

@@ -26,7 +26,7 @@
         
         
         self.gouWuBt = [[UIButton alloc] init];
-        [self.gouWuBt setBackgroundImage:[UIImage imageNamed:@"live_gwc"] forState:UIControlStateNormal];
+        [self.gouWuBt setBackgroundImage:[UIImage imageNamed:@"dyx88"] forState:UIControlStateNormal];
         self.gouWuBt.tag = 100;
         [self.gouWuBt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.gouWuBt];
@@ -102,7 +102,9 @@
         [self.gouWuBt mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self).offset(15);
             make.centerY.equalTo(self);
-            make.height.width.equalTo(@35);
+            make.height.equalTo(@35);
+            make.width.equalTo(@50);
+            
         }];
         
         [self.collectBt mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -161,7 +163,7 @@
     [self.shareBt mas_updateConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@0);
     }];
-    [self.gouWuBt setBackgroundImage:[UIImage imageNamed:@"ksfb"] forState:UIControlStateNormal];
+    [self.gouWuBt setBackgroundImage:[UIImage imageNamed:@"dyx87"] forState:UIControlStateNormal];
     
     self.TF.placeholder = @"和用户聊聊";
     

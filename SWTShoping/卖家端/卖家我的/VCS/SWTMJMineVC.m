@@ -315,6 +315,11 @@
                        }else {
                            cell.rightLB.text = @"";
                        }
+            if (indexPath.row == 3) {
+                cell.leftImgV.image = [UIImage imageNamed: [NSString stringWithFormat:@"dyx%d",16]];
+            }else if (indexPath.row == 4) {
+                cell.leftImgV.image = [UIImage imageNamed: [NSString stringWithFormat:@"dyx%d",86]];
+            }
         }else {
             cell.leftLB.text = self.leftArr[indexPath.row];
             cell.leftImgV.image = [UIImage imageNamed: [NSString stringWithFormat:@"bbdyx%ld",11+indexPath.row]];

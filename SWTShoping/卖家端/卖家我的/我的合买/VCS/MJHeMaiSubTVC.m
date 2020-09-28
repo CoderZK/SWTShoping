@@ -130,7 +130,7 @@
     self.index = button.tag;
     zkPickView * pickV = [[zkPickView alloc] init];
     pickV.arrayType = titleArray;
-    pickV.array = @[@"上传原料结果",@"上传开料结果",@"上传毛坯结果"].mutableCopy;
+    pickV.array = @[@"上传开料结果",@"上传毛坯结果",@"上传成品结果"].mutableCopy;
     [pickV show];
     pickV.delegate = self;
 }
@@ -139,7 +139,7 @@
     
     MJUpDatePicTVC * vc =[[MJUpDatePicTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
     vc.hidesBottomBarWhenPushed = YES;
-    vc.type = 3;
+    vc.type = 1;
     vc.goodsID = self.dataArray[button.tag].goodid;
     [self.navigationController pushViewController:vc animated:YES];
     
@@ -150,7 +150,7 @@
     
     MJUpDatePicTVC * vc =[[MJUpDatePicTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
     vc.hidesBottomBarWhenPushed = YES;
-    vc.type = leftIndex;
+    vc.type = 2+leftIndex;
     vc.goodsID = self.dataArray[self.index].goodid;
     vc.dataModel = self.dataArray[self.index];
     [self.navigationController pushViewController:vc animated:YES];
