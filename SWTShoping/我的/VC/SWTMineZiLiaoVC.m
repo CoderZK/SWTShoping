@@ -60,9 +60,6 @@
     if (indexPath.row == 0) {
         return 80;
     }
-    if (indexPath.row == 4) {
-        return 0;;
-    }
     return 50;
 }
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

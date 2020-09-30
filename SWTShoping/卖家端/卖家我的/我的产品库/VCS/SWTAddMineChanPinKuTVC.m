@@ -33,6 +33,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"新增产品";
+    if (self.isEdit) {
+        self.navigationItem.title = @"修改产品";
+    }
     self.isBaoYou = YES;
     self.picArr = @[].mutableCopy;
     self.picStrArr = @[].mutableCopy;
@@ -880,6 +883,12 @@
             self.headV.picArr = self.picArr;
             self.thumbStr = self.dataModel.thumb;
             self.headV.thumbStr = self.thumbStr;
+            self.headV.shangjiaStatusV.TF.text = self.dataModel.state.intValue == 1?@"上架":@"下架";
+            if (self.dataModel.state.intValue == 1) {
+                self.shangJiaStatus = @"1";
+            }else {
+                self.shangJiaStatus = @"0";
+            }
             self.timeStr = self.dataModel.auction_start_time;
             self.endTimeStr = self.dataModel.auction_end_time;
             self.youFeiStr = self.dataModel.expressprice;

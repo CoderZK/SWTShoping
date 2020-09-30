@@ -22,7 +22,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+    if (!self.isComeBaoZhengJin) {
+       [self getOrderStatus];
+    }
 }
 
 - (void)viewDidLoad {
@@ -65,10 +67,12 @@
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             if (self.isComeBaoZhengJin) {
+                if ([responseObject[@"data"][@"status"] isEqualToString:@"SUCCESS"]) {
                 [SVProgressHUD showSuccessWithStatus:@"店铺保证金支付成功"];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [self.navigationController popToRootViewControllerAnimated:YES];
-                });
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [self.navigationController popToRootViewControllerAnimated:YES];
+                    });
+                }
             }else {
                 if ([responseObject[@"data"][@"status"] isEqualToString:@"SUCCESS"]) {
                     //支付成功
@@ -147,7 +151,7 @@
             if ( dict2 != nil && [dict2.allKeys containsObject:@"appPayRequest"]) {
                 
                 self.payDataJsonStr = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:dict2[@"appPayRequest"] options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
-                self.orderID = responseObject[@"merOrderId"];
+//                self.orderID = responseObject[@"merOrderId"];
                 [self payAction];
                 
                 

@@ -26,7 +26,7 @@
         layout.minimumInteritemSpacing = 10;
         
         self.collectV = [[UICollectionView alloc] initWithFrame:CGRectMake(15, 15, ScreenW - 30, 100) collectionViewLayout:layout];
-        [self.contentView addSubview:self.collectV];
+        [self addSubview:self.collectV];
         self.collectV.delegate = self;
         self.collectV.dataSource = self;
         [self.collectV mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -14,9 +14,16 @@
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *dataArray;
 @property(nonatomic,strong)NSMutableArray<V2TIMConversation *> *ListArr;
 @property(nonatomic,assign)uint64_t stepNext;
+@property(nonatomic,assign)BOOL isShowRed;
 @end
 
 @implementation SWTMJMessageSubTVC
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getList];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -46,7 +53,7 @@
         };
     }else {
         self.ListArr = @[].mutableCopy;
-        [self getList];
+         self.stepNext = 0;
            self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
           
                self.stepNext = 0;
@@ -72,6 +79,19 @@
        }];
 }
 
+- (void)showRedV {
+    for (V2TIMConversation * conVerSation  in self.ListArr) {
+        if (conVerSation.unreadCount > 0 ) {
+            self.isShowRed = YES;
+            break;
+        }else {
+            self.isShowRed = NO;
+        }
+    }
+    [LTSCEventBus sendEvent:@"showmessage" data:@(self.isShowRed)];
+}
+
+
 - (void)getList  {
     
     [[V2TIMManager sharedInstance] getConversationList:(self.stepNext) count:50 succ:^(NSArray<V2TIMConversation *> *list, uint64_t nextSeq, BOOL isFinished) {
@@ -87,6 +107,7 @@
                 [self.ListArr addObject:con];
             }
         }
+        [self showRedV];
         self.stepNext = nextSeq;
         [self.tableView reloadData];
         

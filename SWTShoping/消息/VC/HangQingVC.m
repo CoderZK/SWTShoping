@@ -19,6 +19,11 @@
 
 @implementation HangQingVC
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getList];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"消息";
@@ -29,7 +34,6 @@
     [self getData];
     self.ListArr = @[].mutableCopy;
     self.stepNext = 0;
-    [self getList];
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self getData];
         self.stepNext = 0;
@@ -73,10 +77,9 @@
 
 - (void)showRedV {
     for (V2TIMConversation * conVerSation  in self.ListArr) {
-        V2TIMMessage * lastM  = conVerSation.lastMessage;
-        if (lastM.isPeerRead == NO) {
+        if (conVerSation.unreadCount > 0 ) {
             self.isShowRed = YES;
-            return;
+            break;
         }else {
             self.isShowRed = NO;
         }
@@ -100,7 +103,7 @@
             }
         }
         self.stepNext = nextSeq;
-        
+        [self showRedV];
         if (self.dataArray.count + self.ListArr.count == 0) {
             [self.noneView showNoneDataViewAt:self.view img:[UIImage imageNamed:@"dyx47"] tips:@"暂无数据"];
         }else {

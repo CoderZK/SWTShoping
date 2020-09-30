@@ -31,6 +31,8 @@
 
 //苹果账号 shanghaixunshun@163.com 密码 Ma730620
 @interface AppDelegate ()<V2TIMSDKListener,V2TIMAdvancedMsgListener>
+@property(nonatomic,assign)BOOL isShowRed;
+@property(nonatomic,strong)NSMutableArray<V2TIMConversation *> *ListArr;
 
 @end
 
@@ -78,17 +80,18 @@
 //        [self sendExceptionLogWithData:data path:dataPath];
         
     }
-    
-     [[TUIKit sharedInstance] setupWithAppId:TXIMAPPID];
+    [[TUIKit sharedInstance] setupWithAppId:TXIMAPPID];
+    [self initTengXunIM];
     
     [[V2TIMManager sharedInstance] addAdvancedMsgListener:self];
-    [[V2TIMManager sharedInstance] setGroupListener:self];
-    [self initTengXunIM];
     
     if (ISLOGIN) {
         [self loginIM];
     }
-    
+    self.ListArr = @[].mutableCopy;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self getList];
+    });
     return YES;
 }
 
@@ -96,12 +99,43 @@
 - (void)onRecvNewMessage:(V2TIMMessage *)msg{
     
     [LTSCEventBus sendEvent:@"cmessage" data:nil];
-    
+    [self getList];
 }
 
 /// 收到消息已读回执（仅单聊有效）
 - (void)onRecvC2CReadReceipt:(NSArray<V2TIMMessageReceipt *> *)receiptList{
     
+    
+    
+    
+}
+
+
+- (void)showRedV {
+    for (V2TIMConversation * conVerSation  in self.ListArr) {
+        if (conVerSation.unreadCount > 0 ) {
+            self.isShowRed = YES;
+            break;
+        }else {
+            self.isShowRed = NO;
+        }
+    }
+    [LTSCEventBus sendEvent:@"showmessage" data:@(self.isShowRed)];
+}
+
+- (void)getList  {
+    
+    [[V2TIMManager sharedInstance] getConversationList:(0) count:50 succ:^(NSArray<V2TIMConversation *> *list, uint64_t nextSeq, BOOL isFinished) {
+        [self.ListArr removeAllObjects];
+        for (V2TIMConversation * con in  list) {
+            if (con.type == V2TIM_C2C) {
+                [self.ListArr addObject:con];
+            }
+        }
+        [self showRedV];
+    } fail:^(int code, NSString *desc) {
+     
+    }];
     
     
     
@@ -571,13 +605,14 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     
-    [LTSCEventBus sendEvent:@"foreground" data:nil];
+//    [LTSCEventBus sendEvent:@"foreground" data:nil];
     
 }
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [LTSCEventBus sendEvent:@"foreground" data:nil];
 }
 
 

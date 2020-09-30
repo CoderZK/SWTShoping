@@ -17,7 +17,7 @@
 @property(nonatomic , strong)UICollectionView *collectionView;
 @property(nonatomic , strong)SWTCateSearchView *headV;
 @property(nonatomic , strong)NSString *cateID,*upOrDown;
-@property(nonatomic , assign)NSInteger  paiMaiOrYiKouJia,jiaGeOrTimeType; // 0 拍卖  1一口价  // 1 价格 2 时间
+@property(nonatomic , assign)NSInteger  paiMaiOrYiKouJia,jiaGeOrTimeType; // 1 拍卖  0一口价  // 1 价格 2 时间
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *dataArray;
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *titleArr;
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *caiZhiArr;
@@ -130,10 +130,10 @@
         
         if (tag == 0) {
             //拍卖
-            self.paiMaiOrYiKouJia = 0;
+            self.paiMaiOrYiKouJia = 1;
         }else if (tag == 1) {
             //一口价
-            self.paiMaiOrYiKouJia = 1;
+            self.paiMaiOrYiKouJia = 0;
         }else if (tag == 2) {
             //筛选
             SWTShaiXuanRightView * shaiXuanView = [[SWTShaiXuanRightView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH) withArr:self.caiZhiArr];
