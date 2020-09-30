@@ -40,7 +40,7 @@
         str1 = @"请上传毛坯结果图片或视频";
         str2 = @"确认发布毛坯结果";
     }else  {
-         self.navigationItem.title = @"发布成品结果";
+        self.navigationItem.title = @"发布成品结果";
         str1 = @"请上传成品结果图片或视频";
         str2 = @"确认发布成品结果";
     }
@@ -130,7 +130,7 @@
         url = merchlotsdraw_lots_SWT;
     }
     
-     [zkRequestTool networkingPOST:url parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+    [zkRequestTool networkingPOST:url parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];
@@ -164,7 +164,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-   
+    
     return (ScreenW - 60)/4 * 3 + 50;
     
 }
@@ -192,17 +192,17 @@
     
     cell.clickPlayActionBlock = ^(NSInteger index) {
         NSString * video = weakSelf.picArr[0];;
-            NSURL * url = [NSURL URLWithString:video];
-            
-            AVPlayer *avPlayer = [[AVPlayer alloc] initWithURL:url];
-            weakSelf.avPlayer = avPlayer;
-            weakSelf.playVC = [[AVPlayerViewController alloc] init];
+        NSURL * url = [NSURL URLWithString:video];
+        
+        AVPlayer *avPlayer = [[AVPlayer alloc] initWithURL:url];
+        weakSelf.avPlayer = avPlayer;
+        weakSelf.playVC = [[AVPlayerViewController alloc] init];
         //    [self addChildViewController:self.playVC];
-            weakSelf.playVC.view.frame = CGRectMake(0, 0, ScreenW, 0);
-            weakSelf.playVC.player = avPlayer;
-            [weakSelf.avPlayer play];
-            
-            [weakSelf presentViewController:weakSelf.playVC animated:YES completion:nil];
+        weakSelf.playVC.view.frame = CGRectMake(0, 0, ScreenW, 0);
+        weakSelf.playVC.player = avPlayer;
+        [weakSelf.avPlayer play];
+        
+        [weakSelf presentViewController:weakSelf.playVC animated:YES completion:nil];
     };
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -234,14 +234,14 @@
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if ([self isCanUsePhotos]) {
             
-         
+            
             [self showMXPhotoCameraAndNeedToEdit:YES completion:^(UIImage *image, UIImage *originImage, CGRect cutRect) {
                 
                 self.image = image;
                 [self updateImage];
-
+                
             }];
-       
+            
         }else{
             UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相机" message:@"请在iPhone的""设置-隐私-相机""中允许访问相机" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
@@ -251,38 +251,34 @@
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         if ([self isCanUsePicture]) {
-            [self showMXPickerWithMaximumPhotosAllow:1 completion:^(NSArray *assets) {
+            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:MAXFLOAT columnNumber:4 delegate:self pushPhotoPickerVc:YES];
+            imagePickerVc.maxImagesCount = 1;
+            imagePickerVc.videoMaximumDuration = 3;
+            
+            imagePickerVc.allowTakeVideo = NO;
+            imagePickerVc.allowPickingVideo = NO;
+            imagePickerVc.allowPickingImage = YES;
+            imagePickerVc.allowTakePicture = NO;
+            
+            imagePickerVc.showSelectBtn = NO;
+            imagePickerVc.allowCrop = YES;
+            imagePickerVc.needCircleCrop = NO;
+            imagePickerVc.cropRectPortrait = CGRectMake(0, (ScreenH - ScreenW)/2, ScreenW, ScreenW);
+            imagePickerVc.cropRectLandscape = CGRectMake(0, (ScreenW - ScreenH)/2, ScreenH, ScreenH);
+            imagePickerVc.circleCropRadius = ScreenW/2;
+            [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
                 
-                for (ALAsset *asset in assets) {
-                    ALAssetRepresentation *assetRep = [asset defaultRepresentation];
-                    CGImageRef imgRef = [assetRep fullResolutionImage];
-                    UIImage *image = [[UIImage alloc] initWithCGImage:imgRef
-                                                                scale:assetRep.scale
-                                                          orientation:(UIImageOrientation)assetRep.orientation];
-                    
-                    if (!image) {
-                        image = [[UIImage alloc] initWithCGImage:[[asset defaultRepresentation] fullScreenImage]
-                                                           scale:assetRep.scale
-                                                     orientation:(UIImageOrientation)assetRep.orientation];
-                        
-                    }
-                    if (!image) {
-                        CGImageRef thum = [asset aspectRatioThumbnail];
-                        image = [UIImage imageWithCGImage:thum];
-                    }
-                    
-                    self.image = image;
+                if (photos.count > 0) {
+                    self.image = photos.firstObject;
                     [self updateImage];
-                  
                 }
-                
-              
                 
                 
             }];
+            [self presentViewController:imagePickerVc animated:YES completion:nil];
             
             
-           
+            
         }else{
             UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
@@ -292,9 +288,9 @@
     UIAlertAction *action4 = [UIAlertAction actionWithTitle:@"看大图" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         [[zkPhotoShowVC alloc] initWithArray:@[self.picArr[self.selectIndex]] index:0];
-       
+        
     }];
-   
+    
     
     UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     if ([self.picArr[self.selectIndex] length] > 0) {

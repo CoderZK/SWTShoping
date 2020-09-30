@@ -19,6 +19,8 @@
 @property(nonatomic , strong)UIView *bottomV;
 @property(nonatomic , strong)UIButton *leftBt,*rightBt,*gouBt;
 @property(nonatomic , strong)SWTModel *addressModel;
+@property(nonatomic,assign)BOOL isYuFuDingJin;
+@property(nonatomic,assign)CGFloat payMoney;
 @end
 
 @implementation SWTMineHeMaiTiJiaoOrderTVC
@@ -215,6 +217,17 @@
     dict[@"goodid"] = self.model.ID;
     dict[@"merchid"] = self.model.merchid;
     dict[@"num"] = @"1";
+    
+    SWTHeMaiTwoCell * cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
+    if (cell.swithBt.on) {
+        dict[@"isprepay"] = @"1";
+        self.isYuFuDingJin = YES;
+    }else {
+        dict[@"isprepay"] = @"0";
+        self.isYuFuDingJin = NO;
+    }
+    
+    
     dict[@"price"] = self.model.price;
     dict[@"userid"] = [zkSignleTool shareTool].session_uid;
     [zkRequestTool networkingPOST:shareSubmit_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -223,7 +236,11 @@
         if ([responseObject[@"code"] intValue]== 200) {
           [SVProgressHUD showSuccessWithStatus:@"合买订单成功"];
         
+            SWTPayVC * vc =[[SWTPayVC alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            vc.orderID = responseObject[@"data"];
             
+            [self.navigationController pushViewController:vc animated:YES];
             
           
             
@@ -244,7 +261,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return 4;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
@@ -262,6 +279,7 @@
         cell.moneyLB.textAlignment = NSTextAlignmentRight;
         cell.rightImgV.hidden = YES;
         cell.leftThreeLB.textColor = CharacterColor102;
+        [cell.shopNameBt setTitle:self.model.store_name forState:UIControlStateNormal];
         [cell.leftimgV sd_setImageWithURL:[self.model.img getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
            return cell;
     }else {
@@ -317,8 +335,9 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.row == 1) {
-        SWTHeMaiDianPuShowVIew *  dingzhiV  =[[SWTHeMaiDianPuShowVIew alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
-        [dingzhiV show];
+        
+        
+        
     }else if (indexPath.row == 2) {
         SWTMineAddressTVC * vc =[[SWTMineAddressTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
                vc.hidesBottomBarWhenPushed = YES;

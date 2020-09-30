@@ -44,7 +44,7 @@
             @strongify(self);
             
             [self delectVideo];
-  
+            
         }];
         
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
@@ -93,7 +93,7 @@
         [self.tableView.mj_footer endRefreshing];
         
     }];
-
+    
     
 }
 
@@ -358,7 +358,7 @@
         [self.tableView.mj_footer endRefreshing];
         
     }];
-
+    
 }
 
 - (void)viewClick:(UIButton *)button {
@@ -546,34 +546,31 @@
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         if ([self isCanUsePicture]) {
-            [self showMXPickerWithMaximumPhotosAllow:1 completion:^(NSArray *assets) {
+            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:MAXFLOAT columnNumber:4 delegate:self pushPhotoPickerVc:YES];
+            imagePickerVc.maxImagesCount = 1;
+            imagePickerVc.videoMaximumDuration = 3;
+            
+            imagePickerVc.allowTakeVideo = NO;
+            imagePickerVc.allowPickingVideo = NO;
+            imagePickerVc.allowPickingImage = YES;
+            imagePickerVc.allowTakePicture = NO;
+            
+            imagePickerVc.showSelectBtn = NO;
+            imagePickerVc.allowCrop = YES;
+            imagePickerVc.needCircleCrop = NO;
+            imagePickerVc.cropRectPortrait = CGRectMake(0, (ScreenH - ScreenW)/2, ScreenW, ScreenW);
+            imagePickerVc.cropRectLandscape = CGRectMake(0, (ScreenW - ScreenH)/2, ScreenH, ScreenH);
+            imagePickerVc.circleCropRadius = ScreenW/2;
+            [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
                 
-                for (ALAsset *asset in assets) {
-                    ALAssetRepresentation *assetRep = [asset defaultRepresentation];
-                    CGImageRef imgRef = [assetRep fullResolutionImage];
-                    UIImage *image = [[UIImage alloc] initWithCGImage:imgRef
-                                                                scale:assetRep.scale
-                                                          orientation:(UIImageOrientation)assetRep.orientation];
-                    
-                    if (!image) {
-                        image = [[UIImage alloc] initWithCGImage:[[asset defaultRepresentation] fullScreenImage]
-                                                           scale:assetRep.scale
-                                                     orientation:(UIImageOrientation)assetRep.orientation];
-                        
-                    }
-                    if (!image) {
-                        CGImageRef thum = [asset aspectRatioThumbnail];
-                        image = [UIImage imageWithCGImage:thum];
-                    }
-                    self.image = image;
+                if (photos.count > 0) {
+                    self.image = photos.firstObject;
                     [self updateImage];
-                    
                 }
                 
                 
-                
-                
             }];
+            [self presentViewController:imagePickerVc animated:YES completion:nil];
             
         }else{
             UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];

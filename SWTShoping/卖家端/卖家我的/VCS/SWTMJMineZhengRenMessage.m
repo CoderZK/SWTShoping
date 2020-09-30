@@ -22,15 +22,15 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-   
+    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"店铺认证信息";
-     [self.tableView registerNib:[UINib nibWithNibName:@"SWTMJRenZhengCell" bundle:nil] forCellReuseIdentifier:@"cell"];
-     [self.tableView registerNib:[UINib nibWithNibName:@"SWTMJDainPuLoGoCell" bundle:nil] forCellReuseIdentifier:@"SWTMJDainPuLoGoCell"];
-       [self.tableView registerClass:[SWTMineShopSettingSectionV class] forHeaderFooterViewReuseIdentifier:@"head"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"SWTMJRenZhengCell" bundle:nil] forCellReuseIdentifier:@"cell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"SWTMJDainPuLoGoCell" bundle:nil] forCellReuseIdentifier:@"SWTMJDainPuLoGoCell"];
+    [self.tableView registerClass:[SWTMineShopSettingSectionV class] forHeaderFooterViewReuseIdentifier:@"head"];
     
     self.leftTitleArr = @[@[@"实名认证"],@[@"姓名",@"电话",@"身份证",@"身份证照认证"],@[@"店铺名称",@"店铺简介",@"店铺LOGO"]];
     
@@ -78,7 +78,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     SWTMineShopSettingSectionV * headV  =[tableView dequeueReusableHeaderFooterViewWithIdentifier:@"head"];
-   if (section == 0) {
+    if (section == 0) {
         headV.titelLB.text = @"基本信息";
     }else if (section == 1) {
         headV.titelLB.text = @"个人信息";
@@ -100,7 +100,7 @@
         if (indexPath.row == 0) {
             cell.TF.text = @"已认证";
         }else {
-           
+            
         }
     }else if (indexPath.section == 1){
         cell.TF.userInteractionEnabled = NO;
@@ -139,7 +139,7 @@
         
     }
     if (indexPath.section == 2 && indexPath.row == 2) {
-         [self.tableView endEditing:YES];
+        [self.tableView endEditing:YES];
         [self addPict];
     }
     
@@ -153,7 +153,7 @@
             
             
             [self showMXPhotoCameraAndNeedToEdit:YES completion:^(UIImage *image, UIImage *originImage, CGRect cutRect) {
-              
+                
                 self.image = image;
                 [self updateImage];
                 
@@ -168,31 +168,32 @@
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         if ([self isCanUsePicture]) {
-            [self showMXPickerWithMaximumPhotosAllow:1 completion:^(NSArray *assets) {
+            
+            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:MAXFLOAT columnNumber:4 delegate:self pushPhotoPickerVc:YES];
+            imagePickerVc.maxImagesCount = 1;
+            imagePickerVc.videoMaximumDuration = 3;
+            
+            imagePickerVc.allowTakeVideo = NO;
+            imagePickerVc.allowPickingVideo = NO;
+            imagePickerVc.allowPickingImage = YES;
+            imagePickerVc.allowTakePicture = NO;
+            
+            imagePickerVc.showSelectBtn = NO;
+            imagePickerVc.allowCrop = YES;
+            imagePickerVc.needCircleCrop = NO;
+            imagePickerVc.cropRectPortrait = CGRectMake(0, (ScreenH - ScreenW)/2, ScreenW, ScreenW);
+            imagePickerVc.cropRectLandscape = CGRectMake(0, (ScreenW - ScreenH)/2, ScreenH, ScreenH);
+            imagePickerVc.circleCropRadius = ScreenW/2;
+            [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
                 
-                for (ALAsset *asset in assets) {
-                    ALAssetRepresentation *assetRep = [asset defaultRepresentation];
-                    CGImageRef imgRef = [assetRep fullResolutionImage];
-                    UIImage *image = [[UIImage alloc] initWithCGImage:imgRef
-                                                                scale:assetRep.scale
-                                                          orientation:(UIImageOrientation)assetRep.orientation];
-                    
-                    if (!image) {
-                        image = [[UIImage alloc] initWithCGImage:[[asset defaultRepresentation] fullScreenImage]
-                                                           scale:assetRep.scale
-                                                     orientation:(UIImageOrientation)assetRep.orientation];
-                        
-                    }
-                    
-                    self.image = image;
+                if (photos.count > 0) {
+                    self.image = photos.firstObject;
                     [self updateImage];
-                    
                 }
                 
                 
-                
-                
             }];
+            [self presentViewController:imagePickerVc animated:YES completion:nil];
             
         }else{
             UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -218,7 +219,7 @@
     [zkRequestTool NetWorkingUpLoad:uploadfile_SWT images:@[self.image] name:@"file" parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         
         if ([responseObject[@"code"] intValue] == 200) {
-          
+            
             self.headImgStr = responseObject[@"data"];
             self.imgV.image = self.image;
             [self.tableView reloadData];
@@ -277,7 +278,7 @@
         [self.tableView.mj_footer endRefreshing];
         
     }];
-
+    
     
     
 }

@@ -48,7 +48,7 @@
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     
-
+    
     self.picStrArr = @[].mutableCopy;
 }
 
@@ -59,13 +59,13 @@
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if ([self isCanUsePhotos]) {
             
-         
+            
             [self showMXPhotoCameraAndNeedToEdit:YES completion:^(UIImage *image, UIImage *originImage, CGRect cutRect) {
                 [self.picArr addObject:image];
                 self.headV.picArr = self.picArr;
-
+                
             }];
-       
+            
         }else{
             UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相机" message:@"请在iPhone的""设置-隐私-相机""中允许访问相机" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
@@ -75,42 +75,39 @@
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         if ([self isCanUsePicture]) {
-            [self showMXPickerWithMaximumPhotosAllow:4-self.picArr.count completion:^(NSArray *assets) {
+            
+            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:MAXFLOAT columnNumber:4 delegate:self pushPhotoPickerVc:YES];
+            imagePickerVc.maxImagesCount = 4-self.picArr.count;
+            imagePickerVc.videoMaximumDuration = 3;
+            
+            imagePickerVc.allowTakeVideo = NO;
+            imagePickerVc.allowPickingVideo = NO;
+            imagePickerVc.allowPickingImage = YES;
+            imagePickerVc.allowTakePicture = NO;
+            
+            imagePickerVc.showSelectBtn = NO;
+            imagePickerVc.allowCrop = YES;
+            imagePickerVc.needCircleCrop = NO;
+            imagePickerVc.cropRectPortrait = CGRectMake(0, (ScreenH - ScreenW)/2, ScreenW, ScreenW);
+            imagePickerVc.cropRectLandscape = CGRectMake(0, (ScreenW - ScreenH)/2, ScreenH, ScreenH);
+            imagePickerVc.circleCropRadius = ScreenW/2;
+            [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
                 
-                for (ALAsset *asset in assets) {
-                    ALAssetRepresentation *assetRep = [asset defaultRepresentation];
-                    CGImageRef imgRef = [assetRep fullResolutionImage];
-                    UIImage *image = [[UIImage alloc] initWithCGImage:imgRef
-                                                                scale:assetRep.scale
-                                                          orientation:(UIImageOrientation)assetRep.orientation];
-                    
-                    if (!image) {
-                        image = [[UIImage alloc] initWithCGImage:[[asset defaultRepresentation] fullScreenImage]
-                                                           scale:assetRep.scale
-                                                     orientation:(UIImageOrientation)assetRep.orientation];
-                        
-                    }
-                    if (!image) {
-                        CGImageRef thum = [asset aspectRatioThumbnail];
-                        image = [UIImage imageWithCGImage:thum];
-                    }
-                    [self.picArr addObject:image];
-                   
-                    self.headV.picArr = self.picArr;
-                }
+                [self.picArr addObjectsFromArray:photos];
                 
-              
+                self.headV.picArr = self.picArr;
                 
                 
             }];
-           
+            [self presentViewController:imagePickerVc animated:YES completion:nil];
+            
         }else{
             UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
         }
     }];
     
-   
+    
     
     UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     [ac addAction:action1];
@@ -130,7 +127,7 @@
         [SVProgressHUD showErrorWithStatus:@"请输入描述"];
         return;
     }
-       
+    
     
     if (self.picArr.count > 0) {
         [self updateImage];
@@ -167,7 +164,7 @@
 - (void)pingJiaAction {
     
     
-   
+    
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"comment"] = self.headV.textV.text;
@@ -177,7 +174,7 @@
     [zkRequestTool networkingPOST:orderComment_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
-      
+        
         if ([responseObject[@"code"] intValue]== 200) {
             [SVProgressHUD showSuccessWithStatus:@"评价成功"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -194,7 +191,7 @@
         [self.tableView.mj_footer endRefreshing];
         
     }];
-
+    
     
     
     

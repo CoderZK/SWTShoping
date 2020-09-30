@@ -32,7 +32,7 @@
         
         self.collectionView.scrollEnabled = NO;
         self.collectionView.backgroundColor = BackgroundColor;
-        [self addSubview:self.collectionView];
+        [self.contentView addSubview:self.collectionView];
         
         [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.bottom.equalTo(self);

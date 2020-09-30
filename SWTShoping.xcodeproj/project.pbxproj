@@ -205,6 +205,7 @@
 		666BFDC024BDF9E200719972 /* SWTModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 666BFDBF24BDF9E200719972 /* SWTModel.m */; };
 		666BFDC524BDFB3800719972 /* SWTEditPasswordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 666BFDC324BDFB3800719972 /* SWTEditPasswordVC.m */; };
 		666BFDC624BDFB3800719972 /* SWTEditPasswordVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 666BFDC424BDFB3800719972 /* SWTEditPasswordVC.xib */; };
+		666C36502522E33600732945 /* apple-app-site-association in Resources */ = {isa = PBXBuildFile; fileRef = 666C364F2522E33600732945 /* apple-app-site-association */; };
 		666C484124D9A45200DB6D8D /* SWTMineKeFuTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 666C484024D9A45200DB6D8D /* SWTMineKeFuTVC.m */; };
 		666C484424D9A4D800DB6D8D /* SWTMineKeFuOneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666C484324D9A4D800DB6D8D /* SWTMineKeFuOneCell.m */; };
 		666C484724D9A4EC00DB6D8D /* SWTMineKeFuTwoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666C484624D9A4EC00DB6D8D /* SWTMineKeFuTwoCell.m */; };
@@ -815,6 +816,8 @@
 		666BFDC224BDFB3800719972 /* SWTEditPasswordVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTEditPasswordVC.h; sourceTree = "<group>"; };
 		666BFDC324BDFB3800719972 /* SWTEditPasswordVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTEditPasswordVC.m; sourceTree = "<group>"; };
 		666BFDC424BDFB3800719972 /* SWTEditPasswordVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTEditPasswordVC.xib; sourceTree = "<group>"; };
+		666C364F2522E33600732945 /* apple-app-site-association */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "apple-app-site-association"; sourceTree = "<group>"; };
+		666C36512522E35400732945 /* 滴雨轩.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "滴雨轩.entitlements"; sourceTree = "<group>"; };
 		666C483F24D9A45200DB6D8D /* SWTMineKeFuTVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTMineKeFuTVC.h; sourceTree = "<group>"; };
 		666C484024D9A45200DB6D8D /* SWTMineKeFuTVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTMineKeFuTVC.m; sourceTree = "<group>"; };
 		666C484224D9A4D800DB6D8D /* SWTMineKeFuOneCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTMineKeFuOneCell.h; sourceTree = "<group>"; };
@@ -1274,6 +1277,7 @@
 		337F3E4D20E9FE3B00C5526A = {
 			isa = PBXGroup;
 			children = (
+				666C364F2522E33600732945 /* apple-app-site-association */,
 				337F3EB820EA050000C5526A /* Podfile */,
 				337F3E5820E9FE3B00C5526A /* SWTShoping */,
 				337F3E7120E9FE5400C5526A /* SWTShopingTests */,
@@ -1297,6 +1301,7 @@
 		337F3E5820E9FE3B00C5526A /* SWTShoping */ = {
 			isa = PBXGroup;
 			children = (
+				666C36512522E35400732945 /* 滴雨轩.entitlements */,
 				667087D324E5723300EDA2C5 /* 卖家端 */,
 				666D393324E1361C0023776B /* 支付SDK */,
 				337F3E8D20E9FF3500C5526A /* 首页 */,
@@ -3080,6 +3085,7 @@
 				6669F5C624AB7BBE0013675E /* SWTMineOneCell.xib in Resources */,
 				66689F1F24B40D2700C49A2E /* SWTMineWalletCell.xib in Resources */,
 				666D4AE124CABEDC00300957 /* SWTTuiHuoAddressCell.xib in Resources */,
+				666C36502522E33600732945 /* apple-app-site-association in Resources */,
 				667A44E124B23D2D006C9072 /* SWTLaoYouDesNeiTwoCell.xib in Resources */,
 				667087FB24E5744E00EDA2C5 /* SWTMineShopSettingCell.xib in Resources */,
 				66689F3C24B4250200C49A2E /* SWTTongYongTwoCell.xib in Resources */,
@@ -3710,9 +3716,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "SWTShoping/滴雨轩.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 66YPJF76HN;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3753,9 +3760,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "SWTShoping/滴雨轩.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 66YPJF76HN;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (

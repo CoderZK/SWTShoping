@@ -32,7 +32,7 @@
         [self addSubview:button];
         
         self.yanShiTime = @"10";
-        
+        self.type = 100;
         
         
         self.whiteV = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenH, ScreenW, ScreenH * 2 / 3)];
@@ -42,8 +42,10 @@
         shapeLayer.path = [UIBezierPath bezierPathWithRoundedRect:self.whiteV.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(5, 5)].CGPath;
         self.whiteV.layer.mask = shapeLayer;
         
-        self.headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 120)];
-        UIButton * chaBt  = [[UIButton alloc] initWithFrame:CGRectMake(0, ScreenW - 40, 40, 40)];
+        self.headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 130)];
+        [self.whiteV addSubview:self.headView];
+        UIButton * chaBt  = [[UIButton alloc] initWithFrame:CGRectMake(ScreenW - 40, 0 , 40, 40)];
+        
         [chaBt addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
         [self.headView addSubview:chaBt];
         [chaBt setImage:[UIImage imageNamed:@"cha"] forState:UIControlStateNormal];
@@ -79,7 +81,7 @@
         self.centerBt = [[UIButton alloc] init];
         [self.centerBt setTitleColor:CharacterColor50 forState:UIControlStateNormal];
         [self.centerBt setTitleColor:RedColor forState:UIControlStateSelected];
-        self.centerBt.selected = YES;
+        self.centerBt.selected = NO;
         self.centerBt.titleLabel.font = kFont(15);
         [self.whiteV addSubview:self.centerBt];
         [self.centerBt setTitle:@"一口价" forState:UIControlStateNormal];
@@ -109,7 +111,7 @@
         
         [self.leftBtBt mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.headView);
-            make.top.equalTo(self.headView).offset(100);
+            make.top.equalTo(self.headView).offset(105);
             make.height.equalTo(@25);
             make.width.equalTo(@(ScreenW /3));
         }];
@@ -129,16 +131,7 @@
         }];
         
         
-        [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.equalTo(self.whiteV);
-            make.top.equalTo(self.leftBtBt.mas_bottom);
-            if (sstatusHeight > 20) {
-                make.bottom.equalTo(self.whiteV).offset(-(34+60));
-            }else {
-                make.bottom.equalTo(self.whiteV).offset(60);
-            }
-            
-        }];
+        
         
         self.confirmBt = [[UIButton alloc] init];
         [self.confirmBt setTitle:@"快速发布" forState:UIControlStateNormal];
@@ -150,7 +143,21 @@
             make.left.equalTo(self.whiteV).offset(15);
             make.right.equalTo(self.whiteV).offset(-15);
             make.height.equalTo(@40);
-            make.top.equalTo(self.tableView.mas_bottom).offset(10);
+            if (sstatusHeight > 20) {
+                make.bottom.equalTo(self.whiteV).offset(-(34+10));
+            }else {
+                make.bottom.equalTo(self.whiteV).offset(-10);
+            }
+        }];
+        
+        
+        [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.equalTo(self.whiteV);
+            make.top.equalTo(self.headView.mas_bottom);
+            
+            make.bottom.equalTo(self.confirmBt.mas_top).offset(-(10));
+            
+            
         }];
         
         
@@ -265,66 +272,66 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     
-        
-        if (indexPath.row == 3) {
-            [self.tableView endEditing:YES];
-            SelectTimeV *selectTimeV = [[SelectTimeV alloc] init];
-            selectTimeV.isCanSelectOld = NO;
-            selectTimeV.isBaoHanHHmm = YES;
-            selectTimeV.isCanSelectToday = YES;
-            Weak(weakSelf);
-            selectTimeV.block = ^(NSString *timeStr) {
-                
-                if (weakSelf.endTimeStr.length != 0) {
-                    NSTimeInterval number = [NSString pleaseInsertStarTime:[NSString stringWithFormat:@"%@:00",timeStr] andInsertEndTime:[NSString stringWithFormat:@"%@ 00:00:00",weakSelf.endTimeStr]];
-                    if (number < 0) {
-                        [SVProgressHUD showErrorWithStatus:@"结束时间要大于等于开时间"];
-                        return;
-                    }else {
-                        weakSelf.timeStr = timeStr;
-                        [weakSelf.tableView reloadData];
-                    }
-                    
+    
+    if (indexPath.row == 3) {
+        [self.tableView endEditing:YES];
+        SelectTimeV *selectTimeV = [[SelectTimeV alloc] init];
+        selectTimeV.isCanSelectOld = NO;
+        selectTimeV.isBaoHanHHmm = YES;
+        selectTimeV.isCanSelectToday = YES;
+        Weak(weakSelf);
+        selectTimeV.block = ^(NSString *timeStr) {
+            
+            if (weakSelf.endTimeStr.length != 0) {
+                NSTimeInterval number = [NSString pleaseInsertStarTime:[NSString stringWithFormat:@"%@:00",timeStr] andInsertEndTime:[NSString stringWithFormat:@"%@ 00:00:00",weakSelf.endTimeStr]];
+                if (number < 0) {
+                    [SVProgressHUD showErrorWithStatus:@"结束时间要大于等于开时间"];
+                    return;
                 }else {
                     weakSelf.timeStr = timeStr;
                     [weakSelf.tableView reloadData];
                 }
-            };
-            [[UIApplication sharedApplication].keyWindow addSubview:selectTimeV];
-        }else if (indexPath.row == 4) {
-            [self.tableView endEditing:YES];
-            SelectTimeV *selectTimeV = [[SelectTimeV alloc] init];
-            selectTimeV.isCanSelectOld = NO;
-            selectTimeV.isBaoHanHHmm = YES;
-            selectTimeV.isCanSelectToday = YES;
-            Weak(weakSelf);
-            selectTimeV.block = ^(NSString *timeStr) {
-                if (weakSelf.timeStr.length != 0) {
-                    NSTimeInterval number = [NSString pleaseInsertStarTime: [NSString stringWithFormat:@"%@:00",weakSelf.timeStr] andInsertEndTime:[NSString stringWithFormat:@"%@ 00:00:00",timeStr]];
-                    if (number < 0) {
-                        [SVProgressHUD showErrorWithStatus:@"结束时间要大于等于开时间"];
-                        return;
-                    }else {
-                        weakSelf.endTimeStr = timeStr;
-                        [weakSelf.tableView reloadData];
-                    }
-                    
+                
+            }else {
+                weakSelf.timeStr = timeStr;
+                [weakSelf.tableView reloadData];
+            }
+        };
+        [[UIApplication sharedApplication].keyWindow addSubview:selectTimeV];
+    }else if (indexPath.row == 4) {
+        [self.tableView endEditing:YES];
+        SelectTimeV *selectTimeV = [[SelectTimeV alloc] init];
+        selectTimeV.isCanSelectOld = NO;
+        selectTimeV.isBaoHanHHmm = YES;
+        selectTimeV.isCanSelectToday = YES;
+        Weak(weakSelf);
+        selectTimeV.block = ^(NSString *timeStr) {
+            if (weakSelf.timeStr.length != 0) {
+                NSTimeInterval number = [NSString pleaseInsertStarTime: [NSString stringWithFormat:@"%@:00",weakSelf.timeStr] andInsertEndTime:[NSString stringWithFormat:@"%@ 00:00:00",timeStr]];
+                if (number < 0) {
+                    [SVProgressHUD showErrorWithStatus:@"结束时间要大于等于开时间"];
+                    return;
                 }else {
                     weakSelf.endTimeStr = timeStr;
                     [weakSelf.tableView reloadData];
                 }
                 
-                
-            };
-            [[UIApplication sharedApplication].keyWindow addSubview:selectTimeV];
-        }else if (indexPath.row == 5) {
+            }else {
+                weakSelf.endTimeStr = timeStr;
+                [weakSelf.tableView reloadData];
+            }
             
-            zkPickView * pickV = [[zkPickView alloc] init];
-            pickV.arrayType = titleArray;
-            pickV.array = @[@"10",@"30"].mutableCopy;
-            [pickV show];
-            pickV.delegate = self;
-        }
+            
+        };
+        [[UIApplication sharedApplication].keyWindow addSubview:selectTimeV];
+    }else if (indexPath.row == 5) {
+        
+        zkPickView * pickV = [[zkPickView alloc] init];
+        pickV.arrayType = titleArray;
+        pickV.array = @[@"10",@"30"].mutableCopy;
+        [pickV show];
+        pickV.delegate = self;
+    }
     
     
     
@@ -340,7 +347,7 @@
         return;
     }
     if (self.nameStr.length == 0) {
-         [SVProgressHUD showErrorWithStatus:@"请输入商品名"];
+        [SVProgressHUD showErrorWithStatus:@"请输入商品名"];
         return;
     }
     if (self.diJiaStr.length == 0) {
@@ -397,11 +404,15 @@
             make.centerX.equalTo(self.headView);
         }];
         self.type = 102;
+        self.rightBt.selected = YES;
     }else {
         self.rightBt.hidden = YES;
         [self.centerBt mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(self.headView);
+            
+            make.centerX.equalTo(self.headView).offset((ScreenW   / 3));
         }];
+        self.leftBtBt.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+        self.centerBt.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         self.type = 100;
         [self.tableView reloadData];
     }
@@ -417,6 +428,7 @@
     }else if (button.tag == 102) {
         self.leftBtBt.selected = self.centerBt.selected = YES;
     }
+    [self.tableView reloadData];
 }
 
 - (void)show {
@@ -440,38 +452,33 @@
 
 - (void)imageAction:(UIButton *)button {
     if ([self isCanUsePicture]) {
-        [[UIApplication sharedApplication].keyWindow.rootViewController showMXPickerWithMaximumPhotosAllow:1 completion:^(NSArray *assets) {
+        
+        TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:MAXFLOAT columnNumber:4 delegate:self pushPhotoPickerVc:YES];
+        imagePickerVc.maxImagesCount = 1;
+        imagePickerVc.videoMaximumDuration = 3;
+        
+        imagePickerVc.allowTakeVideo = NO;
+        imagePickerVc.allowPickingVideo = NO;
+        imagePickerVc.allowPickingImage = YES;
+        imagePickerVc.allowTakePicture = NO;
+        
+        imagePickerVc.showSelectBtn = NO;
+        imagePickerVc.allowCrop = YES;
+        imagePickerVc.needCircleCrop = NO;
+        imagePickerVc.cropRectPortrait = CGRectMake(0, (ScreenH - ScreenW)/2, ScreenW, ScreenW);
+        imagePickerVc.cropRectLandscape = CGRectMake(0, (ScreenW - ScreenH)/2, ScreenH, ScreenH);
+        imagePickerVc.circleCropRadius = ScreenW/2;
+        [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
             
-            for (ALAsset *asset in assets) {
-                ALAssetRepresentation *assetRep = [asset defaultRepresentation];
-                CGImageRef imgRef = [assetRep fullResolutionImage];
-                UIImage *image = [[UIImage alloc] initWithCGImage:imgRef
-                                                            scale:assetRep.scale
-                                                      orientation:(UIImageOrientation)assetRep.orientation];
-                
-                if (!image) {
-                    image = [[UIImage alloc] initWithCGImage:[[asset defaultRepresentation] fullScreenImage]
-                                                       scale:assetRep.scale
-                                                 orientation:(UIImageOrientation)assetRep.orientation];
-                    
-                }
-                if (!image) {
-                    CGImageRef thum = [asset aspectRatioThumbnail];
-                    image = [UIImage imageWithCGImage:thum];
-                }
-                
-                self.image = image;
+            if (photos.count > 0) {
+                self.image = photos.firstObject;
                 [self updateImage];
-              
             }
-            
-          
             
             
         }];
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:imagePickerVc animated:YES completion:nil];
         
-        
-       
     }else{
         UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alert show];
@@ -489,7 +496,7 @@
             
             [self.tableView reloadData];
             self.imgStr = responseObject[@"data"];
-      
+            
             
         }else {
             [[UIApplication sharedApplication].keyWindow.rootViewController showAlertWithKey:responseObject[@"code"] message:responseObject[@"msg"] ];

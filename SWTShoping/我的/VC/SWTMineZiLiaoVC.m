@@ -98,7 +98,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
+    
     if (indexPath.row == 0) {
         [self addPict];
     }else if (indexPath.row == 1) {
@@ -174,14 +174,14 @@
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if ([self isCanUsePhotos]) {
             
-         
+            
             [self showMXPhotoCameraAndNeedToEdit:YES completion:^(UIImage *image, UIImage *originImage, CGRect cutRect) {
                 
                 self.image = image;
                 [self updateImage];
-
+                
             }];
-       
+            
         }else{
             UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相机" message:@"请在iPhone的""设置-隐私-相机""中允许访问相机" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
@@ -191,43 +191,40 @@
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         if ([self isCanUsePicture]) {
-            [self showMXPickerWithMaximumPhotosAllow:1 completion:^(NSArray *assets) {
+            
+            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:MAXFLOAT columnNumber:4 delegate:self pushPhotoPickerVc:YES];
+            imagePickerVc.maxImagesCount = 1;
+            imagePickerVc.videoMaximumDuration = 3;
+            
+            imagePickerVc.allowTakeVideo = NO;
+            imagePickerVc.allowPickingVideo = NO;
+            imagePickerVc.allowPickingImage = YES;
+            imagePickerVc.allowTakePicture = NO;
+            
+            imagePickerVc.showSelectBtn = NO;
+            imagePickerVc.allowCrop = YES;
+            imagePickerVc.needCircleCrop = NO;
+            imagePickerVc.cropRectPortrait = CGRectMake(0, (ScreenH - ScreenW)/2, ScreenW, ScreenW);
+            imagePickerVc.cropRectLandscape = CGRectMake(0, (ScreenW - ScreenH)/2, ScreenH, ScreenH);
+            imagePickerVc.circleCropRadius = ScreenW/2;
+            [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
                 
-                for (ALAsset *asset in assets) {
-                    ALAssetRepresentation *assetRep = [asset defaultRepresentation];
-                    CGImageRef imgRef = [assetRep fullResolutionImage];
-                    UIImage *image = [[UIImage alloc] initWithCGImage:imgRef
-                                                                scale:assetRep.scale
-                                                          orientation:(UIImageOrientation)assetRep.orientation];
-                    
-                    if (!image) {
-                        image = [[UIImage alloc] initWithCGImage:[[asset defaultRepresentation] fullScreenImage]
-                                                           scale:assetRep.scale
-                                                     orientation:(UIImageOrientation)assetRep.orientation];
-                        
-                    }
-                    if (!image) {
-                        CGImageRef thum = [asset aspectRatioThumbnail];
-                        image = [UIImage imageWithCGImage:thum];
-                    }
-                    
-                    self.image = image;
-                    [self updateImage];
-                  
+                if (photos.count > 0) {
+                    self.image = photos.firstObject;
                 }
-                
-              
+                [self updateImage];
                 
                 
             }];
-           
+            [self presentViewController:imagePickerVc animated:YES completion:nil];
+            
         }else{
             UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
         }
     }];
     
-   
+    
     
     UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     [ac addAction:action1];
@@ -268,10 +265,10 @@
         dict[@"avatar"] = self.headImgStr;
     }
     if (self.genderStr.length > 0) {
-       dict[@"gender"] = self.genderStr;
+        dict[@"gender"] = self.genderStr;
     }
     if (self.nickName.length > 0) {
-       dict[@"nickname"] = self.nickName;
+        dict[@"nickname"] = self.nickName;
     }
     
     dict[@"id"] = [zkSignleTool shareTool].session_uid;
@@ -284,18 +281,18 @@
             if (self.nickName.length > 0) {
                 [zkSignleTool shareTool].nickname = self.nickName;
                 
-//                   V2TIMUserFullInfo * info = [[V2TIMUserFullInfo alloc] init];
-//                   NSMutableDictionary * dict  = @{}.mutableCopy;
-//                   dict[@"nickname"] = [zkSignleTool shareTool].nickname;
-//                   dict[@"levelname"] = [zkSignleTool shareTool].levelname;
-//                   dict[@"levelcode"] = [zkSignleTool shareTool].level;
-//                   info.nickName = [dict mj_JSONString];
-//
-//                   [[V2TIMManager sharedInstance] setSelfInfo:info succ:^{
-//
-//                   } fail:^(int code, NSString *desc) {
-//
-//                   }];
+                //                   V2TIMUserFullInfo * info = [[V2TIMUserFullInfo alloc] init];
+                //                   NSMutableDictionary * dict  = @{}.mutableCopy;
+                //                   dict[@"nickname"] = [zkSignleTool shareTool].nickname;
+                //                   dict[@"levelname"] = [zkSignleTool shareTool].levelname;
+                //                   dict[@"levelcode"] = [zkSignleTool shareTool].level;
+                //                   info.nickName = [dict mj_JSONString];
+                //
+                //                   [[V2TIMManager sharedInstance] setSelfInfo:info succ:^{
+                //
+                //                   } fail:^(int code, NSString *desc) {
+                //
+                //                   }];
                 
             }
             [self.tableView reloadData];

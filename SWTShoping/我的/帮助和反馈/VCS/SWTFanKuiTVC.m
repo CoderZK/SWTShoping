@@ -87,7 +87,7 @@
         make.left.equalTo(self.whiteViewOne).offset(15);
         make.height.equalTo(@20);
     }];
-
+    
     NSArray * arr = @[@"性能体验 卡顿, 闪退, 白屏",@"功能异常 功能无法使用等问题",@"产品建议",@"其他问题"];
     for (int i  = 0 ; i < arr.count; i++) {
         SWTFanKuiSelectView * sview  =[[SWTFanKuiSelectView alloc] init];
@@ -100,15 +100,15 @@
             make.height.equalTo(@40);
             make.left.equalTo(self.whiteViewOne).offset(5);
             make.right.equalTo(self.whiteViewOne).offset(-5);
-          
+            
         }];
         
         [sview.button addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
         
     }
-
-
-
+    
+    
+    
     self.whiteViewTwo = [[UIView alloc] init];
     self.whiteViewTwo.backgroundColor = WhiteColor;
     self.whiteViewTwo.layer.cornerRadius = 5;
@@ -119,9 +119,9 @@
         make.right.equalTo(self.headV).offset(-10);
         make.top.equalTo(self.whiteViewOne.mas_bottom).offset(10);
         make.height.equalTo(@200);
-
+        
     }];
-
+    
     UILabel * lb2 = [[UILabel alloc] init];
     lb2.text = @"问题和建议";
     lb2.font = kFont(14);
@@ -131,7 +131,7 @@
         make.left.equalTo(self.whiteViewTwo).offset(15);
         make.height.equalTo(@20);
     }];
-
+    
     UIView * gbackV = [[UIView alloc] init];
     gbackV.layer.cornerRadius = 3;
     gbackV.clipsToBounds = YES;
@@ -143,13 +143,13 @@
         make.top.equalTo(lb2.mas_bottom).offset(5);
         make.bottom.equalTo(self.whiteViewTwo).offset(-10);
     }];
-
+    
     self.TV = [[IQTextView alloc] init];
     self.TV.placeholder = @"填写问题描述";
     self.TV.backgroundColor = [UIColor clearColor];
     self.TV.font = kFont(14);
     [[[self.TV rac_textSignal] filter:^BOOL(NSString * _Nullable value) {
-       
+        
         return YES;
     }] subscribeNext:^(NSString * x) {
         @strongify(self);
@@ -159,17 +159,17 @@
             self.numberLB.text = @"200/200";
             self.TV.text = [x substringToIndex:200];
         }
-       
+        
     }];
-
+    
     [gbackV addSubview:self.TV];
     [self.TV mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.equalTo(gbackV);
         make.bottom.equalTo(gbackV).offset(-20);
     }];
-
-
-
+    
+    
+    
     self.numberLB  = [[UILabel alloc] init];
     self.numberLB.font = kFont(12);
     self.numberLB.text = @"0/200";
@@ -179,8 +179,8 @@
         make.right.equalTo(gbackV).offset(-5);
         make.height.equalTo(@20);
     }];
-
-
+    
+    
     self.whiteViewThree = [[UIView alloc] init];
     self.whiteViewThree.backgroundColor = WhiteColor;
     self.whiteViewThree.layer.cornerRadius = 5;
@@ -194,7 +194,7 @@
         make.height.equalTo(@(hh + 20));
         make.bottom.equalTo(self.headV).offset(-15);
     }];
-
+    
     UILabel * lb3 = [[UILabel alloc] init];
     lb3.text = @"添加图片 (问题图片)";
     lb3.font = kFont(14);
@@ -204,7 +204,7 @@
         make.left.equalTo(self.whiteViewThree).offset(15);
         make.height.equalTo(@20);
     }];
-
+    
     self.whiteThreeNeiV =[[UIView alloc] init];
     self.whiteThreeNeiV.backgroundColor = WhiteColor;
     [self.whiteViewThree addSubview:self.whiteThreeNeiV];
@@ -214,21 +214,21 @@
         make.top.equalTo(lb3.mas_bottom).offset(5);
         make.bottom.equalTo(self.whiteViewThree).offset(-20);
     }];
-
-
+    
+    
     self.numberTwoLB  = [[UILabel alloc] init];
     self.numberTwoLB.font = kFont(12);
     [self.whiteViewThree addSubview:self.numberTwoLB];
     self.numberTwoLB.text = @"1/4";
-       [self.numberTwoLB mas_makeConstraints:^(MASConstraintMaker *make) {
-           make.bottom.equalTo(self.whiteViewThree).offset(-10);
-           make.right.equalTo(self.whiteViewThree).offset(-15);
-           make.height.equalTo(@20);
-       }];
-
+    [self.numberTwoLB mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.whiteViewThree).offset(-10);
+        make.right.equalTo(self.whiteViewThree).offset(-15);
+        make.height.equalTo(@20);
+    }];
+    
     
     [self setPics];
-
+    
     
 }
 
@@ -240,14 +240,14 @@
         
         
         SWTFanKuiSelectView * vvN = [self.whiteViewOne viewWithTag:100+i];
-
-            if (vv.tag == vvN.tag) {
-                vvN.leftImgV.image = [UIImage imageNamed:@"gou"];
-                self.selectIndex = i+1;
-            }else {
-                vvN.leftImgV.image = [UIImage imageNamed:@"goun"];
-            }
-
+        
+        if (vv.tag == vvN.tag) {
+            vvN.leftImgV.image = [UIImage imageNamed:@"gou"];
+            self.selectIndex = i+1;
+        }else {
+            vvN.leftImgV.image = [UIImage imageNamed:@"goun"];
+        }
+        
         
         
     }
@@ -269,7 +269,7 @@
         [SVProgressHUD showErrorWithStatus:@"请选择照片"];
         return;
     }
-
+    
     [self updateImage];
     
 }
@@ -281,15 +281,15 @@
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if ([self isCanUsePhotos]) {
             
-         
+            
             [self showMXPhotoCameraAndNeedToEdit:YES completion:^(UIImage *image, UIImage *originImage, CGRect cutRect) {
                 
                 [self.picArr addObject:image];
-                 self.numberTwoLB.text =  [NSString stringWithFormat:@"%ld/4",self.picArr.count];
+                self.numberTwoLB.text =  [NSString stringWithFormat:@"%ld/4",self.picArr.count];
                 [self setPics];
-
+                
             }];
-       
+            
         }else{
             UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相机" message:@"请在iPhone的""设置-隐私-相机""中允许访问相机" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
@@ -299,42 +299,46 @@
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         if ([self isCanUsePicture]) {
-            [self showMXPickerWithMaximumPhotosAllow:4-self.picArr.count completion:^(NSArray *assets) {
+            
+            
+            
+            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:MAXFLOAT columnNumber:4 delegate:self pushPhotoPickerVc:YES];
+            imagePickerVc.maxImagesCount = 4-self.picArr.count;
+            imagePickerVc.videoMaximumDuration = 3;
+            
+            imagePickerVc.allowTakeVideo = NO;
+            imagePickerVc.allowPickingVideo = NO;
+            imagePickerVc.allowPickingImage = YES;
+            imagePickerVc.allowTakePicture = NO;
+            
+            imagePickerVc.showSelectBtn = NO;
+            imagePickerVc.allowCrop = YES;
+            imagePickerVc.needCircleCrop = NO;
+            imagePickerVc.cropRectPortrait = CGRectMake(0, (ScreenH - ScreenW)/2, ScreenW, ScreenW);
+            imagePickerVc.cropRectLandscape = CGRectMake(0, (ScreenW - ScreenH)/2, ScreenH, ScreenH);
+            imagePickerVc.circleCropRadius = ScreenW/2;
+            [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
                 
-                for (ALAsset *asset in assets) {
-                    ALAssetRepresentation *assetRep = [asset defaultRepresentation];
-                    CGImageRef imgRef = [assetRep fullResolutionImage];
-                    UIImage *image = [[UIImage alloc] initWithCGImage:imgRef
-                                                                scale:assetRep.scale
-                                                          orientation:(UIImageOrientation)assetRep.orientation];
-                    
-                    if (!image) {
-                        image = [[UIImage alloc] initWithCGImage:[[asset defaultRepresentation] fullScreenImage]
-                                                           scale:assetRep.scale
-                                                     orientation:(UIImageOrientation)assetRep.orientation];
-                        
-                    }
-                    if (!image) {
-                        CGImageRef thum = [asset aspectRatioThumbnail];
-                        image = [UIImage imageWithCGImage:thum];
-                    }
-                    [self.picArr addObject:image];
-                    self.numberTwoLB.text =  [NSString stringWithFormat:@"%ld/4",self.picArr.count];
-                     [self setPics];
-                }
                 
-              
+                
+                [self.picArr addObjectsFromArray:photos];
+                self.numberTwoLB.text =  [NSString stringWithFormat:@"%ld/4",self.picArr.count];
+                [self setPics];
                 
                 
             }];
-           
+            [self presentViewController:imagePickerVc animated:YES completion:nil];
+            
+            
+            
+            
         }else{
             UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
         }
     }];
     
-   
+    
     
     UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     [ac addAction:action1];
@@ -365,7 +369,7 @@
         anNiuBt.tag = 100+i;
         anNiuBt.clipsToBounds = YES;
         anNiuBt.backgroundColor = RGB(250, 250, 250);
-    
+        
         [anNiuBt addTarget:self action:@selector(hitAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.whiteThreeNeiV addSubview:anNiuBt];
         
@@ -373,18 +377,18 @@
         
         deleteBt.tag = 200+i;
         [deleteBt addTarget:self action:@selector(hitAction:) forControlEvents:UIControlEventTouchUpInside];
-
+        
         if (i<self.picArr.count) {
             [anNiuBt setBackgroundImage:self.picArr[i] forState:UIControlStateNormal];
-                   
+            
             [deleteBt setImage:[UIImage imageNamed:@"48"] forState:UIControlStateNormal];
             [anNiuBt addSubview:deleteBt];
         }else {
             [anNiuBt setBackgroundImage:[UIImage imageNamed:@"feedback_addpic"] forState:UIControlStateNormal];
-                   
-           
+            
+            
         }
-       
+        
         
         
     }
@@ -438,8 +442,8 @@
     dict[@"state"] = @"0";
     dict[@"type"] = @(self.selectIndex);
     [zkRequestTool networkingPOST:helpCommit_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
-
-       
+        
+        
         if ([responseObject[@"code"] intValue]== 200) {
             [SVProgressHUD showSuccessWithStatus:@"反馈成功!"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -452,10 +456,10 @@
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
-     
+        
         
     }];
-
+    
     
     
 }

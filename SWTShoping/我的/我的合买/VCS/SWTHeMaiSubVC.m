@@ -163,22 +163,22 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-//    if (indexPath.row == 0) {
-//        SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
-//        vc.hidesBottomBarWhenPushed = YES;
-//        vc.isHeMai = self.isHeMai;
-//        vc.model = self.topDataModel;
-//        [self.navigationController pushViewController:vc animated:YES];
-//    }else {
-//        SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
-//        vc.hidesBottomBarWhenPushed = YES;
-//        vc.isHeMai = self.isHeMai;
-//        vc.model = self.dataArray[indexPath.row];
-//        [self.navigationController pushViewController:vc animated:YES];
-//    }
-    SWTHeMaiDetailTVC * vc =[[SWTHeMaiDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
+    if (indexPath.row == 0) {
+        SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.isHeMai = YES;
+        vc.model = self.topDataModel;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else {
+        SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.isHeMai = YES;
+        vc.model = self.dataArray[indexPath.row];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+//    SWTHeMaiDetailTVC * vc =[[SWTHeMaiDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+//    vc.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:vc animated:YES];
     
     
 }

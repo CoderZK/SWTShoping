@@ -201,6 +201,7 @@
 - (void)addBottomV {
     self.bottomV = [[SWTZhiBoBottomView alloc] init];
     self.bottomV.isHeMai = self.isHeMai;
+    self.bottomV.isShangHu = self.isTuiLiu;
     [self.view addSubview:self.bottomV];
     [self.bottomV mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
@@ -224,44 +225,7 @@
             //点击购物车
             if (self.isHeMai) {
                 //合买
-                SWTHeMaiDianPuShowVIew *  heMaiV  =[[SWTHeMaiDianPuShowVIew alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
-                self.heMaiView = heMaiV;
-                self.heMaiView.dataModel = self.dataModel;
-                heMaiV.dataArray = self.heMaiArr;
-                self.heMaiView.delegateSignal = [[RACSubject alloc] init];
-                @weakify(self);
-                [self.heMaiView.delegateSignal subscribeNext:^(NSNumber * x) {
-                    @strongify(self);
-                    
-                    if (x.intValue < 200) {
-                        [self.heMaiView dismiss];
-                        
-                        SWTShopHomeVC * vc =[[SWTShopHomeVC alloc] init];
-                        vc.hidesBottomBarWhenPushed = YES;
-                        vc.shopId = self.dataModel.merchid;
-                        self.isPushVC = YES;
-                        [self.navigationController pushViewController:vc animated:YES];
-                        return;
-                    }
-                    
-                    [self.heMaiView dismiss];
-                    SWTModel * model  = self.heMaiArr[x.intValue-200];
-                    //合买提交订单
-                    
-                    //                    if ([NSString pleaseInsertEndTime:model.endtime] <= 0) {
-                    //                        [SVProgressHUD showErrorWithStatus:@"已结束"];
-                    //                        return;
-                    //                    }
-                    
-                    SWTMineHeMaiTiJiaoOrderTVC * vc =[[SWTMineHeMaiTiJiaoOrderTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-                    vc.hidesBottomBarWhenPushed = YES;
-                    vc.model = model;
-                    self.isPushVC = YES;
-                    [self.navigationController pushViewController:vc animated:YES];
-                    
-                    
-                }];
-                [heMaiV show];
+                [self getHeMaiList];
                 
                 
             }else {
@@ -424,6 +388,49 @@
             
             self.heMaiArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
             self.heMaiView.dataArray = self.heMaiArr;
+            
+            SWTHeMaiDianPuShowVIew *  heMaiV  =[[SWTHeMaiDianPuShowVIew alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+            self.heMaiView = heMaiV;
+            self.heMaiView.dataModel = self.dataModel;
+            heMaiV.dataArray = self.heMaiArr;
+            self.heMaiView.delegateSignal = [[RACSubject alloc] init];
+            @weakify(self);
+            [self.heMaiView.delegateSignal subscribeNext:^(NSNumber * x) {
+                @strongify(self);
+                
+                if (x.intValue < 200) {
+                    [self.heMaiView dismiss];
+                    
+                    SWTShopHomeVC * vc =[[SWTShopHomeVC alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    vc.shopId = self.dataModel.merchid;
+                    self.isPushVC = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                    return;
+                }
+                
+                [self.heMaiView dismiss];
+                SWTModel * model  = self.heMaiArr[x.intValue-200];
+                //合买提交订单
+                
+                //                    if ([NSString pleaseInsertEndTime:model.endtime] <= 0) {
+                //                        [SVProgressHUD showErrorWithStatus:@"已结束"];
+                //                        return;
+                //                    }
+                
+                SWTMineHeMaiTiJiaoOrderTVC * vc =[[SWTMineHeMaiTiJiaoOrderTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                vc.hidesBottomBarWhenPushed = YES;
+                model.merchid = self.dataModel.merchid;
+                model.store_name = self.dataModel.name;
+                vc.model = model;
+                self.isPushVC = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+                
+                
+            }];
+            [heMaiV show];
+            
+            
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -952,6 +959,7 @@
 - (void)getNumberAction {
 
     NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"liveid"] = self.dataModel.liveid;
     [zkRequestTool networkingPOST:livegetlivenum_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
     
         if ([responseObject[@"code"] intValue]== 200) {

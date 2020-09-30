@@ -27,6 +27,7 @@
 //距离结束多少时多少秒
 - (void)setTimeInterval:(NSTimeInterval)timeInterval {
     _timeInterval = timeInterval;
+   
 }
 
 

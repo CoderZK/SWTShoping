@@ -149,13 +149,15 @@
 
 
 - (void)dismiss {
-     [LSTTimer removeAllTimer];
+    [LSTTimer removeAllTimer];
+    [LSTTimer removeTimerForIdentifier:@"listTimer"];
     [UIView animateWithDuration:0.2 animations:^{
         self.whiteV.mj_y = ScreenH;
         self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];;
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
     }];
+    
 }
 
 
@@ -172,6 +174,9 @@
        cell.titleLB.text = model.name;
         cell.jiaJiaLB.text =  [NSString stringWithFormat:@"￥%@",model.price];
     cell.numberLB.text =  [NSString stringWithFormat:@"%@/%@",model.isbuynum,model.num];
+    
+    NSTimeInterval  timeV = [NSString pleaseInsertStarTime:[NSString getDateWithDate:[NSDate date]] andInsertEndTime:model.starttime];
+    
 //    [cell.timeBt setTitle: [NSString stringWithFormat:@"%@    %@",[model.starttime substringToIndex:10],[model.endtime substringToIndex:10]] forState:UIControlStateNormal];
     cell.timeInterval = [NSString pleaseInsertEndTime:model.endtime] > 0 ?  [NSString pleaseInsertEndTime:model.endtime] : 0;;
     cell.rightBt.userInteractionEnabled = NO;
@@ -180,6 +185,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    SWTModel * model = self.dataArray[indexPath.row];
+    if (model.resttimes.floatValue <= 0) {
+        [SVProgressHUD showErrorWithStatus:@"商品已经结束"];
+        return;
+    }
+    if (model.num.intValue == model.isbuynum.intValue) {
+        [SVProgressHUD showSuccessWithStatus:@"商品已经被买走"];
+        return;
+    }
     
     
     

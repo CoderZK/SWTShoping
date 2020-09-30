@@ -31,63 +31,63 @@
     [self initSubV];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textFiledEditChanged:)
-
-      name:@"UITextFieldTextDidChangeNotification"
-
+     
+                                                name:@"UITextFieldTextDidChangeNotification"
+     
                                               object:self.shopWinXinV.rightTF];
     
 }
 
 
 
- 
+
 
 -(void)textFiledEditChanged:(NSNotification*)notification
 
 {
-
+    
     UITextField*textField = notification.object;
-
+    
     if (textField.tag == 100) {
         NSString*str = textField.text;
-
-            for (int i = 0; i<str.length; i++)
-
-            {
-
-                NSString*string = [str substringFromIndex:i];
-
-                NSString *regex = @"[\u4e00-\u9fa5]{0,}$"; // 中文
-
-                // 2、拼接谓词
-
-                NSPredicate *predicateRe1 = [NSPredicate predicateWithFormat:@"self matches %@", regex];
-
-                // 3、匹配字符串
-
-                BOOL resualt = [predicateRe1 evaluateWithObject:string];
-
+        
+        for (int i = 0; i<str.length; i++)
+            
+        {
+            
+            NSString*string = [str substringFromIndex:i];
+            
+            NSString *regex = @"[\u4e00-\u9fa5]{0,}$"; // 中文
+            
+            // 2、拼接谓词
+            
+            NSPredicate *predicateRe1 = [NSPredicate predicateWithFormat:@"self matches %@", regex];
+            
+            // 3、匹配字符串
+            
+            BOOL resualt = [predicateRe1 evaluateWithObject:string];
+            
+            
+            
+            if (resualt)
                 
-
-                if (resualt)
-
-                {
-
-        　　　　//是中文替换为空字符串
-
-                    str =  [str stringByReplacingOccurrencesOfString:[str substringFromIndex:i] withString:@""];
-
-         
-
-                }
-
+            {
+                
+                　　　　//是中文替换为空字符串
+                
+                str =  [str stringByReplacingOccurrencesOfString:[str substringFromIndex:i] withString:@""];
+                
+                
+                
             }
-
-            textField.text = str;
+            
+        }
+        
+        textField.text = str;
     }
     
     
-
+    
 }
 
 
@@ -127,12 +127,12 @@
     self.shopDesV.rightTF.placeholder = @"请填写店铺介绍(40字以内)";
     [self.headView addSubview:self.shopDesV];
     
-//    self.shopWinXinV = [[SWTDianPuInfoView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.shopDesV.frame), ScreenW, hh) withIsJianTou:NO withMaxNumber:40];
-//    self.shopWinXinV.leftLB.text = @"店铺微信号";
-//    self.shopWinXinV.rightTF.placeholder = @"请填写微信号";
-//    self.shopWinXinV.rightTF.tag = 100;
-////    self.shopWinXinV.rightTF.keyboardType = UIKeyboardTypePhonePad;
-//    [self.headView addSubview:self.shopWinXinV];
+    //    self.shopWinXinV = [[SWTDianPuInfoView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.shopDesV.frame), ScreenW, hh) withIsJianTou:NO withMaxNumber:40];
+    //    self.shopWinXinV.leftLB.text = @"店铺微信号";
+    //    self.shopWinXinV.rightTF.placeholder = @"请填写微信号";
+    //    self.shopWinXinV.rightTF.tag = 100;
+    ////    self.shopWinXinV.rightTF.keyboardType = UIKeyboardTypePhonePad;
+    //    [self.headView addSubview:self.shopWinXinV];
     
     self.shopPhoneV = [[SWTDianPuInfoView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.shopDesV.frame), ScreenW, hh) withIsJianTou:NO withMaxNumber:40];
     self.shopPhoneV.leftLB.text = @"联系手机号";
@@ -196,11 +196,11 @@
             return;
         }
         
-//        if (self.shopWinXinV.rightTF.text.length == 0) {
-//            [SVProgressHUD showErrorWithStatus:@"请输入商铺微信号"];
-//            return;
-//        }
-//
+        //        if (self.shopWinXinV.rightTF.text.length == 0) {
+        //            [SVProgressHUD showErrorWithStatus:@"请输入商铺微信号"];
+        //            return;
+        //        }
+        //
         if (self.shopPhoneV.rightTF.text.length == 0) {
             [SVProgressHUD showErrorWithStatus:@"请输入商铺联系手机号"];
             return;
@@ -230,7 +230,7 @@
     dict[@"avatar"] = self.headImgStr;
     dict[@"store_name"] = self.shopNameV.rightTF.text;
     dict[@"description"] = self.shopDesV.rightTF.text;
-//    dict[@"weixin"] = self.shopWinXinV.rightTF.text;
+    //    dict[@"weixin"] = self.shopWinXinV.rightTF.text;
     dict[@"mobile"] = self.shopPhoneV.rightTF.text;
     dict[@"bg_image"] = self.shopBackImagStr;
     dict[@"memberid"] = [zkSignleTool shareTool].session_uid;
@@ -289,40 +289,44 @@
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         if ([self isCanUsePicture]) {
-            [self showMXPickerWithMaximumPhotosAllow:1 completion:^(NSArray *assets) {
+            
+            
+            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:MAXFLOAT columnNumber:4 delegate:self pushPhotoPickerVc:YES];
+            imagePickerVc.maxImagesCount = 1;
+            imagePickerVc.videoMaximumDuration = 3;
+            
+            imagePickerVc.allowTakeVideo = NO;
+            imagePickerVc.allowPickingVideo = NO;
+            imagePickerVc.allowPickingImage = YES;
+            imagePickerVc.allowTakePicture = NO;
+            
+            imagePickerVc.showSelectBtn = NO;
+            imagePickerVc.allowCrop = YES;
+            imagePickerVc.needCircleCrop = NO;
+            imagePickerVc.cropRectPortrait = CGRectMake(0, (ScreenH - ScreenW)/2, ScreenW, ScreenW);
+            imagePickerVc.cropRectLandscape = CGRectMake(0, (ScreenW - ScreenH)/2, ScreenH, ScreenH);
+            imagePickerVc.circleCropRadius = ScreenW/2;
+            [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
                 
-                for (ALAsset *asset in assets) {
-                    ALAssetRepresentation *assetRep = [asset defaultRepresentation];
-                    CGImageRef imgRef = [assetRep fullResolutionImage];
-                    UIImage *image = [[UIImage alloc] initWithCGImage:imgRef
-                                                                scale:assetRep.scale
-                                                          orientation:(UIImageOrientation)assetRep.orientation];
-                    
-                    if (!image) {
-                        image = [[UIImage alloc] initWithCGImage:[[asset defaultRepresentation] fullScreenImage]
-                                                           scale:assetRep.scale
-                                                     orientation:(UIImageOrientation)assetRep.orientation];
-                        
-                    }
-                    if (!image) {
-                        CGImageRef thum = [asset aspectRatioThumbnail];
-                        image = [UIImage imageWithCGImage:thum];
-                    }
+                
+                
+                
+                if (photos.count > 0) {
+                    self.image = photos.firstObject;
                     if (self.isShopBackImg) {
-                        self.imgV.image = image;
+                        self.imgV.image = self.image;
                     }else {
-                        [self.headPicBt setBackgroundImage:image forState:UIControlStateNormal];
+                        [self.headPicBt setBackgroundImage:self.image forState:UIControlStateNormal];
                         
                     }
-                    self.image = image;
                     [self updateImage];
-                    
                 }
                 
                 
-                
-                
             }];
+            [self presentViewController:imagePickerVc animated:YES completion:nil];
+            
+            
             
         }else{
             UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];

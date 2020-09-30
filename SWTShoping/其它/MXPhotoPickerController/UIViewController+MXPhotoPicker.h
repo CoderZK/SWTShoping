@@ -34,9 +34,9 @@ typedef void (^MXPhotoPickerMultipleBlock)(NSArray *assets);
  *  @param needToEdit 选择图片后是否需要编辑
  *  @param completion 回调
  */
-- (void)showMXPhotoPickerWithTitle:(NSString *)title
-                        needToEdit:(BOOL)needToEdit
-                        completion:(MXPhotoPickerSingleBlock)completion;
+//- (void)showMXPhotoPickerWithTitle:(NSString *)title
+//                        needToEdit:(BOOL)needToEdit
+//                        completion:(MXPhotoPickerSingleBlock)completion;
 
 /**
  *  照相（单选）
@@ -53,8 +53,8 @@ typedef void (^MXPhotoPickerMultipleBlock)(NSArray *assets);
  *  @param needToEdit 选择图片后是否需要编辑
  *  @param completion 回调
  */
-- (void)showMXPhotoPickerControllerAndNeedToEdit:(BOOL)needToEdit
-                                      completion:(MXPhotoPickerSingleBlock)completion;
+//- (void)showMXPhotoPickerControllerAndNeedToEdit:(BOOL)needToEdit
+//                                      completion:(MXPhotoPickerSingleBlock)completion;
 
 /**
  *  相册（多选）
@@ -62,7 +62,7 @@ typedef void (^MXPhotoPickerMultipleBlock)(NSArray *assets);
  *  @param maximumNumberOfSelectionalPhotos 最多允许选择的图片张数
  *  @param completion                       回调
  */
-- (void)showMXPickerWithMaximumPhotosAllow:(NSInteger)maximumNumberOfSelectionalPhotos
-                                completion:(MXPhotoPickerMultipleBlock)completion;
+//- (void)showMXPickerWithMaximumPhotosAllow:(NSInteger)maximumNumberOfSelectionalPhotos
+//                                completion:(MXPhotoPickerMultipleBlock)completion;
 
 @end

@@ -198,12 +198,20 @@
         }else if (lastM.elemType == V2TIM_ELEM_TYPE_IMAGE) {
             cell.contentLB.text = @"图片";
         }
-        NSDictionary * dict = [conVerSation.showName mj_JSONObject];
-        if ([dict.allKeys containsObject:@"nickname"]) {
-            cell.nameLB.text = dict[@"nickname"];
+        id tempData = [conVerSation.showName mj_JSONObject];
+        
+        if ([tempData isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *dict = (NSDictionary *)tempData;
+            if ([dict.allKeys containsObject:@"nickname"]) {
+                cell.nameLB.text = dict[@"nickname"];
+            }else {
+                cell.nameLB.text = @"";
+            }
         }else {
-            cell.nameLB.text = @"";
+            cell.nameLB.text = conVerSation.showName;
         }
+        
+        
         [cell.imgV sd_setImageWithURL:[lastM.faceURL getPicURL] placeholderImage:[UIImage imageNamed:@"369"] completed:nil];
         if (conVerSation.unreadCount >  0) {
             cell.redV.hidden = NO;
@@ -293,10 +301,18 @@
         
         TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:conVerSation.userID];
         TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
-        NSDictionary * dict = [conVerSation.showName mj_JSONObject];
-        if ([dict.allKeys containsObject:@"nickname"]) {
-            vc.navigationItem.title = dict[@"nickname"];
+        id tempData = [conVerSation.showName mj_JSONObject];
+        if ([tempData isKindOfClass:[NSDictionary class]]) {
+            NSDictionary * dict = (NSDictionary *)tempData;
+            if ([dict.allKeys containsObject:@"nickname"]) {
+                vc.navigationItem.title = dict[@"nickname"];
+            }
+        }else {
+            
+            vc.navigationItem.title = conVerSation.showName;
+            
         }
+        
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
         

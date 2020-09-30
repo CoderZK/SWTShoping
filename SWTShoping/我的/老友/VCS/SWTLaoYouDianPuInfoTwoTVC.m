@@ -116,9 +116,9 @@
     self.tableView.tableHeaderView = self.headView;
     CGFloat hh = 50;
     self.shopTyepV = [[SWTDianPuInfoView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, hh) withIsJianTou:YES withMaxNumber:200];
-       self.shopTyepV.leftLB.text = @"店铺类型";
-       self.shopTyepV.rightTF.placeholder = @"请选择";
-       [self.headView addSubview:self.shopTyepV];
+    self.shopTyepV.leftLB.text = @"店铺类型";
+    self.shopTyepV.rightTF.placeholder = @"请选择";
+    [self.headView addSubview:self.shopTyepV];
     self.shopTyepV.rightBt.tag = 100;
     [self.shopTyepV.rightBt  addTarget:self action:@selector(chooseAction:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -128,7 +128,7 @@
     self.shopOwnerV.rightTF.placeholder = @"请选择";
     [self.headView addSubview:self.shopOwnerV];
     self.shopOwnerV.rightBt.tag = 101;
-       [self.shopOwnerV.rightBt  addTarget:self action:@selector(chooseAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.shopOwnerV.rightBt  addTarget:self action:@selector(chooseAction:) forControlEvents:UIControlEventTouchUpInside];
     
     self.shopLeiV = [[SWTDianPuInfoView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.shopOwnerV.frame), ScreenW, hh) withIsJianTou:YES withMaxNumber:200];
     self.shopLeiV.leftLB.text = @"主营类目";
@@ -153,10 +153,10 @@
     self.shopNumberV.rightBt.hidden = YES;
     self.shopNumberV.rightTF.userInteractionEnabled = YES;
     
-
     
     
-  
+    
+    
     
     UILabel * lb  =[[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(self.shopNumberV.frame) + 10, ScreenW - 20, 20)];
     lb.textColor = CharacterColor102;
@@ -183,33 +183,33 @@
     self.shouChiV.titleLB.text = @"请上传手持身份照";
     [self.headView addSubview:self.shouChiV];
     self.shouChiV.leftBt.tag = 2;
-       [self.shouChiV.leftBt addTarget:self action:@selector(chooseImageAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.shouChiV.leftBt addTarget:self action:@selector(chooseImageAction:) forControlEvents:UIControlEventTouchUpInside];
     
     
     UIButton * button  =[[UIButton alloc] initWithFrame:CGRectMake(40, CGRectGetMaxY(self.shouChiV.frame) + 40, ScreenW - 80, 40)];
-      [button setTitle:@"下一步" forState:UIControlStateNormal];
-      button.titleLabel.font = kFont(14);
-      [button setBackgroundImage:[UIImage imageNamed:@"bg_href"] forState:UIControlStateNormal];
-      button.layer.cornerRadius = 20;
-      button.clipsToBounds = YES;
- 
-      [self.headView addSubview:button];
-      
-      @weakify(self);
-      [[button rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-          @strongify(self);
-          
-          
-          
-          [self renZhengAction];
-          
-          
-      }];
+    [button setTitle:@"下一步" forState:UIControlStateNormal];
+    button.titleLabel.font = kFont(14);
+    [button setBackgroundImage:[UIImage imageNamed:@"bg_href"] forState:UIControlStateNormal];
+    button.layer.cornerRadius = 20;
+    button.clipsToBounds = YES;
+    
+    [self.headView addSubview:button];
+    
+    @weakify(self);
+    [[button rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+        @strongify(self);
+        
+        
+        
+        [self renZhengAction];
+        
+        
+    }];
     self.nextBt = button;
     
     self.headView.mj_h = CGRectGetMaxY(self.nextBt.frame) + 40;
     
-
+    
     
 }
 
@@ -307,26 +307,26 @@
             pickV.delegate = self;
             
             
-//            [SVProgressHUD showSuccessWithStatus:@"申请店铺成功,等待审核"];
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                [self.navigationController popToRootViewControllerAnimated:YES];
-//            });
+            //            [SVProgressHUD showSuccessWithStatus:@"申请店铺成功,等待审核"];
+            //            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            //                [self.navigationController popToRootViewControllerAnimated:YES];
+            //            });
             
-//            SWTMJDianPuBaoZhengJinShowView * showV  = [[SWTMJDianPuBaoZhengJinShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
-//            showV.dataArray = @[@"10",@"20",@"40",@"50",@"60",@"60",@"600"];
-//            
-//            showV.delegateSignal = [[RACSubject alloc] init];
-//            @weakify(self);
-//            [showV.delegateSignal subscribeNext:^(NSNumber * x) {
-//                @strongify(self);
-//                //点击
-//                
-//                
-//                
-//                
-//            }];
-//            
-//            [showV show];
+            //            SWTMJDianPuBaoZhengJinShowView * showV  = [[SWTMJDianPuBaoZhengJinShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+            //            showV.dataArray = @[@"10",@"20",@"40",@"50",@"60",@"60",@"600"];
+            //            
+            //            showV.delegateSignal = [[RACSubject alloc] init];
+            //            @weakify(self);
+            //            [showV.delegateSignal subscribeNext:^(NSNumber * x) {
+            //                @strongify(self);
+            //                //点击
+            //                
+            //                
+            //                
+            //                
+            //            }];
+            //            
+            //            [showV show];
             
             
         }else {
@@ -385,7 +385,7 @@
         pickV.delegate = self;
         
     }else {
-       if (self.dataArrayThree.count == 0) {
+        if (self.dataArrayThree.count == 0) {
             [SVProgressHUD showErrorWithStatus:@"数据请求中,请稍后再试"];
             [self getData];
             return;
@@ -439,7 +439,7 @@
                 self.headView.mj_h = CGRectGetMaxY(self.nextBt.frame) + 40;
                 
             }else {
-               self.zhengV.hidden = self.fanV.hidden =  self.isGongSi = NO;
+                self.zhengV.hidden = self.fanV.hidden =  self.isGongSi = NO;
                 
                 self.zhengV.titleLB.text = @"请上传身份证正面";
                 self.zhengV.rigthImgV.image = [UIImage imageNamed:@"dyx11"];
@@ -495,35 +495,31 @@
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         if ([self isCanUsePicture]) {
-            [self showMXPickerWithMaximumPhotosAllow:1 completion:^(NSArray *assets) {
+            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:MAXFLOAT columnNumber:4 delegate:self pushPhotoPickerVc:YES];
+            imagePickerVc.maxImagesCount = 1;
+            imagePickerVc.videoMaximumDuration = 3;
+            
+            imagePickerVc.allowTakeVideo = NO;
+            imagePickerVc.allowPickingVideo = NO;
+            imagePickerVc.allowPickingImage = YES;
+            imagePickerVc.allowTakePicture = NO;
+            
+            imagePickerVc.showSelectBtn = NO;
+            imagePickerVc.allowCrop = YES;
+            imagePickerVc.needCircleCrop = NO;
+            imagePickerVc.cropRectPortrait = CGRectMake(0, (ScreenH - ScreenW)/2, ScreenW, ScreenW);
+            imagePickerVc.cropRectLandscape = CGRectMake(0, (ScreenW - ScreenH)/2, ScreenH, ScreenH);
+            imagePickerVc.circleCropRadius = ScreenW/2;
+            [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
                 
-                for (ALAsset *asset in assets) {
-                    ALAssetRepresentation *assetRep = [asset defaultRepresentation];
-                    CGImageRef imgRef = [assetRep fullResolutionImage];
-                    UIImage *image = [[UIImage alloc] initWithCGImage:imgRef
-                                                                scale:assetRep.scale
-                                                          orientation:(UIImageOrientation)assetRep.orientation];
-                    
-                    if (!image) {
-                        image = [[UIImage alloc] initWithCGImage:[[asset defaultRepresentation] fullScreenImage]
-                                                           scale:assetRep.scale
-                                                     orientation:(UIImageOrientation)assetRep.orientation];
-                        
-                    }
-                    if (!image) {
-                        CGImageRef thum = [asset aspectRatioThumbnail];
-                        image = [UIImage imageWithCGImage:thum];
-                    }
-                
-                    self.image = image;
+                if (photos.count > 0) {
+                    self.image = photos.firstObject;
                     [self updateImage];
-                   
                 }
                 
                 
-                
-                
             }];
+            [self presentViewController:imagePickerVc animated:YES completion:nil];
             
         }else{
             UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -560,7 +556,7 @@
                 self.imgStr3 = responseObject[@"data"];
                 [self.shouChiV.leftBt sd_setBackgroundImageWithURL:[self.imgStr3 getPicURL] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
             }
-//            [self.tableView reloadData];
+            //            [self.tableView reloadData];
             
         }else {
             [self showAlertWithKey:responseObject[@"code"] message:responseObject[@"msg"] ];

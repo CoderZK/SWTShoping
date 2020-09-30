@@ -594,40 +594,36 @@
                 num = 1;
             }
             
-            [self showMXPickerWithMaximumPhotosAllow:num completion:^(NSArray *assets) {
+            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:MAXFLOAT columnNumber:4 delegate:self pushPhotoPickerVc:YES];
+            imagePickerVc.maxImagesCount = num;
+            imagePickerVc.videoMaximumDuration = 3;
+            
+            imagePickerVc.allowTakeVideo = NO;
+            imagePickerVc.allowPickingVideo = NO;
+            imagePickerVc.allowPickingImage = YES;
+            imagePickerVc.allowTakePicture = NO;
+            
+            imagePickerVc.showSelectBtn = NO;
+            imagePickerVc.allowCrop = YES;
+            imagePickerVc.needCircleCrop = NO;
+            imagePickerVc.cropRectPortrait = CGRectMake(0, (ScreenH - ScreenW)/2, ScreenW, ScreenW);
+            imagePickerVc.cropRectLandscape = CGRectMake(0, (ScreenW - ScreenH)/2, ScreenH, ScreenH);
+            imagePickerVc.circleCropRadius = ScreenW/2;
+            [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
                 
-                for (ALAsset *asset in assets) {
-                    ALAssetRepresentation *assetRep = [asset defaultRepresentation];
-                    CGImageRef imgRef = [assetRep fullResolutionImage];
-                    UIImage *image = [[UIImage alloc] initWithCGImage:imgRef
-                                                                scale:assetRep.scale
-                                                          orientation:(UIImageOrientation)assetRep.orientation];
-                    
-                    if (!image) {
-                        image = [[UIImage alloc] initWithCGImage:[[asset defaultRepresentation] fullScreenImage]
-                                                           scale:assetRep.scale
-                                                     orientation:(UIImageOrientation)assetRep.orientation];
-                        
-                    }
-                    if (!image) {
-                        CGImageRef thum = [asset aspectRatioThumbnail];
-                        image = [UIImage imageWithCGImage:thum];
-                    }
-                    if (self.isAddThumbPic) {
-                        self.thumbImge = image;
-                        [self updateImage];
-                    }else {
-                        [self.picArr addObject:image];
-                        self.headV.picArr = self.picArr;
-                    }
-                    
-                    
+                
+                if (self.isAddThumbPic) {
+                    self.thumbImge = photos.firstObject;
+                    [self updateImage];
+                }else {
+                    [self.picArr addObjectsFromArray:photos];
+                    self.headV.picArr = self.picArr;
                 }
                 
                 
                 
-                
             }];
+            [self presentViewController:imagePickerVc animated:YES completion:nil];
             
         }else{
             UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -694,10 +690,10 @@
     }
     
     if (indexPath.section == 2 && indexPath.row == 4) {
-           [self.tableView endEditing:YES];
-           self.isHeMai = !self.isHeMai;
-           [self.tableView reloadData];
-       }
+        [self.tableView endEditing:YES];
+        self.isHeMai = !self.isHeMai;
+        [self.tableView reloadData];
+    }
     
     
     if (indexPath.section == 2) {
@@ -808,7 +804,7 @@
             }
         }
     }
-
+    
     [zkRequestTool NetWorkingUpLoad:uploadfiles_SWT images:arrOne name:@"files" parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         
         if ([responseObject[@"code"] intValue] == 200) {

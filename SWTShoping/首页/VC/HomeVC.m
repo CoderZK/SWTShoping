@@ -382,9 +382,19 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    SWTJiShiFaBuView * view = [[SWTJiShiFaBuView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
-    [view show];
-    return;
+    
+//    if  (indexPath.row == 0) {
+//        SWTJiShiFaBuView * view = [[SWTJiShiFaBuView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+//        view.isSiJia = YES;
+//          [view show];
+//    }else {
+//        SWTJiShiFaBuView * view = [[SWTJiShiFaBuView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+//          view.isSiJia = NO;
+//          [view show];
+//    }
+//    
+//  
+//    return;
     
     
     SWTModel * model = self.recommendArr[indexPath.row];

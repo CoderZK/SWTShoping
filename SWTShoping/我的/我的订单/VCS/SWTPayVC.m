@@ -29,7 +29,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.navigationItem.title = @"支付";
-    
+    self.payType = 100;
     self.moneyLB.text =  [NSString stringWithFormat:@"￥%@",self.priceStr.getPriceAllStr];
     [self.payBt setTitle:[NSString stringWithFormat:@"支付￥%@",self.priceStr.getPriceAllStr] forState:UIControlStateNormal];
     Weak(weakSelf);
@@ -181,7 +181,7 @@
         [UMSPPPayUnifyPayPlugin payWithPayChannel:CHANNEL_WEIXIN
                                           payData:self.payDataJsonStr
                                     callbackBlock:^(NSString *resultCode, NSString *resultInfo) {
-            
+            NSLog(@"=====---\n%@",resultInfo);
             
             
         }];

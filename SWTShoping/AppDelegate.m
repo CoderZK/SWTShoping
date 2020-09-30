@@ -58,6 +58,7 @@
        manager.enableAutoToolbar = NO;
     
     [WXApi registerApp:WXAppID universalLink:@"https://www.zb.com/huishou/"];
+    
       [self initPush];
       [self initUMeng:launchOptions];
       

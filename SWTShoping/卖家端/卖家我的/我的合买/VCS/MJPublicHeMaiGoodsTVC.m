@@ -66,12 +66,12 @@
     
     
     self.queRenBt = [[UIButton alloc] initWithFrame:CGRectMake(30, 200, ScreenW - 60, 45)];
-       [self.queRenBt setTitle:@"发布合买商品" forState:UIControlStateNormal];
-       self.queRenBt.titleLabel.font = kFont(14);
-       self.queRenBt.layer.cornerRadius = 22.5;
-       self.queRenBt.clipsToBounds = YES;
-       self.queRenBt.backgroundColor = RedColor;
-       [self.footView  addSubview:self.queRenBt];
+    [self.queRenBt setTitle:@"发布合买商品" forState:UIControlStateNormal];
+    self.queRenBt.titleLabel.font = kFont(14);
+    self.queRenBt.layer.cornerRadius = 22.5;
+    self.queRenBt.clipsToBounds = YES;
+    self.queRenBt.backgroundColor = RedColor;
+    [self.footView  addSubview:self.queRenBt];
     self.pingMingArr = @[].mutableCopy;
     [self.queRenBt addTarget:self action:@selector(faBuAction) forControlEvents:UIControlEventTouchUpInside];
     [self getPingMingData];
@@ -135,7 +135,7 @@
         return cell;
     }
     
-   SWTMineShopSettingCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTMineShopSettingCell" forIndexPath:indexPath];
+    SWTMineShopSettingCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTMineShopSettingCell" forIndexPath:indexPath];
     cell.rightTF.userInteractionEnabled = YES;
     cell.rightImgV.hidden = YES;
     cell.leftwoLB.hidden = YES;
@@ -157,6 +157,7 @@
         cell.rightTF.userInteractionEnabled = NO;
     }else if (indexPath.row == 4){
         cell.rightTF.text = self.allMoneyStr;
+        cell.rightTF.keyboardType = UIKeyboardTypeDecimalPad;
         cell.desLB.hidden = NO;
         cell.desLB.text = @"一人合买总价乘以1.05 (定制费)";
         cell.leftLB.text = @"合买总价";
@@ -260,7 +261,7 @@
                 }else {
                     weakSelf.endTimeStr = timeStr;
                     [weakSelf.timeEBt setTitle:timeStr forState:UIControlStateNormal];
-//                    [weakSelf.tableView reloadData];
+                    //                    [weakSelf.tableView reloadData];
                 }
                 
             }else {
@@ -283,11 +284,11 @@
 }
 
 - (void)checkRoom  {
-
+    
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"id"] = [zkSignleTool shareTool].selectShopID;
     [zkRequestTool networkingPOST:merchliveCheck_room_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
-
+        
         if ([responseObject[@"code"] intValue]== 200) {
             NSString * status = [NSString stringWithFormat:@"%@",responseObject[@"data"][@"status"]];
             if (status.intValue == 3) {
@@ -306,7 +307,7 @@
         [self.tableView.mj_footer endRefreshing];
         
     }];
-
+    
 }
 
 
@@ -316,14 +317,14 @@
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"相机" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if ([self isCanUsePhotos]) {
             
-         
+            
             [self showMXPhotoCameraAndNeedToEdit:YES completion:^(UIImage *image, UIImage *originImage, CGRect cutRect) {
                 
                 self.image = image;
                 [self updateImage];
-
+                
             }];
-       
+            
         }else{
             UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相机" message:@"请在iPhone的""设置-隐私-相机""中允许访问相机" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
@@ -333,43 +334,39 @@
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         if ([self isCanUsePicture]) {
-            [self showMXPickerWithMaximumPhotosAllow:1 completion:^(NSArray *assets) {
+            TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:MAXFLOAT columnNumber:4 delegate:self pushPhotoPickerVc:YES];
+            imagePickerVc.maxImagesCount = 1;
+            imagePickerVc.videoMaximumDuration = 3;
+            
+            imagePickerVc.allowTakeVideo = NO;
+            imagePickerVc.allowPickingVideo = NO;
+            imagePickerVc.allowPickingImage = YES;
+            imagePickerVc.allowTakePicture = NO;
+            
+            imagePickerVc.showSelectBtn = NO;
+            imagePickerVc.allowCrop = YES;
+            imagePickerVc.needCircleCrop = NO;
+            imagePickerVc.cropRectPortrait = CGRectMake(0, (ScreenH - ScreenW)/2, ScreenW, ScreenW);
+            imagePickerVc.cropRectLandscape = CGRectMake(0, (ScreenW - ScreenH)/2, ScreenH, ScreenH);
+            imagePickerVc.circleCropRadius = ScreenW/2;
+            [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
                 
-                for (ALAsset *asset in assets) {
-                    ALAssetRepresentation *assetRep = [asset defaultRepresentation];
-                    CGImageRef imgRef = [assetRep fullResolutionImage];
-                    UIImage *image = [[UIImage alloc] initWithCGImage:imgRef
-                                                                scale:assetRep.scale
-                                                          orientation:(UIImageOrientation)assetRep.orientation];
-                    
-                    if (!image) {
-                        image = [[UIImage alloc] initWithCGImage:[[asset defaultRepresentation] fullScreenImage]
-                                                           scale:assetRep.scale
-                                                     orientation:(UIImageOrientation)assetRep.orientation];
-                        
-                    }
-                    if (!image) {
-                        CGImageRef thum = [asset aspectRatioThumbnail];
-                        image = [UIImage imageWithCGImage:thum];
-                    }
-                    
-                    self.image = image;
+                if (photos.count > 0) {
+                    self.image = photos.firstObject;
                     [self updateImage];
-                  
                 }
-                
-              
                 
                 
             }];
-           
+            [self presentViewController:imagePickerVc animated:YES completion:nil];
+            
         }else{
             UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
         }
     }];
     
-   
+    
     
     UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     [ac addAction:action1];
@@ -446,8 +443,8 @@
     }
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    dict[@"auction_end_time"] = self.endTimeStr;
-    dict[@"auction_start_time"] = self.timeStr;
+    dict[@"auction_end_time"] = [NSString stringWithFormat:@"%@:00",self.endTimeStr];;
+    dict[@"auction_start_time"] = [NSString stringWithFormat:@"%@:00",self.timeStr];;
     dict[@"chipped_num"] = self.fenShuStr;
     if(self.fenShuStr.intValue == 1) {
         dict[@"chipped_price"] = @(self.allMoneyStr.floatValue * 1.05);
@@ -459,7 +456,7 @@
     dict[@"name"] = self.nameStr;
     dict[@"price"] = self.allMoneyStr;
     dict[@"liveid"] = self.liveID;
-     [zkRequestTool networkingPOST:merchpublicshare_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+    [zkRequestTool networkingPOST:merchpublicshare_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];

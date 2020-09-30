@@ -316,7 +316,7 @@
                            cell.rightLB.text = @"";
                        }
             if (indexPath.row == 3) {
-                cell.leftImgV.image = [UIImage imageNamed: [NSString stringWithFormat:@"dyx%d",16]];
+                cell.leftImgV.image = [UIImage imageNamed: [NSString stringWithFormat:@"bbdyx%d",16]];
             }else if (indexPath.row == 4) {
                 cell.leftImgV.image = [UIImage imageNamed: [NSString stringWithFormat:@"dyx%d",86]];
             }

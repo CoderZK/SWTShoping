@@ -26,7 +26,7 @@
         
         
         self.gouWuBt = [[UIButton alloc] init];
-        [self.gouWuBt setBackgroundImage:[UIImage imageNamed:@"dyx88"] forState:UIControlStateNormal];
+        [self.gouWuBt setBackgroundImage:[UIImage imageNamed:@"live_gwc"] forState:UIControlStateNormal];
         self.gouWuBt.tag = 100;
         [self.gouWuBt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.gouWuBt];
@@ -103,7 +103,7 @@
             make.left.equalTo(self).offset(15);
             make.centerY.equalTo(self);
             make.height.equalTo(@35);
-            make.width.equalTo(@50);
+            make.width.equalTo(@35);
             
         }];
         
@@ -154,18 +154,23 @@
 
 
 - (void)setIsShangHu:(BOOL)isShangHu {
-    [self.shareBt mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(@0);
-    }];
-    [self.collectBt mas_updateConstraints:^(MASConstraintMaker *make) {
-         make.width.equalTo(@0);
-    }];
-    [self.shareBt mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(@0);
-    }];
-    [self.gouWuBt setBackgroundImage:[UIImage imageNamed:@"dyx87"] forState:UIControlStateNormal];
     
-    self.TF.placeholder = @"和用户聊聊";
+    if (isShangHu) {
+        [self.shareBt mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.width.equalTo(@0);
+        }];
+        [self.collectBt mas_updateConstraints:^(MASConstraintMaker *make) {
+             make.width.equalTo(@0);
+        }];
+        [self.shareBt mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.width.equalTo(@0);
+        }];
+        [self.gouWuBt setBackgroundImage:[UIImage imageNamed:@"dyx87"] forState:UIControlStateNormal];
+        
+        self.TF.placeholder = @"和用户聊聊";
+    }
+    
+    
     
 }
 
@@ -177,6 +182,10 @@
         [self.heMaibt mas_updateConstraints:^(MASConstraintMaker *make) {
             make.width.equalTo(@0);
              make.right.equalTo(self.shareBt.mas_left).offset(0);
+        }];
+    }else {
+        [self.gouWuBt mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.width.equalTo(@45);
         }];
     }
    

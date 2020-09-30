@@ -107,7 +107,7 @@
             cell.rightTF.userInteractionEnabled = YES;
         }else {
             cell.rightTF.text = self.dataModel.mobile;
-            cell.rightTF.userInteractionEnabled = YES;
+            cell.rightTF.userInteractionEnabled = NO;
         }
         
     }else if (indexPath.section == 1) {
