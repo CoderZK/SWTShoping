@@ -292,6 +292,10 @@
 #define shareGoodlist_SWT URLOne@"share/goodlist"
 /** 直播列表 */
 #define shareList_SWT URLOne@"share/list"
+
+/**  我的合买列表 */
+#define sharesharelist_SWT URLOne@"share/sharelist"
+
 /** 我的合买 */
 #define shareMyshare_SWT URLOne@"share/myshare"
 /** 订单详情 */

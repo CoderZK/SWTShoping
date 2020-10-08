@@ -46,6 +46,7 @@
 		33DC824F20EA224F00D1C283 /* HangQingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DC824E20EA224F00D1C283 /* HangQingVC.m */; };
 		33DC825220EA228E00D1C283 /* GuanZhuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DC825120EA228E00D1C283 /* GuanZhuVC.m */; };
 		33DC825520EA245E00D1C283 /* HomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DC825320EA245E00D1C283 /* HomeVC.m */; };
+		66264F9F252F5110001B70AC /* SWTZhiBoFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66264F9E252F5110001B70AC /* SWTZhiBoFootView.m */; };
 		6648B4B9251A460B00255DF1 /* MJMineHeMaiFatherVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6648B4B8251A460B00255DF1 /* MJMineHeMaiFatherVC.m */; };
 		6648B4BC251A462100255DF1 /* MJHeMaiSubTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6648B4BB251A462100255DF1 /* MJHeMaiSubTVC.m */; };
 		6648B4C0251A474B00255DF1 /* MJHeMaiOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6648B4BE251A474B00255DF1 /* MJHeMaiOrderCell.m */; };
@@ -532,6 +533,8 @@
 		33DC825120EA228E00D1C283 /* GuanZhuVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GuanZhuVC.m; path = "SWTShoping/关注/GuanZhuVC.m"; sourceTree = SOURCE_ROOT; };
 		33DC825320EA245E00D1C283 /* HomeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeVC.m; sourceTree = "<group>"; };
 		33DC825420EA245E00D1C283 /* HomeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeVC.h; sourceTree = "<group>"; };
+		66264F9D252F5110001B70AC /* SWTZhiBoFootView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTZhiBoFootView.h; sourceTree = "<group>"; };
+		66264F9E252F5110001B70AC /* SWTZhiBoFootView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTZhiBoFootView.m; sourceTree = "<group>"; };
 		6648B4B7251A460B00255DF1 /* MJMineHeMaiFatherVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MJMineHeMaiFatherVC.h; sourceTree = "<group>"; };
 		6648B4B8251A460B00255DF1 /* MJMineHeMaiFatherVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MJMineHeMaiFatherVC.m; sourceTree = "<group>"; };
 		6648B4BA251A462100255DF1 /* MJHeMaiSubTVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MJHeMaiSubTVC.h; sourceTree = "<group>"; };
@@ -2736,6 +2739,8 @@
 				666AC3D125222B3500CBFB6F /* SWTJiShiFaBuView.m */,
 				666AC3D325223BB400CBFB6F /* SWTZhiBoPeoPleView.h */,
 				666AC3D425223BB400CBFB6F /* SWTZhiBoPeoPleView.m */,
+				66264F9D252F5110001B70AC /* SWTZhiBoFootView.h */,
+				66264F9E252F5110001B70AC /* SWTZhiBoFootView.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -3328,6 +3333,7 @@
 				66732D1924BB069C00452F21 /* SWTZhiBoHedView.m in Sources */,
 				66689F3724B4242100C49A2E /* SWTHelpOneTVC.m in Sources */,
 				337F3EAD20EA014600C5526A /* BaseTableViewHeaderFooterView.m in Sources */,
+				66264F9F252F5110001B70AC /* SWTZhiBoFootView.m in Sources */,
 				6648B4CC251A51CE00255DF1 /* MJHeadView.m in Sources */,
 				666C70E224B611E5002C11E1 /* SWTFanKuiOneNeiCell.m in Sources */,
 				666F813B24EACA0100F338C1 /* SWTAddMineChanPinKuTVC.m in Sources */,

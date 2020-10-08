@@ -157,6 +157,9 @@
 //发货
 - (void)faHuoActionWithModel:(SWTModel *)model {
     
+    
+    
+    
     SWTMJFaHuoShowView * showV  =[[SWTMJFaHuoShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
     showV.delegateSignal = [[RACSubject alloc] init];
     @weakify(self);

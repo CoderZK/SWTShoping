@@ -45,9 +45,9 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FnU-aT-9uH">
-                        <rect key="frame" x="409" y="24.5" width="60" height="30"/>
+                        <rect key="frame" x="409" y="31.5" width="60" height="16"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="30" id="MUF-8A-NoE"/>
+                            <constraint firstAttribute="height" constant="16" id="MUF-8A-NoE"/>
                             <constraint firstAttribute="width" constant="60" id="u2J-yg-8Of"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -56,9 +56,9 @@
                         </state>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J0h-Cc-Im6">
-                        <rect key="frame" x="339" y="24.5" width="60" height="30"/>
+                        <rect key="frame" x="339" y="31.5" width="60" height="16"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="30" id="DZF-Ot-6ac"/>
+                            <constraint firstAttribute="height" constant="16" id="DZF-Ot-6ac"/>
                             <constraint firstAttribute="width" constant="60" id="pa2-FH-6Zl"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>

@@ -10,11 +10,11 @@
 
 @implementation SWTModel
 + (NSDictionary *)mj_replacedKeyFromPropertyName {
-    return @{@"ID":@"id",@"des":@"description",@"merch_id":@"mer_id"};
+    return @{@"ID":@"id",@"des":@"description"};
 }
 
 + (NSDictionary *)mj_objectClassInArray {
-    return @{@"lotinfo":@"SWTModel",@"childorderinfo":@"SWTModel"};
+    return @{@"lotinfo":@"SWTModel",@"childorderinfo":@"SWTModel",@"sharedict":@"SWTModel"};
 }
 
 - (void)setStorename:(NSString *)storename {

@@ -9,7 +9,7 @@
 #import "SWTAVChatRoomView.h"
 #import "SWTAVChatRoomCell.h"
 @interface SWTAVChatRoomView()<UITableViewDelegate,UITableViewDataSource>
-@property(nonatomic , strong)UITableView *tableView;
+
 @end
 
 @implementation SWTAVChatRoomView

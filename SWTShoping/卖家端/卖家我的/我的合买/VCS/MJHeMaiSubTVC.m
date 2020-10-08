@@ -81,17 +81,15 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.type == 0) {
-        return 165;
-    }else {
-        return UITableViewAutomaticDimension;
-    }
+ 
+    return 165;
+    
     
     
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.type == 0) {
+   
         MJHeMaiOrderCell * cell =[tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
         cell.centerBt.tag = indexPath.row;
         cell.leftBt.tag = indexPath.row;
@@ -99,14 +97,7 @@
          [cell.leftBt  addTarget:self action:@selector(upPicActionTwo:) forControlEvents:UIControlEventTouchUpInside];
         cell.model = self.dataArray[indexPath.row];
         return cell;
-    }else {
-        SWTMineHeMaiOrderCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-//        cell.rightOneBt.tag = indexPath.row;
-//        [cell.rightOneBt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
-//        cell.type = self.type;
-//        cell.model = self.dataArray[indexPath.row];
-        return cell;
-    }
+   
     
     
 }

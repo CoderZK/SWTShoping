@@ -126,7 +126,7 @@
         dict[@"type"] = @"5";
     }
     NSString * url = merchlotsAdd_lots_info_SWT;
-    if (self.type == 3) {
+    if (self.type == 1) {
         url = merchlotsdraw_lots_SWT;
     }
     
@@ -137,9 +137,7 @@
         if ([responseObject[@"code"] intValue]== 200) {
             
             [SVProgressHUD showSuccessWithStatus:@"上传成功"];
-            
-            
-            
+
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }

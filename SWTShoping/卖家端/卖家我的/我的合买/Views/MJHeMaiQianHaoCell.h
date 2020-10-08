@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *LB3;
 @property (weak, nonatomic) IBOutlet UIButton *leftBt;
 @property (weak, nonatomic) IBOutlet UIButton *rigthBt;
-
+@property(nonatomic,strong)SWTModel *model;
 @end
 
 NS_ASSUME_NONNULL_END

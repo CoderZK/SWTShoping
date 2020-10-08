@@ -11,6 +11,7 @@
 
 @interface SWTAVChatRoomView : UIView
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *dataArr;
+@property(nonatomic , strong)UITableView *tableView;
 @end
 
 

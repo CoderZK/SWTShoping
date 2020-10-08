@@ -56,18 +56,20 @@
     
     [self setLeftNagate];
     
-    [self getData];
+//    [self getData];
     
     self.tableView.mj_header = [MJRefreshHeader headerWithRefreshingBlock:^{
         [self getData];
     }];
    
-//    if ([zkSignleTool shareTool].isHeMaiDianPu) {
-//        [self getHeMaiNumber];
-//    }
+    if ([zkSignleTool shareTool].isHeMaiDianPu) {
+        
+    }else {
+        [self tongjiAction];
+    }
     
     self.tabBarController.delegate = self;
-    [self tongjiAction];
+    
 }
 
 - (void)setLeftNagate {
@@ -124,7 +126,7 @@
             self.dataModel.merchinfo.merch_id = [zkSignleTool shareTool].selectShopID;
             
             if ([zkSignleTool shareTool].isHeMaiDianPu) {
-                self.jingPaiNumebr = self.dataModel.merchinfo.shareorders;
+                self.jingPaiNumebr = self.dataModel.shareorders;
             }
             [self.tableView reloadData];
             

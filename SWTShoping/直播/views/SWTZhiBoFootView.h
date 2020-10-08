@@ -11,7 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTZhiBoFootView : UIView
-
+@property(nonatomic,strong)SWTModel  *model;
+@property (nonatomic, assign)NSTimeInterval timeInterval;
+@property(nonatomic,assign)BOOL isOrder;
 @end
 
 NS_ASSUME_NONNULL_END

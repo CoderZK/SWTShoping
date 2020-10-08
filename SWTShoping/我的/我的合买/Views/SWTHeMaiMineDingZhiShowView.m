@@ -8,6 +8,7 @@
 
 #import "SWTHeMaiMineDingZhiShowView.h"
 #import "SWTHeMaiDianPuOneCell.h"
+#import "SWTHeMaiDianPuOneCell.h"
 @interface SWTHeMaiMineDingZhiShowView()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic , strong)UIView *whiteV;
 @property(nonatomic , strong)UITableView *tableView;
@@ -25,7 +26,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-
+        
         
         UIButton *button = [[UIButton alloc] initWithFrame:[UIScreen mainScreen].bounds];
         [button addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
@@ -85,8 +86,9 @@
         self.tableView.tableFooterView = [[UIView alloc] init];
         [self.whiteV addSubview:_tableView];
         
-        [self.tableView registerNib:[UINib nibWithNibName:@"SWTHeMaiDianPuOneCell" bundle:nil] forCellReuseIdentifier:@"cell"];
+        //        [self.tableView registerNib:[UINib nibWithNibName:@"SWTHeMaiDianPuOneCell" bundle:nil] forCellReuseIdentifier:@"cell"];
         
+        [self.tableView registerNib:[UINib nibWithNibName:@"SWTHeMaiDianPuOneCell" bundle:nil] forCellReuseIdentifier:@"cell"];
         
         [closeBt mas_makeConstraints:^(MASConstraintMaker *make) {
             make.width.width.equalTo(@30);
@@ -132,6 +134,11 @@
             
         }];
         
+        
+//        [LSTTimer addTimerForTime:7200 identifier:@"listTimer" handle:nil];
+//        //配置通知发送和计时任务绑定 没有配置 就不会有通知发送
+//        [LSTTimer setNotificationForName:@"ListChangeNF" identifier:@"listTimer" changeNFType:LSTTimerSecondChangeNFTypeMS];
+        
     }
     
     return self;
@@ -163,6 +170,8 @@
 
 
 - (void)dismiss {
+//    [LSTTimer removeAllTimer];
+//       [LSTTimer removeTimerForIdentifier:@"listTimer"];
     [UIView animateWithDuration:0.2 animations:^{
         self.whiteV.mj_y = ScreenH;
         self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];;
@@ -183,10 +192,15 @@
     SWTModel * model = self.dataArray[indexPath.row];
     [cell.imgV sd_setImageWithURL:[model.img getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
     cell.titleLB.text = model.goodname;
-    cell.jiaJiaLB.text =  [NSString stringWithFormat:@"￥%@",model.goodprice.getPriceAllStr];
-    cell.numberLB.text =  [NSString stringWithFormat:@"%@/%@",model.goodnum,model.lot_no];
+    cell.jiaJiaLB.text =  [NSString stringWithFormat:@"￥%@",model.chipped_price.getPriceAllStr];
+    cell.numberLB.text =  [NSString stringWithFormat:@"%@/%@",model.isbuynum,model.chipped_num];
     cell.rightBt.hidden = YES;
-    [cell.timeBt setTitle: @"已完成" forState:UIControlStateNormal];
+    //    [cell.timeBt setTitle: @"已完成" forState:UIControlStateNormal];
+    if (model.sharedict.count > 0) {
+        [cell.timeBt setTitle:[NSString stringWithFormat:@"%@小时后商家未发布抽签将自动退款",model.sharedict[0].value] forState:UIControlStateNormal];
+    }else {
+        [cell.timeBt setTitle: @"" forState:UIControlStateNormal];
+    }
     cell.rightBt.tag = indexPath.row;
     [cell.rightBt addTarget:self action:@selector(action:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
@@ -203,7 +217,7 @@
     
     if (self.delegateSignal) {
         [self.delegateSignal sendNext:@(indexPath.row + 200)];
-       }
+    }
     
 }
 

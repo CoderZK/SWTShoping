@@ -20,6 +20,7 @@
 #import "SWTZhiBoPeopleComeInView.h"
 #import <PLMediaStreamingKit/PLMediaStreamingKit.h>
 #import <PLPlayerKit/PLPlayerKit.h>
+#import "SWTZhiBoFootView.h"
 
 @interface SWTZhiBoDetailVC ()<V2TIMAdvancedMsgListener,V2TIMGroupListener,PLPlayerDelegate>
 @property(nonatomic , strong)SWTZhiBoHedView *headV; // 头视图
@@ -37,6 +38,7 @@
 @property(nonatomic , strong)SWTAVChatRoomView *avChatRoomView;
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *AVCharRoomArr;
 @property(nonatomic , strong)SWTZhiBoPeopleComeInView *comeInV;
+@property(nonatomic,strong)SWTZhiBoFootView *zhiBoFootV;
 
 //推流部分
 @property (nonatomic, strong) PLMediaStreamingSession *session;
@@ -66,12 +68,19 @@
  
 }
 
+
+- (SWTZhiBoFootView *)zhiBoFootV {
+    if (_zhiBoFootV == nil) {
+        _zhiBoFootV = [[SWTZhiBoFootView alloc] initWithFrame:CGRectMake(0, 0, (ScreenW -30)/4 * 3, 110)];
+    }
+    return _zhiBoFootV;
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.timer invalidate];
     self.timer = nil;
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    [[V2TIMManager sharedInstance] removeAdvancedMsgListener:self];
     if (!self.isPushVC) {
         if (self.isTuiLiu) {
                [self upDateLive];
@@ -107,7 +116,19 @@
     [self addChuJiaBottomV];
     [self initChatRoomV];
     
-    
+    [self.view addSubview: self.zhiBoFootV];
+    [self.zhiBoFootV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).offset(10);
+        
+        if (sstatusHeight > 20) {
+            make.bottom.equalTo(self.view).offset(-94);
+        }else {
+            make.bottom.equalTo(self.view).offset(-50);
+        }
+        make.width.equalTo(@(ScreenW - 30 - 60));
+        make.height.equalTo(@110);
+    }];
+    self.zhiBoFootV.hidden = YES;
     
     self.chuJiaBottomV.hidden = YES;
     [self.view addSubview:self.comeInV];
@@ -141,6 +162,7 @@
     if (self.isHeMai) {
         [self getMineHeMaiDingZhiListWithType:0];//获取我的合买列表
         [self getGoodsListData]; //店铺合买列表
+//         [self getHeMaiList];
     }else {
         [self getLivegoodListDataWithType:0]; //获取竞拍和一口价列表
     }
@@ -224,10 +246,8 @@
             
             //点击购物车
             if (self.isHeMai) {
-                //合买
+                //适合买的时候点击购物车
                 [self getHeMaiList];
-                
-                
             }else {
                 //直播
                 SWTZhiBoJingPaiShowView *  jingPaiV  =[[SWTZhiBoJingPaiShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
@@ -328,14 +348,15 @@
     
     
 }
-//我的合买
+//我的合买 // 原本此处展示的是我的合买 shareList_SWT
 - (void)getMineHeMaiDingZhiListWithType:(NSInteger)type {
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    //    dict[@"liveid"] = self.model.ID;
+    dict[@"liveid"] = self.model.ID;
     dict[@"userid"] = [zkSignleTool shareTool].session_uid;
-    dict[@"status"] = @(type+1);
-    [zkRequestTool networkingPOST:shareMyshare_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+    dict[@"status"] = @(2-type);
+    dict[@"merchid"] = self.model.merch_id;
+    [zkRequestTool networkingPOST:sharesharelist_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             self.mineHeMaiArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
@@ -459,7 +480,7 @@
     
 }
 
-
+// 获取正在合的数据
 - (void)getGoodsListData {
     
     [SVProgressHUD show];
@@ -471,6 +492,15 @@
         if ([responseObject[@"code"] intValue]== 200) {
             
             self.heMaiArr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            
+            if (self.heMaiArr.count > 0 ) {
+                
+                self.zhiBoFootV.hidden = NO;
+                self.zhiBoFootV.isOrder = self.isTuiLiu;
+                self.zhiBoFootV.model = [self.heMaiArr firstObject];
+                
+            }
+            
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {

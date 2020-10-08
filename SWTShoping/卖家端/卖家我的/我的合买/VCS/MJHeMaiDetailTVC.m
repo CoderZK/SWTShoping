@@ -12,6 +12,7 @@
 #import "MJHeMaiQianHaoCell.h"
 #import "MJHeMaiPicCell.h"
 #import <AVKit/AVKit.h>
+#import "SWTMJFaHuoShowView.h"
 @interface MJHeMaiDetailTVC ()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic,strong)MJHeadView *headV;
 @property(nonatomic,strong)UITableView *tableView;
@@ -22,6 +23,7 @@
 @property(nonatomic,assign)BOOL isHaveVideo;
 @property(nonatomic , strong)AVPlayer *avPlayer;
 @property(nonatomic , strong)AVPlayerViewController *playVC;
+@property(nonatomic,strong)SWTMJFaHuoShowView *showV;
 @end
 
 @implementation MJHeMaiDetailTVC
@@ -73,7 +75,7 @@
             self.picArr = @[].mutableCopy;
             for (SWTModel * model  in self.dataModel.lotinfo) {
                 
-                if (model.type.intValue == 2) {
+                if (model.type.intValue == 1) {
                     self.isHaveVideo = NO;
                     if (model.videos.length > 0) {
                         [self.picArr insertObject:model.videos atIndex:0];
@@ -105,22 +107,38 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 1) {
-        return 3;
+        if (self.dataModel.childorderinfo.count == 0) {
+            return 0;
+        }
+        return self.dataModel.childorderinfo.count+1;
     }
     return 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return 165;
+        return 125;
     }else if (indexPath.section == 1) {
         return 40;
+    }else {
+        if (self.picArr.count == 0) {
+            return 0;
+        }else {
+           return (ScreenW - 60)/4 * (self.picArr.count / 4 +  self.picArr.count % 4 > 0?1:0)+ 50;
+        }
     }
-    return (ScreenW - 60)/4 * (self.picArr.count / 4 +  self.picArr.count % 4 > 0?1:0)+ 50;
+    
+    
     
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 10;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 10)];
+    view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    return view;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -129,6 +147,7 @@
         MJHeMaiOrderCell * cell =[tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         cell.backgroundColor = cell.contentView.backgroundColor = WhiteColor;
         cell.model = self.model;
+        cell.leftBt.hidden = cell.centerBt.hidden = cell.rightBt.hidden = YES;
         return cell;
     }else if (indexPath.section == 1) {
         MJHeMaiQianHaoCell * cell =[tableView dequeueReusableCellWithIdentifier:@"MJHeMaiQianHaoCell" forIndexPath:indexPath];
@@ -139,7 +158,7 @@
             [cell.rigthBt setTitleColor:CharacterColor50 forState:UIControlStateNormal];
             cell.LB1.text = @"签号";
             cell.LB2.text = @"用户名";
-            cell.LB3.text = @"说出阶段";
+            cell.LB3.text = @"所处阶段";
             [cell.leftBt setTitle:@"联系买家" forState:UIControlStateNormal];
             [cell.rigthBt setTitle:@"订单状态" forState:UIControlStateNormal];
             cell.leftBt.layer.borderWidth = cell.rigthBt.layer.borderWidth = 0;
@@ -149,6 +168,9 @@
             cell.leftBt.titleLabel.font = cell.rigthBt.titleLabel.font = kFont(13);
             cell.LB1.textColor = cell.LB2.textColor =cell.LB3.textColor = CharacterColor50;
             cell.leftBt.layer.borderWidth = cell.rigthBt.layer.borderWidth = 0.5;
+            cell.model = self.dataModel.childorderinfo[indexPath.row - 1];
+            cell.rigthBt.tag = indexPath.row - 1;
+            [cell.rigthBt addTarget:self action:@selector(faHuoActin:) forControlEvents:UIControlEventTouchUpInside];
         }
         cell.backgroundColor = cell.contentView.backgroundColor = WhiteColor;
         return cell;
@@ -188,6 +210,66 @@
     
     
 }
+
+- (void)faHuoActin:(UIButton *)button {
+    
+    if ([button.titleLabel.text isEqualToString:@"待发货"]) {
+        SWTModel * model = self.dataModel.childorderinfo[button.tag];
+        [self faHuoActionWithModel:model];
+    }
+}
+
+
+//发货
+- (void)faHuoActionWithModel:(SWTModel *)model {
+    
+    SWTMJFaHuoShowView * showV  =[[SWTMJFaHuoShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+    showV.delegateSignal = [[RACSubject alloc] init];
+    @weakify(self);
+    [showV.delegateSignal subscribeNext:^(NSArray * x) {
+        @strongify(self);
+        
+        [self sendGoodWithArr:x withID:model.ID];
+        
+    }];
+    self.showV = showV;
+    [showV show];
+    
+    
+}
+
+//发货
+- (void)sendGoodWithArr:(NSArray *)arr withID:(NSString *)ID{
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"id"] = ID;
+    dict[@"expresssn"] = arr[0];
+    dict[@"expressid"] = arr[1];
+    dict[@"expressname"] = arr[2];
+    dict[@"express"] = arr[3];
+    [zkRequestTool networkingPOST:merchorderSend_order_merch_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            [SVProgressHUD showSuccessWithStatus:@"发货成功"];
+            [self getData];
+            [self.showV dismiss];
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+
+    
+}
+
+
 
 //天机图片或者视频
 - (void)addPicWithIndex:(NSInteger)index {

@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *comment; //
 @property(nonatomic,strong)NSString *unit;
 @property(nonatomic,strong)NSString *type;
+@property(nonatomic,strong)NSString *lots_status;
 @property(nonatomic,strong)NSString *productprice;
 @property(nonatomic,strong)NSString *marketprice;
 @property(nonatomic,strong)NSString *cost_price;
@@ -53,6 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *stepprice;
 @property(nonatomic,strong)NSString *auction_start_time;
 @property(nonatomic,strong)NSString *auction_end_time;
+@property(nonatomic,strong)NSString *chippedtime;
 @property(nonatomic,strong)NSString *label;
 @property(nonatomic,strong)NSString *bidsnum;
 @property(nonatomic,strong)NSString *material;
@@ -133,6 +135,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *liveisfollow;
 @property(nonatomic,strong)NSString *merchisfollow;
 @property(nonatomic,strong)NSString *isbuynum;
+@property(nonatomic,strong)NSString *chipped_num;
+@property(nonatomic,strong)NSString *chipped_price;
 @property(nonatomic,strong)NSString *num;
 @property(nonatomic,strong)NSString *levelcode;
 @property(nonatomic,strong)NSString *orderid;
@@ -178,9 +182,25 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *memberid;
 @property(nonatomic,strong)NSString *member_id;
 @property(nonatomic,strong)NSString *shareorders;
-//@property(nonatomic,strong)NSString *allnum;
-//@property(nonatomic,strong)NSString *imgnum;
-//@property(nonatomic,strong)NSArray *refundImgs;
+@property(nonatomic,strong)NSString *lotsno;
+@property(nonatomic,strong)NSString *username;
+@property(nonatomic,strong)NSString *orderstatus;
+@property(nonatomic,strong)NSString *value;
+//@property(nonatomic,strong)NSString *o;
+//@property(nonatomic,strong)NSString *o;
+//@property(nonatomic,strong)NSString *o;
+//@property(nonatomic,strong)NSString *o;
+//@property(nonatomic,strong)NSString *o;
+//@property(nonatomic,strong)NSString *o;
+//@property(nonatomic,strong)NSString *o;
+//@property(nonatomic,strong)NSString *o;
+//@property(nonatomic,strong)NSString *o;
+//@property(nonatomic,strong)NSString *o;
+//@property(nonatomic,strong)NSString *o;
+//@property(nonatomic,strong)NSString *o;
+//@property(nonatomic,strong)NSString *o;
+
+
 //@property(nonatomic,strong)NSArray *delaytime;
 //@property(nonatomic,strong)NSString *commentstatus;
 //@property(nonatomic,strong)NSString *gender;
@@ -224,7 +244,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *children;
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *lotinfo;
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *childorderinfo;
-//@property(nonatomic,strong)NSMutableArray<SWTModel *> *doctors;
+@property(nonatomic,strong)NSMutableArray<SWTModel *> *sharedict;
 //@property(nonatomic,strong)NSMutableArray<SWTModel *> *doctorAppoints;
 //@property(nonatomic,strong)NSMutableArray<SWTModel *> *weightNub;
 //@property(nonatomic,strong)NSMutableArray<SWTModel *> *bloodpressureNub;
