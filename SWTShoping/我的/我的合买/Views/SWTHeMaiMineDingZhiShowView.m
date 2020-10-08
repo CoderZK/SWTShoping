@@ -194,7 +194,7 @@
     cell.titleLB.text = model.goodname;
     cell.jiaJiaLB.text =  [NSString stringWithFormat:@"￥%@",model.chipped_price.getPriceAllStr];
     cell.numberLB.text =  [NSString stringWithFormat:@"%@/%@",model.isbuynum,model.chipped_num];
-    cell.rightBt.hidden = YES;
+    cell.rightBt.hidden = self.type;
     //    [cell.timeBt setTitle: @"已完成" forState:UIControlStateNormal];
     if (model.sharedict.count > 0) {
         [cell.timeBt setTitle:[NSString stringWithFormat:@"%@小时后商家未发布抽签将自动退款",model.sharedict[0].value] forState:UIControlStateNormal];

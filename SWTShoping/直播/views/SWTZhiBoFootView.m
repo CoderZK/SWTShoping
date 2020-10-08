@@ -72,12 +72,12 @@
         [self.titleLB mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.imgV);
             make.height.equalTo(@16);
-            make.left.equalTo(self.imgV).offset(5);
+            make.left.equalTo(self.imgV.mas_right).offset(5);
         }];
         
         self.typeOneLB = [[UILabel alloc] init];
         self.typeOneLB.font = kFont(12);
-        self.typeOneLB.backgroundColor = RedLightColor;
+        self.typeOneLB.backgroundColor = RGB(253, 216, 217);
         self.typeOneLB.textColor = RedColor;
         [self.wihteV addSubview:self.typeOneLB];
         self.typeOneLB.text = @"标签";
@@ -89,7 +89,7 @@
         
         self.typeTwoLB = [[UILabel alloc] init];
         self.typeTwoLB.font = kFont(12);
-        self.typeTwoLB.backgroundColor = RedLightColor;
+        self.typeTwoLB.backgroundColor = RGB(253, 216, 217);
         self.typeTwoLB.textColor = RedColor;
         [self.wihteV addSubview:self.typeTwoLB];
         self.typeTwoLB.text = @"标签";
@@ -149,21 +149,23 @@
         self.rightBt.titleLabel.font = kFont(13);
         [self.wihteV addSubview:self.rightBt];
         [self.rightBt mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(self.wihteV).offset(-15);
+            make.right.equalTo(self.wihteV).offset(-10);
             make.bottom.equalTo(self.wihteV).offset(-8);
             make.height.equalTo(@18);
-            make.width.equalTo(@80);
+            make.width.equalTo(@70);
         }];
         
         UIImageView * sanJianImgV  =[[UIImageView alloc] init];
         sanJianImgV.image = [UIImage imageNamed:@"sanjian"];
         [self addSubview:sanJianImgV];
         [sanJianImgV mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.wihteV.mas_bottom).offset(-5);
+            make.top.equalTo(self.wihteV.mas_bottom).offset(-8);
             make.height.width.equalTo(@20);
             make.left.equalTo(self).offset(20);
         }];
         
+     
+        [self.rightBt addTarget:self action:@selector(rightAction:) forControlEvents:UIControlEventTouchUpInside];
         
     }
     return self;
@@ -194,6 +196,12 @@
     //    [cell.timeBt setTitle: [NSString stringWithFormat:@"%@    %@",[model.starttime substringToIndex:10],[model.endtime substringToIndex:10]] forState:UIControlStateNormal];
     self.timeInterval = [NSString pleaseInsertEndTime:model.endtime] > 0 ?  [NSString pleaseInsertEndTime:model.endtime] : 0;;
     self.rightBt.hidden = self.isOrder;
+}
+
+- (void)rightAction:(UIButton *)button {
+    if (self.delegateSignal) {
+        [self.delegateSignal sendNext:@""];
+    }
 }
 
 @end

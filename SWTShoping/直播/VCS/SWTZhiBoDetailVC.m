@@ -72,6 +72,21 @@
 - (SWTZhiBoFootView *)zhiBoFootV {
     if (_zhiBoFootV == nil) {
         _zhiBoFootV = [[SWTZhiBoFootView alloc] initWithFrame:CGRectMake(0, 0, (ScreenW -30)/4 * 3, 110)];
+        _zhiBoFootV.delegateSignal = [[RACSubject alloc] init];
+        @weakify(self);
+        [_zhiBoFootV.delegateSignal subscribeNext:^(NSNumber * x) {
+            @strongify(self);
+            
+            SWTModel * model  = [self.heMaiArr firstObject];
+            SWTMineHeMaiTiJiaoOrderTVC * vc =[[SWTMineHeMaiTiJiaoOrderTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+            vc.hidesBottomBarWhenPushed = YES;
+            model.merchid = self.dataModel.merchid;
+            model.store_name = self.dataModel.name;
+            vc.model = model;
+            self.isPushVC = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+            
+        }];
     }
     return _zhiBoFootV;
 }
@@ -125,7 +140,7 @@
         }else {
             make.bottom.equalTo(self.view).offset(-50);
         }
-        make.width.equalTo(@(ScreenW - 30 - 60));
+        make.width.equalTo(@(ScreenW - 30 - 30));
         make.height.equalTo(@110);
     }];
     self.zhiBoFootV.hidden = YES;
@@ -302,7 +317,14 @@
                 if (x.intValue < 102) {
                     [self getMineHeMaiDingZhiListWithType:x.intValue - 100];
                 }else {
-                    
+                    SWTModel * model  = self.heMaiArr[x.intValue-200];
+                    SWTMineHeMaiTiJiaoOrderTVC * vc =[[SWTMineHeMaiTiJiaoOrderTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    model.merchid = self.dataModel.merchid;
+                    model.store_name = self.dataModel.name;
+                    vc.model = model;
+                    self.isPushVC = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
                 }
                 
             }];
@@ -499,6 +521,7 @@
                 self.zhiBoFootV.isOrder = self.isTuiLiu;
                 self.zhiBoFootV.model = [self.heMaiArr firstObject];
                 
+                
             }
             
         }
@@ -601,12 +624,24 @@
     model.nickname = [userDict.allKeys containsObject:@"nickname"] ? userDict[@"nickname"]:@"??";
     model.levelcode = [userDict.allKeys containsObject:@"levelcode"] ? userDict[@"levelcode"]:@"0";
     if ([dict.allKeys containsObject:@"type"]) {
-     
-        model.type = [NSString stringWithFormat:@"%@",dict[@"type"]];
-        if ([dict.allKeys containsObject:@"data"]) {
-            if ([NSString stringWithFormat:@"%@",dict[@"type"]].intValue == 0 || [NSString stringWithFormat:@"%@",dict[@"type"]].intValue == 1)
-            model.content = dict[@"data"];
+        
+        NSInteger  tempType = [NSString stringWithFormat:@"%@",dict[@"type"]].intValue;
+        if (tempType > 1) {
+            if (tempType == 2) {
+                //发布合买全部都看的见
+                [self getGoodsListData];
+            }else if (tempType == 3) {
+                [self getChouQianData];
+            }
+        }else {
+            model.type = [NSString stringWithFormat:@"%@",dict[@"type"]];
+            if ([dict.allKeys containsObject:@"data"]) {
+                if ([NSString stringWithFormat:@"%@",dict[@"type"]].intValue == 0 || [NSString stringWithFormat:@"%@",dict[@"type"]].intValue == 1)
+                model.content = dict[@"data"];
+            }
         }
+     
+        
     }
     [self.AVCharRoomArr addObject:model];
     self.avChatRoomView.dataArr = self.AVCharRoomArr;
@@ -741,6 +776,28 @@
     
 }
 
+//获取抽签结果
+
+- (void)getChouQianData {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"goodsid"] = [self.heMaiArr firstObject].ID;
+    [zkRequestTool networkingPOST:merchlotsGet_lots_result_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+       
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+ 
+        
+    }];
+}
 
 - (void)initChatRoomV {
     
