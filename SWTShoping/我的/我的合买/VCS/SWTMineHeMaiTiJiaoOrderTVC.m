@@ -14,6 +14,7 @@
 #import "SWTHeMaiDianPuShowVIew.h"
 #import "SWTHeMaiMineDingZhiShowView.h"
 #import "SWTMineAddressTVC.h"
+#import "SWTChooseAddcell.h"
 #import "SWTMineHeMaiOrderFatherVC.h"
 @interface SWTMineHeMaiTiJiaoOrderTVC ()
 @property(nonatomic , strong)UIView *bottomV;
@@ -21,19 +22,20 @@
 @property(nonatomic , strong)SWTModel *addressModel;
 @property(nonatomic,assign)BOOL isYuFuDingJin;
 @property(nonatomic,assign)CGFloat payMoney;
+@property(nonatomic,strong)NSArray *dictArray;
 @end
 
 @implementation SWTMineHeMaiTiJiaoOrderTVC
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [LSTTimer addTimerForTime:7200 identifier:@"listTimer" handle:nil];
-              //配置通知发送和计时任务绑定 没有配置 就不会有通知发送
-    [LSTTimer setNotificationForName:@"ListChangeNF" identifier:@"listTimer" changeNFType:LSTTimerSecondChangeNFTypeMS];
+//    [LSTTimer addTimerForTime:7200 identifier:@"listTimer" handle:nil];
+//              //配置通知发送和计时任务绑定 没有配置 就不会有通知发送
+//    [LSTTimer setNotificationForName:@"ListChangeNF" identifier:@"listTimer" changeNFType:LSTTimerSecondChangeNFTypeMS];
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [LSTTimer removeTimerForIdentifier:@"listTimer"];
+//    [LSTTimer removeTimerForIdentifier:@"listTimer"];
 }
 
 - (void)viewDidLoad {
@@ -43,18 +45,21 @@
     [self.tableView registerClass:[SWTLaoYouOneCell class] forCellReuseIdentifier:@"cell"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerNib:[UINib nibWithNibName:@"SWTHeMaiTwoCell" bundle:nil] forCellReuseIdentifier:@"SWTHeMaiTwoCell"];
+     [self.tableView registerNib:[UINib nibWithNibName:@"SWTChooseAddcell" bundle:nil] forCellReuseIdentifier:@"SWTChooseAddcell"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = BackgroundColor;
     
     [self initBottomView];
     [self getData];
     
-    
+    [self getDictData];
     
 }
 
+
+
 - (void)dealloc {
-    [LSTTimer removeAllTimer];
+//    [LSTTimer removeAllTimer];
 }
 
 - (void)initBottomView {
@@ -169,6 +174,27 @@
     
 }
 
+- (void)getDictData {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    [zkRequestTool networkingPOST:orderdict_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+  
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            self.dictArray = responseObject[@"data"];
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+}
 
 - (void)getData {
     
@@ -239,7 +265,8 @@
             SWTPayVC * vc =[[SWTPayVC alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
             vc.orderID = responseObject[@"data"];
-            
+            vc.merchID = self.model.merchid;
+            vc.priceStr = self.model.price;
             [self.navigationController pushViewController:vc animated:YES];
             
           
@@ -260,69 +287,99 @@
     
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    if (section == 0) {
+        return 1;
+    }
+    return 5;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0) {
-        return 132;
+    if (indexPath.section == 0) {
+        return 79;
+    }else {
+        if (indexPath.row == 0) {
+            return 132;
+        }else if (indexPath.row == 2) {
+            return 0;
+        }
+        return 50;
     }
-    return 50;
+    
 }
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0) {
-        SWTLaoYouOneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-        cell.timeInterval = [NSString pleaseInsertEndTime:self.model.endtime] > 0 ? [NSString pleaseInsertEndTime:self.model.endtime]:0;
-        cell.leftOneLB.text = self.model.name;
-        cell.leftTwoLb.text = @"x1";
-        cell.moneyLB.text =  [NSString stringWithFormat:@"￥%@",self.model.price.getPriceStr];
-        cell.moneyLB.textAlignment = NSTextAlignmentRight;
-        cell.rightImgV.hidden = YES;
-        cell.leftThreeLB.textColor = CharacterColor102;
-        [cell.shopNameBt setTitle:self.model.store_name forState:UIControlStateNormal];
-        [cell.leftimgV sd_setImageWithURL:[self.model.img getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
-           return cell;
+    if (indexPath.section == 0) {
+        SWTChooseAddcell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTChooseAddcell" forIndexPath:indexPath];
+        cell.model = self.addressModel;
+        
+        return cell;
     }else {
-       SWTHeMaiTwoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SWTHeMaiTwoCell" forIndexPath:indexPath];
-        cell.swithBt.hidden = YES;
-        cell.rightLB.hidden = NO;
-        cell.leftTwoLB.hidden = NO;
-        cell.leftBt.hidden = YES;
-        if (indexPath.row == 1) {
-            cell.leftTwoLB.hidden = YES;
-            cell.leftOneLB.text = @"配送方式";
-            cell.rightLB.text = @"卖家包邮";
-            cell.rightLB.textColor = CharacterColor50;
-            
-        }else if (indexPath.row == 2) {
-            cell.leftTwoLB.hidden = YES;
-            cell.leftOneLB.text = @"地址";
-            if (self.addressModel == nil) {
-                cell.rightLB.text = @"请选择地址";
-            }else {
-                cell.rightLB.text = self.addressModel.address_info;
+        if (indexPath.row == 0) {
+            SWTLaoYouOneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+            cell.timeInterval = [NSString pleaseInsertEndTime:self.model.endtime] > 0 ? [NSString pleaseInsertEndTime:self.model.endtime]:0;
+            cell.leftOneLB.text = self.model.name;
+            cell.leftTwoLb.text = @"x1";
+            cell.moneyLB.text =  [NSString stringWithFormat:@"￥%@",self.model.price.getPriceStr];
+            cell.moneyLB.textAlignment = NSTextAlignmentRight;
+            cell.rightImgV.hidden = YES;
+            cell.leftThreeLB.textColor = CharacterColor102;
+            [cell.shopNameBt setTitle:self.model.store_name forState:UIControlStateNormal];
+            [cell.leftimgV sd_setImageWithURL:[self.model.img getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+            cell.leftTwoLb.text =@"";
+            if (self.dictArray.count >2) {
+                  cell.leftTwoLb.text = [NSString stringWithFormat:@"剩余支付时间:%@小时",[self.dictArray[1] objectForKey:@"value"]];;
             }
-            
-            cell.rightLB.textColor = CharacterColor50;
-            
-            
-        } else if (indexPath.row == 3) {
-            cell.leftBt.hidden =  cell.swithBt.hidden = NO;
-            cell.rightLB.hidden = YES;
-            
-            cell.leftOneLB.text = @"预付定金";
-            cell.leftTwoLB.text = @"尾款支付, 不支持退款";
+               return cell;
+        }else {
+           SWTHeMaiTwoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SWTHeMaiTwoCell" forIndexPath:indexPath];
+            cell.swithBt.hidden = YES;
+            cell.rightLB.hidden = NO;
+            cell.leftTwoLB.hidden = NO;
+            cell.leftBt.hidden = YES;
+            cell.clipsToBounds = YES;
+            if (indexPath.row == 1) {
+                cell.leftTwoLB.hidden = YES;
+                cell.leftOneLB.text = @"配送方式";
+                cell.rightLB.text = @"";
+                if (self.dictArray.count >1){
+                    cell.rightLB.text = [NSString stringWithFormat:@"%@",[self.dictArray[1] objectForKey:@"value"]];;
+                }
+                cell.rightLB.textColor = CharacterColor50;
+                
+            }else if (indexPath.row == 2) {
+                cell.leftTwoLB.hidden = YES;
+                cell.leftOneLB.text = @"地址";
+                if (self.addressModel == nil) {
+                    cell.rightLB.text = @"请选择地址";
+                }else {
+                    cell.rightLB.text = self.addressModel.address_info;
+                }
+                
+                cell.rightLB.textColor = CharacterColor50;
+                
+                
+            } else if (indexPath.row == 3) {
+                cell.leftBt.hidden =  cell.swithBt.hidden = NO;
+                cell.rightLB.hidden = YES;
+                
+                cell.leftOneLB.text = @"预付定金";
+                cell.leftTwoLB.text = @"尾款支付, 不支持退款";
 
-            [cell.yiwenbt  addTarget:self action:@selector(TTTTAction:) forControlEvents:UIControlEventTouchUpInside];
-            
-        }else if (indexPath.row == 4) {
-            cell.leftOneLB.text = @"私人定制费";
-            cell.leftTwoLB.text = @"(贷款金额5%)";
-            cell.rightLB.text = @"250";
-            cell.rightLB.textColor = RedLightColor;
+                [cell.yiwenbt  addTarget:self action:@selector(TTTTAction:) forControlEvents:UIControlEventTouchUpInside];
+                
+            }else if (indexPath.row == 4) {
+                cell.leftOneLB.text = @"私人定制费";
+                cell.leftTwoLB.text = @"(贷款金额5%)";
+                cell.rightLB.text = @"";
+                cell.rightLB.textColor = RedLightColor;
+            }
+           return cell;
         }
-       return cell;
     }
+    
   
 }
 
@@ -334,23 +391,22 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.row == 1) {
-        
-        
-        
-    }else if (indexPath.row == 2) {
-        SWTMineAddressTVC * vc =[[SWTMineAddressTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-               vc.hidesBottomBarWhenPushed = YES;
-        
-               Weak(weakSelf);
-               vc.sendAddressModelBlock = ^(SWTModel * _Nonnull model) {
-                   weakSelf.addressModel = model;
-                   [weakSelf.tableView reloadData];
-               };
-               [self.navigationController pushViewController:vc animated:YES];
-        
-    }
     
+    if (indexPath.section == 0) {
+        
+     
+            
+            SWTMineAddressTVC * vc =[[SWTMineAddressTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+            vc.hidesBottomBarWhenPushed = YES;
+            Weak(weakSelf);
+            vc.sendAddressModelBlock = ^(SWTModel * _Nonnull model) {
+                weakSelf.addressModel = model;
+                [weakSelf.tableView reloadData];
+            };
+            [self.navigationController pushViewController:vc animated:YES];
+
+    }
+  
 }
 
 

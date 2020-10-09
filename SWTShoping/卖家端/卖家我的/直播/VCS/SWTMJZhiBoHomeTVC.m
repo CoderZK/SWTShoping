@@ -78,12 +78,13 @@
                 if (self.index == 0) {
                     
                     self.liveID = [NSString stringWithFormat:@"%@",responseObject[@"data"][@"liveid"]];
-                                   [self upDateLive];
+                    [self upDateLive];
                     
                 }else {
                     SWTMJAddZhiBoShangPinTVC * vc =[[SWTMJAddZhiBoShangPinTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
                     vc.hidesBottomBarWhenPushed = YES;
                     vc.liveid = responseObject[@"data"][@"liveid"];
+                    
                     [self.navigationController pushViewController:vc animated:YES];
                 }
                 
@@ -125,6 +126,9 @@
             vc.hidesBottomBarWhenPushed = YES;
             vc.model = model;
             vc.isTuiLiu = YES;
+            if ([zkSignleTool shareTool].isHeMaiDianPu) {
+                vc.isHeMai = YES;
+            }
             [self.navigationController pushViewController:vc animated:YES];
             
         }else {

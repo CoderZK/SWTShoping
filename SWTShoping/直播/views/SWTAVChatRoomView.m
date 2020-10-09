@@ -8,6 +8,7 @@
 
 #import "SWTAVChatRoomView.h"
 #import "SWTAVChatRoomCell.h"
+#import "SWTAvChatZhongQianCell.h"
 @interface SWTAVChatRoomView()<UITableViewDelegate,UITableViewDataSource>
 
 @end
@@ -28,6 +29,7 @@
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         [self.tableView registerClass:[SWTAVChatRoomCell class] forCellReuseIdentifier:@"cell"];
+        [self.tableView registerClass:[SWTAvChatZhongQianCell class] forCellReuseIdentifier:@"SWTAvChatZhongQianCell"];
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         self.backgroundColor  = [UIColor clearColor];
@@ -60,27 +62,39 @@
     return 50;
 }
 - (UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    SWTAVChatRoomCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     SWTModel * model = self.dataArr[indexPath.row];
-    [cell.headImgV sd_setImageWithURL:[model.avatar getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
-    cell.nameLB.text = model.nickname;
-    cell.contentLB.text = model.content;
-    [cell.leveBt setTitle:model.levelcode forState:UIControlStateNormal];
-    if (model.levelcode.length == 0) {
-        [cell.leveBt setTitle:@"0" forState:UIControlStateNormal];
+    
+    if (model.type.intValue == 0 || model.type.intValue == 1) {
+        SWTAVChatRoomCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        [cell.headImgV sd_setImageWithURL:[model.avatar getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+        cell.nameLB.text = model.nickname;
+        cell.contentLB.text = model.content;
+        [cell.leveBt setTitle:model.levelcode forState:UIControlStateNormal];
+        if (model.levelcode.length == 0) {
+            [cell.leveBt setTitle:@"0" forState:UIControlStateNormal];
+        }
+        
+        if (model.type.intValue == 0) {
+            //正常聊天
+            cell.nameLB.textColor = YellowColor;
+            cell.backV.backgroundColor = [UIColor clearColor];
+        }else {
+            cell.nameLB.textColor = WhiteColor;
+            cell.backV.backgroundColor = RedColor;
+        }
+        
+        return cell;
+    }else  {
+        SWTAvChatZhongQianCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTAvChatZhongQianCell" forIndexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.titleLB.text = [NSString stringWithFormat:@"恭喜用户%@  获得%@号签",model.nickname,model.lotsno];
+        return cell;
     }
     
-    if (model.type.intValue == 0) {
-        //正常聊天
-        cell.nameLB.textColor = YellowColor;
-        cell.backV.backgroundColor = [UIColor clearColor];
-    }else {
-        cell.nameLB.textColor = WhiteColor;
-        cell.backV.backgroundColor = RedColor;
-    }
     
-    return cell;
 }
 
 

@@ -166,8 +166,11 @@
             make.width.equalTo(@0);
         }];
         [self.gouWuBt setBackgroundImage:[UIImage imageNamed:@"dyx87"] forState:UIControlStateNormal];
-        
-        self.TF.placeholder = @"和用户聊聊";
+        NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:@"和用户聊聊" attributes:
+        @{NSForegroundColorAttributeName:[UIColor whiteColor],
+        NSFontAttributeName:[UIFont systemFontOfSize:14]
+        }];
+        self.TF.attributedPlaceholder = attrString;
     }
     
     

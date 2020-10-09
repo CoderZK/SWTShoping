@@ -493,6 +493,10 @@
 /** 合买详情,商户*/
 #define merchsharedetail_SWT URLOne@"merch/sharedetail"
 
+/** 合买订单信息*/
+#define orderdict_SWT URLOne@"order/dict"
+
+
 
 
 #endif /* SWTURLDefineTool_h */

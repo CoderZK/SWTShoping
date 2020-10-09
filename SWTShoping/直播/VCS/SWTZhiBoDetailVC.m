@@ -639,12 +639,13 @@
                 if ([NSString stringWithFormat:@"%@",dict[@"type"]].intValue == 0 || [NSString stringWithFormat:@"%@",dict[@"type"]].intValue == 1)
                 model.content = dict[@"data"];
             }
+            [self.AVCharRoomArr addObject:model];
+            self.avChatRoomView.dataArr = self.AVCharRoomArr;
         }
      
         
     }
-    [self.AVCharRoomArr addObject:model];
-    self.avChatRoomView.dataArr = self.AVCharRoomArr;
+    
     
 }
 
@@ -787,6 +788,11 @@
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             
+            SWTModel * model = [[SWTModel alloc] init];
+            model = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
+            model.type = @"3";
+            [self.AVCharRoomArr addObject:model];
+            self.avChatRoomView.dataArr = self.AVCharRoomArr;
             
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];

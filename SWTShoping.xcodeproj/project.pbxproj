@@ -46,6 +46,7 @@
 		33DC824F20EA224F00D1C283 /* HangQingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DC824E20EA224F00D1C283 /* HangQingVC.m */; };
 		33DC825220EA228E00D1C283 /* GuanZhuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DC825120EA228E00D1C283 /* GuanZhuVC.m */; };
 		33DC825520EA245E00D1C283 /* HomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 33DC825320EA245E00D1C283 /* HomeVC.m */; };
+		661A7F7725300D2200F530D9 /* SWTAvChatZhongQianCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 661A7F7625300D2200F530D9 /* SWTAvChatZhongQianCell.m */; };
 		66264F9F252F5110001B70AC /* SWTZhiBoFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66264F9E252F5110001B70AC /* SWTZhiBoFootView.m */; };
 		6648B4B9251A460B00255DF1 /* MJMineHeMaiFatherVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6648B4B8251A460B00255DF1 /* MJMineHeMaiFatherVC.m */; };
 		6648B4BC251A462100255DF1 /* MJHeMaiSubTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6648B4BB251A462100255DF1 /* MJHeMaiSubTVC.m */; };
@@ -533,6 +534,8 @@
 		33DC825120EA228E00D1C283 /* GuanZhuVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GuanZhuVC.m; path = "SWTShoping/关注/GuanZhuVC.m"; sourceTree = SOURCE_ROOT; };
 		33DC825320EA245E00D1C283 /* HomeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeVC.m; sourceTree = "<group>"; };
 		33DC825420EA245E00D1C283 /* HomeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeVC.h; sourceTree = "<group>"; };
+		661A7F7525300D2200F530D9 /* SWTAvChatZhongQianCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTAvChatZhongQianCell.h; sourceTree = "<group>"; };
+		661A7F7625300D2200F530D9 /* SWTAvChatZhongQianCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTAvChatZhongQianCell.m; sourceTree = "<group>"; };
 		66264F9D252F5110001B70AC /* SWTZhiBoFootView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTZhiBoFootView.h; sourceTree = "<group>"; };
 		66264F9E252F5110001B70AC /* SWTZhiBoFootView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTZhiBoFootView.m; sourceTree = "<group>"; };
 		6648B4B7251A460B00255DF1 /* MJMineHeMaiFatherVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MJMineHeMaiFatherVC.h; sourceTree = "<group>"; };
@@ -2733,6 +2736,8 @@
 				666D392E24E0F0C60023776B /* SWTAVChatRoomView.m */,
 				666D393024E0F3EA0023776B /* SWTAVChatRoomCell.h */,
 				666D393124E0F3EA0023776B /* SWTAVChatRoomCell.m */,
+				661A7F7525300D2200F530D9 /* SWTAvChatZhongQianCell.h */,
+				661A7F7625300D2200F530D9 /* SWTAvChatZhongQianCell.m */,
 				6664B11124FFDC4A009D325A /* SWTZhiBoPeopleComeInView.h */,
 				6664B11224FFDC4A009D325A /* SWTZhiBoPeopleComeInView.m */,
 				666AC3D025222B3500CBFB6F /* SWTJiShiFaBuView.h */,
@@ -3464,6 +3469,7 @@
 				666A3A1D24B75E2C00318075 /* SWTLaoYouDianPuInfoOneTVC.m in Sources */,
 				666A3A1724B74D1500318075 /* zkPhotoShowCell.m in Sources */,
 				666A53AF24E7D3F200D75A08 /* SWTMJMineJingPaiSubTVC.m in Sources */,
+				661A7F7725300D2200F530D9 /* SWTAvChatZhongQianCell.m in Sources */,
 				335010EE20EE05C100F8486B /* NSString+Size.m in Sources */,
 				66747B0F24E515A9002C6DAA /* SWTMineCollectFatherVC.m in Sources */,
 				6648B4CF251A538800255DF1 /* MJHeMaiHeadFootView.m in Sources */,
