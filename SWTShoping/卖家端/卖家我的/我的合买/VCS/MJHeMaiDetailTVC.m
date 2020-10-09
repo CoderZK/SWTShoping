@@ -171,6 +171,8 @@
             cell.model = self.dataModel.childorderinfo[indexPath.row - 1];
             cell.rigthBt.tag = indexPath.row - 1;
             [cell.rigthBt addTarget:self action:@selector(faHuoActin:) forControlEvents:UIControlEventTouchUpInside];
+             [cell.leftBt addTarget:self action:@selector(lianxiActin:) forControlEvents:UIControlEventTouchUpInside];
+            cell.leftBt.tag = indexPath.row - 1;
         }
         cell.backgroundColor = cell.contentView.backgroundColor = WhiteColor;
         return cell;
@@ -219,6 +221,16 @@
     }
 }
 
+//联系买家
+- (void)lianxiActin:(UIButton *)button {
+    
+    TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:self.dataModel.childorderinfo[button.tag].memberid];
+    TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
+    vc.navigationItem.title = self.dataModel.childorderinfo[button.tag].username;
+    [self.navigationController pushViewController:vc animated:YES];
+    
+    
+}
 
 //发货
 - (void)faHuoActionWithModel:(SWTModel *)model {

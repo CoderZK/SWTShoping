@@ -69,7 +69,7 @@
     TYTabPagerBar *tabBar = [[TYTabPagerBar alloc] init];
     tabBar.backgroundColor = [UIColor whiteColor];
     tabBar.collectionView.bounces = NO;
-    tabBar.contentInset = UIEdgeInsetsMake(0, 15, 5, 15);
+    tabBar.contentInset = UIEdgeInsetsMake(0,100, 5, 100);
     //    tabBar.layout.barStyle = TYPagerBarStyleProgressElasticView;
     tabBar.layout.normalTextFont = [UIFont systemFontOfSize:15];
     tabBar.layout.normalTextColor = CharacterColor50;
@@ -141,7 +141,7 @@
 #pragma mark - TYTabPagerBarDelegate
 
 - (CGFloat)pagerTabBar:(TYTabPagerBar *)pagerTabBar widthForItemAtIndex:(NSInteger)index {
-    return (ScreenW - 50)/2.0;
+    return (ScreenW - 240) / 2.0;
 }
 - (void)pagerTabBar:(TYTabPagerBar *)pagerTabBar didSelectItemAtIndex:(NSInteger)index {
     self.selectIndex = index;

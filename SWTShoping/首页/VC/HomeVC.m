@@ -294,6 +294,7 @@
             SWTHeMaiFatherVC * vc =[[SWTHeMaiFatherVC alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
             vc.isHeMai = NO;
+            vc.selectIndex = 1;
             [self.navigationController pushViewController:vc animated:YES];
         }else if (index == 1) {
             SWTZhenPinGeFatherVC * vc =[[SWTZhenPinGeFatherVC alloc] init];
@@ -345,6 +346,7 @@
                 SWTHeMaiFatherVC * vc =[[SWTHeMaiFatherVC alloc] init];
                 vc.hidesBottomBarWhenPushed = YES;
                 vc.isHeMai = YES;
+                vc.selectIndex = 1;
                 [self.navigationController pushViewController:vc animated:YES];
             }else {
                 SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];

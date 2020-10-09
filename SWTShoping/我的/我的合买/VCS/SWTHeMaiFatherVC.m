@@ -14,7 +14,7 @@
 @property(nonatomic , strong)UIView *headV;
 @property (nonatomic, weak) TYPagerController *pagerController;
 @property(nonatomic , strong)NSMutableArray *titleArr;
-@property(nonatomic , assign)NSInteger selectIndex;
+
 @property(nonatomic , strong)NSArray<SWTModel *> *dataArray;
 
 
@@ -59,9 +59,12 @@
         make.leading.bottom.trailing.equalTo (self.view);
     }];
    
+    
 
     [self getTopTitleData];
     
+
+//    [self reloadData];
     
 }
 
@@ -148,6 +151,7 @@
 - (void)reloadData {
     [_tabBar reloadData];
     [_pagerController reloadData];
+    [_pagerController scrollToControllerAtIndex:self.selectIndex + 1 animate:YES];
 }
 
 - (NSInteger)numberOfItemsInPagerTabBar {

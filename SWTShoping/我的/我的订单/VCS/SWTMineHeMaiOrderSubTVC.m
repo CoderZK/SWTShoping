@@ -8,6 +8,7 @@
 
 #import "SWTMineHeMaiOrderSubTVC.h"
 #import "SWTMineHeMaiOrderCell.h"
+#import "SWTMineHeMaiOrderDetailTVC.h"
 @interface SWTMineHeMaiOrderSubTVC ()
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *dataArray;
 @end
@@ -88,15 +89,24 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+    SWTMineHeMaiOrderDetailTVC * vc =[[SWTMineHeMaiOrderDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+    vc.hidesBottomBarWhenPushed = YES;
+    vc.type = self.type;
+    vc.dataModel = self.dataArray[indexPath.row];
+    [self.navigationController pushViewController:vc animated:YES];
     
     
 }
 
 
-//点击
+//点击链接卖家
 - (void)clickAction:(UIButton *)button {
     
+    
+    TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:self.dataArray[button.tag].imid];
+    TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
+    vc.navigationItem.title = self.dataArray[button.tag].store_name;
+    [self.navigationController pushViewController:vc animated:YES];
     
     
 }

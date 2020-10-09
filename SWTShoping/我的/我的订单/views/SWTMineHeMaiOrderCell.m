@@ -247,19 +247,37 @@
         self.rightImgV.hidden =self.typeTwoLB.hidden  =YES;
         self.leftTwoLb.hidden =self.numberAndMoneyLB.hidden = NO;
         self.leftThreeLB.textColor = CharacterColor70;
-        self.leftTwoLb.text = @"x1份";
+        self.leftTwoLb.text = [NSString stringWithFormat:@"x%@份",model.goodnum];;
         self.numberAndMoneyLB.text =  [NSString stringWithFormat:@"￥%@",model.goodprice.getPriceAllStr];
+        self.typeOneLB.text = [NSString stringWithFormat:@"%@",model.material];
+        [self.shopNameBt setTitle:model.goodname forState:UIControlStateNormal];
+        if (model.sharedict.count > 0) {
+            self.leftThreeLB.text = [NSString stringWithFormat:@"%@小时后商家未发布抽签将自动退款",model.sharedict.firstObject.value];
+        }else {
+            self.leftThreeLB.text = @"";
+        }
+        
     } else {
         self.rightImgV.hidden =self.typeTwoLB.hidden  = NO;
         self.leftTwoLb.hidden =self.numberAndMoneyLB.hidden = YES;
-        self.typeTwoLB.text = @" 2号签 ";
+        self.typeTwoLB.text = [NSString stringWithFormat:@"%@号签",model.lot_no];;
         self.leftThreeLB.textColor = RedLightColor;
         self.leftThreeLB.text = [NSString stringWithFormat:@"￥%@",model.goodprice.getPriceAllStr];
         
+        self.typeOneLB.text = [NSString stringWithFormat:@"%@",model.material];
+        [self.shopNameBt setTitle:model.goodname forState:UIControlStateNormal];
+        
+        
     }
     
-    
-    
+    CGFloat typeW = [[NSString stringWithFormat:@"%@",model.material] getWidhtWithFontSize:10] + 10;
+    [self.typeOneLB mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(@(typeW));
+    }];
+    CGFloat typeTwoW = [[NSString stringWithFormat:@"%@号签",model.lot_no] getWidhtWithFontSize:10] + 10;
+    [self.typeTwoLB mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(@(typeTwoW));
+    }];
     
 }
 

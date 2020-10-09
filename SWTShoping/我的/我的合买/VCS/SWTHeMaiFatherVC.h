@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTHeMaiFatherVC : BaseViewController
 @property(nonatomic , assign)BOOL isHeMai;
+@property(nonatomic , assign)NSInteger selectIndex;
 @end
 
 NS_ASSUME_NONNULL_END
