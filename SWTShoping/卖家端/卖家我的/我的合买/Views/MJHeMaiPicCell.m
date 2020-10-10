@@ -62,6 +62,7 @@
                 cell.playBt.hidden = NO;
                 [cell.imgV sd_setImageWithURL:[self.picArr[0] getPicURL] placeholderImage:[UIImage imageNamed:@"369"]];
                 [cell.playBt addTarget:self action:@selector(playAction) forControlEvents:UIControlEventTouchUpInside];
+                cell.imgV.image = [PublicFuntionTool firstFrameWithVideoURL:[NSURL URLWithString:self.picArr.firstObject] size:CGSizeMake(100, 100)];
             }else {
                 cell.playBt.hidden = YES;
                 [cell.imgV sd_setImageWithURL:[self.picArr[indexPath.row] getPicURL] placeholderImage:[UIImage imageNamed:@"369"]];

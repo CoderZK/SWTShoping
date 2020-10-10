@@ -20,6 +20,9 @@
 
 @implementation SWTMineHeMaiOrderDetailTVC
 
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"订单详情";
@@ -30,12 +33,26 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 40;
     [self getData];
+    [self addTableHeadV];
+}
+
+- (void)addTableHeadV {
+    self.HeadV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, 40)];
+    self.HeadV.backgroundColor = RGB(30, 28, 35);
+    self.tableView.tableHeaderView = self.HeadV;
+    
+    self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 200, 20)];
+    [self.HeadV addSubview:self.titleLB];
+    self.titleLB.textColor = WhiteColor;
+    self.titleLB.font = kFont(14);
+    
+    
 }
 
 - (void)getData {
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    dict[@"orderid"] = self.dataModel.orderid;
+    dict[@"orderid"] = self.dataModel.ID;
     [zkRequestTool networkingPOST:shareOrderdetail_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
@@ -57,6 +74,19 @@
                     self.changPinModel = neiM;
                 }
             }
+            
+            if (model.status.intValue == 0) {
+                self.titleLB.text = @"待付款";
+            }else if (model.status.intValue == 1) {
+                self.titleLB.text = @"待发货";
+            }else if (model.status.intValue == 2) {
+                self.titleLB.text = @"已发货";
+            }else if (model.status.intValue == 3) {
+                self.titleLB.text = @"交易完成";
+            }else if (model.status.intValue == 4) {
+                self.titleLB.text = @"交易完成";
+            }
+            
             [self.tableView reloadData];
             
         }else {
@@ -133,7 +163,7 @@
     cell.clickPlayActionBlock = ^(NSString * videoStr) {
         
         NSString * video = videoStr;
-        NSURL * url = [NSURL URLWithString:video];
+        NSURL * url = [NSURL URLWithString:[video stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet  URLQueryAllowedCharacterSet]]];
         
         AVPlayer *avPlayer = [[AVPlayer alloc] initWithURL:url];
         weakSelf.avPlayer = avPlayer;
@@ -142,6 +172,8 @@
         weakSelf.playVC.view.frame = CGRectMake(0, 0, ScreenW, 0);
         weakSelf.playVC.player = avPlayer;
         [weakSelf.avPlayer play];
+        
+
         
         [weakSelf presentViewController:weakSelf.playVC animated:YES completion:nil];
     };
@@ -157,7 +189,8 @@
             cell.isHaveVideo = NO;
             cell.picArr = [self.yuanLiaoModel.imgs componentsSeparatedByString:@","].mutableCopy;
         }
-        
+        cell.timeLB.text = self.yuanLiaoModel.createtime;
+        cell.leftLB.text = @"原料结果";
         
     }else if (indexPath.row == 1) {
         if (self.kaiLiaoModel.videos.length > 0) {
@@ -170,6 +203,8 @@
             cell.isHaveVideo = NO;
             cell.picArr = [self.kaiLiaoModel.imgs componentsSeparatedByString:@","].mutableCopy;
         }
+        cell.timeLB.text = self.kaiLiaoModel.createtime;
+        cell.leftLB.text = @"开料结果";
     }else if (indexPath.row == 2) {
         if (self.maoPiModel.videos.length > 0) {
             cell.isHaveVideo = YES;
@@ -181,6 +216,8 @@
             cell.isHaveVideo = NO;
             cell.picArr = [self.maoPiModel.imgs componentsSeparatedByString:@","].mutableCopy;
         }
+        cell.timeLB.text = self.maoPiModel.createtime;
+        cell.leftLB.text = @"毛坯结果";
     }else if (indexPath.row == 3) {
        if (self.changPinModel.videos.length > 0) {
             cell.isHaveVideo = YES;
@@ -192,8 +229,10 @@
             cell.isHaveVideo = NO;
             cell.picArr = [self.changPinModel.imgs componentsSeparatedByString:@","].mutableCopy;
         }
+        cell.timeLB.text = self.changPinModel.createtime;
+        cell.leftLB.text = @"产品结果";
     }
-
+    cell.clipsToBounds = YES;
     
     return cell;
 }

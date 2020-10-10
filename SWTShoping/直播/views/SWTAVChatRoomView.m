@@ -101,7 +101,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    
+    if (self.clickPeopleBlock != nil) {
+        self.clickPeopleBlock(self.dataArr[indexPath.row]);
+    }
     
 }
 

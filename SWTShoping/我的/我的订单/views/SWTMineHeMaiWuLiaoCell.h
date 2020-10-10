@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,assign)BOOL isXiangQing,isHaveVideo;
 @property(nonatomic,copy)void(^clickPlayActionBlock)(NSString *videoStr);
 @property(nonatomic,copy)void(^addPicBlock)(NSInteger index);
+
 @end
 
 NS_ASSUME_NONNULL_END

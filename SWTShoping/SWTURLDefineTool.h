@@ -496,7 +496,13 @@
 /** 合买订单信息*/
 #define orderdict_SWT URLOne@"order/dict"
 
+/** 获取实时商品 */
+#define livegetlivegood_SWT URLOne@"live/getlivegood"
 
+/** 发布实时商品 */
+#define merchpubliclivedgood_SWT URLOne@"merch/publiclivedgood"
+/** 禁言 */
+#define livesetlivesend_SWT URLOne@"live/setlivesend"
 
 
 #endif /* SWTURLDefineTool_h */

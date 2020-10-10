@@ -12,6 +12,7 @@
 @interface SWTAVChatRoomView : UIView
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *dataArr;
 @property(nonatomic , strong)UITableView *tableView;
+@property(nonatomic,copy)void(^clickPeopleBlock)(SWTModel *model);
 @end
 
 

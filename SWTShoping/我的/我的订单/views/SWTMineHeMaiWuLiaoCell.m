@@ -32,15 +32,16 @@
         [self.contentView addSubview:self.timeLB];
         
         UICollectionViewFlowLayout * layout = [[UICollectionViewFlowLayout alloc] init];
+        layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         layout.itemSize = CGSizeMake((ScreenW - 60)/4, (ScreenW - 60)/4);
         layout.minimumLineSpacing = 10;
         layout.minimumInteritemSpacing = 10;
         
-        self.collectV = [[UICollectionView alloc] initWithFrame:CGRectMake(15, 35, ScreenW - 30, (ScreenW - 60)/4) collectionViewLayout:layout];
+        self.collectV = [[UICollectionView alloc] initWithFrame:CGRectMake(15, 35, ScreenW - 30 , (ScreenW - 60)/4) collectionViewLayout:layout];
         [self.contentView addSubview:self.collectV];
         self.collectV.delegate = self;
         self.collectV.dataSource = self;
-
+        self.collectV.alwaysBounceHorizontal = YES;
         
         self.collectV.backgroundColor = WhiteColor;
         [self.collectV registerNib:[UINib nibWithNibName:@"MJPicCollectNeiCell" bundle:nil] forCellWithReuseIdentifier:@"MJPicCollectNeiCell"];
@@ -68,7 +69,7 @@
     cell.playBt.hidden = YES;
     
     cell.chaBt.tag = indexPath.row;
-    [cell.chaBt addTarget:self action:@selector(delectAction:) forControlEvents:UIControlEventTouchUpInside];
+//    [cell.chaBt addTarget:self action:@selector(delectAction:) forControlEvents:UIControlEventTouchUpInside];
     if (self.isXiangQing) {
         cell.chaBt.hidden = YES;
         
@@ -77,6 +78,7 @@
                 cell.playBt.hidden = NO;
                 [cell.imgV sd_setImageWithURL:[self.picArr[0] getPicURL] placeholderImage:[UIImage imageNamed:@"369"]];
                 [cell.playBt addTarget:self action:@selector(playAction) forControlEvents:UIControlEventTouchUpInside];
+                cell.imgV.image = [PublicFuntionTool firstFrameWithVideoURL:[NSURL URLWithString:self.picArr.firstObject] size:CGSizeMake(100, 100)];
             }else {
                 cell.playBt.hidden = YES;
                 [cell.imgV sd_setImageWithURL:[self.picArr[indexPath.row] getPicURL] placeholderImage:[UIImage imageNamed:@"369"]];
@@ -116,6 +118,8 @@
     return cell;
     
 }
+
+
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (self.isHaveVideo ) {

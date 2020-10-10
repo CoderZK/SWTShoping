@@ -21,7 +21,10 @@
 #import <PLMediaStreamingKit/PLMediaStreamingKit.h>
 #import <PLPlayerKit/PLPlayerKit.h>
 #import "SWTZhiBoFootView.h"
-
+#import "SWTJiShiFaBuView.h"
+#import "SWTZhiBoYiKouJiaFootView.h"
+#import "SWTZhiBoJiaPaiFootView.h"
+#import "SWTZhiBoGeRenShowView.h"
 @interface SWTZhiBoDetailVC ()<V2TIMAdvancedMsgListener,V2TIMGroupListener,PLPlayerDelegate>
 @property(nonatomic , strong)SWTZhiBoHedView *headV; // 头视图
 @property(nonatomic , strong)SWTZhiBoBottomView *bottomV;
@@ -39,7 +42,8 @@
 @property(nonatomic , strong)NSMutableArray<SWTModel *> *AVCharRoomArr;
 @property(nonatomic , strong)SWTZhiBoPeopleComeInView *comeInV;
 @property(nonatomic,strong)SWTZhiBoFootView *zhiBoFootV;
-
+@property(nonatomic,strong)SWTZhiBoYiKouJiaFootView *yiKouJiaFootView;
+@property(nonatomic,strong)SWTZhiBoJiaPaiFootView *jingPaiFootV;
 //推流部分
 @property (nonatomic, strong) PLMediaStreamingSession *session;
 @property(nonatomic,strong)PLVideoCaptureConfiguration *videoPL;
@@ -63,9 +67,9 @@
     if (self.dataModel != nil) {
         self.timer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(getNumberAction) userInfo:nil repeats:YES];
     }
-   
+    
     self.isPushVC = NO;
- 
+    
 }
 
 
@@ -91,6 +95,9 @@
     return _zhiBoFootV;
 }
 
+
+
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.timer invalidate];
@@ -98,20 +105,20 @@
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     if (!self.isPushVC) {
         if (self.isTuiLiu) {
-               [self upDateLive];
-           }else {
-               [self quitAVRoom];
-           }
-           if (self.player != nil) {
-               [self.player stop];
-               self.player = nil;
-           }
-           if (self.session != nil) {
-               [self.session destroy];
-               self.session = nil;
-           }
+            [self upDateLive];
+        }else {
+            [self quitAVRoom];
+        }
+        if (self.player != nil) {
+            [self.player stop];
+            self.player = nil;
+        }
+        if (self.session != nil) {
+            [self.session destroy];
+            self.session = nil;
+        }
     }
-   
+    
 }
 
 -(SWTZhiBoPeopleComeInView *)comeInV {
@@ -156,7 +163,7 @@
     }];
     
     
-     [self getLiveData];//获取合买商品列表
+    [self getLiveData];//获取合买商品列表
     
     //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
     //        self.comeInV.titleLB.text = @"欢迎134*****789进入直播间";
@@ -177,7 +184,7 @@
     if (self.isHeMai) {
         [self getMineHeMaiDingZhiListWithType:0];//获取我的合买列表
         [self getGoodsListData]; //店铺合买列表
-//         [self getHeMaiList];
+        //         [self getHeMaiList];
     }else {
         [self getLivegoodListDataWithType:0]; //获取竞拍和一口价列表
     }
@@ -261,47 +268,67 @@
             
             //点击购物车
             if (self.isHeMai) {
+                if (self.isTuiLiu) {
+                    return;
+                }
                 //适合买的时候点击购物车
                 [self getHeMaiList];
             }else {
-                //直播
-                SWTZhiBoJingPaiShowView *  jingPaiV  =[[SWTZhiBoJingPaiShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
-                jingPaiV.delegateSignal = [[RACSubject alloc] init];
-                self.jingPaiV = jingPaiV;
-                [self getLivegoodListDataWithType:0];
-                @weakify(self);
-                [jingPaiV.delegateSignal subscribeNext:^(NSNumber * x) {
-                    @strongify(self);
-                    if (x.intValue == 99){
-                        //店铺
-                        [self.jingPaiV dismiss];
+                
+                if (self.isTuiLiu) {
+                    //发布实时商品
+                    SWTJiShiFaBuView * shishiView = [[SWTJiShiFaBuView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+                    shishiView.isSiJia = NO;
+                    shishiView.delegateSignal = [[RACSubject alloc] init];
+                    @weakify(self);
+                    [shishiView.delegateSignal subscribeNext:^(NSNumber * x) {
+                        @strongify(self);
                         
-                        SWTShopHomeVC * vc =[[SWTShopHomeVC alloc] init];
-                        vc.hidesBottomBarWhenPushed = YES;
-                        vc.shopId = self.dataModel.merchid;
-                        self.isPushVC = YES;
-                        [self.navigationController pushViewController:vc animated:YES];
-                        
-                        
-                    }else  if (x.intValue < 102){
-                        [self getLivegoodListDataWithType:x.intValue - 100];
-                    }else {
-                        [self.jingPaiV dismiss];
-                        SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-                        vc.hidesBottomBarWhenPushed = YES;
-                        if (x.intValue - 200 < self.zhiBoArr.count) {
-                            vc.goodID = self.zhiBoArr[x.intValue - 200].ID;
+                    }];
+                    [shishiView show];
+                }else {
+                    //用户端
+                    //直播
+                    SWTZhiBoJingPaiShowView *  jingPaiV  =[[SWTZhiBoJingPaiShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+                    jingPaiV.delegateSignal = [[RACSubject alloc] init];
+                    self.jingPaiV = jingPaiV;
+                    [self getLivegoodListDataWithType:0];
+                    @weakify(self);
+                    [jingPaiV.delegateSignal subscribeNext:^(NSNumber * x) {
+                        @strongify(self);
+                        if (x.intValue == 99){
+                            //店铺
+                            [self.jingPaiV dismiss];
+                            
+                            SWTShopHomeVC * vc =[[SWTShopHomeVC alloc] init];
+                            vc.hidesBottomBarWhenPushed = YES;
+                            vc.shopId = self.dataModel.merchid;
+                            self.isPushVC = YES;
+                            [self.navigationController pushViewController:vc animated:YES];
+                            
+                            
+                        }else  if (x.intValue < 102){
+                            [self getLivegoodListDataWithType:x.intValue - 100];
+                        }else {
+                            [self.jingPaiV dismiss];
+                            SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                            vc.hidesBottomBarWhenPushed = YES;
+                            if (x.intValue - 200 < self.zhiBoArr.count) {
+                                vc.goodID = self.zhiBoArr[x.intValue - 200].ID;
+                            }
+                            self.isPushVC = YES;
+                            [self.navigationController pushViewController:vc animated:YES];
+                            
                         }
-                        self.isPushVC = YES;
-                        [self.navigationController pushViewController:vc animated:YES];
                         
-                    }
-                    
-                    
-                }];
-                jingPaiV.dataModel = self.dataModel;
-                jingPaiV.dataArray = self.zhiBoArr;
-                [jingPaiV show];
+                        
+                    }];
+                    jingPaiV.dataModel = self.dataModel;
+                    jingPaiV.dataArray = self.zhiBoArr;
+                    [jingPaiV show];
+                }
+                
+                
             }
             
             
@@ -548,18 +575,18 @@
     }else {
         
     }
-//    V2TIMGroupInfo * groupInfo = [[V2TIMGroupInfo alloc] init];
-//    groupInfo.groupID = self.dataModel.livegroupid;
-//    groupInfo.groupType = @"ChatRoom";
-//    groupInfo.groupAddOpt = V2TIM_GROUP_ADD_ANY;
-//    [[V2TIMManager sharedInstance] createGroup:groupInfo memberList:nil succ:^(NSString *groupID) {
-//
-//        NSLog(@"%@",@"创建直播间成功");
-//
-//
-//    } fail:^(int code, NSString *desc) {
-//        NSLog(@"%@",@"创建直播间失败");
-//    }];
+    //    V2TIMGroupInfo * groupInfo = [[V2TIMGroupInfo alloc] init];
+    //    groupInfo.groupID = self.dataModel.livegroupid;
+    //    groupInfo.groupType = @"ChatRoom";
+    //    groupInfo.groupAddOpt = V2TIM_GROUP_ADD_ANY;
+    //    [[V2TIMManager sharedInstance] createGroup:groupInfo memberList:nil succ:^(NSString *groupID) {
+    //
+    //        NSLog(@"%@",@"创建直播间成功");
+    //
+    //
+    //    } fail:^(int code, NSString *desc) {
+    //        NSLog(@"%@",@"创建直播间失败");
+    //    }];
     [[V2TIMManager sharedInstance] setGroupListener:self];
     [[V2TIMManager sharedInstance] joinGroup:self.dataModel.livegroupid msg:@"333" succ:^{
         NSLog(@"%@",@"进入直播间成功");
@@ -602,6 +629,7 @@
         model.nickname = [zkSignleTool shareTool].nickname;
         model.type = @"0";
         model.levelcode = [zkSignleTool shareTool].level;
+        model.ID = [zkSignleTool shareTool].session_uid;
         [self.AVCharRoomArr addObject:model];
         self.avChatRoomView.dataArr = self.AVCharRoomArr;
         self.bottomV.TF.text = @"";
@@ -617,6 +645,7 @@
 - (void)onRecvNewMessage:(V2TIMMessage *)msg{
     NSLog(@"message === \n %@",msg);
     SWTModel * model = [[SWTModel alloc] init];
+    model.ID = msg.sender;
     model.avatar = msg.faceURL;
     NSDictionary * userDict = [msg.nickName mj_JSONObject];
     NSData * data  = msg.customElem.data;
@@ -627,22 +656,23 @@
         
         NSInteger  tempType = [NSString stringWithFormat:@"%@",dict[@"type"]].intValue;
         if (tempType > 1) {
-            if (tempType == 2) {
-                //发布合买全部都看的见
+            if (tempType == 2 || tempType == 9) {
+                //2发布合买全部都看的见, 9 有人购买刷新浮窗
                 [self getGoodsListData];
             }else if (tempType == 3) {
+                //发布抽签
                 [self getChouQianData];
             }
         }else {
             model.type = [NSString stringWithFormat:@"%@",dict[@"type"]];
             if ([dict.allKeys containsObject:@"data"]) {
                 if ([NSString stringWithFormat:@"%@",dict[@"type"]].intValue == 0 || [NSString stringWithFormat:@"%@",dict[@"type"]].intValue == 1)
-                model.content = dict[@"data"];
+                    model.content = dict[@"data"];
             }
             [self.AVCharRoomArr addObject:model];
             self.avChatRoomView.dataArr = self.AVCharRoomArr;
         }
-     
+        
         
     }
     
@@ -668,48 +698,6 @@
     
     
     
-}
-//有成员离开
--(void)onMemberLeave:(NSString *)groupID member:(V2TIMGroupMemberInfo *)member {
-    
-//    //获取成员
-//    [[V2TIMManager sharedInstance] getJoinedGroupList:^(NSArray<V2TIMGroupInfo *> *groupList) {
-//        
-//        NSString * str = @"";
-//        if (self.dataModel.focusnum.intValue > 10000) {
-//            str =  [NSString stringWithFormat:@"%0.2f万",self.dataModel.focusnum.floatValue/10000];
-//        }else{
-//            str = self.dataModel.focusnum;
-//        }
-//        
-//        NSString * str1 = @"";
-//           if (groupList.count > 10000) {
-//               str1 =  [NSString stringWithFormat:@"%0.2f万",groupList.count/10000.0];
-//           }else{
-//               str1 = [NSString stringWithFormat:@"%d",groupList.count];;
-//           }
-//        self.headV.fanAndSeeLB.text =  [NSString stringWithFormat:@"粉丝:%@  %@人观看",str,str1];
-//    } fail:^(int code, NSString *desc) {
-//        
-//    }];
-    
-    NSLog(@"%@",@"成员离开了");
-    
-}
-
-// 收到消息已读回执（仅单聊有效）
-- (void)onRecvC2CReadReceipt:(NSArray<V2TIMMessageReceipt *> *)receiptList{
-    
-    
-}
-
-// 收到消息撤回
-- (void)onRecvMessageRevoked:(NSString *)msgID {
-    
-}
-
-- (void)dismiss {
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -784,7 +772,7 @@
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"goodsid"] = [self.heMaiArr firstObject].ID;
     [zkRequestTool networkingPOST:merchlotsGet_lots_result_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
-       
+        
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             
@@ -800,7 +788,7 @@
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
- 
+        
         
     }];
 }
@@ -809,6 +797,18 @@
     
     self.avChatRoomView = [[SWTAVChatRoomView alloc] init];
     [self.view addSubview:self.avChatRoomView];
+    Weak(weakSelf);
+    self.avChatRoomView.clickPeopleBlock = ^(SWTModel *model) {
+        //点击用户
+        if (!weakSelf.isTuiLiu) {
+            return;
+        }
+        if (model.type.intValue == 0 || model.type.intValue == 1) {
+            SWTZhiBoGeRenShowView * gerenShowView  = [[SWTZhiBoGeRenShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenH, ScreenH)];
+            gerenShowView.model = model;
+            [gerenShowView show];
+        }
+    };
     [self.avChatRoomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
         make.bottom.equalTo(self.bottomV.mas_top).offset(-30);
@@ -848,16 +848,16 @@
 - (void)addTuiLiuWithType:(NSInteger)type {
     
     PLVideoCaptureConfiguration * videoCaptureConfiguration = [PLVideoCaptureConfiguration defaultConfiguration];
-//    if (type == 1) {
-//        self.videoPL.streamMirrorFrontFacing = YES;
-//        self.videoPL.streamMirrorRearFacing = NO;
-//        videoCaptureConfiguration.position = AVCaptureDevicePositionFront;
-//    }else {
-//         self.videoPL.streamMirrorRearFacing = YES;
-//        self.videoPL.streamMirrorFrontFacing = NO;
-//        videoCaptureConfiguration.position = AVCaptureDevicePositionBack;
-//    }
-//    self.videoPL = videoCaptureConfiguration;
+    //    if (type == 1) {
+    //        self.videoPL.streamMirrorFrontFacing = YES;
+    //        self.videoPL.streamMirrorRearFacing = NO;
+    //        videoCaptureConfiguration.position = AVCaptureDevicePositionFront;
+    //    }else {
+    //         self.videoPL.streamMirrorRearFacing = YES;
+    //        self.videoPL.streamMirrorFrontFacing = NO;
+    //        videoCaptureConfiguration.position = AVCaptureDevicePositionBack;
+    //    }
+    //    self.videoPL = videoCaptureConfiguration;
     videoCaptureConfiguration.position = AVCaptureDevicePositionFront;
     PLAudioCaptureConfiguration *audioCaptureConfiguration = [PLAudioCaptureConfiguration defaultConfiguration];
     PLVideoStreamingConfiguration *videoStreamingConfiguration = [PLVideoStreamingConfiguration defaultConfiguration];
@@ -868,7 +868,7 @@
     self.session.autoReconnectEnable = YES;
     
     
-  
+    
     
     [self.view addSubview:self.session.previewView];
     [self.view sendSubviewToBack:self.session.previewView];
@@ -885,44 +885,20 @@
             NSLog(@"Oops.");
         }
     }];
-    
-//    
-//    [PLMediaStreamingSession checkAuthentication:^(PLAuthenticationResult result) {
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            NSString *message;
-//            switch (result) {
-//                case PLAuthenticationResultNotDetermined:
-//                    message = @"还未授权！";
-//                    break;
-//                case PLAuthenticationResultDenied:
-//                    message = @"授权失败！";
-//                    break;
-//                case PLAuthenticationResultAuthorized:{
-//                    message = @"授权成功！";
-//                    
-//                    
-//                }
-//                    break;
-//                default:
-//                    break;
-//            }
-//        });
-//    }];
-    
-    
+
     
 }
 
 - (void)qieHuanAction:(UIButton *)button {
     button.selected = !button.selected;
-//    [self.session destroy];
+    //    [self.session destroy];
     if (button.selected) {
-//        [self addTuiLiuWithType:1];
-//         self.videoPL.position = AVCaptureDevicePositionBack;
-//        [self.session startCaptureSession];
-//        self.videoPL.streamMirrorRearFacing = YES;
-//        self.videoPL.streamMirrorFrontFacing = NO;
-//        [self.session stopStreaming];
+        //        [self addTuiLiuWithType:1];
+        //         self.videoPL.position = AVCaptureDevicePositionBack;
+        //        [self.session startCaptureSession];
+        //        self.videoPL.streamMirrorRearFacing = YES;
+        //        self.videoPL.streamMirrorFrontFacing = NO;
+        //        [self.session stopStreaming];
         self.session.captureDevicePosition = AVCaptureDevicePositionBack;
         
         
@@ -930,48 +906,14 @@
         
         self.session.captureDevicePosition = AVCaptureDevicePositionFront;
         
-//       [self addTuiLiuWithType:0];
-//        self.videoPL.position = AVCaptureDevicePositionFront;
-//        [self.session startCaptureSession];
-//        self.videoPL.streamMirrorFrontFacing = YES;
-//        self.videoPL.streamMirrorRearFacing = NO;
+        //       [self addTuiLiuWithType:0];
+        //        self.videoPL.position = AVCaptureDevicePositionFront;
+        //        [self.session startCaptureSession];
+        //        self.videoPL.streamMirrorFrontFacing = YES;
+        //        self.videoPL.streamMirrorRearFacing = NO;
     }
 }
 
-
-/**
- 告知代理对象 PLPlayer 即将开始进入后台播放任务
- 
- @param player 调用该代理方法的 PLPlayer 对象
- 
- @since v1.0.0
- */
-- (void)playerWillBeginBackgroundTask:(nonnull PLPlayer *)player{
-    NSLog(@"%@",@"00002334");
-}
-
-/**
- 告知代理对象 PLPlayer 即将结束后台播放状态任务
- 
- @param player 调用该方法的 PLPlayer 对象
- 
- @since v2.1.1
- */
-- (void)playerWillEndBackgroundTask:(nonnull PLPlayer *)player{
-    NSLog(@"%@",@"11112334");
-}
-
-/**
- 告知代理对象播放器状态变更
- 
- @param player 调用该方法的 PLPlayer 对象
- @param state  变更之后的 PLPlayer 状态
- 
- @since v1.0.0
- */
-- (void)player:(nonnull PLPlayer *)player statusDidChange:(PLPlayerStatus)state{
-    NSLog(@"%@",@"2334");
-}
 
 /**
  告知代理对象播放器因错误停止播放
@@ -995,41 +937,6 @@
     
 }
 
-/**
- 点播已缓冲区域
- 
- @param player 调用该方法的 PLPlayer 对象
- @param timeRange  CMTime , 表示从0时开始至当前缓冲区域，单位秒。
- 
- @warning 仅对点播有效
- 
- @since v2.4.1
- */
-- (void)player:(nonnull PLPlayer *)player loadedTimeRange:(CMTime)timeRange{
-    NSLog(@"%@",@"44442334");
-}
-
-/**
- 回调将要渲染的帧数据
- 该功能只支持直播
- 
- @param player 调用该方法的 PLPlayer 对象
- @param frame 将要渲染帧 YUV 数据。
- CVPixelBufferGetPixelFormatType 获取 YUV 的类型。
- 软解为 kCVPixelFormatType_420YpCbCr8Planar.
- 硬解为 kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange.
- @param pts 显示时间戳 单位ms
- @param sarNumerator
- @param sarDenominator
- 其中sar 表示 storage aspect ratio
- 视频流的显示比例 sarNumerator sarDenominator
- @discussion sarNumerator = 0 表示该参数无效
- 
- @since v2.4.3
- */
-- (void)player:(nonnull PLPlayer *)player willRenderFrame:(nullable CVPixelBufferRef)frame pts:(int64_t)pts sarNumerator:(int)sarNumerator sarDenominator:(int)sarDenominator{
-    NSLog(@"%@",@"55552334");
-}
 
 //是直播时离开直播间关闭直播
 
@@ -1050,11 +957,11 @@
 
 //获取直播人数
 - (void)getNumberAction {
-
+    
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"liveid"] = self.dataModel.liveid;
     [zkRequestTool networkingPOST:livegetlivenum_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
-    
+        
         if ([responseObject[@"code"] intValue]== 200) {
             self.dataModel.watchnum = [NSString stringWithFormat:@"%@",responseObject[@"data"]];
             self.headV.model = self.dataModel;
@@ -1063,7 +970,7 @@
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
-       
+        
         
     }];
 }
