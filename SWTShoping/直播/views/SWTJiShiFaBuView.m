@@ -371,15 +371,36 @@
     NSMutableDictionary  * dict = @{}.mutableCopy;
     dict[@"name"] = self.nameStr;
     dict[@"price"] = self.diJiaStr;
-    dict[@"jiajia"] = self.jiaJiaStr;
-    dict[@"sTime"] = self.timeStr;
-    dict[@"eTime"] = self.endTimeStr;
-    dict[@"imgStr"] = self.imgStr;
-    dict[@"type"] = @(self.type);
+    dict[@"stepprice"] = self.jiaJiaStr;
+    dict[@"starttime"] = self.timeStr;
+    dict[@"endtime"] = self.endTimeStr;
+    dict[@"img"] = self.imgStr;
+    dict[@"type"] = @(self.type-100);
     dict[@"yanshi"] = self.yanShiTime;
-    if (self.delegateSignal) {
-        [self.delegateSignal sendNext:dict];
-    }
+    dict[@"liveid"] = self.liveid;
+    dict[@"tomemberid"] = self.tomemberid;
+    
+    [SVProgressHUD show];
+    [zkRequestTool networkingPOST:merchpubliclivedgood_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            [SVProgressHUD showSuccessWithStatus:@"发布成功"];
+        }else {
+            [SVProgressHUD showErrorWithStatus:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+       
+    }];
+    
+    
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {

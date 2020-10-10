@@ -14,8 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)show;
 - (void)dismiss;
 @property(nonatomic,assign)BOOL isSiJia;
-@property(nonatomic,strong)NSString  *maiJiaName;
+@property(nonatomic,strong)NSString  *maiJiaName,*liveid,*tomemberid;
 @property(nonatomic , strong)RACSubject *delegateSignal;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

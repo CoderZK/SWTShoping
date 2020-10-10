@@ -33,10 +33,12 @@
         self.wihteV.clipsToBounds = YES;
         
         [self.wihteV mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self).offset(30);
-            make.right.equalTo(self).offset(-30);
+           
             make.height.equalTo(@200);
+            make.width.equalTo(@(ScreenW - 60));
+            make.left.equalTo(self).offset(30);
             make.centerY.equalTo(self);
+
         }];
         
         
@@ -46,7 +48,7 @@
         [self.wihteV addSubview:closeBt];
         
         [closeBt mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.width.width.equalTo(@30);
+            make.width.height.equalTo(@30);
             make.right.equalTo(self.wihteV).offset(-5);
             make.top.equalTo(self.wihteV).offset(5);
         }];
@@ -54,6 +56,9 @@
         
         
         self.imgV = [[UIImageView alloc] init];
+        self.imgV.layer.cornerRadius = 25;
+        self.imgV.image = [UIImage imageNamed:@"369"];
+        self.imgV.clipsToBounds = YES;
         [self.wihteV addSubview:self.imgV];
         [self.imgV mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.wihteV).offset(30);
@@ -69,7 +74,7 @@
         [self.nameLB mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.imgV.mas_bottom).offset(15);
             make.height.equalTo(@16);
-            make.centerX.equalTo(self.wihteV).offset(20);
+            make.centerX.equalTo(self.wihteV).offset(25);
         }];
         self.nameLB.text = @"12345678998";
         
@@ -82,46 +87,48 @@
         self.levelBt.clipsToBounds = YES;
         [self.levelBt setImage:[UIImage imageNamed:@"vip"] forState:UIControlStateNormal];
         [self.levelBt setTitle:@"6" forState:UIControlStateNormal];
+        [self.wihteV addSubview:self.levelBt];
+        self.levelBt.backgroundColor = [UIColor orangeColor];
         [self.levelBt mas_makeConstraints:^(MASConstraintMaker *make) {
             make.height.equalTo(@16);
-            make.width.equalTo(@60);
+            make.width.equalTo(@50);
             make.centerY.equalTo(self.nameLB);
-            make.right.equalTo(self.nameLB.mas_left);
+            make.right.equalTo(self.nameLB.mas_left).offset(-5);
         }];
         
         self.leftBt = [[UIButton alloc] init];
         [self.leftBt setTitle:@"禁言" forState:UIControlStateNormal];
         [self.leftBt setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-        self.leftBt.layer.cornerRadius = 10;
+        self.leftBt.layer.cornerRadius = 15;
         self.leftBt.clipsToBounds = YES;
         self.leftBt.titleLabel.font = kFont(13);
         self.leftBt.layer.borderColor = [UIColor orangeColor].CGColor;
         self.leftBt.layer.borderWidth= 0.5;
-        
+        [self.wihteV addSubview:self.leftBt];
         
         [self.leftBt mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.nameLB.mas_bottom).offset(15);
-            make.height.equalTo(@20);
-            make.width.equalTo(@60);
-            make.centerX.equalTo(self.wihteV).offset(-40);
+            make.top.equalTo(self.nameLB.mas_bottom).offset(20);
+            make.height.equalTo(@30);
+            make.width.equalTo(@70);
+            make.centerX.equalTo(self.wihteV).offset(-45);
             
         }];
         
         self.rightBt = [[UIButton alloc] init];
         [self.rightBt setTitle:@"创建订单" forState:UIControlStateNormal];
         [self.rightBt setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-        self.rightBt.layer.cornerRadius = 10;
+        self.rightBt.layer.cornerRadius = 15;
         self.rightBt.clipsToBounds = YES;
         self.rightBt.titleLabel.font = kFont(13);
         self.rightBt.layer.borderColor = [UIColor orangeColor].CGColor;
         self.rightBt.layer.borderWidth= 0.5;
-        
+        [self.wihteV addSubview:self.rightBt];
         
         [self.rightBt mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.nameLB.mas_bottom).offset(15);
-            make.height.equalTo(@20);
-            make.width.equalTo(@60);
-            make.centerX.equalTo(self.wihteV).offset(40);
+            make.top.equalTo(self.nameLB.mas_bottom).offset(20);
+            make.height.equalTo(@30);
+            make.width.equalTo(@70);
+            make.centerX.equalTo(self.wihteV).offset(45);
             
         }];
         
@@ -139,7 +146,7 @@
     [zkRequestTool networkingPOST:livesetlivesend_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
       
         [SVProgressHUD dismiss];
-        if ([responseObject[@"code"] intValue]== 1) {
+        if ([responseObject[@"code"] intValue]== 200) {
             
             
         }else {
@@ -154,13 +161,16 @@
 }
 
 - (void)rightAction:(UIButton *)button {
-    
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(clickChuangJianSiDanWithModel:)]) {
+        [self.delegate clickChuangJianSiDanWithModel:self.model];
+    }
 }
 
 - (void)setModel:(SWTModel *)model {
     _model = model;
     self.nameLB.text = model.nickname;
     [self.leftBt setTitle:model.levelcode forState:UIControlStateNormal];
+    [self.imgV sd_setImageWithURL:[model.avatar getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
     
 }
 

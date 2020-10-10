@@ -48,7 +48,7 @@
     NSMutableDictionary * dict = @{}.mutableCopy;
     //    dict[@"liveid"] = self.model.ID;
     dict[@"userid"] = [zkSignleTool shareTool].session_uid;
-    dict[@"status"] = @(1);
+    dict[@"status"] = @(self.type + 1);
     [zkRequestTool networkingPOST:shareMyshare_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [SVProgressHUD dismiss];
         [self.tableView.mj_header endRefreshing];

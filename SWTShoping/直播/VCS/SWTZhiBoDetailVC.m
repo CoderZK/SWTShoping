@@ -25,7 +25,7 @@
 #import "SWTZhiBoYiKouJiaFootView.h"
 #import "SWTZhiBoJiaPaiFootView.h"
 #import "SWTZhiBoGeRenShowView.h"
-@interface SWTZhiBoDetailVC ()<V2TIMAdvancedMsgListener,V2TIMGroupListener,PLPlayerDelegate>
+@interface SWTZhiBoDetailVC ()<V2TIMAdvancedMsgListener,V2TIMGroupListener,PLPlayerDelegate,SWTZhiBoGeRenShowViewDelegate>
 @property(nonatomic , strong)SWTZhiBoHedView *headV; // 头视图
 @property(nonatomic , strong)SWTZhiBoBottomView *bottomV;
 @property(nonatomic , strong)SWTZhiBoChuJiaBottomView *chuJiaBottomV;
@@ -216,6 +216,12 @@
     }];
 }
 
+- (void)dismiss {
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
+
 - (void)addHeadV {
     self.headV  = [[SWTZhiBoHedView alloc] init];
     [self.view addSubview:self.headV];
@@ -265,7 +271,6 @@
             //变化底部状态栏
             //            self.bottomV.hidden = YES;
             //            self.chuJiaBottomV.hidden = NO;
-            
             //点击购物车
             if (self.isHeMai) {
                 if (self.isTuiLiu) {
@@ -276,7 +281,7 @@
             }else {
                 
                 if (self.isTuiLiu) {
-                    //发布实时商品
+                    //发布实时商品一口价和竞拍
                     SWTJiShiFaBuView * shishiView = [[SWTJiShiFaBuView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
                     shishiView.isSiJia = NO;
                     shishiView.delegateSignal = [[RACSubject alloc] init];
@@ -305,8 +310,6 @@
                             vc.shopId = self.dataModel.merchid;
                             self.isPushVC = YES;
                             [self.navigationController pushViewController:vc animated:YES];
-                            
-                            
                         }else  if (x.intValue < 102){
                             [self getLivegoodListDataWithType:x.intValue - 100];
                         }else {
@@ -327,11 +330,7 @@
                     jingPaiV.dataArray = self.zhiBoArr;
                     [jingPaiV show];
                 }
-                
-                
             }
-            
-            
         }else if (x.intValue == 1) {
             //我的合买
             SWTHeMaiMineDingZhiShowView *  dingZhiV  =[[SWTHeMaiMineDingZhiShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
@@ -570,23 +569,6 @@
 //加入直播室
 - (void)jionAVRoom {
     
-    if (self.isTuiLiu) {
-        
-    }else {
-        
-    }
-    //    V2TIMGroupInfo * groupInfo = [[V2TIMGroupInfo alloc] init];
-    //    groupInfo.groupID = self.dataModel.livegroupid;
-    //    groupInfo.groupType = @"ChatRoom";
-    //    groupInfo.groupAddOpt = V2TIM_GROUP_ADD_ANY;
-    //    [[V2TIMManager sharedInstance] createGroup:groupInfo memberList:nil succ:^(NSString *groupID) {
-    //
-    //        NSLog(@"%@",@"创建直播间成功");
-    //
-    //
-    //    } fail:^(int code, NSString *desc) {
-    //        NSLog(@"%@",@"创建直播间失败");
-    //    }];
     [[V2TIMManager sharedInstance] setGroupListener:self];
     [[V2TIMManager sharedInstance] joinGroup:self.dataModel.livegroupid msg:@"333" succ:^{
         NSLog(@"%@",@"进入直播间成功");
@@ -759,10 +741,7 @@
         
         
     }];
-    
-    
-    
-    
+
 }
 
 //获取抽签结果
@@ -793,19 +772,21 @@
     }];
 }
 
+//添加聊天列表
 - (void)initChatRoomV {
-    
     self.avChatRoomView = [[SWTAVChatRoomView alloc] init];
     [self.view addSubview:self.avChatRoomView];
     Weak(weakSelf);
     self.avChatRoomView.clickPeopleBlock = ^(SWTModel *model) {
-        //点击用户
+        //点击用户进行私价
         if (!weakSelf.isTuiLiu) {
             return;
         }
         if (model.type.intValue == 0 || model.type.intValue == 1) {
             SWTZhiBoGeRenShowView * gerenShowView  = [[SWTZhiBoGeRenShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenH, ScreenH)];
             gerenShowView.model = model;
+            
+            gerenShowView.delegate = self;
             [gerenShowView show];
         }
     };
@@ -816,6 +797,27 @@
     }];
     
 }
+//点击创建私单
+- (void)clickChuangJianSiDanWithModel:(SWTModel *)model {
+    
+    //发布实时商品私价
+    SWTJiShiFaBuView * shishiView = [[SWTJiShiFaBuView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+    shishiView.isSiJia = NO;
+    shishiView.tomemberid = model.ID;
+    shishiView.liveid = self.dataModel.liveid;
+    shishiView.delegateSignal = [[RACSubject alloc] init];
+    @weakify(self);
+    [shishiView.delegateSignal subscribeNext:^(NSDictionary * x) {
+        @strongify(self);
+        
+    }];
+    [shishiView show];
+    
+}
+
+
+
+
 //添加播流
 - (void)addBoLiu {
     
@@ -837,9 +839,7 @@
     [self.view sendSubviewToBack:self.player.playerView];
     
     [self.player play];
-    
-    
-    
+
 }
 
 
@@ -889,28 +889,13 @@
     
 }
 
+//切换摄像头
 - (void)qieHuanAction:(UIButton *)button {
     button.selected = !button.selected;
-    //    [self.session destroy];
     if (button.selected) {
-        //        [self addTuiLiuWithType:1];
-        //         self.videoPL.position = AVCaptureDevicePositionBack;
-        //        [self.session startCaptureSession];
-        //        self.videoPL.streamMirrorRearFacing = YES;
-        //        self.videoPL.streamMirrorFrontFacing = NO;
-        //        [self.session stopStreaming];
         self.session.captureDevicePosition = AVCaptureDevicePositionBack;
-        
-        
     }else {
-        
         self.session.captureDevicePosition = AVCaptureDevicePositionFront;
-        
-        //       [self addTuiLiuWithType:0];
-        //        self.videoPL.position = AVCaptureDevicePositionFront;
-        //        [self.session startCaptureSession];
-        //        self.videoPL.streamMirrorFrontFacing = YES;
-        //        self.videoPL.streamMirrorRearFacing = NO;
     }
 }
 

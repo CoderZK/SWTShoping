@@ -91,7 +91,7 @@
         [self.tableView registerNib:[UINib nibWithNibName:@"SWTHeMaiDianPuOneCell" bundle:nil] forCellReuseIdentifier:@"cell"];
         
         [closeBt mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.width.width.equalTo(@30);
+            make.width.height.equalTo(@30);
             make.right.equalTo(self.whiteV).offset(-5);
             make.top.equalTo(self.whiteV).offset(5);
         }];

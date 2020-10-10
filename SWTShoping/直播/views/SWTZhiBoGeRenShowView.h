@@ -8,12 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-NS_ASSUME_NONNULL_BEGIN
+@protocol SWTZhiBoGeRenShowViewDelegate <NSObject>
+
+- (void)clickChuangJianSiDanWithModel:(SWTModel *)model;
+
+@end
 
 @interface SWTZhiBoGeRenShowView : UIView
 - (void)show;
 - (void)dismiss;
 @property(nonatomic,strong)SWTModel *model;
+@property(nonatomic,assign)id<SWTZhiBoGeRenShowViewDelegate>delegate;
 @end
 
-NS_ASSUME_NONNULL_END
+
