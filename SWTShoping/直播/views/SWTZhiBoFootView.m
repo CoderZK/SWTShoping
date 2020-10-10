@@ -192,9 +192,7 @@
         }
         
     }];
-    
-    //    [cell.timeBt setTitle: [NSString stringWithFormat:@"%@    %@",[model.starttime substringToIndex:10],[model.endtime substringToIndex:10]] forState:UIControlStateNormal];
-    self.timeInterval = [NSString pleaseInsertEndTime:model.endtime] > 0 ?  [NSString pleaseInsertEndTime:model.endtime] : 0;;
+
     self.rightBt.hidden = self.isOrder;
 }
 

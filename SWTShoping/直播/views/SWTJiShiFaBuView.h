@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,assign)BOOL isSiJia;
 @property(nonatomic,strong)NSString  *maiJiaName,*liveid,*tomemberid;
 @property(nonatomic , strong)RACSubject *delegateSignal;
+@property(nonatomic,strong)UIImage *image;
 
 
 @end

@@ -21,7 +21,7 @@
     if (self) {
         
         
-        self.chujiaV = [[UIView alloc] initWithFrame:CGRectMake(15, 15, 230 , 30)];
+        self.chujiaV = [[UIView alloc] initWithFrame:CGRectMake(15, 15, 210 , 30)];
         self.chujiaV.layer.cornerRadius = 15;
         self.chujiaV.clipsToBounds = YES;
         self.chujiaV.layer.borderColor = WhiteColor.CGColor;
@@ -37,7 +37,7 @@
         [self.chujiaV addSubview:self.leftBt];
         [self.leftBt setTitle:@"-100" forState:UIControlStateNormal];
         
-        self.rightBt = [[UIButton alloc] initWithFrame:CGRectMake(160, 0, 70, 30)];
+        self.rightBt = [[UIButton alloc] initWithFrame:CGRectMake(140, 0, 70, 30)];
         self.rightBt.titleLabel.font = kFont(14);
         [self.rightBt setTitleColor:WhiteColor forState:UIControlStateNormal];
         self.rightBt.backgroundColor = RGB(214,136, 26);
@@ -46,7 +46,7 @@
         self.rightBt.tag = 101;
         [self.rightBt addTarget:self action:@selector(action:) forControlEvents:UIControlEventTouchUpInside];
         
-        self.priceTF  =[[UITextField alloc] initWithFrame:CGRectMake(70, 0, 90, 30)];
+        self.priceTF  =[[UITextField alloc] initWithFrame:CGRectMake(70, 0, 70, 30)];
         self.priceTF.keyboardType = UIKeyboardTypeDecimalPad;
         self.priceTF.font = kFont(14);
         self.priceTF.textColor = WhiteColor;
@@ -57,7 +57,7 @@
         
         
         
-        self.chujiaBt = [[UIButton alloc] initWithFrame:CGRectMake(ScreenW - 105, 15, 80, 30)];
+        self.chujiaBt = [[UIButton alloc] initWithFrame:CGRectMake(ScreenW - 105 - 30, 15, 80, 30)];
         self.chujiaBt.titleLabel.font = kFont(14);
         [self.chujiaBt setTitleColor:WhiteColor forState:UIControlStateNormal];
         [self.chujiaBt setBackgroundImage:[UIImage imageNamed:@"rbg"] forState:UIControlStateNormal];
@@ -68,6 +68,12 @@
         self.chujiaBt.tag = 102;
         [self.chujiaBt addTarget:self action:@selector(action:) forControlEvents:UIControlEventTouchUpInside];
         
+        UIButton * messageBt = [[UIButton alloc] initWithFrame:CGRectMake(ScreenW  - 40, 15, 30, 30)];
+        [self addSubview:messageBt];
+        [messageBt setBackgroundImage:[UIImage imageNamed:@"bbdyx65"] forState:UIControlStateNormal];
+        messageBt.tag = 103;
+    
+        [messageBt addTarget:self action:@selector(action:) forControlEvents:UIControlEventTouchUpInside];
         
         
     }
@@ -77,9 +83,18 @@
 
 - (void)action:(UIButton *)button {
     
-    
-    
-    
+    if (button.tag == 100) {
+        
+    }else if (button.tag == 101) {
+        
+    }else if (button.tag == 102) {
+        
+    }else if (button.tag == 103){
+        if (self.delegateSignal) {
+            [self.delegateSignal sendNext:@"123"];
+        }
+    }
+
 }
 
 

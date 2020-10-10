@@ -17,7 +17,7 @@
 @property(nonatomic , assign)NSInteger  type;
 @property(nonatomic,strong)UILabel *titleLB;
 @property(nonatomic,strong)NSString *nameStr,*timeStr,*diJiaStr,*jiaJiaStr,*endTimeStr,*yanShiTime,*imgStr;
-@property(nonatomic,strong)UIImage *image;
+
 
 @end
 
@@ -62,6 +62,7 @@
         [self.imgBt setBackgroundImage:[UIImage imageNamed:@"bbdyx72"] forState:UIControlStateNormal];
         self.imgBt.clipsToBounds = YES;
         [self.imgBt addTarget:self action:@selector(imageAction:) forControlEvents:UIControlEventTouchUpInside];
+        self.imgBt.contentMode = UIViewContentModeScaleAspectFill;
         [self.headView addSubview:self.imgBt];
         
         
@@ -472,38 +473,49 @@
 }
 
 - (void)imageAction:(UIButton *)button {
-    if ([self isCanUsePicture]) {
-        
-        TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:MAXFLOAT columnNumber:4 delegate:self pushPhotoPickerVc:YES];
-        imagePickerVc.maxImagesCount = 1;
-        imagePickerVc.videoMaximumDuration = 3;
-        
-        imagePickerVc.allowTakeVideo = NO;
-        imagePickerVc.allowPickingVideo = NO;
-        imagePickerVc.allowPickingImage = YES;
-        imagePickerVc.allowTakePicture = NO;
-        
-        imagePickerVc.showSelectBtn = NO;
-        imagePickerVc.allowCrop = YES;
-        imagePickerVc.needCircleCrop = NO;
-        imagePickerVc.cropRectPortrait = CGRectMake(0, (ScreenH - ScreenW)/2, ScreenW, ScreenW);
-        imagePickerVc.cropRectLandscape = CGRectMake(0, (ScreenW - ScreenH)/2, ScreenH, ScreenH);
-        imagePickerVc.circleCropRadius = ScreenW/2;
-        [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
-            
-            if (photos.count > 0) {
-                self.image = photos.firstObject;
-                [self updateImage];
-            }
-            
-            
-        }];
-        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:imagePickerVc animated:YES completion:nil];
-        
-    }else{
-        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alert show];
+    if (self.delegateSignal) {
+        [self.delegateSignal sendNext:@"image"];
     }
+    
+    
+    
+//    if ([self isCanUsePicture]) {
+//
+//        TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:MAXFLOAT columnNumber:4 delegate:self pushPhotoPickerVc:YES];
+//        imagePickerVc.maxImagesCount = 1;
+//        imagePickerVc.videoMaximumDuration = 3;
+//
+//        imagePickerVc.allowTakeVideo = NO;
+//        imagePickerVc.allowPickingVideo = NO;
+//        imagePickerVc.allowPickingImage = YES;
+//        imagePickerVc.allowTakePicture = NO;
+//
+//        imagePickerVc.showSelectBtn = NO;
+//        imagePickerVc.allowCrop = YES;
+//        imagePickerVc.needCircleCrop = NO;
+//        imagePickerVc.cropRectPortrait = CGRectMake(0, (ScreenH - ScreenW)/2, ScreenW, ScreenW);
+//        imagePickerVc.cropRectLandscape = CGRectMake(0, (ScreenW - ScreenH)/2, ScreenH, ScreenH);
+//        imagePickerVc.circleCropRadius = ScreenW/2;
+//        [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
+//
+//            if (photos.count > 0) {
+//                self.image = photos.firstObject;
+//                [self updateImage];
+//            }
+//
+//
+//        }];
+//        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:imagePickerVc animated:YES completion:nil];
+//
+//    }else{
+//        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//        [alert show];
+//    }
+}
+
+- (void)setImage:(UIImage *)image {
+    _image = image;
+    [self updateImage];
 }
 
 
@@ -517,6 +529,7 @@
             
             [self.tableView reloadData];
             self.imgStr = responseObject[@"data"];
+            [self.imgBt sd_setBackgroundImageWithURL:self.imgStr.getPicURL forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"369"]];
             
             
         }else {

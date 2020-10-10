@@ -57,6 +57,7 @@
         }];
         
         self.imgV = [[UIImageView alloc] init];
+        self.imgV.image = [UIImage imageNamed:@"369"];
         [self.wihteV addSubview:self.imgV];
         [self.imgV mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.wihteV).offset(5);
@@ -68,6 +69,7 @@
         self.titleLB.font = kFont(13);
         self.titleLB.textColor = CharacterColor50;
         [self.wihteV addSubview:self.titleLB];
+        self.titleLB.text = @"瓷器花瓶";
         
         [self.titleLB mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.imgV);
@@ -82,6 +84,7 @@
         self.jiaJiaLB.font = kFont(13);
         self.jiaJiaLB.textColor = RedColor;
         [self.wihteV addSubview:self.jiaJiaLB];
+        self.jiaJiaLB.text = @"3456";
         [self.jiaJiaLB mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.titleLB);
             make.top.equalTo(self.titleLB.mas_bottom).offset(10);
@@ -134,20 +137,6 @@
     [self.imgV sd_setImageWithURL:[model.img getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
     self.titleLB.text = model.name;
     self.jiaJiaLB.text =  [NSString stringWithFormat:@"￥%@",model.price];
-    self.numberLB.text =  [NSString stringWithFormat:@"%@/%@",model.isbuynum,model.num];
-    [LSTTimer removeAllTimer];
-    Weak(weakSelf);
-    [LSTTimer addTimerForTime:model.resttimes.intValue /1000 handle:^(NSString * _Nonnull day, NSString * _Nonnull hour, NSString * _Nonnull minute, NSString * _Nonnull second, NSString * _Nonnull ms) {
-        if (day.intValue + hour.intValue + minute.intValue + second.intValue <= 0) {
-            [weakSelf.timeBt setTitle:@"已结束" forState:UIControlStateNormal];
-        }else {
-            [weakSelf.timeBt setTitle:[NSString stringWithFormat:@"%@天%@小时%@分%@秒",day,hour,minute,second] forState:UIControlStateNormal];
-        }
-        
-    }];
-    
-    //    [cell.timeBt setTitle: [NSString stringWithFormat:@"%@    %@",[model.starttime substringToIndex:10],[model.endtime substringToIndex:10]] forState:UIControlStateNormal];
-    self.timeInterval = [NSString pleaseInsertEndTime:model.endtime] > 0 ?  [NSString pleaseInsertEndTime:model.endtime] : 0;;
     self.rightBt.hidden = self.isOrder;
 }
 

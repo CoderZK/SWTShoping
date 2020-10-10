@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTZhiBoChuJiaBottomView : UIView
-
+@property(nonatomic , strong)RACSubject *delegateSignal;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -51,6 +51,7 @@
 
 @property(nonatomic,assign)BOOL isPushVC;
 @property(nonatomic,strong)NSTimer *timer;
+@property(nonatomic,strong)SWTJiShiFaBuView *shishiView;
 
 //播流部分
 @property (nonatomic, strong) PLPlayer  *player;
@@ -96,6 +97,53 @@
 }
 
 
+- (SWTZhiBoYiKouJiaFootView *)yiKouJiaFootView {
+    if (_yiKouJiaFootView == nil) {
+        _yiKouJiaFootView = [[SWTZhiBoYiKouJiaFootView alloc] initWithFrame:CGRectMake(0, 0, (ScreenW -30)/4 * 3, 110)];
+        _yiKouJiaFootView.delegateSignal = [[RACSubject alloc] init];
+        @weakify(self);
+        [_yiKouJiaFootView.delegateSignal subscribeNext:^(NSNumber * x) {
+            @strongify(self);
+            
+            //                SWTModel * model  = [self.heMaiArr firstObject];
+            //                SWTMineHeMaiTiJiaoOrderTVC * vc =[[SWTMineHeMaiTiJiaoOrderTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+            //                vc.hidesBottomBarWhenPushed = YES;
+            //                model.merchid = self.dataModel.merchid;
+            //                model.store_name = self.dataModel.name;
+            //                vc.model = model;
+            //                self.isPushVC = YES;
+            //                [self.navigationController pushViewController:vc animated:YES];
+            
+        }];
+    }
+    return _yiKouJiaFootView;
+}
+
+- (SWTZhiBoJiaPaiFootView *)jingPaiFootV {
+    if (_jingPaiFootV == nil) {
+        _jingPaiFootV = [[SWTZhiBoJiaPaiFootView alloc] initWithFrame:CGRectMake(0, 0, (ScreenW -30)/4 * 3, 110)];
+        _jingPaiFootV.delegateSignal = [[RACSubject alloc] init];
+        @weakify(self);
+        [_jingPaiFootV.delegateSignal subscribeNext:^(NSNumber * x) {
+            @strongify(self);
+            
+            //                SWTModel * model  = [self.heMaiArr firstObject];
+            //                SWTMineHeMaiTiJiaoOrderTVC * vc =[[SWTMineHeMaiTiJiaoOrderTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+            //                vc.hidesBottomBarWhenPushed = YES;
+            //                model.merchid = self.dataModel.merchid;
+            //                model.store_name = self.dataModel.name;
+            //                vc.model = model;
+            //                self.isPushVC = YES;
+            //                [self.navigationController pushViewController:vc animated:YES];
+            
+            //变化底部状态栏
+            self.bottomV.hidden = YES;
+            self.chuJiaBottomV.hidden = NO;
+            
+        }];
+    }
+    return _jingPaiFootV;
+}
 
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -138,19 +186,8 @@
     [self addChuJiaBottomV];
     [self initChatRoomV];
     
-    [self.view addSubview: self.zhiBoFootV];
-    [self.zhiBoFootV mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).offset(10);
-        
-        if (sstatusHeight > 20) {
-            make.bottom.equalTo(self.view).offset(-94);
-        }else {
-            make.bottom.equalTo(self.view).offset(-50);
-        }
-        make.width.equalTo(@(ScreenW - 30 - 30));
-        make.height.equalTo(@110);
-    }];
-    self.zhiBoFootV.hidden = YES;
+    
+    
     
     self.chuJiaBottomV.hidden = YES;
     [self.view addSubview:self.comeInV];
@@ -185,8 +222,54 @@
         [self getMineHeMaiDingZhiListWithType:0];//获取我的合买列表
         [self getGoodsListData]; //店铺合买列表
         //         [self getHeMaiList];
+        
+        [self.view addSubview: self.zhiBoFootV];
+        [self.zhiBoFootV mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.view).offset(10);
+            
+            if (sstatusHeight > 20) {
+                make.bottom.equalTo(self.view).offset(-94);
+            }else {
+                make.bottom.equalTo(self.view).offset(-50);
+            }
+            make.width.equalTo(@(ScreenW - 30 - 30));
+            make.height.equalTo(@110);
+        }];
+        
+        self.zhiBoFootV.hidden = YES;
+        
     }else {
         [self getLivegoodListDataWithType:0]; //获取竞拍和一口价列表
+        
+        //天机一口价浮窗
+        [self.view addSubview:self.yiKouJiaFootView];
+        [self.yiKouJiaFootView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.view).offset(10);
+            if (sstatusHeight > 20) {
+                make.bottom.equalTo(self.view).offset(-94);
+            }else {
+                make.bottom.equalTo(self.view).offset(-50);
+            }
+            make.width.equalTo(@(ScreenW - 30 - 30));
+            make.height.equalTo(@110);
+        }];
+        self.yiKouJiaFootView.hidden = YES;
+        
+        //添加竞拍浮窗
+        [self.view addSubview:self.jingPaiFootV];
+        [self.jingPaiFootV mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.view).offset(10);
+            if (sstatusHeight > 20) {
+                make.bottom.equalTo(self.view).offset(-94);
+            }else {
+                make.bottom.equalTo(self.view).offset(-50);
+            }
+            make.width.equalTo(@(ScreenW - 30 - 30));
+            make.height.equalTo(@110);
+        }];
+        self.jingPaiFootV.hidden = NO;
+        
+        
     }
     
     if (self.isTuiLiu) {
@@ -268,9 +351,7 @@
     [ self.bottomV.delegateSignal subscribeNext:^(NSNumber * x) {
         @strongify(self);
         if (x.intValue == 0) {
-            //变化底部状态栏
-            //            self.bottomV.hidden = YES;
-            //            self.chuJiaBottomV.hidden = NO;
+            
             //点击购物车
             if (self.isHeMai) {
                 if (self.isTuiLiu) {
@@ -286,10 +367,11 @@
                     shishiView.isSiJia = NO;
                     shishiView.delegateSignal = [[RACSubject alloc] init];
                     @weakify(self);
-                    [shishiView.delegateSignal subscribeNext:^(NSNumber * x) {
+                    [shishiView.delegateSignal subscribeNext:^(id  x) {
                         @strongify(self);
-                        
+                        [self shishiViewAddPic];
                     }];
+                    self.shishiView = shishiView;
                     [shishiView show];
                 }else {
                     //用户端
@@ -524,6 +606,13 @@
             make.bottom.equalTo(self.view);
         }
     }];
+    self.chuJiaBottomV.delegateSignal = [[RACSubject alloc] init]; 
+    @weakify(self);
+    [self.chuJiaBottomV.delegateSignal subscribeNext:^(NSNumber * x) {
+        @strongify(self);
+        self.bottomV.hidden = NO;
+        self.chuJiaBottomV.hidden = YES;
+    }];
     
     
 }
@@ -644,6 +733,12 @@
             }else if (tempType == 3) {
                 //发布抽签
                 [self getChouQianData];
+            }else if (tempType == 4) {
+                [self getShiShiGoodDataWithtype:@"2"];
+            }else if (tempType == 5) {
+                [self getShiShiGoodDataWithtype:@"0"];
+            }else if (tempType == 6) {
+                [self getShiShiGoodDataWithtype:@"1"];
             }
         }else {
             model.type = [NSString stringWithFormat:@"%@",dict[@"type"]];
@@ -741,11 +836,10 @@
         
         
     }];
-
+    
 }
 
 //获取抽签结果
-
 - (void)getChouQianData {
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
@@ -760,6 +854,27 @@
             model.type = @"3";
             [self.AVCharRoomArr addObject:model];
             self.avChatRoomView.dataArr = self.AVCharRoomArr;
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        
+        
+    }];
+}
+//获取实时直播商品
+- (void)getShiShiGoodDataWithtype:(NSString *)type {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"type"] = type;
+    [zkRequestTool networkingPOST:livegetlivegood_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
             
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
@@ -807,15 +922,49 @@
     shishiView.liveid = self.dataModel.liveid;
     shishiView.delegateSignal = [[RACSubject alloc] init];
     @weakify(self);
-    [shishiView.delegateSignal subscribeNext:^(NSDictionary * x) {
+    [shishiView.delegateSignal subscribeNext:^(id  x) {
         @strongify(self);
-        
+        [self shishiViewAddPic];
     }];
+    self.shishiView = shishiView;
     [shishiView show];
     
 }
 
-
+- (void)shishiViewAddPic {
+    
+    if ([self isCanUsePicture]) {
+    
+    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:MAXFLOAT columnNumber:4 delegate:self pushPhotoPickerVc:YES];
+    imagePickerVc.maxImagesCount = 1;
+    imagePickerVc.videoMaximumDuration = 3;
+    
+    imagePickerVc.allowTakeVideo = NO;
+    imagePickerVc.allowPickingVideo = NO;
+    imagePickerVc.allowPickingImage = YES;
+    imagePickerVc.allowTakePicture = NO;
+    
+    imagePickerVc.showSelectBtn = NO;
+    imagePickerVc.allowCrop = YES;
+    imagePickerVc.needCircleCrop = NO;
+    imagePickerVc.cropRectPortrait = CGRectMake(0, (ScreenH - ScreenW)/2, ScreenW, ScreenW);
+    imagePickerVc.cropRectLandscape = CGRectMake(0, (ScreenW - ScreenH)/2, ScreenH, ScreenH);
+    imagePickerVc.circleCropRadius = ScreenW/2;
+    [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
+        
+        if (photos.count > 0) {
+            self.shishiView.image = photos.firstObject;
+            
+        }
+        
+        
+    }];
+    [self presentViewController:imagePickerVc animated:YES completion:nil];
+    }else{
+        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+}
 
 
 //添加播流
@@ -839,7 +988,7 @@
     [self.view sendSubviewToBack:self.player.playerView];
     
     [self.player play];
-
+    
 }
 
 
@@ -885,7 +1034,7 @@
             NSLog(@"Oops.");
         }
     }];
-
+    
     
 }
 
