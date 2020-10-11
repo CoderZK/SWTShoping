@@ -373,8 +373,8 @@
     dict[@"name"] = self.nameStr;
     dict[@"price"] = self.diJiaStr;
     dict[@"stepprice"] = self.jiaJiaStr;
-    dict[@"starttime"] = self.timeStr;
-    dict[@"endtime"] = self.endTimeStr;
+    dict[@"starttime"] = [NSString stringWithFormat:@"%@:00",self.timeStr];
+    dict[@"endtime"] = [NSString stringWithFormat:@"%@:00",self.endTimeStr];
     dict[@"img"] = self.imgStr;
     dict[@"type"] = @(self.type-100);
     dict[@"yanshi"] = self.yanShiTime;
@@ -387,7 +387,7 @@
         [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
-            
+            [self dismiss];
             [SVProgressHUD showSuccessWithStatus:@"发布成功"];
         }else {
             [SVProgressHUD showErrorWithStatus:responseObject[@"msg"]];

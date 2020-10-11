@@ -82,19 +82,60 @@
 }
 
 - (void)action:(UIButton *)button {
-    
+    CGFloat price = self.priceTF.text.doubleValue;
+    CGFloat stepPrice = self.model.stepprice.doubleValue;
+    CGFloat nowPrice = self.model.price.doubleValue;
     if (button.tag == 100) {
-        
+        //点击减号
+        if (price - stepPrice < nowPrice) {
+            [SVProgressHUD showErrorWithStatus:@"出价不能小于当前最新价格"];
+        }else {
+            self.priceTF.text = [NSString stringWithFormat:@"%0.2f",price - stepPrice];
+        }
     }else if (button.tag == 101) {
-        
+        //点击加好
+        self.priceTF.text = [NSString stringWithFormat:@"%0.2f",price + stepPrice];
     }else if (button.tag == 102) {
+        // 点击出价
+        [self chuJiaAction:button];
         
     }else if (button.tag == 103){
         if (self.delegateSignal) {
             [self.delegateSignal sendNext:@"123"];
         }
     }
+}
 
+- (void)setModel:(SWTModel *)model {
+    _model = model;
+    [self.leftBt setTitle:[NSString stringWithFormat:@"-%@",model.stepprice] forState:UIControlStateNormal];
+    [self.rightBt setTitle:[NSString stringWithFormat:@"+%@",model.stepprice] forState:UIControlStateNormal];
+    self.priceTF.text = model.price;
+    
+}
+
+- (void)chuJiaAction:(UIButton *)button {
+
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"goodid"]= self.model.ID;
+    dict[@"price"] = [NSString stringWithFormat:@"%0.2f",self.priceTF.text.doubleValue];;
+    dict[@"userid"] = [zkSignleTool shareTool].session_uid;
+    [zkRequestTool networkingPOST:goodOffer_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"您出价:%0.2f 成功",self.priceTF.text.doubleValue]];
+        }else {
+            [SVProgressHUD showErrorWithStatus:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        
+        
+    }];
+    
+    
 }
 
 

@@ -14,7 +14,7 @@
 }
 
 + (NSDictionary *)mj_objectClassInArray {
-    return @{@"lotinfo":@"SWTModel",@"childorderinfo":@"SWTModel",@"sharedict":@"SWTModel"};
+    return @{@"lotinfo":@"SWTModel",@"childorderinfo":@"SWTModel",@"sharedict":@"SWTModel",@"livegoodlist":@"SWTModel"};
 }
 
 - (void)setStorename:(NSString *)storename {

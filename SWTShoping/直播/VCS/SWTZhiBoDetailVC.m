@@ -52,7 +52,7 @@
 @property(nonatomic,assign)BOOL isPushVC;
 @property(nonatomic,strong)NSTimer *timer;
 @property(nonatomic,strong)SWTJiShiFaBuView *shishiView;
-
+@property(nonatomic,strong)SWTModel *shishiModel;
 //播流部分
 @property (nonatomic, strong) PLPlayer  *player;
 
@@ -235,7 +235,7 @@
             make.width.equalTo(@(ScreenW - 30 - 30));
             make.height.equalTo(@110);
         }];
-        
+        self.zhiBoFootV.isOrder = self.isTuiLiu;
         self.zhiBoFootV.hidden = YES;
         
     }else {
@@ -253,6 +253,7 @@
             make.width.equalTo(@(ScreenW - 30 - 30));
             make.height.equalTo(@110);
         }];
+        self.yiKouJiaFootView.isOrder = self.isTuiLiu;
         self.yiKouJiaFootView.hidden = YES;
         
         //添加竞拍浮窗
@@ -267,7 +268,8 @@
             make.width.equalTo(@(ScreenW - 30 - 30));
             make.height.equalTo(@110);
         }];
-        self.jingPaiFootV.hidden = NO;
+        self.jingPaiFootV.isOrder = self.isTuiLiu;
+        self.jingPaiFootV.hidden = YES;
         
         
     }
@@ -365,12 +367,14 @@
                     //发布实时商品一口价和竞拍
                     SWTJiShiFaBuView * shishiView = [[SWTJiShiFaBuView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
                     shishiView.isSiJia = NO;
+                    shishiView.liveid = self.dataModel.liveid;
                     shishiView.delegateSignal = [[RACSubject alloc] init];
                     @weakify(self);
                     [shishiView.delegateSignal subscribeNext:^(id  x) {
                         @strongify(self);
                         [self shishiViewAddPic];
                     }];
+                    
                     self.shishiView = shishiView;
                     [shishiView show];
                 }else {
@@ -464,6 +468,28 @@
             self.dataModel = [SWTModel mj_objectWithKeyValues:responseObject[@"data"]];
             self.headV.model = self.dataModel;
             self.bottomV.model = self.dataModel;
+            
+            if (self.dataModel.livegoodlist.count > 0) {
+                self.shishiModel = [self.dataModel.livegoodlist firstObject];
+                if (self.shishiModel.type.intValue == 0) {
+                    //竞拍
+                    self.jingPaiFootV.hidden = NO;
+                    self.jingPaiFootV.model = self.shishiModel;
+
+                }else if (self.shishiModel.type.intValue == 1) {
+                    //一口价
+                    self.yiKouJiaFootView.hidden = NO;
+                    self.yiKouJiaFootView.model = self.shishiModel;
+
+                }else if (self.shishiModel.type.intValue == 2) {
+                    //私价
+                }
+            }else {
+                self.shishiModel = nil;
+                self.yiKouJiaFootView.hidden = YES;
+                self.jingPaiFootV.hidden = YES;
+            }
+            
             [self jionAVRoom];
             if (self.isTuiLiu) {
                 [self addTuiLiuWithType:0];
@@ -870,10 +896,33 @@
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"type"] = type;
+    dict[@"liveid"] = self.dataModel.liveid;
     [zkRequestTool networkingPOST:livegetlivegood_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
+            NSArray<SWTModel *> * arr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            if (arr.count > 0) {
+                self.shishiModel = [arr firstObject];
+                if (type.intValue == 0) {
+                    //竞拍
+                    self.jingPaiFootV.hidden = NO;
+                    self.jingPaiFootV.model = self.shishiModel;
+                    
+                }else if (type.intValue == 1) {
+                    //一口价
+                    self.yiKouJiaFootView.hidden = NO;
+                    self.yiKouJiaFootView.model = self.shishiModel;
+                    
+                }else if (type.intValue == 2) {
+                    //私价
+                }
+            }else {
+                self.shishiModel = nil;
+                self.yiKouJiaFootView.hidden = YES;
+                self.jingPaiFootV.hidden = YES;
+            }
+            
             
             
         }else {
@@ -959,6 +1008,7 @@
         
         
     }];
+        self.isPushVC = YES;
     [self presentViewController:imagePickerVc animated:YES completion:nil];
     }else{
         UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];

@@ -140,7 +140,7 @@
     
     [self.imgV sd_setImageWithURL:[model.img getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
     self.titleLB.text = model.name;
-    self.jiaJiaLB.text =  [NSString stringWithFormat:@"￥%@",model.price];
+    self.jiaJiaLB.text =  [NSString stringWithFormat:@"￥%@",model.nowprice];
     [LSTTimer removeAllTimer];
     Weak(weakSelf);
     [LSTTimer addTimerForTime:model.resttimes.intValue /1000 handle:^(NSString * _Nonnull day, NSString * _Nonnull hour, NSString * _Nonnull minute, NSString * _Nonnull second, NSString * _Nonnull ms) {

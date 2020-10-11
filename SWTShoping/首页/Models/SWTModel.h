@@ -186,7 +186,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *username;
 @property(nonatomic,strong)NSString *orderstatus;
 @property(nonatomic,strong)NSString *value;
-//@property(nonatomic,strong)NSString *o;
+@property(nonatomic,strong)NSString *nowprice;
 //@property(nonatomic,strong)NSString *o;
 //@property(nonatomic,strong)NSString *o;
 //@property(nonatomic,strong)NSString *o;
@@ -245,7 +245,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *lotinfo;
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *childorderinfo;
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *sharedict;
-//@property(nonatomic,strong)NSMutableArray<SWTModel *> *doctorAppoints;
+@property(nonatomic,strong)NSMutableArray<SWTModel *> *livegoodlist;
 //@property(nonatomic,strong)NSMutableArray<SWTModel *> *weightNub;
 //@property(nonatomic,strong)NSMutableArray<SWTModel *> *bloodpressureNub;
 //@property(nonatomic,strong)NSMutableArray<SWTModel *> *heartrateNub;
