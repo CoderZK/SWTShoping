@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SWTZhiBoYiKouJiaFootView : UIView
 @property(nonatomic,strong)SWTModel  *model;
 @property(nonatomic,assign)BOOL isOrder;
+@property(nonatomic,assign)BOOL isSiJia;
 @property(nonatomic , strong)RACSubject *delegateSignal;
 @end
 

@@ -182,13 +182,21 @@
 - (void)payAction {
     
     if (self.payType == 100) {
-        [UMSPPPayUnifyPayPlugin payWithPayChannel:CHANNEL_WEIXIN
-                                          payData:self.payDataJsonStr
-                                    callbackBlock:^(NSString *resultCode, NSString *resultInfo) {
-            NSLog(@"=====---\n%@",resultInfo);
-            
-            
-        }];
+        
+        WXLaunchMiniProgramReq *launchMiniProgramReq = [WXLaunchMiniProgramReq object];
+        launchMiniProgramReq.userName = @"wx42f7270dbfb675d0";  //拉起的小程序的username-原始ID
+        launchMiniProgramReq.path = self.payDataJsonStr;    //拉起小程序页面的可带参路径，不填默认拉起小程首页
+        launchMiniProgramReq.miniProgramType = WXMiniProgramTypeRelease; //拉起小程序的类型
+        [WXApi sendReq:launchMiniProgramReq completion:nil];
+        
+        
+//        [UMSPPPayUnifyPayPlugin payWithPayChannel:CHANNEL_WEIXIN
+//                                          payData:self.payDataJsonStr
+//                                    callbackBlock:^(NSString *resultCode, NSString *resultInfo) {
+//            NSLog(@"=====---\n%@",resultInfo);
+//
+//
+//        }];
     }else if (self.payType == 101) {
         
         //        NSDictionary * dictionary = @{@"qrCode": @"https://qr.alipay.com/bax09163hdue268uttgh005b"};

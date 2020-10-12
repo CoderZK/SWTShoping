@@ -376,7 +376,14 @@
     dict[@"starttime"] = [NSString stringWithFormat:@"%@:00",self.timeStr];
     dict[@"endtime"] = [NSString stringWithFormat:@"%@:00",self.endTimeStr];
     dict[@"img"] = self.imgStr;
-    dict[@"type"] = @(self.type-100);
+    
+    if (self.type == 100) {
+        dict[@"type"] = @(1);
+    }else if (self.type == 101) {
+        dict[@"type"] = @(0);
+    }else {
+        dict[@"type"] = @(2);
+    }
     dict[@"yanshi"] = self.yanShiTime;
     dict[@"liveid"] = self.liveid;
     dict[@"tomemberid"] = self.tomemberid;

@@ -101,7 +101,7 @@
         
     }else if (button.tag == 103){
         if (self.delegateSignal) {
-            [self.delegateSignal sendNext:@"123"];
+            [self.delegateSignal sendNext:@"-1"];
         }
     }
 }
@@ -125,6 +125,12 @@
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"您出价:%0.2f 成功",self.priceTF.text.doubleValue]];
+            
+//            if (self.delegateSignal) {
+//                [self.delegateSignal sendNext:self.priceTF.text];
+//            }
+            
+            
         }else {
             [SVProgressHUD showErrorWithStatus:responseObject[@"msg"]];
         }

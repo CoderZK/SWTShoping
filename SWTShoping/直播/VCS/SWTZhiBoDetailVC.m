@@ -25,6 +25,7 @@
 #import "SWTZhiBoYiKouJiaFootView.h"
 #import "SWTZhiBoJiaPaiFootView.h"
 #import "SWTZhiBoGeRenShowView.h"
+#import "SWTTiJiaoOrderTVC.h"
 @interface SWTZhiBoDetailVC ()<V2TIMAdvancedMsgListener,V2TIMGroupListener,PLPlayerDelegate,SWTZhiBoGeRenShowViewDelegate>
 @property(nonatomic , strong)SWTZhiBoHedView *headV; // 头视图
 @property(nonatomic , strong)SWTZhiBoBottomView *bottomV;
@@ -43,6 +44,7 @@
 @property(nonatomic , strong)SWTZhiBoPeopleComeInView *comeInV;
 @property(nonatomic,strong)SWTZhiBoFootView *zhiBoFootV;
 @property(nonatomic,strong)SWTZhiBoYiKouJiaFootView *yiKouJiaFootView;
+@property(nonatomic,strong)SWTZhiBoYiKouJiaFootView *siJiaFootV;
 @property(nonatomic,strong)SWTZhiBoJiaPaiFootView *jingPaiFootV;
 //推流部分
 @property (nonatomic, strong) PLMediaStreamingSession *session;
@@ -52,9 +54,10 @@
 @property(nonatomic,assign)BOOL isPushVC;
 @property(nonatomic,strong)NSTimer *timer;
 @property(nonatomic,strong)SWTJiShiFaBuView *shishiView;
-@property(nonatomic,strong)SWTModel *shishiModel;
+@property(nonatomic,strong)SWTModel *shishiModel,*siJiaModel;
 //播流部分
 @property (nonatomic, strong) PLPlayer  *player;
+@property(nonatomic,strong)NSString *jingPaiJiaGeStr;
 
 @end
 
@@ -102,22 +105,51 @@
         _yiKouJiaFootView = [[SWTZhiBoYiKouJiaFootView alloc] initWithFrame:CGRectMake(0, 0, (ScreenW -30)/4 * 3, 110)];
         _yiKouJiaFootView.delegateSignal = [[RACSubject alloc] init];
         @weakify(self);
-        [_yiKouJiaFootView.delegateSignal subscribeNext:^(NSNumber * x) {
+        [_yiKouJiaFootView.delegateSignal subscribeNext:^(SWTModel * x) {
             @strongify(self);
             
-            //                SWTModel * model  = [self.heMaiArr firstObject];
-            //                SWTMineHeMaiTiJiaoOrderTVC * vc =[[SWTMineHeMaiTiJiaoOrderTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-            //                vc.hidesBottomBarWhenPushed = YES;
-            //                model.merchid = self.dataModel.merchid;
-            //                model.store_name = self.dataModel.name;
-            //                vc.model = model;
-            //                self.isPushVC = YES;
-            //                [self.navigationController pushViewController:vc animated:YES];
+            SWTTiJiaoOrderTVC * vc =[[SWTTiJiaoOrderTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+            vc.hidesBottomBarWhenPushed = YES;
+            //                    vc.moneyStr =  [NSString stringWithFormat:@"%0.2f",x.intValue * self.dataModel.price.floatValue];
+            vc.numStr = @"1";
+            vc.goodID = self.shishiModel.ID;
+            vc.merchID = self.dataModel.merchid;
+            self.shishiModel.goodid = self.shishiModel.ID;
+            self.shishiModel.goodprice = self.shishiModel.price;
+            self.shishiModel.goodimg = self.shishiModel.img;
+            vc.model = self.shishiModel;
+            [self.navigationController pushViewController:vc animated:YES];
             
         }];
     }
     return _yiKouJiaFootView;
 }
+
+- (SWTZhiBoYiKouJiaFootView *)siJiaFootV {
+  if (_siJiaFootV == nil) {
+            _siJiaFootV = [[SWTZhiBoYiKouJiaFootView alloc] initWithFrame:CGRectMake(0, 0, (ScreenW -30)/4 * 3, 110)];
+            _siJiaFootV.delegateSignal = [[RACSubject alloc] init];
+            @weakify(self);
+            [_siJiaFootV.delegateSignal subscribeNext:^(SWTModel * x) {
+                @strongify(self);
+                
+                SWTTiJiaoOrderTVC * vc =[[SWTTiJiaoOrderTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+                vc.hidesBottomBarWhenPushed = YES;
+                //                    vc.moneyStr =  [NSString stringWithFormat:@"%0.2f",x.intValue * self.dataModel.price.floatValue];
+                vc.numStr = @"1";
+                vc.goodID = x.ID;
+                vc.merchID = self.dataModel.merchid;
+                x.goodid = x.ID;
+                x.goodprice = x.price;
+                x.goodimg = x.img;
+                vc.model = self.shishiModel;
+                [self.navigationController pushViewController:vc animated:YES];
+                
+            }];
+        }
+        return _siJiaFootV;
+    }
+
 
 - (SWTZhiBoJiaPaiFootView *)jingPaiFootV {
     if (_jingPaiFootV == nil) {
@@ -126,16 +158,6 @@
         @weakify(self);
         [_jingPaiFootV.delegateSignal subscribeNext:^(NSNumber * x) {
             @strongify(self);
-            
-            //                SWTModel * model  = [self.heMaiArr firstObject];
-            //                SWTMineHeMaiTiJiaoOrderTVC * vc =[[SWTMineHeMaiTiJiaoOrderTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-            //                vc.hidesBottomBarWhenPushed = YES;
-            //                model.merchid = self.dataModel.merchid;
-            //                model.store_name = self.dataModel.name;
-            //                vc.model = model;
-            //                self.isPushVC = YES;
-            //                [self.navigationController pushViewController:vc animated:YES];
-            
             //变化底部状态栏
             self.bottomV.hidden = YES;
             self.chuJiaBottomV.hidden = NO;
@@ -218,6 +240,9 @@
     self.mineHeMaiArr = @[].mutableCopy;
     self.AVCharRoomArr = @[].mutableCopy;
     
+    
+//
+    
     if (self.isHeMai) {
         [self getMineHeMaiDingZhiListWithType:0];//获取我的合买列表
         [self getGoodsListData]; //店铺合买列表
@@ -241,7 +266,7 @@
     }else {
         [self getLivegoodListDataWithType:0]; //获取竞拍和一口价列表
         
-        //天机一口价浮窗
+        //一口价浮窗
         [self.view addSubview:self.yiKouJiaFootView];
         [self.yiKouJiaFootView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.view).offset(10);
@@ -271,6 +296,21 @@
         self.jingPaiFootV.isOrder = self.isTuiLiu;
         self.jingPaiFootV.hidden = YES;
         
+        //私价浮窗
+        [self.view addSubview:self.siJiaFootV];
+        [self.siJiaFootV mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.view).offset(10);
+            if (sstatusHeight > 20) {
+                make.bottom.equalTo(self.view).offset(-(94+110));
+            }else {
+                make.bottom.equalTo(self.view).offset(-(50+110));
+            }
+            make.width.equalTo(@(ScreenW - 30 - 30));
+            make.height.equalTo(@110);
+        }];
+        self.siJiaFootV.isSiJia = YES;
+        self.siJiaFootV.isOrder = self.isTuiLiu;
+        self.siJiaFootV.hidden = YES;
         
     }
     
@@ -450,7 +490,7 @@
             [self gaunZhuActionwithType:1];
         }else if (x.intValue == 100) {
             //点击发送按钮
-            [self sendMessage];
+            [self sendMessageWityType:@"0"];
         }
         
         
@@ -470,16 +510,19 @@
             self.bottomV.model = self.dataModel;
             
             if (self.dataModel.livegoodlist.count > 0) {
+                
                 self.shishiModel = [self.dataModel.livegoodlist firstObject];
-                if (self.shishiModel.type.intValue == 0) {
+                if (self.shishiModel.type.intValue == 1) {
                     //竞拍
                     self.jingPaiFootV.hidden = NO;
                     self.jingPaiFootV.model = self.shishiModel;
+                    self.chuJiaBottomV.model = self.shishiModel;
 
-                }else if (self.shishiModel.type.intValue == 1) {
+                }else if (self.shishiModel.type.intValue == 0) {
                     //一口价
                     self.yiKouJiaFootView.hidden = NO;
                     self.yiKouJiaFootView.model = self.shishiModel;
+                    
 
                 }else if (self.shishiModel.type.intValue == 2) {
                     //私价
@@ -634,10 +677,17 @@
     }];
     self.chuJiaBottomV.delegateSignal = [[RACSubject alloc] init]; 
     @weakify(self);
-    [self.chuJiaBottomV.delegateSignal subscribeNext:^(NSNumber * x) {
+    [self.chuJiaBottomV.delegateSignal subscribeNext:^(NSString * x) {
         @strongify(self);
-        self.bottomV.hidden = NO;
-        self.chuJiaBottomV.hidden = YES;
+        if ([x isEqualToString:@"-1"]) {
+            self.bottomV.hidden = NO;
+            self.chuJiaBottomV.hidden = YES;
+        }else {
+//            self.jingPaiJiaGeStr = [NSString stringWithFormat:@"%@",x];
+//            [self sendMessageWityType:@"7"];
+            
+        }
+        
     }];
     
     
@@ -690,6 +740,7 @@
         
     } fail:^(int code, NSString *desc) {
         NSLog(@"%@",@"进入直播间失败");
+        [SVProgressHUD showErrorWithStatus:@"加入聊天室失败"];
     }];
     
 }
@@ -705,14 +756,17 @@
 }
 
 //发送消息
-- (void)sendMessage {
+- (void)sendMessageWityType:(NSString *)type {
     
     if ([self.dataModel.livegroupid isEqualToString:@"0"] ||  [[NSString stringWithFormat:@"%@",self.dataModel.livegroupid] isEqualToString:@"(null)"]) {
         [SVProgressHUD showErrorWithStatus:@"直播间无效!"];
         return;
     }
-    
-    V2TIMMessage * cusMsg = [[V2TIMManager sharedInstance] createCustomMessage:[@{@"type":@"0",@"data":self.bottomV.TF.text} mj_JSONData]];
+    NSMutableDictionary * dict = @{@"type":type,@"data":self.bottomV.TF.text}.mutableCopy;
+    if (type.intValue == 7) {
+        dict[@"data"] = self.jingPaiJiaGeStr;
+    }
+    V2TIMMessage * cusMsg = [[V2TIMManager sharedInstance] createCustomMessage:[dict mj_JSONData]];
     
     
     [[V2TIMManager sharedInstance] sendMessage:cusMsg receiver:nil groupID:self.dataModel.livegroupid priority:(V2TIM_PRIORITY_DEFAULT) onlineUserOnly:NO offlinePushInfo:nil progress:^(uint32_t progress) {
@@ -723,8 +777,11 @@
         SWTModel * model = [[SWTModel alloc] init];
         model.avatar = [zkSignleTool shareTool].avatar;
         model.content = self.bottomV.TF.text;
+        if (type.intValue == 7) {
+            model.content = [NSString stringWithFormat:@"出价%@元",self.jingPaiJiaGeStr.getPriceAllStr];
+        }
         model.nickname = [zkSignleTool shareTool].nickname;
-        model.type = @"0";
+        model.type = type;
         model.levelcode = [zkSignleTool shareTool].level;
         model.ID = [zkSignleTool shareTool].session_uid;
         [self.AVCharRoomArr addObject:model];
@@ -752,7 +809,7 @@
     if ([dict.allKeys containsObject:@"type"]) {
         
         NSInteger  tempType = [NSString stringWithFormat:@"%@",dict[@"type"]].intValue;
-        if (tempType > 1) {
+        if (tempType > 0) {
             if (tempType == 2 || tempType == 9) {
                 //2发布合买全部都看的见, 9 有人购买刷新浮窗
                 [self getGoodsListData];
@@ -765,6 +822,11 @@
                 [self getShiShiGoodDataWithtype:@"0"];
             }else if (tempType == 6) {
                 [self getShiShiGoodDataWithtype:@"1"];
+            }else if (tempType == 1) {
+                [self getShiShiGoodDataWithtype:@"1"];
+                 model.content = dict[@"data"];
+                [self.AVCharRoomArr addObject:model];
+                self.avChatRoomView.dataArr = self.AVCharRoomArr;
             }
         }else {
             model.type = [NSString stringWithFormat:@"%@",dict[@"type"]];
@@ -903,24 +965,55 @@
         if ([responseObject[@"code"] intValue]== 200) {
             NSArray<SWTModel *> * arr = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
             if (arr.count > 0) {
-                self.shishiModel = [arr firstObject];
-                if (type.intValue == 0) {
+                
+                if (type.intValue == 1) {
                     //竞拍
+                    self.shishiModel = [arr firstObject];
                     self.jingPaiFootV.hidden = NO;
                     self.jingPaiFootV.model = self.shishiModel;
+                    self.chuJiaBottomV.model = self.shishiModel;
                     
-                }else if (type.intValue == 1) {
+                }else if (type.intValue == 0) {
                     //一口价
+                    self.shishiModel = [arr firstObject];
                     self.yiKouJiaFootView.hidden = NO;
                     self.yiKouJiaFootView.model = self.shishiModel;
                     
                 }else if (type.intValue == 2) {
                     //私价
+                    self.siJiaModel = [arr firstObject];
+                    if ([[zkSignleTool shareTool].session_uid isEqualToString:self.siJiaModel.tomemberid]) {
+                        self.siJiaFootV.hidden = NO;
+                        self.siJiaFootV.model = self.siJiaModel;
+                        
+                        if (self.shishiModel != nil) {
+                            [self.siJiaFootV mas_updateConstraints:^(MASConstraintMaker *make) {
+                                if (sstatusHeight > 20) {
+                                    make.bottom.equalTo(self.view).offset(-(94+110));
+                                }else {
+                                    make.bottom.equalTo(self.view).offset(-(50+110));
+                                }
+                            }];
+                        }else {
+                            [self.siJiaFootV mas_updateConstraints:^(MASConstraintMaker *make) {
+                                if (sstatusHeight > 20) {
+                                    make.bottom.equalTo(self.view).offset(-(94));
+                                }else {
+                                    make.bottom.equalTo(self.view).offset(-(50));
+                                }
+                            }];
+                        }
+                        
+                    }else {
+                        self.siJiaFootV.hidden = YES;
+                    }
+                    
                 }
             }else {
                 self.shishiModel = nil;
                 self.yiKouJiaFootView.hidden = YES;
                 self.jingPaiFootV.hidden = YES;
+                self.siJiaFootV.hidden = YES;
             }
             
             
@@ -956,8 +1049,8 @@
     };
     [self.avChatRoomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
-        make.bottom.equalTo(self.bottomV.mas_top).offset(-30);
-        make.height.equalTo(@(ScreenH/2.0));
+        make.bottom.equalTo(self.bottomV.mas_top).offset(-220);
+        make.height.equalTo(@200);
     }];
     
 }

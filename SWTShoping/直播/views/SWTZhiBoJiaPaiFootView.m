@@ -143,7 +143,7 @@
     self.jiaJiaLB.text =  [NSString stringWithFormat:@"￥%@",model.nowprice];
     [LSTTimer removeAllTimer];
     Weak(weakSelf);
-    [LSTTimer addTimerForTime:model.resttimes.intValue /1000 handle:^(NSString * _Nonnull day, NSString * _Nonnull hour, NSString * _Nonnull minute, NSString * _Nonnull second, NSString * _Nonnull ms) {
+    [LSTTimer addTimerForTime:model.resttime.intValue /1000 handle:^(NSString * _Nonnull day, NSString * _Nonnull hour, NSString * _Nonnull minute, NSString * _Nonnull second, NSString * _Nonnull ms) {
         if (day.intValue + hour.intValue + minute.intValue + second.intValue <= 0) {
             [weakSelf.timeBt setTitle:@"已结束" forState:UIControlStateNormal];
         }else {

@@ -11,7 +11,7 @@
 @interface SWTZhiBoYiKouJiaFootView()
 @property(nonatomic,strong)UIView *wihteV,*redV;
 @property(nonatomic,strong)UIImageView *imgV;
-@property(nonatomic,strong)UILabel *titleLB,*jiaJiaLB,*numberLB,*typeOneLB,*typeTwoLB;
+@property(nonatomic,strong)UILabel *titleLB,*jiaJiaLB,*numberLB,*typeOneLB,*typeTwoLB,*LB;
 @property(nonatomic,strong)UIButton *timeBt,*rightBt;
 
 
@@ -55,6 +55,7 @@
             make.bottom.top.right.equalTo(self.redV);
             
         }];
+        self.LB = lb;
         
         self.imgV = [[UIImageView alloc] init];
         self.imgV.image = [UIImage imageNamed:@"369"];
@@ -127,6 +128,10 @@
     return self;
 }
 
+- (void)setIsSiJia:(BOOL)isSiJia {
+    _isSiJia = isSiJia;
+    self.LB.text = @"秒杀(私价单)";
+}
 
 
 
@@ -142,7 +147,7 @@
 
 - (void)rightAction:(UIButton *)button {
     if (self.delegateSignal) {
-        [self.delegateSignal sendNext:@""];
+        [self.delegateSignal sendNext:self.model];
     }
 }
 @end

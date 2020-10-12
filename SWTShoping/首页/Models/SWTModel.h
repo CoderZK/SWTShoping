@@ -141,6 +141,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *levelcode;
 @property(nonatomic,strong)NSString *orderid;
 @property(nonatomic,strong)NSString *resttimes;
+@property(nonatomic,strong)NSString *resttime;
 @property(nonatomic,strong)NSString *realprice;
 @property(nonatomic,strong)NSString *coupons;
 @property(nonatomic,strong)NSString *expressinfo;
@@ -187,7 +188,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *orderstatus;
 @property(nonatomic,strong)NSString *value;
 @property(nonatomic,strong)NSString *nowprice;
-//@property(nonatomic,strong)NSString *o;
+@property(nonatomic,strong)NSString *tomemberid;
 //@property(nonatomic,strong)NSString *o;
 //@property(nonatomic,strong)NSString *o;
 //@property(nonatomic,strong)NSString *o;
