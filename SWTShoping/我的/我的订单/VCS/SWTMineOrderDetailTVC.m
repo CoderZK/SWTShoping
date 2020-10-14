@@ -476,9 +476,13 @@
                 });
             }else if (type == 3) {
                 [SVProgressHUD showSuccessWithStatus:@"退款完成"]; 
-                [LTSCEventBus sendEvent:@"tuikuan" data:nil];
-          
-                [self getData];
+               
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    
+                     [LTSCEventBus sendEvent:@"tuikuan" data:nil];
+                     [self getData];
+                });
+                
                 
                 
             }else if (type == 2) {

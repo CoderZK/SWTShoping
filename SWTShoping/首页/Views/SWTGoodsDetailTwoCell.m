@@ -58,6 +58,7 @@
             [LTSCEventBus sendEvent:@"timeover" data:@""];
             [LSTTimer removeAllTimer];
         }else {
+            [LTSCEventBus sendEvent:@"timerun" data:@""];
             if (day > 0) {
                self.timeLB.text = [NSString stringWithFormat:@"剩余时间: %@天%@:%@:%@",day,hour,minute,second];
             }else {

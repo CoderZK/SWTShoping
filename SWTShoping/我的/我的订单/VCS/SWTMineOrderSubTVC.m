@@ -178,7 +178,7 @@
         vc.model = model;
         [self.navigationController pushViewController:vc animated:YES];
         
-    }else if ([button.titleLabel.text containsString:@"售后"] ) {
+    }else if ([button.titleLabel.text containsString:@"售后"] || [button.titleLabel.text isEqualToString:@"退款"]) {
         SWTTiJiaoTuiHuoTwoTVC * vc =[[SWTTiJiaoTuiHuoTwoTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
         vc.hidesBottomBarWhenPushed = YES;
         vc.model = model;

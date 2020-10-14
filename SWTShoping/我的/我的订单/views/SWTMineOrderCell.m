@@ -350,12 +350,20 @@
                 
                  self.rightTwoBt.hidden = self.rightThreeBt.hidden = YES;
                 self.rightOneBt.hidden = NO;
-                [self.rightTwoBt setTitle:@"退款" forState:UIControlStateNormal];
+                [self.rightOneBt setTitle:@"退款" forState:UIControlStateNormal];
                 if (model.commentstatus.intValue == 0) {
                     [self.rightTwoBt setTitle:@" 评价 " forState:UIControlStateNormal];
                     self.rightTwoBt.hidden = NO;
+                    if (model.type.integerValue == 3) {
+                        self.rightOneBt.hidden = YES;
+                    }
                 }else {
-                    self.rightTwoBt.hidden = YES;
+                    self.rightOneBt.hidden = YES;
+                    self.rightTwoBt.hidden = NO;
+                    [self.rightTwoBt setTitle:@"退款" forState:UIControlStateNormal];\
+                    if (model.type.integerValue == 3) {
+                        self.rightTwoBt.hidden = YES;
+                    }
                 }
                 
                 
@@ -400,7 +408,8 @@
     
     
     if (self.isShangJia) {
-        //商家端
+        
+        
         if (self.status.intValue == 0 || self.status.intValue == 1) {
             self.rightTwoBt.hidden = self.rightOneBt.hidden = NO;
             [self.rightOneBt setTitle:@" 拒绝 " forState:UIControlStateNormal];
@@ -410,12 +419,38 @@
                 if (mjModel.sn.length > 0) {
                     [self.rightTwoBt setTitle:@" 完成 " forState:UIControlStateNormal];
                 }else {
-                   [self.rightTwoBt setTitle:@" 同意退货退款 " forState:UIControlStateNormal];
-                }
                 
+                   [self.rightTwoBt setTitle:@" 同意退货退款 " forState:UIControlStateNormal];
+                    if (self.status.integerValue == 1) {
+                        [self.rightTwoBt setTitle:@"退款" forState:UIControlStateNormal];
+                    }
+                }
+
             }
-            
+
         }
+        
+//        //商家端
+//        if (self.status.intValue == 0 || self.status.intValue == 1) {
+//            self.rightTwoBt.hidden = self.rightOneBt.hidden = NO;
+//            [self.rightOneBt setTitle:@" 拒绝 " forState:UIControlStateNormal];
+//            if (mjModel.refundtype.intValue == 1) {
+//
+//
+//                [self.rightTwoBt setTitle:@"退款" forState:UIControlStateNormal];
+//
+//
+//
+//            }else {
+//                if (mjModel.sn.length > 0) {
+//                    [self.rightTwoBt setTitle:@" 完成 " forState:UIControlStateNormal];
+//                }else {
+//                   [self.rightTwoBt setTitle:@" 同意退货退款 " forState:UIControlStateNormal];
+//                }
+//
+//            }
+//
+//        }
     }else {
         
         if (mjModel.backstatus.intValue == 1) {

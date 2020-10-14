@@ -170,7 +170,7 @@
         
         [self.leftTwoLb mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.leftimgV.mas_right).offset(5);
-            make.right.equalTo(self.numberAndMoneyLB.mas_left).offset(-10);
+//            make.right.equalTo(self.numberAndMoneyLB.mas_left).offset(-10);
             make.top.equalTo(self.leftOneLB.mas_bottom).offset(7);
             make.height.equalTo(@17);
         }];
@@ -200,7 +200,7 @@
         }];
         
         [self.typeTwoLB mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.leftimgV.mas_right).offset(5);
+            make.left.equalTo(self.leftimgV.mas_right).offset(50);
             make.top.equalTo(self.leftOneLB.mas_bottom).offset(8);
             make.height.equalTo(@15);
         }];
@@ -244,12 +244,16 @@
     [self.leftimgV sd_setImageWithURL:[model.thumb getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
     self.leftOneLB.text = model.goodname;
     if (self.type == 1) {
-        self.rightImgV.hidden =self.typeTwoLB.hidden  =YES;
-        self.leftTwoLb.hidden =self.numberAndMoneyLB.hidden = NO;
+        self.rightImgV.hidden = YES;
+        self.leftTwoLb.hidden =self.numberAndMoneyLB.hidden = self.typeTwoLB.hidden = NO;
         self.leftThreeLB.textColor = CharacterColor70;
         self.leftTwoLb.text = [NSString stringWithFormat:@"x%@份",model.goodnum];;
         self.numberAndMoneyLB.text =  [NSString stringWithFormat:@"￥%@",model.goodprice.getPriceAllStr];
         self.typeOneLB.text = [NSString stringWithFormat:@"%@",model.material];
+        self.typeTwoLB.text = [NSString stringWithFormat:@"%@号签",model.lot_no];;
+//        [self.typeTwoLB mas_updateConstraints:^(MASConstraintMaker *make) {
+//            make.left.equalTo(self.leftTwoLb.mas_right).offset(10);
+//        }];
         [self.shopNameBt setTitle:model.goodname forState:UIControlStateNormal];
         if (model.sharedict.count > 0) {
             self.leftThreeLB.text = [NSString stringWithFormat:@"%@小时后商家未发布抽签将自动退款",model.sharedict.firstObject.value];

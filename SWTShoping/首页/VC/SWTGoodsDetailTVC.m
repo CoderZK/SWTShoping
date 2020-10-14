@@ -80,6 +80,13 @@
 
     }];
     
+    [LTSCEventBus registerEvent:@"timerun" block:^(id data) {
+           if (!self.isYiKouJia && self.dataModel != nil) {
+              [self.bottomView.chujiaBt setTitle:@"出价" forState:UIControlStateNormal];
+           }
+
+       }];
+    
     
     self.page = 1;
     self.dataArray = @[].mutableCopy;
@@ -95,6 +102,9 @@
     }];
     
 
+    [LSTTimer addTimerForTime:3600 identifier:@"listTimer" handle:nil];
+          //配置通知发送和计时任务绑定 没有配置 就不会有通知发送
+    [LSTTimer setNotificationForName:@"ListChangeNF" identifier:@"listTimer" changeNFType:LSTTimerSecondChangeNFTypeMS];
 
     
     
@@ -246,10 +256,8 @@
                 if (self.dataModel.resttimes.length == 0 && self.dataModel != nil) {
                    [self.bottomView.chujiaBt setTitle:@"已结束" forState:UIControlStateNormal];
                 }
-                [LSTTimer removeAllTimer];
-                [LSTTimer addTimerForTime:3600 identifier:@"listTimer" handle:nil];
-                      //配置通知发送和计时任务绑定 没有配置 就不会有通知发送
-                [LSTTimer setNotificationForName:@"ListChangeNF" identifier:@"listTimer" changeNFType:LSTTimerSecondChangeNFTypeMS];
+               
+                
                 
             }
         
@@ -302,6 +310,9 @@
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if (self.dataModel == nil) {
+        return 0;
+    }
     if (self.isYiKouJia) {
         return 3;
     }
@@ -400,7 +411,7 @@
             SWTGoodsDetailTwoCell  * cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTGoodsDetailTwoCell" forIndexPath:indexPath];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.model = self.dataModel;
-            cell.timeInterval = self.dataModel.resttimes > 0 ?  self.dataModel.resttimes.doubleValue /1000.0 : 0;
+            cell.timeInterval = self.dataModel.resttimes > 0 ?  self.dataModel.resttimes.doubleValue / 1000.0 : 0;
             cell.delegateSignal = [[RACSubject alloc] init];
             @weakify(self);
             [cell.delegateSignal subscribeNext:^(NSNumber * x) {

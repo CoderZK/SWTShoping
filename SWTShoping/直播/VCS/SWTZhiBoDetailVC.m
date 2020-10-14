@@ -753,7 +753,15 @@
         NSLog(@"%@",@"退出直播间失败");
     }];
 }
-
+// 群解散
+- (void)onGroupDismissed:(NSString *)groupID opUser:(V2TIMGroupMemberInfo *)opUser {
+    
+    [SVProgressHUD showErrorWithStatus:@"直播已关闭"];
+    [self addBoLiu];
+    
+    
+    
+}
 //发送消息
 - (void)sendMessageWityType:(NSString *)type {
     
@@ -1233,9 +1241,7 @@
     NSLog(@"error===%@",error);
     if (error.code == -1005) {
         if (!self.isTuiLiu) {
-            [SVProgressHUD showErrorWithStatus:@"直播已关闭"];
-             
-            [self addBoLiu];
+            
         }
     }
     
