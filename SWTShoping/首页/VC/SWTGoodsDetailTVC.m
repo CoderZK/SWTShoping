@@ -44,9 +44,7 @@
     
     [self getData];
     
-    [LSTTimer addTimerForTime:7200 identifier:@"listTimer" handle:nil];
-       //配置通知发送和计时任务绑定 没有配置 就不会有通知发送
-    [LSTTimer setNotificationForName:@"ListChangeNF" identifier:@"listTimer" changeNFType:LSTTimerSecondChangeNFTypeMS];
+   
 
 }
 
@@ -54,7 +52,7 @@
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
-    [LSTTimer removeTimerForIdentifier:@"listTimer"];
+
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -97,11 +95,15 @@
     }];
     
 
-    
+
     
     
 }
 
+
+- (void)dealloc {
+    [LSTTimer removeAllTimer];
+}
 
 
 - (void)addHeadV {
@@ -241,9 +243,14 @@
                 [self.bottomView.chujiaBt setTitle:@"立即购买" forState:UIControlStateNormal];
             }else {
                 [self.bottomView.chujiaBt setTitle:@"出个价" forState:UIControlStateNormal];
-                if (self.dataModel.resttimes.length == 0) {
+                if (self.dataModel.resttimes.length == 0 && self.dataModel != nil) {
                    [self.bottomView.chujiaBt setTitle:@"已结束" forState:UIControlStateNormal];
                 }
+                [LSTTimer removeAllTimer];
+                [LSTTimer addTimerForTime:3600 identifier:@"listTimer" handle:nil];
+                      //配置通知发送和计时任务绑定 没有配置 就不会有通知发送
+                [LSTTimer setNotificationForName:@"ListChangeNF" identifier:@"listTimer" changeNFType:LSTTimerSecondChangeNFTypeMS];
+                
             }
         
             [self.tableView reloadData];

@@ -146,6 +146,11 @@
     [LSTTimer addTimerForTime:model.resttime.intValue /1000 handle:^(NSString * _Nonnull day, NSString * _Nonnull hour, NSString * _Nonnull minute, NSString * _Nonnull second, NSString * _Nonnull ms) {
         if (day.intValue + hour.intValue + minute.intValue + second.intValue <= 0) {
             [weakSelf.timeBt setTitle:@"已结束" forState:UIControlStateNormal];
+            
+            [LSTTimer removeAllTimer];
+            if (self.isOrder) {
+                [self tiJiaoOrderAction];
+            }
         }else {
             [weakSelf.timeBt setTitle:[NSString stringWithFormat:@"%@天%@小时%@分%@秒",day,hour,minute,second] forState:UIControlStateNormal];
         }
@@ -155,9 +160,29 @@
     self.rightBt.hidden = self.isOrder;
 }
 
+
+- (void)tiJiaoOrderAction{
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"goodid"] = self.model.ID;
+    dict[@"liveid"] = self.model.liveid;
+    [zkRequestTool networkingPOST:livegenerorder2_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+        }else {
+            [SVProgressHUD showErrorWithStatus:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+       
+    }];
+}
+
 - (void)rightAction:(UIButton *)button {
     if (self.delegateSignal) {
-        [self.delegateSignal sendNext:@""];
+        [self.delegateSignal sendNext:@"123"];
     }
 }
 

@@ -203,15 +203,14 @@
 }
 
 - (void)tuihuoActionOne {
-    if (self.TV.text.length == 0) {
-        [SVProgressHUD showErrorWithStatus:@"请输入退款描述"];
-        return;
-    }
+//    if (self.TV.text.length == 0) {
+//        [SVProgressHUD showErrorWithStatus:@"请输入退款描述"];
+//        return;
+//    }
     if (self.picArr.count > 0) {
         [self updateImage];
     }else {
-        [SVProgressHUD showErrorWithStatus:@"请添加图片"];
-        return;
+         [self tuihuoActionTwo];;
     }
 }
 
@@ -242,9 +241,9 @@
         [SVProgressHUD showErrorWithStatus:@"请选择原因"];
         return;
     }
-    if (self.TV.text.length == 0) {
-        [SVProgressHUD showErrorWithStatus:@"请输入退款或者退货描述"];
-    }
+//    if (self.TV.text.length == 0) {
+//        [SVProgressHUD showErrorWithStatus:@"请输入退款或者退货描述"];
+//    }
     
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;

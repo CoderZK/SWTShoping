@@ -185,7 +185,12 @@
     dict[@"goodid"] = self.goodID;
     dict[@"couponid"] = self.zheKouID;
     dict[@"addressid"] = self.addressModel.ID;
-    [zkRequestTool networkingPOST: orderSubmit_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+    dict[@"liveid"] = self.model.liveid;
+    NSString * url = orderSubmit_SWT;
+    if (self.isComeZhiBo) {
+        url = livegenerorder1_SWT;
+    }
+    [zkRequestTool networkingPOST:url  parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         [SVProgressHUD dismiss];

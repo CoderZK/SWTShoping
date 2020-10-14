@@ -348,7 +348,9 @@
             }else if (model.status.intValue == 4) {
                 self.statusLB.text = @" 已完成 ";
                 
-                self.rightOneBt.hidden = self.rightTwoBt.hidden = self.rightThreeBt.hidden = YES;
+                 self.rightTwoBt.hidden = self.rightThreeBt.hidden = YES;
+                self.rightOneBt.hidden = NO;
+                [self.rightTwoBt setTitle:@"退款" forState:UIControlStateNormal];
                 if (model.commentstatus.intValue == 0) {
                     [self.rightTwoBt setTitle:@" 评价 " forState:UIControlStateNormal];
                     self.rightTwoBt.hidden = NO;

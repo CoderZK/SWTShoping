@@ -156,12 +156,11 @@
         _jingPaiFootV = [[SWTZhiBoJiaPaiFootView alloc] initWithFrame:CGRectMake(0, 0, (ScreenW -30)/4 * 3, 110)];
         _jingPaiFootV.delegateSignal = [[RACSubject alloc] init];
         @weakify(self);
-        [_jingPaiFootV.delegateSignal subscribeNext:^(NSNumber * x) {
+        [_jingPaiFootV.delegateSignal subscribeNext:^(NSString * x) {
             @strongify(self);
-            //变化底部状态栏
-            self.bottomV.hidden = YES;
-            self.chuJiaBottomV.hidden = NO;
-            
+                //变化底部状态栏
+                self.bottomV.hidden = YES;
+                self.chuJiaBottomV.hidden = NO;
         }];
     }
     return _jingPaiFootV;
@@ -827,6 +826,11 @@
                  model.content = dict[@"data"];
                 [self.AVCharRoomArr addObject:model];
                 self.avChatRoomView.dataArr = self.AVCharRoomArr;
+            }else if (tempType == 10) {
+                SWTModel * neiM = [SWTModel mj_objectWithKeyValues:[dict[@"data"] mj_JSONObject]];
+                neiM.img = self.shishiModel.img;
+                [self getShiShiGoodDataWithtype:@"1"];
+                [self showJiapaiHuodezheWithModel:neiM];
             }
         }else {
             model.type = [NSString stringWithFormat:@"%@",dict[@"type"]];
@@ -843,6 +847,31 @@
     
     
 }
+//展示谁获得了竞拍
+- (void)showJiapaiHuodezheWithModel:(SWTModel * )model {
+    if ([[zkSignleTool shareTool].session_uid isEqualToString:model.userid]) {
+        
+        self.huoDeShowView = [[SWTHuoDeShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+        self.huoDeShowView.model = model;
+        [self.huoDeShowView show];
+        self.huoDeShowView.delegateSignal = [[RACSubject alloc] init];
+        @weakify(self);
+        [self.huoDeShowView.delegateSignal subscribeNext:^(SWTModel * x) {
+            @strongify(self);
+            
+            SWTPayVC * vc =[[SWTPayVC alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            vc.orderID = x.orderno;
+            vc.priceStr = model.price;
+            [self.navigationController pushViewController:vc animated:YES];
+            
+            
+        }];
+        
+    }
+    
+}
+
 
 //有新成员进入到群里面
 - (void)onMemberEnter:(NSString *)groupID memberList:(NSArray<V2TIMGroupMemberInfo *>*)memberList {
@@ -953,7 +982,7 @@
         
     }];
 }
-//获取实时直播商品
+//获取实时直播商品 type0一口价1拍卖2私卖
 - (void)getShiShiGoodDataWithtype:(NSString *)type {
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
@@ -1205,6 +1234,8 @@
     if (error.code == -1005) {
         if (!self.isTuiLiu) {
             [SVProgressHUD showErrorWithStatus:@"直播已关闭"];
+             
+            [self addBoLiu];
         }
     }
     

@@ -503,6 +503,9 @@
 #define merchpubliclivedgood_SWT URLOne@"merch/publiclivedgood"
 /** 禁言 */
 #define livesetlivesend_SWT URLOne@"live/setlivesend"
-
+/** 直播一口价和私加订单 */
+#define livegenerorder1_SWT URLOne@"live/generorder"
+/** 直播一竞拍订单 */
+#define livegenerorder2_SWT URLOne@"live/generorder2"
 
 #endif /* SWTURLDefineTool_h */

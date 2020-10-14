@@ -36,7 +36,7 @@
         
         UILabel * titleLB  = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,ww , 40)];
         titleLB.backgroundColor = RedColor;
-        titleLB.text = @"恭喜 139****6789 成功拍得";
+        titleLB.text = @"恭喜 **** 成功拍得";
         titleLB.font = kFont(14);
         titleLB.textColor = WhiteColor;
         titleLB.textAlignment = NSTextAlignmentCenter;
@@ -68,12 +68,12 @@
         
         moneyLb.textAlignment = NSTextAlignmentCenter;
         moneyLb.font = [UIFont systemFontOfSize:20 weight:0.3];
-        moneyLb.text =  [NSString stringWithFormat:@"￥%@",@"6100"];
+        moneyLb.text =  [NSString stringWithFormat:@"￥%@",@""];
         moneyLb.textColor = RedColor;
         [self.whiteV addSubview:moneyLb];
         
         UILabel * timeLB  = [[UILabel alloc] initWithFrame:CGRectMake(0,CGRectGetMaxY(moneyLb.frame) + 20 , ww-20, 17)];
-        timeLB.text = @"剩余有效时间: 8:52:58";
+        timeLB.text = @"剩余有效时间:";
         timeLB.font = kFont(13);
         timeLB.textColor = CharacterColor102;
         timeLB.textAlignment = NSTextAlignmentCenter;
@@ -82,8 +82,9 @@
         UIButton * payBt  =[[UIButton alloc] initWithFrame:CGRectMake(ww/2 - 60, CGRectGetMaxY(timeLB.frame) + 15, 120, 40)];
         [payBt setTitleColor:WhiteColor forState:UIControlStateNormal];
         payBt.titleLabel.font = kFont(14);
-        [payBt setTitle:@"支付6100" forState:UIControlStateNormal];
+        [payBt setTitle:@"支付" forState:UIControlStateNormal];
         payBt.layer.cornerRadius = 20;
+        [payBt addTarget:self action:@selector(payAction:) forControlEvents:UIControlEventTouchUpInside];
     
         payBt.clipsToBounds = YES;
         [self.whiteV addSubview:payBt];
@@ -102,7 +103,36 @@
     return self;
 }
 
+- (void)setModel:(SWTModel *)model {
+    _model = model;
+    self.titleLB.text = [NSString stringWithFormat:@"恭喜 %@ 成功拍得",model.username];
+    self.moneyLB.text = [NSString stringWithFormat:@"￥%@",model.price.getPriceAllStr];
+    [self.imgV sd_setImageWithURL:model.img.getPicURL placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
+    [LSTTimer removeAllTimer];
+    Weak(weakSelf);
+       [LSTTimer addTimerForTime:model.resttime.intValue /1000 handle:^(NSString * _Nonnull day, NSString * _Nonnull hour, NSString * _Nonnull minute, NSString * _Nonnull second, NSString * _Nonnull ms) {
+           if (day.intValue + hour.intValue + minute.intValue + second.intValue <= 0) {
+               weakSelf.timeLB.text = @"已结束";
+               [weakSelf dismiss];
+               [LSTTimer removeAllTimer];
+               
+           }else {
+               weakSelf.timeLB.text = [NSString stringWithFormat:@"剩余时间:%@",[NSString stringWithFormat:@"%@天%@小时%@分%@秒",day,hour,minute,second]];
+           }
+           
+       }];
 
+    
+    
+}
+
+
+- (void)payAction:(UIButton *)button {
+    [self dismiss];
+    if (self.delegateSignal) {
+        [self.delegateSignal sendNext:self.model];
+    }
+}
 
 - (void)show {
     [[UIApplication sharedApplication].keyWindow addSubview:self];

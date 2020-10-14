@@ -302,6 +302,7 @@
             self.isMoney = YES;
             zkPickView * pickV = [[zkPickView alloc] init];
             pickV.arrayType = titleArray;
+            pickV.selectLb.text = @"请缴纳店铺保证金";
             pickV.array = self.moneyArr;
             [pickV show];
             pickV.delegate = self;

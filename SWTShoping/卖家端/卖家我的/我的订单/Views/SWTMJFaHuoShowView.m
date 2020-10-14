@@ -73,9 +73,49 @@
         [self getData];
         
         
+        
+        //注册键盘出现的通知
+
+        [[NSNotificationCenter defaultCenter] addObserver:self
+
+                                                 selector:@selector(keyboardWasShown:)
+
+                                                     name:UIKeyboardWillShowNotification object:nil];
+
+        //注册键盘消失的通知
+
+        [[NSNotificationCenter defaultCenter] addObserver:self
+
+                                                 selector:@selector(keyboardWillBeHidden:)
+
+                                                     name:UIKeyboardWillHideNotification object:nil];
+        
     }
     
     return self;
+}
+
+- (void)keyboardWasShown:(NSNotification*)aNotification
+
+{
+
+    //键盘高度
+
+    CGRect keyBoardFrame = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    self.whiteV.mj_y = ScreenH - 500;
+    self.whiteV.mj_h = 500;
+
+}
+
+
+
+-(void)keyboardWillBeHidden:(NSNotification*)aNotification
+
+{
+
+    self.whiteV.mj_y = ScreenH - 350;
+    self.whiteV.mj_h = 350;
+
 }
 
 - (void)getData {
@@ -108,6 +148,7 @@
        pickV.selectLb.text = @"请选择快递公司";
        [pickV show];
        pickV.delegate = self;
+    
 }
 
 - (void)confirmAction{
@@ -124,6 +165,7 @@
         return;
     }
     if (self.delegateSignal) {
+        [self dismiss];
         [self.delegateSignal sendNext:@[self.TF.text,self.slectModel.ID,self.TFTwo.text,self.slectModel.express]];
     }
 }
@@ -151,6 +193,7 @@
     self.slectModel = self.dataArray[leftIndex];
     self.TFTwo.text = self.dataArray[leftIndex].name;
 }
+
 
 
 @end

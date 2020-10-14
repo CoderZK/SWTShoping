@@ -119,11 +119,11 @@
         [self.navigationController pushViewController:vc animated:YES];
     }else if ([button.titleLabel.text containsString:@"退款"]) {
         //
-        [self caozuoWithID:self.dataArray[button.tag].ID withType:3];
+        [self caozuoWithID:self.dataArray[button.tag].refundid withType:3];
     }else if ([button.titleLabel.text containsString:@"同意买家退货"]) {
-        [self caozuoWithID:self.dataArray[button.tag].ID withType:2];
+        [self caozuoWithID:self.dataArray[button.tag].refundid withType:2];
     }else if ([button.titleLabel.text containsString:@"驳回退款"]) {
-        [self caozuoWithID:self.dataArray[button.tag].ID withType:1];
+        [self caozuoWithID:self.dataArray[button.tag].refundid withType:1];
     }
 }
 
@@ -156,10 +156,7 @@
 }
 //发货
 - (void)faHuoActionWithModel:(SWTModel *)model {
-    
-    
-    
-    
+
     SWTMJFaHuoShowView * showV  =[[SWTMJFaHuoShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
     showV.delegateSignal = [[RACSubject alloc] init];
     @weakify(self);

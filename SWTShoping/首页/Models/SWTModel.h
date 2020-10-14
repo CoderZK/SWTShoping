@@ -189,9 +189,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *value;
 @property(nonatomic,strong)NSString *nowprice;
 @property(nonatomic,strong)NSString *tomemberid;
-//@property(nonatomic,strong)NSString *o;
-//@property(nonatomic,strong)NSString *o;
-//@property(nonatomic,strong)NSString *o;
+@property(nonatomic,strong)NSString *userid;
+@property(nonatomic,strong)NSString *orderno;
+@property(nonatomic,strong)NSString *refundid;
 //@property(nonatomic,strong)NSString *o;
 //@property(nonatomic,strong)NSString *o;
 //@property(nonatomic,strong)NSString *o;

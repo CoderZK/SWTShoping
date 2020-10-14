@@ -178,7 +178,7 @@
         vc.model = model;
         [self.navigationController pushViewController:vc animated:YES];
         
-    }else if ([button.titleLabel.text containsString:@"售后"]) {
+    }else if ([button.titleLabel.text containsString:@"售后"] ) {
         SWTTiJiaoTuiHuoTwoTVC * vc =[[SWTTiJiaoTuiHuoTwoTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
         vc.hidesBottomBarWhenPushed = YES;
         vc.model = model;
@@ -186,6 +186,30 @@
     }
     
 }
+
+//退款操作
+- (void)mjTuiKuanActionWtihModel:(SWTModel *)model {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"merOrderId"] = model.orderid;
+    dict[@"refundAmount"] =  [NSString stringWithFormat:@"%0.0f",model.realprice.floatValue * 100];
+    [zkRequestTool networkingPOST:payRefund_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSDictionary * dict = [responseObject[@"returninfo"] mj_JSONObject];
+        if ([dict.allKeys containsObject:@"errCode"] &&  [dict[@"errCode"] isEqualToString:@"SUCCESS"]) {
+            
+        }else {
+            [SVProgressHUD showErrorWithStatus:@"退款失败,请联系客服"];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+
+}
+
 
 //左侧按钮
 - (void)rightOneAction:(UIButton *)button {
@@ -201,8 +225,11 @@
         vc.hidesBottomBarWhenPushed = YES;
         vc.ID = model.ID;
         [self.navigationController pushViewController:vc animated:YES];
-    }else if (model.status.intValue == 4) {
-        
+    }else if ([button.titleLabel.text isEqualToString:@"退款"]) {
+        SWTTiJiaoTuiHuoTwoTVC * vc =[[SWTTiJiaoTuiHuoTwoTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.model = model;
+        [self.navigationController pushViewController:vc animated:YES];
     }else if (model.status.intValue == 5) {
         
     }

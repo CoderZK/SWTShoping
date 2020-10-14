@@ -56,6 +56,7 @@
         if (day.intValue + hour.intValue + minute.intValue + second.intValue == 0) {
             self.timeLB.text = @"已结束";
             [LTSCEventBus sendEvent:@"timeover" data:@""];
+            [LSTTimer removeAllTimer];
         }else {
             if (day > 0) {
                self.timeLB.text = [NSString stringWithFormat:@"剩余时间: %@天%@:%@:%@",day,hour,minute,second];
