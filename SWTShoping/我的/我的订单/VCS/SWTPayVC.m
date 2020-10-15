@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *payBt;
 @property(nonatomic , assign)NSInteger  payType; // 100,101,102
 @property(nonatomic , strong)NSString *payDataJsonStr;
+@property(nonatomic , strong)NSDictionary *weixinpaydict;
 @end
 
 @implementation SWTPayVC
@@ -23,7 +24,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if (!self.isComeBaoZhengJin) {
-       [self getOrderStatus];
+        [self getOrderStatus];
     }
 }
 
@@ -68,7 +69,7 @@
         if ([responseObject[@"code"] intValue]== 200) {
             if (self.isComeBaoZhengJin) {
                 if ([responseObject[@"data"][@"status"] isEqualToString:@"SUCCESS"]) {
-                [SVProgressHUD showSuccessWithStatus:@"店铺保证金支付成功"];
+                    [SVProgressHUD showSuccessWithStatus:@"店铺保证金支付成功"];
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         [self.navigationController popToRootViewControllerAnimated:YES];
                     });
@@ -146,17 +147,33 @@
         
         NSDictionary * dict = [responseObject[@"returninfo"] mj_JSONObject];
         
-        if (dict != nil && [dict.allKeys containsObject:@"respStr"]) {
-            NSDictionary * dict2 = [dict[@"respStr"] mj_JSONObject];
-            if ( dict2 != nil && [dict2.allKeys containsObject:@"appPayRequest"]) {
+        if (dict != nil && [dict.allKeys containsObject:@"errCode"]) {
+            if ([[NSString stringWithFormat:@"%@",dict[@"errCode"]] isEqualToString:@"SUCCESS"]) {
+                //成功
+                NSDictionary * dict2 = [dict[@"respStr"] mj_JSONObject];
+                if (self.payType == 100) {
+                    if ( dict2 != nil && [dict2.allKeys containsObject:@"miniPayRequest"]) {
+                        self.weixinpaydict = dict2[@"miniPayRequest"];
+                        [self payAction];
+                    }
+                    
+                }else {
+                    if ( dict2 != nil && [dict2.allKeys containsObject:@"appPayRequest"]) {
+                        
+                        self.payDataJsonStr = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:dict2[@"appPayRequest"] options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
+                        //                self.orderID = responseObject[@"merOrderId"];
+                       
+                         [self payAction];
+                        
+                    }
+                }
                 
-                self.payDataJsonStr = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:dict2[@"appPayRequest"] options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
-//                self.orderID = responseObject[@"merOrderId"];
-                [self payAction];
                 
-                
+            }else {
+                [SVProgressHUD showErrorWithStatus:@"支付失败"];
             }
         }
+        
         
         //        if ([responseObject[@"code"] intValue]== 200) {
         //
@@ -185,18 +202,28 @@
         
         WXLaunchMiniProgramReq *launchMiniProgramReq = [WXLaunchMiniProgramReq object];
         launchMiniProgramReq.userName = @"wx42f7270dbfb675d0";  //拉起的小程序的username-原始ID
-        launchMiniProgramReq.path = self.payDataJsonStr;    //拉起小程序页面的可带参路径，不填默认拉起小程首页
+        NSArray * arr = self.weixinpaydict.allKeys;
+        NSString * str = @"";
+        for (int i = 0 ; i < arr.count; i++) {
+            if (i== 0) {
+                str = [NSString stringWithFormat:@"pages/index/index?%@=%@",arr,self.weixinpaydict[arr[i]]];
+            }else {
+                str = [NSString stringWithFormat:@"%@&%@=%@",str,arr,self.weixinpaydict[arr[i]]];
+            }
+            
+        }
+        launchMiniProgramReq.path = str;    //拉起小程序页面的可带参路径，不填默认拉起小程首页
         launchMiniProgramReq.miniProgramType = WXMiniProgramTypeRelease; //拉起小程序的类型
         [WXApi sendReq:launchMiniProgramReq completion:nil];
         
         
-//        [UMSPPPayUnifyPayPlugin payWithPayChannel:CHANNEL_WEIXIN
-//                                          payData:self.payDataJsonStr
-//                                    callbackBlock:^(NSString *resultCode, NSString *resultInfo) {
-//            NSLog(@"=====---\n%@",resultInfo);
-//
-//
-//        }];
+        //        [UMSPPPayUnifyPayPlugin payWithPayChannel:CHANNEL_WEIXIN
+        //                                          payData:self.payDataJsonStr
+        //                                    callbackBlock:^(NSString *resultCode, NSString *resultInfo) {
+        //            NSLog(@"=====---\n%@",resultInfo);
+        //
+        //
+        //        }];
     }else if (self.payType == 101) {
         
         //        NSDictionary * dictionary = @{@"qrCode": @"https://qr.alipay.com/bax09163hdue268uttgh005b"};

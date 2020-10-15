@@ -70,6 +70,7 @@
     
     if (self.dataModel != nil) {
         self.timer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(getNumberAction) userInfo:nil repeats:YES];
+        [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
     }
     
     self.isPushVC = NO;
@@ -524,7 +525,9 @@
                     
 
                 }else if (self.shishiModel.type.intValue == 2) {
-                    //私价
+//                    //私价
+//                    self.siJiaFootV.hidden = NO;
+//                    self.siJiaFootV.model = self.siJiaModel;
                 }
             }else {
                 self.shishiModel = nil;
@@ -682,8 +685,11 @@
             self.bottomV.hidden = NO;
             self.chuJiaBottomV.hidden = YES;
         }else {
-//            self.jingPaiJiaGeStr = [NSString stringWithFormat:@"%@",x];
-//            [self sendMessageWityType:@"7"];
+            self.jingPaiJiaGeStr = [NSString stringWithFormat:@"%@",x];
+            [self sendMessageWityType:@"1"];
+            self.shishiModel.nowprice = x;
+            self.jingPaiFootV.model = self.shishiModel;
+//            [self getShiShiGoodDataWithtype:@"1"];
             
         }
         
@@ -695,7 +701,7 @@
 // 获取正在合的数据
 - (void)getGoodsListData {
     
-    [SVProgressHUD show];
+  
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"liveid"] = self.model.ID;
     [zkRequestTool networkingPOST:shareGoodlist_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -770,7 +776,7 @@
         return;
     }
     NSMutableDictionary * dict = @{@"type":type,@"data":self.bottomV.TF.text}.mutableCopy;
-    if (type.intValue == 7) {
+    if (type.intValue == 1) {
         dict[@"data"] = self.jingPaiJiaGeStr;
     }
     V2TIMMessage * cusMsg = [[V2TIMManager sharedInstance] createCustomMessage:[dict mj_JSONData]];
@@ -784,8 +790,8 @@
         SWTModel * model = [[SWTModel alloc] init];
         model.avatar = [zkSignleTool shareTool].avatar;
         model.content = self.bottomV.TF.text;
-        if (type.intValue == 7) {
-            model.content = [NSString stringWithFormat:@"出价%@元",self.jingPaiJiaGeStr.getPriceAllStr];
+        if (type.intValue == 1) {
+            model.content = [NSString stringWithFormat:@"%@",self.jingPaiJiaGeStr.getPriceAllStr];
         }
         model.nickname = [zkSignleTool shareTool].nickname;
         model.type = type;
@@ -797,6 +803,9 @@
         
     } fail:^(int code, NSString *desc) {
         NSLog(@"%@",@"发送失败");
+        if (code == 10017) {
+            [SVProgressHUD showErrorWithStatus:@"您已经被主播禁言一天"];
+        }
     }];
     
 }
@@ -830,8 +839,11 @@
             }else if (tempType == 6) {
                 [self getShiShiGoodDataWithtype:@"1"];
             }else if (tempType == 1) {
-                [self getShiShiGoodDataWithtype:@"1"];
-                 model.content = dict[@"data"];
+//                [self getShiShiGoodDataWithtype:@"1"];
+                model.content = [NSString stringWithFormat:@"出价:%@元",dict[@"data"]];;
+                model.type = @"1";
+                self.shishiModel.newprice = [NSString stringWithFormat:@"%@",dict[@"data"]];
+                self.jingPaiFootV.model = self.shishiModel;
                 [self.AVCharRoomArr addObject:model];
                 self.avChatRoomView.dataArr = self.AVCharRoomArr;
             }else if (tempType == 10) {
@@ -870,7 +882,7 @@
             SWTPayVC * vc =[[SWTPayVC alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
             vc.orderID = x.orderno;
-            vc.priceStr = model.price;
+            vc.priceStr = x.price;
             [self.navigationController pushViewController:vc animated:YES];
             
             
@@ -992,7 +1004,7 @@
 }
 //获取实时直播商品 type0一口价1拍卖2私卖
 - (void)getShiShiGoodDataWithtype:(NSString *)type {
-    [SVProgressHUD show];
+ 
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"type"] = type;
     dict[@"liveid"] = self.dataModel.liveid;
@@ -1079,7 +1091,7 @@
         if (model.type.intValue == 0 || model.type.intValue == 1) {
             SWTZhiBoGeRenShowView * gerenShowView  = [[SWTZhiBoGeRenShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenH, ScreenH)];
             gerenShowView.model = model;
-            
+            gerenShowView.liveid = weakSelf.dataModel.liveid;
             gerenShowView.delegate = self;
             [gerenShowView show];
         }
@@ -1096,9 +1108,10 @@
     
     //发布实时商品私价
     SWTJiShiFaBuView * shishiView = [[SWTJiShiFaBuView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
-    shishiView.isSiJia = NO;
+    shishiView.isSiJia = YES;
     shishiView.tomemberid = model.ID;
     shishiView.liveid = self.dataModel.liveid;
+    shishiView.maiJiaName = model.nickname;
     shishiView.delegateSignal = [[RACSubject alloc] init];
     @weakify(self);
     [shishiView.delegateSignal subscribeNext:^(id  x) {

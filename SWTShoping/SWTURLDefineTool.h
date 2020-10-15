@@ -45,6 +45,9 @@
 #define goodNewprice_SWT URLOne@"good/newprice"
 /**出价*/
 #define goodOffer_SWT URLOne@"good/offer"
+/**直播出价*/
+#define liveoffer_SWT URLOne@"live/offer"
+
 
 #pragma mark ---- 商户信息接口  -----
 /** 加入黑名单 */
@@ -503,9 +506,9 @@
 #define merchpubliclivedgood_SWT URLOne@"merch/publiclivedgood"
 /** 禁言 */
 #define livesetlivesend_SWT URLOne@"live/setlivesend"
-/** 直播一口价和私加订单 */
-#define livegenerorder1_SWT URLOne@"live/generorder"
 /** 直播一竞拍订单 */
+#define livegenerorder1_SWT URLOne@"live/generorder"
+/** 直播一口价和私加订单 */
 #define livegenerorder2_SWT URLOne@"live/generorder2"
 
 #endif /* SWTURLDefineTool_h */

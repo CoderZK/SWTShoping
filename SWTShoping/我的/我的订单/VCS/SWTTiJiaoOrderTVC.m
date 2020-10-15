@@ -188,7 +188,7 @@
     dict[@"liveid"] = self.model.liveid;
     NSString * url = orderSubmit_SWT;
     if (self.isComeZhiBo) {
-        url = livegenerorder1_SWT;
+        url = livegenerorder2_SWT;
     }
     [zkRequestTool networkingPOST:url  parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];

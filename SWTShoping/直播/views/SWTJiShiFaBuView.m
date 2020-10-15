@@ -372,21 +372,22 @@
     NSMutableDictionary  * dict = @{}.mutableCopy;
     dict[@"name"] = self.nameStr;
     dict[@"price"] = self.diJiaStr;
-    dict[@"stepprice"] = self.jiaJiaStr;
-    dict[@"starttime"] = [NSString stringWithFormat:@"%@:00",self.timeStr];
-    dict[@"endtime"] = [NSString stringWithFormat:@"%@:00",self.endTimeStr];
     dict[@"img"] = self.imgStr;
     
     if (self.type == 100) {
         dict[@"type"] = @(1);
+        dict[@"stepprice"] = self.jiaJiaStr;
+        dict[@"starttime"] = [NSString stringWithFormat:@"%@:00",self.timeStr];
+        dict[@"endtime"] = [NSString stringWithFormat:@"%@:00",self.endTimeStr];
+        dict[@"yanshi"] = self.yanShiTime;
     }else if (self.type == 101) {
         dict[@"type"] = @(0);
     }else {
         dict[@"type"] = @(2);
+        dict[@"tomemberid"] = self.tomemberid;
     }
-    dict[@"yanshi"] = self.yanShiTime;
     dict[@"liveid"] = self.liveid;
-    dict[@"tomemberid"] = self.tomemberid;
+    
     
     [SVProgressHUD show];
     [zkRequestTool networkingPOST:merchpubliclivedgood_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {

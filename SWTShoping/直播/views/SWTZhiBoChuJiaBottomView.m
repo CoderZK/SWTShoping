@@ -110,7 +110,7 @@
     _model = model;
     [self.leftBt setTitle:[NSString stringWithFormat:@"-%@",model.stepprice] forState:UIControlStateNormal];
     [self.rightBt setTitle:[NSString stringWithFormat:@"+%@",model.stepprice] forState:UIControlStateNormal];
-    self.priceTF.text = model.price;
+    self.priceTF.text = model.nowprice;
     
 }
 
@@ -120,15 +120,15 @@
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"goodid"]= self.model.ID;
     dict[@"price"] = [NSString stringWithFormat:@"%0.2f",self.priceTF.text.doubleValue];;
-    dict[@"userid"] = [zkSignleTool shareTool].session_uid;
-    [zkRequestTool networkingPOST:goodOffer_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+//    dict[@"userid"] = [zkSignleTool shareTool].session_uid;
+    [zkRequestTool networkingPOST:liveoffer_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
-            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"您出价:%0.2f 成功",self.priceTF.text.doubleValue]];
             
-//            if (self.delegateSignal) {
-//                [self.delegateSignal sendNext:self.priceTF.text];
-//            }
+          
+            if (self.delegateSignal) {
+                [self.delegateSignal sendNext:self.priceTF.text];
+            }
             
             
         }else {

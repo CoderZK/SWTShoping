@@ -141,7 +141,6 @@
     [self.imgV sd_setImageWithURL:[model.img getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
     self.titleLB.text = model.name;
     self.jiaJiaLB.text =  [NSString stringWithFormat:@"￥%@",model.nowprice];
-    [LSTTimer removeAllTimer];
     Weak(weakSelf);
     [LSTTimer addTimerForTime:model.resttime.intValue /1000 handle:^(NSString * _Nonnull day, NSString * _Nonnull hour, NSString * _Nonnull minute, NSString * _Nonnull second, NSString * _Nonnull ms) {
         if (day.intValue + hour.intValue + minute.intValue + second.intValue <= 0) {
@@ -166,7 +165,7 @@
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"goodid"] = self.model.ID;
     dict[@"liveid"] = self.model.liveid;
-    [zkRequestTool networkingPOST:livegenerorder2_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+    [zkRequestTool networkingPOST:livegenerorder1_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {

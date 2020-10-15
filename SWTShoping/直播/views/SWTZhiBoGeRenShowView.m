@@ -103,6 +103,7 @@
         self.leftBt.clipsToBounds = YES;
         self.leftBt.titleLabel.font = kFont(13);
         self.leftBt.layer.borderColor = [UIColor orangeColor].CGColor;
+        [self.leftBt setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
         self.leftBt.layer.borderWidth= 0.5;
         [self.wihteV addSubview:self.leftBt];
         
@@ -143,11 +144,16 @@
 - (void)leftAction:(UIButton *)button {
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"liveid"] = self.liveid;
+    dict[@"times"] = @(24*3600);
+    dict[@"memberid"] = self.model.ID;
     [zkRequestTool networkingPOST:livesetlivesend_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
       
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
             
+            [SVProgressHUD showSuccessWithStatus:@"禁言成功"];
+            [self dismiss];
             
         }else {
             [SVProgressHUD showErrorWithStatus:responseObject[@"msg"]];
@@ -162,14 +168,16 @@
 
 - (void)rightAction:(UIButton *)button {
     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(clickChuangJianSiDanWithModel:)]) {
+        
         [self.delegate clickChuangJianSiDanWithModel:self.model];
+        [self dismiss];
     }
 }
 
 - (void)setModel:(SWTModel *)model {
     _model = model;
     self.nameLB.text = model.nickname;
-    [self.leftBt setTitle:model.levelcode forState:UIControlStateNormal];
+    [self.levelBt setTitle:model.levelcode forState:UIControlStateNormal];
     [self.imgV sd_setImageWithURL:[model.avatar getPicURL] placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
     
 }
