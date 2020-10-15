@@ -195,11 +195,26 @@
         }else if (lastM.elemType == V2TIM_ELEM_TYPE_IMAGE) {
             cell.contentLB.text = @"图片";
         }
-        NSDictionary * dict = [conVerSation.showName mj_JSONObject];
-        if ([dict.allKeys containsObject:@"nickname"]) {
-            cell.nameLB.text = dict[@"nickname"];
+       id  tempDataTwo = [lastM.nickName mj_JSONObject];
+        if ([tempDataTwo isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *dict = (NSDictionary *)tempDataTwo;
+            if ([dict.allKeys containsObject:@"nickname"]) {
+                cell.nameLB.text = dict[@"nickname"];
+            }else {
+                cell.nameLB.text = @"";
+            }
         }else {
-            cell.nameLB.text = @"";
+            id tempOne = conVerSation.showName ;
+            if ([[tempOne mj_JSONObject] isKindOfClass:[NSDictionary class]]) {
+                NSDictionary *dict = (NSDictionary *)[tempOne mj_JSONObject];
+                if ([dict.allKeys containsObject:@"nickname"]) {
+                    cell.nameLB.text = dict[@"nickname"];
+                }else {
+                    cell.nameLB.text = @"";
+                }
+            }else {
+                cell.nameLB.text = tempOne;
+            }
         }
         [cell.imgV sd_setImageWithURL:[lastM.faceURL getPicURL] placeholderImage:[UIImage imageNamed:@"369"] completed:nil];
         if (conVerSation.unreadCount >  0) {

@@ -98,7 +98,7 @@
         }else {
             return NO;
         }
-    }] subscribeNext:^(NSString * _Nullable x) {
+    }] subscribeNext:^(NSString *  x) {
         NSLog(@"======\n%@",x);
         self.isSearch = YES;
         self.searchArr = @[].mutableCopy;
@@ -188,7 +188,12 @@
     
     if (self.type == 1) {
         SWTMJAddZhiBoShangPinCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTMJAddZhiBoShangPinCell" forIndexPath:indexPath];
-        cell.model = self.dataArray[indexPath.row];
+        if (self.isSearch) {
+            cell.model = self.searchArr[indexPath.row];
+        }else {
+            cell.model = self.dataArray[indexPath.row];
+        }
+        
         return cell;
     }else {
         SWTAddVideoTypeCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
