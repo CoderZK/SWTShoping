@@ -54,27 +54,27 @@
     }else {
         
         
-        TUIConversationListController *vc = [[TUIConversationListController alloc] init];
-        vc.delegate = self;
-        
-        [self addChildViewController:vc];
-        [self.view addSubview:vc.view];
-        
-//        self.ListArr = @[].mutableCopy;
-//         self.stepNext = 0;
-//           self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+//        TUIConversationListController *vc = [[TUIConversationListController alloc] init];
+//        vc.delegate = self;
 //
-//               self.stepNext = 0;
-//               [self getList];
-//           }];
-//
-//           self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-//               if (self.ListArr.count < 50) {
-//                   [self.tableView.mj_footer endRefreshing];
-//                   return;
-//               }
-//               [self getList];
-//           }];
+//        [self addChildViewController:vc];
+//        [self.view addSubview:vc.view];
+        
+        self.ListArr = @[].mutableCopy;
+         self.stepNext = 0;
+           self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+
+               self.stepNext = 0;
+               [self getList];
+           }];
+
+           self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+               if (self.ListArr.count < 50) {
+                   [self.tableView.mj_footer endRefreshing];
+                   return;
+               }
+               [self getList];
+           }];
         
         
     }

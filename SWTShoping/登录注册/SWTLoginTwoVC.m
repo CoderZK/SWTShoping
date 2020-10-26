@@ -196,6 +196,9 @@
     
     [[V2TIMManager sharedInstance] login:[zkSignleTool shareTool].session_uid userSig:[zkSignleTool shareTool].userSig succ:^{
         NSLog(@"%@",@"登录腾讯成功");
+        
+        [LTSCEventBus sendEvent:@"imlogin" data:nil];
+        
     } fail:^(int code, NSString *desc) {
         NSLog(@"%@",@"登录腾旭失败");
     }];

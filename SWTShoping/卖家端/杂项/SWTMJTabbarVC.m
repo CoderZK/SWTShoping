@@ -31,14 +31,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    Weak(weakSelf);
-    [LTSCEventBus registerEvent:@"showmessage" block:^(NSNumber * data) {
-        if (data.intValue == 1) {
-            [weakSelf.tabBar showBadgeIndex:2];
-        }else {
-            [weakSelf.tabBar hideBadgeIndex:2];
-        }
-    }];
+//    Weak(weakSelf);
+//    [LTSCEventBus registerEvent:@"showmessage" block:^(NSNumber * data) {
+//        if (data.intValue == 1) {
+//            [weakSelf.tabBar showBadgeIndex:2];
+//        }else {
+//            [weakSelf.tabBar hideBadgeIndex:2];
+//        }
+//    }];
+//    
+//    [LTSCEventBus registerEvent:@"hiddenmessage" block:^(NSNumber * data) {
+//          [weakSelf.tabBar hideBadgeIndex:2];
+//       }];
     
     NSArray *imgArr=@[@"bbdyx18",@"bbdyx20",@"bbdyx22",@"bbdyx24"];
     NSArray *selectedImgArr=@[@"bbdyx19",@"bbdyx21",@"bbdyx23",@"bbdyx25"];

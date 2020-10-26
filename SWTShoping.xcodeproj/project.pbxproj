@@ -220,6 +220,7 @@
 		666C484D24D9AC6100DB6D8D /* SWTKeFuTwoNeiCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666C484C24D9AC6100DB6D8D /* SWTKeFuTwoNeiCell.m */; };
 		666C485124D9BC1400DB6D8D /* SWTHuoDeShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 666C485024D9BC1400DB6D8D /* SWTHuoDeShowView.m */; };
 		666C485424D9C4DA00DB6D8D /* SWTPeopleChuJiaVIew.m in Sources */ = {isa = PBXBuildFile; fileRef = 666C485324D9C4DA00DB6D8D /* SWTPeopleChuJiaVIew.m */; };
+		666C4A1B2546B70300DE4EB4 /* UITabBar+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = 666C4A192546B70200DE4EB4 /* UITabBar+Badge.m */; };
 		666C70D824B60C30002C11E1 /* SWTMienZuJiSubVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 666C70D724B60C30002C11E1 /* SWTMienZuJiSubVC.m */; };
 		666C70DB24B61165002C11E1 /* SWTFanKuiTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 666C70DA24B61165002C11E1 /* SWTFanKuiTVC.m */; };
 		666C70DE24B611C8002C11E1 /* SWTFanKuiOneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666C70DD24B611C8002C11E1 /* SWTFanKuiOneCell.m */; };
@@ -854,6 +855,8 @@
 		666C485024D9BC1400DB6D8D /* SWTHuoDeShowView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTHuoDeShowView.m; sourceTree = "<group>"; };
 		666C485224D9C4DA00DB6D8D /* SWTPeopleChuJiaVIew.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTPeopleChuJiaVIew.h; sourceTree = "<group>"; };
 		666C485324D9C4DA00DB6D8D /* SWTPeopleChuJiaVIew.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTPeopleChuJiaVIew.m; sourceTree = "<group>"; };
+		666C4A192546B70200DE4EB4 /* UITabBar+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBar+Badge.m"; sourceTree = "<group>"; };
+		666C4A1A2546B70300DE4EB4 /* UITabBar+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBar+Badge.h"; sourceTree = "<group>"; };
 		666C70D624B60C30002C11E1 /* SWTMienZuJiSubVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTMienZuJiSubVC.h; sourceTree = "<group>"; };
 		666C70D724B60C30002C11E1 /* SWTMienZuJiSubVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTMienZuJiSubVC.m; sourceTree = "<group>"; };
 		666C70D924B61165002C11E1 /* SWTFanKuiTVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTFanKuiTVC.h; sourceTree = "<group>"; };
@@ -1343,6 +1346,8 @@
 				337F3E5D20E9FE3C00C5526A /* ViewController.m */,
 				33DC822F20EA20D600D1C283 /* LYGuideViewController.h */,
 				33DC823220EA20D700D1C283 /* LYGuideViewController.m */,
+				666C4A1A2546B70300DE4EB4 /* UITabBar+Badge.h */,
+				666C4A192546B70200DE4EB4 /* UITabBar+Badge.m */,
 				33DC823120EA20D600D1C283 /* TabBarController.h */,
 				33DC823020EA20D600D1C283 /* TabBarController.m */,
 				337F3EBA20EA057600C5526A /* Header.pch */,
@@ -3562,6 +3567,7 @@
 				66721FEA24EECB1B00EC65A8 /* SWTMJAddZhiBoShangPinTVC.m in Sources */,
 				6670E04824C02B2700662F5D /* zkPickModel.m in Sources */,
 				666BB1CE24B059BA00341CE8 /* SWTGoodsDetailHeadV.m in Sources */,
+				666C4A1B2546B70300DE4EB4 /* UITabBar+Badge.m in Sources */,
 				666C484424D9A4D800DB6D8D /* SWTMineKeFuOneCell.m in Sources */,
 				6648B4E0251B98D900255DF1 /* MJAddGuanLiYuanTVC.m in Sources */,
 				666BFDC024BDF9E200719972 /* SWTModel.m in Sources */,
@@ -3763,7 +3769,7 @@
 				CODE_SIGN_ENTITLEMENTS = "SWTShoping/滴雨轩Debug.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 66YPJF76HN;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3787,6 +3793,7 @@
 					"$(PROJECT_DIR)/SWTShoping/支付SDK/ThirdPartyPaySDK/UMSPosPayOnly",
 					"$(PROJECT_DIR)/SWTShoping/支付SDK/ThirdPartyPaySDK/WeChat",
 				);
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wink.livemall;
 				PRODUCT_NAME = "滴雨轩";
 				PROVISIONING_PROFILE = "3bdcf4b3-e396-4d7a-ab2b-739f2269ddaa";
@@ -3807,7 +3814,7 @@
 				CODE_SIGN_ENTITLEMENTS = "SWTShoping/滴雨轩.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 66YPJF76HN;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3831,6 +3838,7 @@
 					"$(PROJECT_DIR)/SWTShoping/支付SDK/ThirdPartyPaySDK/UMSPosPayOnly",
 					"$(PROJECT_DIR)/SWTShoping/支付SDK/ThirdPartyPaySDK/WeChat",
 				);
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wink.livemall;
 				PRODUCT_NAME = "滴雨轩";
 				PROVISIONING_PROFILE_SPECIFIER = shopLiveDev;

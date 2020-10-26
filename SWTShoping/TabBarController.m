@@ -36,14 +36,16 @@
 {
     [super viewDidLoad];
     
-       Weak(weakSelf);
-       [LTSCEventBus registerEvent:@"showmessage" block:^(NSNumber * data) {
-           if (data.intValue == 1) {
-               [weakSelf.tabBar showBadgeIndex:2];
-           }else {
-               [weakSelf.tabBar hideBadgeIndex:2];
-           }
-       }];
+//       Weak(weakSelf);
+//       [LTSCEventBus registerEvent:@"showmessage" block:^(NSNumber * data) {
+//           if (data.intValue == 1) {
+//               [weakSelf.tabBar showBadgeOnItemIndex:2];
+//           }else {
+//               [weakSelf.tabBar hideBadgeOnItemIndex:2 animated:YES];
+//           }
+//       }];
+    
+    
     
     NSArray *imgArr=@[@"shouye00",@"shouye10",@"shouye20",@"shouye30"];
     NSArray *selectedImgArr=@[@"shouye01",@"shouye11",@"shouye21",@"shouye31"];
@@ -89,7 +91,7 @@
         //页面的bar上面的title值
         NSString *str3=[barTitleArr objectAtIndex:i];
         vc.tabBarItem.title=str3;
-        self.tabBar.tintColor=[UIColor blackColor];
+        
         
         //给每个页面添加导航栏
         BaseNavigationController *nav=[[BaseNavigationController alloc] initWithRootViewController:vc];
@@ -98,8 +100,9 @@
  
  
     self.viewControllers=arr;
-    _mineNavi = arr.lastObject;
+//    _mineNavi = arr.lastObject;
     self.tabBar.barTintColor = [UIColor whiteColor];
+    self.tabBar.tintColor=[UIColor blackColor];
 }
 
 

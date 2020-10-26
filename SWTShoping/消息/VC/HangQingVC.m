@@ -26,6 +26,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    self.stepNext = 0;
+    [self getList];
+    
 //    if (self.ListArr.count ==  0) {
 //        self.stepNext = 0;
 //        [self getList];
@@ -39,61 +43,61 @@
     [super viewDidLoad];
     self.navigationItem.title = @"消息";
     
-    TUIConversationListController *vc = [[TUIConversationListController alloc] init];
-    vc.delegate = self;
-    self.cVC = vc;
-    
-    [self addChildViewController:vc];
-    [self.view addSubview:vc.view];
-    
-    
-//    [self.tableView registerNib:[UINib nibWithNibName:@"SWTMessageOneCell" bundle:nil] forCellReuseIdentifier:@"cell"];
+//    TUIConversationListController *vc = [[TUIConversationListController alloc] init];
+//    vc.delegate = self;
+//    self.cVC = vc;
 //
-//    self.dataArray = @[].mutableCopy;
-////    [self getData];
-//    self.ListArr = @[].mutableCopy;
-//    self.stepNext = 0;
-//
-//    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-////        [self getData];
-//        self.stepNext = 0;
-//        [self getList];
-//    }];
+//    [self addChildViewController:vc];
+//    [self.view addSubview:vc.view];
+    
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"SWTMessageOneCell" bundle:nil] forCellReuseIdentifier:@"cell"];
+
+    self.dataArray = @[].mutableCopy;
+//    [self getData];
+    self.ListArr = @[].mutableCopy;
+    self.stepNext = 0;
+
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+//        [self getData];
+        self.stepNext = 0;
+        [self getList];
+    }];
     
     
  
     
-//    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-//        if (self.ListArr.count < 50) {
-//            [self.tableView.mj_footer endRefreshing];
-//            return;
-//        }
-//        [self getList];
-//    }];
-//
-//
-//
-//    Weak(weakSelf);
-//    self.noneView.clickBlock = ^{
-//
-//        [weakSelf getList];
-////        [weakSelf getData];
-//    };
-//
-//
-//    [LTSCEventBus registerEvent:@"diss" block:^(id data) {
-//        [self.ListArr removeAllObjects];
-//        [self.tableView reloadData];
-//    }];
-//
-//
-//    [LTSCEventBus registerEvent:@"cmessage" block:^(id data) {
-//
-//        self.stepNext = 0;
-//        [self getList];
-//
-//
-//    }];
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        if (self.ListArr.count < 50) {
+            [self.tableView.mj_footer endRefreshing];
+            return;
+        }
+        [self getList];
+    }];
+
+
+
+    Weak(weakSelf);
+    self.noneView.clickBlock = ^{
+
+        [weakSelf getList];
+//        [weakSelf getData];
+    };
+
+
+    [LTSCEventBus registerEvent:@"diss" block:^(id data) {
+        [self.ListArr removeAllObjects];
+        [self.tableView reloadData];
+    }];
+
+
+    [LTSCEventBus registerEvent:@"cmessage" block:^(id data) {
+
+        self.stepNext = 0;
+        [self getList];
+
+
+    }];
     
     
     

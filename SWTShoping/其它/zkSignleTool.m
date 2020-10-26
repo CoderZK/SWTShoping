@@ -31,6 +31,15 @@ static zkSignleTool * tool = nil;
     return [[NSUserDefaults standardUserDefaults] boolForKey:@"isLogin"];
 }
 
+- (void)setIsDiYici:(BOOL)isDiYici {
+    [[NSUserDefaults standardUserDefaults] setBool:isDiYici forKey:@"isDiYici"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (BOOL)isDiYici {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"isDiYici"];
+}
+
 - (void)setIsHeMaiDianPu:(BOOL)isHeMaiDianPu {
     [[NSUserDefaults standardUserDefaults] setBool:isHeMaiDianPu forKey:@"isHeMaiDianPu"];
     [[NSUserDefaults standardUserDefaults] synchronize];

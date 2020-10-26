@@ -8,7 +8,7 @@
 
 #import "UITabBar+RedTabBar.h"
 
-static NSInteger const badgeTag = 200; //红点起始tag值
+static NSInteger const badgeTag = 600; //红点起始tag值
 static NSInteger const pointWidth = 6; //小红点的宽高
 static NSInteger const rightRange = 9; //距离tabBar右边的距离
 
@@ -30,14 +30,22 @@ static NSInteger const rightRange = 9; //距离tabBar右边的距离
     // 设置小红点的位置
     int i = 0;
     for (UIView *subView in self.subviews){
+        
+       
+        
         if ([subView isKindOfClass:NSClassFromString(@"UITabBarButton")]){
             //找到需要加小红点的view，根据frame设置小红点的位置
+  
+             NSLog(@"frme ==== %d ==== %@",i,subView);
+            
             if (i == index) {
                 //向右边的偏移量，可以根据具体情况调整
                 CGFloat x = subView.frame.origin.x + subView.frame.size.width / 2 + rightRange;
                 CGFloat y = pointWidth / 2;
                 badgeView.frame = CGRectMake(x, y, pointWidth, pointWidth);
-                break;
+                
+                NSLog(@"==== 展示的 %d ----%@",i,subView);
+                
             }
             i++;
         }

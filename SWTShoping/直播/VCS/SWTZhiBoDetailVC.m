@@ -66,7 +66,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
-    [[V2TIMManager sharedInstance] addAdvancedMsgListener:self];
+//    [[V2TIMManager sharedInstance] addAdvancedMsgListener:self];
     
     if (self.dataModel != nil) {
         self.timer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(getNumberAction) userInfo:nil repeats:YES];
@@ -128,30 +128,30 @@
 }
 
 - (SWTZhiBoYiKouJiaFootView *)siJiaFootV {
-  if (_siJiaFootV == nil) {
-            _siJiaFootV = [[SWTZhiBoYiKouJiaFootView alloc] initWithFrame:CGRectMake(0, 0, (ScreenW -30)/4 * 3, 110)];
-            _siJiaFootV.delegateSignal = [[RACSubject alloc] init];
-            @weakify(self);
-            [_siJiaFootV.delegateSignal subscribeNext:^(SWTModel * x) {
-                @strongify(self);
-                
-                SWTTiJiaoOrderTVC * vc =[[SWTTiJiaoOrderTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
-                vc.hidesBottomBarWhenPushed = YES;
-                //                    vc.moneyStr =  [NSString stringWithFormat:@"%0.2f",x.intValue * self.dataModel.price.floatValue];
-                vc.numStr = @"1";
-                vc.goodID = x.ID;
-                vc.isComeZhiBo = YES;
-                vc.merchID = self.dataModel.merchid;
-                x.goodid = x.ID;
-                x.goodprice = x.price;
-                x.goodimg = x.img;
-                vc.model = self.siJiaModel;
-                [self.navigationController pushViewController:vc animated:YES];
-                
-            }];
-        }
-        return _siJiaFootV;
+    if (_siJiaFootV == nil) {
+        _siJiaFootV = [[SWTZhiBoYiKouJiaFootView alloc] initWithFrame:CGRectMake(0, 0, (ScreenW -30)/4 * 3, 110)];
+        _siJiaFootV.delegateSignal = [[RACSubject alloc] init];
+        @weakify(self);
+        [_siJiaFootV.delegateSignal subscribeNext:^(SWTModel * x) {
+            @strongify(self);
+            
+            SWTTiJiaoOrderTVC * vc =[[SWTTiJiaoOrderTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
+            vc.hidesBottomBarWhenPushed = YES;
+            //                    vc.moneyStr =  [NSString stringWithFormat:@"%0.2f",x.intValue * self.dataModel.price.floatValue];
+            vc.numStr = @"1";
+            vc.goodID = x.ID;
+            vc.isComeZhiBo = YES;
+            vc.merchID = self.dataModel.merchid;
+            x.goodid = x.ID;
+            x.goodprice = x.price;
+            x.goodimg = x.img;
+            vc.model = self.siJiaModel;
+            [self.navigationController pushViewController:vc animated:YES];
+            
+        }];
     }
+    return _siJiaFootV;
+}
 
 
 - (SWTZhiBoJiaPaiFootView *)jingPaiFootV {
@@ -161,9 +161,9 @@
         @weakify(self);
         [_jingPaiFootV.delegateSignal subscribeNext:^(NSString * x) {
             @strongify(self);
-                //变化底部状态栏
-                self.bottomV.hidden = YES;
-                self.chuJiaBottomV.hidden = NO;
+            //变化底部状态栏
+            self.bottomV.hidden = YES;
+            self.chuJiaBottomV.hidden = NO;
         }];
     }
     return _jingPaiFootV;
@@ -209,10 +209,10 @@
     [self addBottomV];
     [self addChuJiaBottomV];
     [self initChatRoomV];
-    Weak(weakSelf);
-    [LTSCEventBus registerEvent:@"cmessage" block:^(V2TIMMessage * data) {
-        [weakSelf resiveIMmessage:data];
-    }];
+        Weak(weakSelf);
+        [LTSCEventBus registerEvent:@"cmessage" block:^(V2TIMMessage * data) {
+            [weakSelf resiveIMmessage:data];
+        }];
     
     
     self.chuJiaBottomV.hidden = YES;
@@ -245,7 +245,7 @@
     self.AVCharRoomArr = @[].mutableCopy;
     
     
-//
+    //
     
     if (self.isHeMai) {
         [self getMineHeMaiDingZhiListWithType:0];//获取我的合买列表
@@ -521,17 +521,17 @@
                     self.jingPaiFootV.hidden = NO;
                     self.jingPaiFootV.model = self.shishiModel;
                     self.chuJiaBottomV.model = self.shishiModel;
-
+                    
                 }else if (self.shishiModel.type.intValue == 0) {
                     //一口价
                     self.yiKouJiaFootView.hidden = NO;
                     self.yiKouJiaFootView.model = self.shishiModel;
                     
-
+                    
                 }else if (self.shishiModel.type.intValue == 2) {
-//                    //私价
-//                    self.siJiaFootV.hidden = NO;
-//                    self.siJiaFootV.model = self.siJiaModel;
+                    //                    //私价
+                    //                    self.siJiaFootV.hidden = NO;
+                    //                    self.siJiaFootV.model = self.siJiaModel;
                 }
             }else {
                 self.shishiModel = nil;
@@ -681,7 +681,7 @@
             make.bottom.equalTo(self.view);
         }
     }];
-    self.chuJiaBottomV.delegateSignal = [[RACSubject alloc] init]; 
+    self.chuJiaBottomV.delegateSignal = [[RACSubject alloc] init];
     @weakify(self);
     [self.chuJiaBottomV.delegateSignal subscribeNext:^(NSString * x) {
         @strongify(self);
@@ -691,11 +691,11 @@
         }else {
             self.jingPaiJiaGeStr = [NSString stringWithFormat:@"%@",x];
             [self sendMessageWityType:@"1"];
-//            self.shishiModel.nowprice = x;
+            //            self.shishiModel.nowprice = x;
             self.jingPaiFootV.PriceStr = x;
-        
-//            self.jingPaiFootV.model = self.shishiModel;
-//            [self getShiShiGoodDataWithtype:@"1"];
+            
+            //            self.jingPaiFootV.model = self.shishiModel;
+            //            [self getShiShiGoodDataWithtype:@"1"];
             
         }
         
@@ -707,7 +707,7 @@
 // 获取正在合的数据
 - (void)getGoodsListData {
     
-  
+    
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"liveid"] = self.model.ID;
     [zkRequestTool networkingPOST:shareGoodlist_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -820,57 +820,57 @@
 - (void)resiveIMmessage:(V2TIMMessage *)msg {
     
     NSLog(@"message === \n %@",msg);
-        SWTModel * model = [[SWTModel alloc] init];
-        model.ID = msg.sender;
-        model.avatar = msg.faceURL;
-        NSDictionary * userDict = [msg.nickName mj_JSONObject];
-        NSData * data  = msg.customElem.data;
-        NSDictionary * dict = [data mj_JSONObject];
-        model.nickname = [userDict.allKeys containsObject:@"nickname"] ? userDict[@"nickname"]:@"??";
-        model.levelcode = [userDict.allKeys containsObject:@"levelcode"] ? userDict[@"levelcode"]:@"0";
-        if ([dict.allKeys containsObject:@"type"]) {
-            
-            NSInteger  tempType = [NSString stringWithFormat:@"%@",dict[@"type"]].intValue;
-            if (tempType > 0) {
-                if (tempType == 2 || tempType == 9) {
-                    //2发布合买全部都看的见, 9 有人购买刷新浮窗
-                    [self getGoodsListData];
-                }else if (tempType == 3) {
-                    //发布抽签
-                    [self getChouQianData];
-                }else if (tempType == 4) {
-                    [self getShiShiGoodDataWithtype:@"2"];
-                }else if (tempType == 5) {
-                    [self getShiShiGoodDataWithtype:@"0"];
-                }else if (tempType == 6) {
-                    [self getShiShiGoodDataWithtype:@"1"];
-                }else if (tempType == 1) {
-    //                [self getShiShiGoodDataWithtype:@"1"];
-                    model.content = [NSString stringWithFormat:@"出价:%@元",dict[@"data"]];;
-                    model.type = @"1";
-                    self.shishiModel.nowprice = [NSString stringWithFormat:@"%@",dict[@"data"]];
-//                    self.jingPaiFootV.model = self.shishiModel;
-                    self.jingPaiFootV.PriceStr = [NSString stringWithFormat:@"%@",dict[@"data"]];
-                    [self.AVCharRoomArr addObject:model];
-                    self.avChatRoomView.dataArr = self.AVCharRoomArr;
-                }else if (tempType == 10) {
-                    SWTModel * neiM = [SWTModel mj_objectWithKeyValues:[dict[@"data"] mj_JSONObject]];
-                    neiM.img = self.shishiModel.img;
-                    [self getShiShiGoodDataWithtype:@"1"];
-                    [self showJiapaiHuodezheWithModel:neiM];
-                }
-            }else {
-                model.type = [NSString stringWithFormat:@"%@",dict[@"type"]];
-                if ([dict.allKeys containsObject:@"data"]) {
-                    if ([NSString stringWithFormat:@"%@",dict[@"type"]].intValue == 0 || [NSString stringWithFormat:@"%@",dict[@"type"]].intValue == 1)
-                        model.content = dict[@"data"];
-                }
+    SWTModel * model = [[SWTModel alloc] init];
+    model.ID = msg.sender;
+    model.avatar = msg.faceURL;
+    NSDictionary * userDict = [msg.nickName mj_JSONObject];
+    NSData * data  = msg.customElem.data;
+    NSDictionary * dict = [data mj_JSONObject];
+    model.nickname = [userDict.allKeys containsObject:@"nickname"] ? userDict[@"nickname"]:@"??";
+    model.levelcode = [userDict.allKeys containsObject:@"levelcode"] ? userDict[@"levelcode"]:@"0";
+    if ([dict.allKeys containsObject:@"type"]) {
+        
+        NSInteger  tempType = [NSString stringWithFormat:@"%@",dict[@"type"]].intValue;
+        if (tempType > 0) {
+            if (tempType == 2 || tempType == 9) {
+                //2发布合买全部都看的见, 9 有人购买刷新浮窗
+                [self getGoodsListData];
+            }else if (tempType == 3) {
+                //发布抽签
+                [self getChouQianData];
+            }else if (tempType == 4) {
+                [self getShiShiGoodDataWithtype:@"2"];
+            }else if (tempType == 5) {
+                [self getShiShiGoodDataWithtype:@"0"];
+            }else if (tempType == 6) {
+                [self getShiShiGoodDataWithtype:@"1"];
+            }else if (tempType == 1) {
+                //                [self getShiShiGoodDataWithtype:@"1"];
+                model.content = [NSString stringWithFormat:@"出价:%@元",dict[@"data"]];;
+                model.type = @"1";
+                self.shishiModel.nowprice = [NSString stringWithFormat:@"%@",dict[@"data"]];
+                //                    self.jingPaiFootV.model = self.shishiModel;
+                self.jingPaiFootV.PriceStr = [NSString stringWithFormat:@"%@",dict[@"data"]];
                 [self.AVCharRoomArr addObject:model];
                 self.avChatRoomView.dataArr = self.AVCharRoomArr;
+            }else if (tempType == 10) {
+                SWTModel * neiM = [SWTModel mj_objectWithKeyValues:[dict[@"data"] mj_JSONObject]];
+                neiM.img = self.shishiModel.img;
+                [self getShiShiGoodDataWithtype:@"1"];
+                [self showJiapaiHuodezheWithModel:neiM];
             }
-            
-            
+        }else {
+            model.type = [NSString stringWithFormat:@"%@",dict[@"type"]];
+            if ([dict.allKeys containsObject:@"data"]) {
+                if ([NSString stringWithFormat:@"%@",dict[@"type"]].intValue == 0 || [NSString stringWithFormat:@"%@",dict[@"type"]].intValue == 1)
+                    model.content = dict[@"data"];
+            }
+            [self.AVCharRoomArr addObject:model];
+            self.avChatRoomView.dataArr = self.AVCharRoomArr;
         }
+        
+        
+    }
     
 }
 
@@ -902,11 +902,12 @@
 //            }else if (tempType == 6) {
 //                [self getShiShiGoodDataWithtype:@"1"];
 //            }else if (tempType == 1) {
-////                [self getShiShiGoodDataWithtype:@"1"];
+//                //                [self getShiShiGoodDataWithtype:@"1"];
 //                model.content = [NSString stringWithFormat:@"出价:%@元",dict[@"data"]];;
 //                model.type = @"1";
 //                self.shishiModel.nowprice = [NSString stringWithFormat:@"%@",dict[@"data"]];
-//                self.jingPaiFootV.model = self.shishiModel;
+//                //                    self.jingPaiFootV.model = self.shishiModel;
+//                self.jingPaiFootV.PriceStr = [NSString stringWithFormat:@"%@",dict[@"data"]];
 //                [self.AVCharRoomArr addObject:model];
 //                self.avChatRoomView.dataArr = self.AVCharRoomArr;
 //            }else if (tempType == 10) {
@@ -1068,7 +1069,7 @@
 }
 //获取实时直播商品 type0一口价1拍卖2私卖
 - (void)getShiShiGoodDataWithtype:(NSString *)type {
- 
+    
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"type"] = type;
     dict[@"liveid"] = self.dataModel.liveid;
@@ -1190,33 +1191,33 @@
 - (void)shishiViewAddPic {
     
     if ([self isCanUsePicture]) {
-    
-    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:MAXFLOAT columnNumber:4 delegate:self pushPhotoPickerVc:YES];
-    imagePickerVc.maxImagesCount = 1;
-    imagePickerVc.videoMaximumDuration = 3;
-    
-    imagePickerVc.allowTakeVideo = NO;
-    imagePickerVc.allowPickingVideo = NO;
-    imagePickerVc.allowPickingImage = YES;
-    imagePickerVc.allowTakePicture = NO;
-    
-    imagePickerVc.showSelectBtn = NO;
-    imagePickerVc.allowCrop = YES;
-    imagePickerVc.needCircleCrop = NO;
-    imagePickerVc.cropRectPortrait = CGRectMake(0, (ScreenH - ScreenW)/2, ScreenW, ScreenW);
-    imagePickerVc.cropRectLandscape = CGRectMake(0, (ScreenW - ScreenH)/2, ScreenH, ScreenH);
-    imagePickerVc.circleCropRadius = ScreenW/2;
-    [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
         
-        if (photos.count > 0) {
-            self.shishiView.image = photos.firstObject;
+        TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:MAXFLOAT columnNumber:4 delegate:self pushPhotoPickerVc:YES];
+        imagePickerVc.maxImagesCount = 1;
+        imagePickerVc.videoMaximumDuration = 3;
+        
+        imagePickerVc.allowTakeVideo = NO;
+        imagePickerVc.allowPickingVideo = NO;
+        imagePickerVc.allowPickingImage = YES;
+        imagePickerVc.allowTakePicture = NO;
+        
+        imagePickerVc.showSelectBtn = NO;
+        imagePickerVc.allowCrop = YES;
+        imagePickerVc.needCircleCrop = NO;
+        imagePickerVc.cropRectPortrait = CGRectMake(0, (ScreenH - ScreenW)/2, ScreenW, ScreenW);
+        imagePickerVc.cropRectLandscape = CGRectMake(0, (ScreenW - ScreenH)/2, ScreenH, ScreenH);
+        imagePickerVc.circleCropRadius = ScreenW/2;
+        [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
             
-        }
-        
-        
-    }];
+            if (photos.count > 0) {
+                self.shishiView.image = photos.firstObject;
+                
+            }
+            
+            
+        }];
         self.isPushVC = YES;
-    [self presentViewController:imagePickerVc animated:YES completion:nil];
+        [self presentViewController:imagePickerVc animated:YES completion:nil];
     }else{
         UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"无法使用相册" message:@"请在iPhone的""设置-隐私-相册""中允许访问相册" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alert show];

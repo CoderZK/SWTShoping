@@ -15,6 +15,7 @@
 #import <PLMediaStreamingKit/PLMediaStreamingKit.h>
 #import "TConversationListViewModel.h"
 #import <TUIConversationListController.h>
+#import "SWTLoginTwoVC.h"
 
 #define UMKey @"567a0b8767e58e04b70070c0"
 //友盟安全密钥//r6xbw5gy0zenei6x56xtm9wmkrrz653y
@@ -80,8 +81,8 @@
 //        [self sendExceptionLogWithData:data path:dataPath];
         
     }
-    [[TUIKit sharedInstance] setupWithAppId:TXIMAPPID];
-//    [self initTengXunIM];
+//    [[TUIKit sharedInstance] setupWithAppId:TXIMAPPID];
+    [self initTengXunIM];
     
     
     
@@ -92,50 +93,65 @@
     }
     
     self.ListArr = @[].mutableCopy;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self getList];
-    });
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [self getList];
+//    });
 
-    @weakify(self)
-    [RACObserve(self.viewModel, dataList) subscribeNext:^(id  _Nullable x) {
-           @strongify(self)
-           [[NSNotificationCenter defaultCenter] postNotificationName:@"messagechange" object:x];
-            [self showRedVWtihArr:x];
+//    @weakify(self)
+//    [RACObserve(self.viewModel, dataList) subscribeNext:^(id  _Nullable x) {
+//           @strongify(self)
+//           [[NSNotificationCenter defaultCenter] postNotificationName:@"messagechange" object:x];
+//            [self showRedVWtihArr:x];
+//    }];
+    
+    
+    [LTSCEventBus registerEvent:@"imlogin" block:^(id data) {
+        [self getList];
+    }];
+    
+    [LTSCEventBus registerEvent:@"showmessage" block:^(NSNumber *data) {
+        UITabBarController * tabvc = (UITabBarController *)self.window.rootViewController;
+        if (data.intValue == 1) {
+            [tabvc.tabBar showBadgeOnItemIndex:2];
+        }else {
+            [tabvc.tabBar hideBadgeOnItemIndex:2 animated:YES];
+        }
     }];
     
     return YES;
 }
 
 
-- (void)showRedVWtihArr:(NSArray<TUIConversationCellData *> *)arr {
-    for (TUIConversationCellData * conVerSation  in arr) {
-        if (conVerSation.unRead > 0 ) {
-            self.isShowRed = YES;
-            break;
-        }else {
-            self.isShowRed = NO;
-        }
-    }
-    [LTSCEventBus sendEvent:@"showmessage" data:@(self.isShowRed)];
-}
-
-- (TConversationListViewModel *)viewModel
-{
-    if (!_viewModel) {
-        _viewModel = [TConversationListViewModel new];
-        _viewModel.listFilter = ^BOOL(TUIConversationCellData * _Nonnull data) {
-            return (data.convType != TIM_GROUP);
-        };
-    }
-    return _viewModel;
-}
+//- (void)showRedVWtihArr:(NSArray<TUIConversationCellData *> *)arr {
+//    for (TUIConversationCellData * conVerSation  in arr) {
+//        if (conVerSation.unRead > 0 ) {
+//            self.isShowRed = YES;
+//            break;
+//        }else {
+//            self.isShowRed = NO;
+//        }
+//    }
+//    [LTSCEventBus sendEvent:@"showmessage" data:@(self.isShowRed)];
+//}
+//
+//- (TConversationListViewModel *)viewModel
+//{
+//    if (!_viewModel) {
+//        _viewModel = [TConversationListViewModel new];
+//        _viewModel.listFilter = ^BOOL(TUIConversationCellData * _Nonnull data) {
+//            return (data.convType != TIM_GROUP);
+//        };
+//    }
+//    return _viewModel;
+//}
 
 
 
 /// 收到新消息
 - (void)onRecvNewMessage:(V2TIMMessage *)msg{
+    
     [LTSCEventBus sendEvent:@"cmessage" data:msg];
-//    [self getList];
+   
 }
 
 /// 收到消息已读回执（仅单聊有效）
@@ -183,25 +199,27 @@
     // 2. 初始化 config 对象
     V2TIMSDKConfig *config = [[V2TIMSDKConfig alloc] init];
     // 3. 指定 log 输出级别，详情请参考 SDKConfig。
-    config.logLevel = V2TIM_LOG_DEBUG;
+    config.logLevel = V2TIM_LOG_NONE;
     // 4. 初始化 SDK 并设置 V2TIMSDKListener 的监听对象。
     // initSDK 后 SDK 会自动连接网络，网络连接状态可以在 V2TIMSDKListener 回调里面监听。
     [[V2TIMManager sharedInstance] initSDK:TXIMAPPID config:config listener:self];
+    [[V2TIMManager sharedInstance] addAdvancedMsgListener:self];
 }
 
 - (void)loginIM {
-    
-    
+
     NSInteger userStatus = [[V2TIMManager sharedInstance] getLoginStatus];
     if (userStatus == 3) {
         [[V2TIMManager sharedInstance] login:[zkSignleTool shareTool].session_uid userSig:[zkSignleTool shareTool].userSig succ:^{
-            NSLog(@"%@",@"登录腾讯成功");
+            NSLog(@"%@",@"登录腾讯成功");            
+            [self getList];
             
-            [[V2TIMManager sharedInstance] addAdvancedMsgListener:self];
             
         } fail:^(int code, NSString *desc) {
             NSLog(@"%@",@"登录腾旭失败");
         }];
+    }else if (userStatus == 1) {
+        [self getList];
     }
     
     
@@ -221,6 +239,19 @@
     NSLog(@"%@",@"连接到腾讯云失败");
 }
 
+
+- (void)onKickedOffline {
+    //掉线
+    [SVProgressHUD showErrorWithStatus:@"您的账号在其它地方登陆"];
+    [zkSignleTool shareTool].isLogin = NO;
+    [LTSCEventBus sendEvent:@"showmessage" data:@(0)];
+    SWTLoginTwoVC * vc =[[SWTLoginTwoVC alloc] init];
+    BaseNavigationController * navc =[[BaseNavigationController alloc] initWithRootViewController:vc];;
+    [self.window.rootViewController presentViewController:navc animated:YES completion:nil];
+    
+    
+    
+}
 - (void)configUSharePlatforms
 {
     
@@ -451,6 +482,7 @@
 - (void)showHomeVC{
     TabBarController  *BarVC=[[TabBarController alloc] init];
     self.window.rootViewController = BarVC;
+    
     
     //更新本地储存的版本号
     NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];

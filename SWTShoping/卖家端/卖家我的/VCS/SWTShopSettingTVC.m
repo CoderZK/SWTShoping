@@ -62,7 +62,7 @@
         [self dismissViewControllerAnimated:YES completion:nil];
         [LTSCEventBus sendEvent:@"diss" data:nil];
         [[V2TIMManager sharedInstance] logout:nil fail:nil];
-        
+        [LTSCEventBus sendEvent:@"showmessage" data:@(0)];
         
 //        [[V2TIMManager sharedInstance] logout:^{
 //            [zkSignleTool shareTool].isLogin = NO;

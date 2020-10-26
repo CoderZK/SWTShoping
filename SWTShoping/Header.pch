@@ -82,6 +82,7 @@
 #import "UITabBar+RedTabBar.h"
 #import "UITabBarItem+RedBadge.h"
 #import "UIView+RedBadege.h"
+#import "UITabBar+Badge.h"
 
 #define iOS11Later ([UIDevice currentDevice].systemVersion.floatValue >= 11.0f)
 
