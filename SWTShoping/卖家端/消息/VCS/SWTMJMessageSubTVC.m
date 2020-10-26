@@ -9,7 +9,8 @@
 #import "SWTMJMessageSubTVC.h"
 #import "SWTMJMessageOneCell.h"
 #import "SWTMessageOneCell.h"
-@interface SWTMJMessageSubTVC ()
+#import <TUIConversationListController.h>
+@interface SWTMJMessageSubTVC ()<TUIConversationListControllerDelegagte>
 @property(nonatomic,assign)NSInteger page;
 @property(nonatomic,strong)NSMutableArray<SWTModel *> *dataArray;
 @property(nonatomic,strong)NSMutableArray<V2TIMConversation *> *ListArr;
@@ -33,7 +34,6 @@
     
     
     if (self.type == 0) {
-        
         self.page = 1;
         self.dataArray = @[].mutableCopy;
         [self getData];
@@ -47,26 +47,34 @@
         }];
         Weak(weakSelf);
         self.noneView.clickBlock = ^{
-            
-            
+
+
             [weakSelf getData];
         };
     }else {
-        self.ListArr = @[].mutableCopy;
-         self.stepNext = 0;
-           self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-          
-               self.stepNext = 0;
-               [self getList];
-           }];
-           
-           self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-               if (self.ListArr.count < 50) {
-                   [self.tableView.mj_footer endRefreshing];
-                   return;
-               }
-               [self getList];
-           }];
+        
+        
+        TUIConversationListController *vc = [[TUIConversationListController alloc] init];
+        vc.delegate = self;
+        
+        [self addChildViewController:vc];
+        [self.view addSubview:vc.view];
+        
+//        self.ListArr = @[].mutableCopy;
+//         self.stepNext = 0;
+//           self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+//
+//               self.stepNext = 0;
+//               [self getList];
+//           }];
+//
+//           self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+//               if (self.ListArr.count < 50) {
+//                   [self.tableView.mj_footer endRefreshing];
+//                   return;
+//               }
+//               [self getList];
+//           }];
         
         
     }
@@ -78,6 +86,31 @@
             }
        }];
 }
+
+
+- (void)conversationListController:(TUIConversationListController *)conversationController didSelectConversation:(TUIConversationCell *)conversation
+{
+    // 会话列表点击事件，通常是打开聊天界面
+    
+    TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:conversation.convData.convId];
+    TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
+    id x  = conversation.convData.title;
+    if ([[x mj_JSONObject] isKindOfClass:[NSDictionary class]]) {
+        NSDictionary * dict = (NSDictionary *)[x mj_JSONObject];
+        if ([dict.allKeys containsObject:@"nickname"]) {
+            vc.navigationItem.title = dict[@"nickname"];
+        }else {
+            vc.navigationItem.title = @"";
+        }
+        
+    }else {
+        vc.navigationItem.title = conversation.convData.title;
+    }
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+
 
 - (void)showRedV {
     for (V2TIMConversation * conVerSation  in self.ListArr) {
@@ -195,27 +228,40 @@
         }else if (lastM.elemType == V2TIM_ELEM_TYPE_IMAGE) {
             cell.contentLB.text = @"图片";
         }
-       id  tempDataTwo = [lastM.nickName mj_JSONObject];
-        if ([tempDataTwo isKindOfClass:[NSDictionary class]]) {
-            NSDictionary *dict = (NSDictionary *)tempDataTwo;
+        
+        id tempOne = conVerSation.showName ;
+        if ([[tempOne mj_JSONObject] isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *dict = (NSDictionary *)[tempOne mj_JSONObject];
             if ([dict.allKeys containsObject:@"nickname"]) {
                 cell.nameLB.text = dict[@"nickname"];
             }else {
                 cell.nameLB.text = @"";
             }
         }else {
-            id tempOne = conVerSation.showName ;
-            if ([[tempOne mj_JSONObject] isKindOfClass:[NSDictionary class]]) {
-                NSDictionary *dict = (NSDictionary *)[tempOne mj_JSONObject];
-                if ([dict.allKeys containsObject:@"nickname"]) {
-                    cell.nameLB.text = dict[@"nickname"];
-                }else {
-                    cell.nameLB.text = @"";
-                }
-            }else {
-                cell.nameLB.text = tempOne;
-            }
+            cell.nameLB.text = tempOne;
         }
+        
+//       id  tempDataTwo = [lastM.nickName mj_JSONObject];
+//        if ([tempDataTwo isKindOfClass:[NSDictionary class]]) {
+//            NSDictionary *dict = (NSDictionary *)tempDataTwo;
+//            if ([dict.allKeys containsObject:@"nickname"]) {
+//                cell.nameLB.text = dict[@"nickname"];
+//            }else {
+//                cell.nameLB.text = @"";
+//            }
+//        }else {
+//            id tempOne = conVerSation.showName ;
+//            if ([[tempOne mj_JSONObject] isKindOfClass:[NSDictionary class]]) {
+//                NSDictionary *dict = (NSDictionary *)[tempOne mj_JSONObject];
+//                if ([dict.allKeys containsObject:@"nickname"]) {
+//                    cell.nameLB.text = dict[@"nickname"];
+//                }else {
+//                    cell.nameLB.text = @"";
+//                }
+//            }else {
+//                cell.nameLB.text = tempOne;
+//            }
+//        }
         [cell.imgV sd_setImageWithURL:[lastM.faceURL getPicURL] placeholderImage:[UIImage imageNamed:@"369"] completed:nil];
         if (conVerSation.unreadCount >  0) {
             cell.redV.hidden = NO;

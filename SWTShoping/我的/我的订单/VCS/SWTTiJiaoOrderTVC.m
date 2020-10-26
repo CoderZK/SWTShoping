@@ -181,6 +181,7 @@
     dict[@"num"] = self.numStr;
     dict[@"price"] =  [NSString stringWithFormat:@"%0.2f",self.model.price.doubleValue * self.numStr.doubleValue - self.zheKouMoney];;
     dict[@"userid"] = [zkSignleTool shareTool].session_uid;
+    dict[@"memberid"] = [zkSignleTool shareTool].session_uid;
     dict[@"merchid"] = self.merchID;
     dict[@"goodid"] = self.goodID;
     dict[@"couponid"] = self.zheKouID;
@@ -200,9 +201,13 @@
 //                [self.navigationController popViewControllerAnimated:YES];
 //            });
             
+            
             SWTPayVC * vc =[[SWTPayVC alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
             vc.orderID = responseObject[@"data"];
+            if (self.isComeZhiBo) {
+                vc.orderID = responseObject[@"data"][@"orderno"];
+            }
             vc.priceStr = [NSString stringWithFormat:@"%0.2f",self.model.price.doubleValue * self.numStr.doubleValue - self.zheKouMoney];
             [self.navigationController pushViewController:vc animated:YES];
             

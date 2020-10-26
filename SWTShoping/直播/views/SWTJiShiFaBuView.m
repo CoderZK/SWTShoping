@@ -379,7 +379,7 @@
         dict[@"stepprice"] = self.jiaJiaStr;
         dict[@"starttime"] = [NSString stringWithFormat:@"%@:00",self.timeStr];
         dict[@"endtime"] = [NSString stringWithFormat:@"%@:00",self.endTimeStr];
-        dict[@"yanshi"] = self.yanShiTime;
+        dict[@"delaytime"] = self.yanShiTime;
     }else if (self.type == 101) {
         dict[@"type"] = @(0);
     }else {

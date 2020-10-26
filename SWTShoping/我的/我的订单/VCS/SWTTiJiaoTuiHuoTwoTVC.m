@@ -19,6 +19,11 @@
 
 @implementation SWTTiJiaoTuiHuoTwoTVC
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getDetailData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"申请退货";
@@ -30,7 +35,7 @@
     self.tableView.estimatedRowHeight = 40;
     
     //    [self getBackAddressData];
-    [self getDetailData];
+    //    [self getDetailData];
     
 }
 
@@ -121,18 +126,23 @@
     if (indexPath.section == 0) {
         
         SWTTuiHuoThreeCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTTuiHuoThreeCell" forIndexPath:indexPath];
-       
+        
         
         [cell.leftBt addTarget:self action:@selector(leftAction:) forControlEvents:UIControlEventTouchUpInside];
         
         [cell.rightBt addTarget:self action:@selector(rightAction:) forControlEvents:UIControlEventTouchUpInside];
+        if (self.detailModel.sn.length > 0) {
+            [cell.rightBt setTitle:@"修改物流单号" forState:UIControlStateNormal];
+        }else {
+            [cell.rightBt setTitle:@"填写物流单号" forState:UIControlStateNormal];
+        }
         cell.clipsToBounds = YES;
         return cell;
     }else {
         if (indexPath.row == 0) {
             SWTTuiHuoAddressCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTTuiHuoAddressCell" forIndexPath:indexPath];
-            cell.leftOneLB.text = self.addressModel.address;
-            cell.leftTwoLB.text = self.addressModel.mobile;
+            cell.leftOneLB.text = self.detailModel.address;
+            cell.leftTwoLB.text = self.detailModel.mobile;
             return cell;
         }else if (indexPath.row == 1) {
             SWTTuiHuiOneCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SWTTuiHuiOneCell" forIndexPath:indexPath];
@@ -164,12 +174,13 @@
 //点击右侧按钮
 - (void)rightAction:(UIButton *)button {
     if ([button.titleLabel.text isEqualToString:@"填写物流单号"] || [button.titleLabel.text isEqualToString:@"修改物流单号"] ) {
-                   
-                   SWTTuiHuoKuaiDiDanHaoVC * vc =[[SWTTuiHuoKuaiDiDanHaoVC alloc] init];
-                   vc.hidesBottomBarWhenPushed = YES;
-                   vc.model = self.model;
-                   [self.navigationController pushViewController:vc animated:YES];
-               }
+        
+        SWTTuiHuoKuaiDiDanHaoVC * vc =[[SWTTuiHuoKuaiDiDanHaoVC alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        self.detailModel.ID = self.model.ID;
+        vc.model = self.detailModel;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 

@@ -44,6 +44,7 @@
     
     [self getData];
     
+    
    
 
 }
@@ -102,9 +103,7 @@
     }];
     
 
-    [LSTTimer addTimerForTime:3600 identifier:@"listTimer" handle:nil];
-          //配置通知发送和计时任务绑定 没有配置 就不会有通知发送
-    [LSTTimer setNotificationForName:@"ListChangeNF" identifier:@"listTimer" changeNFType:LSTTimerSecondChangeNFTypeMS];
+    
 
     
     
@@ -194,7 +193,7 @@
                     [SVProgressHUD showSuccessWithStatus:@"竞拍已结束"];
                     return;
                 }
-                [self getNewPirceAndAc];
+                [self getNewPirceAndAcWithIsChengGong:NO];
                 self.chuJiaView  = [[SWTGoodsDetailChuJiaView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
                 [self.chuJiaView.chujiaBt addTarget:self action:@selector(chuJiaAction:) forControlEvents:UIControlEventTouchUpInside];
                 [self.chuJiaView show];
@@ -261,6 +260,12 @@
                 
             }
         
+            [LSTTimer removeTimerForIdentifier:@"listTimerTwo"];
+            
+            [LSTTimer addTimerForTime:3600 identifier:@"listTimerTwo" handle:nil];
+                  //配置通知发送和计时任务绑定 没有配置 就不会有通知发送
+            [LSTTimer setNotificationForName:@"ListChangeNF" identifier:@"listTimerTwo" changeNFType:LSTTimerSecondChangeNFTypeMS];
+            
             [self.tableView reloadData];
             
             [self getJingXuanData];
@@ -411,7 +416,7 @@
             SWTGoodsDetailTwoCell  * cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTGoodsDetailTwoCell" forIndexPath:indexPath];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.model = self.dataModel;
-            cell.timeInterval = self.dataModel.resttimes > 0 ?  self.dataModel.resttimes.doubleValue / 1000.0 : 0;
+            cell.timeInterval = self.dataModel.resttimes.length > 0 ?  self.dataModel.resttimes.floatValue : 0;
             cell.delegateSignal = [[RACSubject alloc] init];
             @weakify(self);
             [cell.delegateSignal subscribeNext:^(NSNumber * x) {
@@ -428,15 +433,15 @@
                 }else {
                     //出价
                     
-                    if ([self.bottomView.chujiaBt.titleLabel.text isEqualToString:@"已结束"]) {
-                        [SVProgressHUD showSuccessWithStatus:@"竞拍已结束"];
-                        return;
-                    }
-                    
-                    [self getNewPirceAndAc];
-                    self.chuJiaView  = [[SWTGoodsDetailChuJiaView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
-                    [self.chuJiaView.chujiaBt addTarget:self action:@selector(chuJiaAction:) forControlEvents:UIControlEventTouchUpInside];
-                    [self.chuJiaView show];
+//                    if ([self.bottomView.chujiaBt.titleLabel.text isEqualToString:@"已结束"]) {
+//                        [SVProgressHUD showSuccessWithStatus:@"竞拍已结束"];
+//                        return;
+//                    }
+//
+//                    [self getNewPirceAndAc];
+//                    self.chuJiaView  = [[SWTGoodsDetailChuJiaView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+//                    [self.chuJiaView.chujiaBt addTarget:self action:@selector(chuJiaAction:) forControlEvents:UIControlEventTouchUpInside];
+//                    [self.chuJiaView show];
                 }
                 
                 
@@ -603,7 +608,7 @@
 }
 
 
-- (void)getNewPirceAndAc {
+- (void)getNewPirceAndAcWithIsChengGong:(BOOL )isChuJia {
     
     if (!ISLOGIN) {
         [self gotoLoginVC];
@@ -624,6 +629,13 @@
             if ( [[NSString stringWithFormat:@"%@",priceModel.newprice] isEqualToString:@"(null)"]) {
                 priceModel.newprice = self.dataModel.productprice;
             }
+            self.dataModel.resttimes = priceModel.resttimes;
+            [LSTTimer removeTimerForIdentifier:@"listTimerTwo"];
+                       
+            [LSTTimer addTimerForTime:3600 identifier:@"listTimerTwo" handle:nil];
+            //配置通知发送和计时任务绑定 没有配置 就不会有通知发送
+            [LSTTimer setNotificationForName:@"ListChangeNF" identifier:@"listTimerTwo" changeNFType:LSTTimerSecondChangeNFTypeMS];
+            
             self.zuiXinPrice = priceModel.newprice;
             self.dataModel.auctionlist = priceModel.auctionlist;
             [self.tableView reloadData];
@@ -664,7 +676,7 @@
             
             [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"您出价:%0.2f 成功",self.zuiXinPrice.doubleValue + self.dataModel.stepprice.doubleValue]];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self getNewPirceAndAc];
+                [self getNewPirceAndAcWithIsChengGong:YES];
             });
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];

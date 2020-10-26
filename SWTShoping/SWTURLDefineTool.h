@@ -13,7 +13,7 @@
 //#define URLOne @"http://mobile.qunyanzhujia.com:8098/qyzj/"
 //测试
 //#define URLOne @"http://192.168.0.38/jkgl/"
-#define URLOne @"http://139.129.47.30:8080/admin/"
+#define URLOne @"http://api.xunshun.net/api/"
 
 //图片地址
 #define QiNiuImgURL @"http://web.qunyanzhujia.com/"

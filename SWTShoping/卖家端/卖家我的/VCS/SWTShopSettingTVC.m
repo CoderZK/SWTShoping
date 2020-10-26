@@ -64,6 +64,16 @@
         [[V2TIMManager sharedInstance] logout:nil fail:nil];
         
         
+//        [[V2TIMManager sharedInstance] logout:^{
+//            [zkSignleTool shareTool].isLogin = NO;
+//            [zkSignleTool shareTool].session_uid = nil;
+//            self.tabBarController.selectedIndex = 0;
+//            [self dismissViewControllerAnimated:YES completion:nil];
+//            [LTSCEventBus sendEvent:@"diss" data:nil];
+//        } fail:^(int code, NSString *desc) {
+//            [SVProgressHUD showErrorWithStatus:@"退出登录失败,请稍后再试"];
+//        }];
+        
     }];
     [self.footV addSubview:button];
 }

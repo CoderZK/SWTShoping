@@ -37,6 +37,15 @@
     //               self.collectionView.scrollEnabled = NO;
     self.collectionView.backgroundColor = BackgroundColor;
     [self.view addSubview:self.collectionView];
+    [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.top.equalTo(self.view);
+        if (sstatusHeight > 20) {
+           make.bottom.equalTo(self.view).offset(-34);
+        }else {
+            make.bottom.equalTo(self.view).offset(0);
+        }
+        
+    }];
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"SWTHomeCollectionTwoCell" bundle:nil] forCellWithReuseIdentifier:@"SWTHomeCollectionTwoCell"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"SWTHomeCollectionThreeCell" bundle:nil] forCellWithReuseIdentifier:@"SWTHomeCollectionThreeCell"];

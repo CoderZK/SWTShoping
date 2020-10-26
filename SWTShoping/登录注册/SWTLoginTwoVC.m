@@ -10,6 +10,7 @@
 #import "SWTRegistVC.h"
 #import "SWTBoLiuVC.h"
 #import "SWTTuiLiuVC.h"
+#import "TabBarController.h"
 @interface SWTLoginTwoVC ()
 @property (weak, nonatomic) IBOutlet UITextField *phoneTF;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTF;
@@ -123,6 +124,16 @@
             [self loginIM];
             
             
+            TabBarController * tabbarVC =  (TabBarController * )[UIApplication sharedApplication].keyWindow.rootViewController;
+            
+            NSMutableArray * arr = tabbarVC.viewControllers.mutableCopy;
+            
+            if (arr.count > 2) {
+                arr[2] =  [self getXiaoXi];
+                tabbarVC.viewControllers = arr;
+            }
+            
+            
             [self.navigationController dismissViewControllerAnimated:YES completion:nil];
             
             
@@ -138,7 +149,49 @@
     }];
 }
 
+
+- (BaseNavigationController *)getXiaoXi {
+   
+    NSString *str= @"HangQingVC";
+    BaseViewController *vc = nil;
+    
+    //此处创建控制器要根据自己的情况确定是否带tableView
+    
+        vc=[[NSClassFromString(str) alloc] initWithTableViewStyle:UITableViewStyleGrouped];
+    
+    
+
+    NSString *str1=@"shouye20";
+    
+    NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
+    attrs[NSFontAttributeName] = [UIFont systemFontOfSize:12];
+    attrs[NSForegroundColorAttributeName] = CharacterColor102;
+    NSMutableDictionary *selectedAttrs = [NSMutableDictionary dictionary];
+    selectedAttrs[NSFontAttributeName] = attrs[NSFontAttributeName];
+    selectedAttrs[NSForegroundColorAttributeName] = TabberGreen;
+    UITabBarItem *item = [UITabBarItem appearance];
+    [item setTitleTextAttributes:attrs forState:UIControlStateNormal];
+    [item setTitleTextAttributes:selectedAttrs forState:UIControlStateSelected];
+    
+    //让图片保持原来的模样，未选中的图片
+    vc.tabBarItem.image=[[UIImage imageNamed:str1] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    //图片选中时的图片
+    NSString *str2=@"shouye21";
+    vc.tabBarItem.selectedImage=[[UIImage imageNamed:str2] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    //页面的bar上面的title值
+    NSString *str3=@"消息";
+    vc.tabBarItem.title=str3;
+
+    
+    //给每个页面添加导航栏
+    BaseNavigationController *nav=[[BaseNavigationController alloc] initWithRootViewController:vc];
+    return nav;
+}
+
 - (void)loginIM {
+    
     
     
     [[V2TIMManager sharedInstance] login:[zkSignleTool shareTool].session_uid userSig:[zkSignleTool shareTool].userSig succ:^{
@@ -147,18 +200,21 @@
         NSLog(@"%@",@"登录腾旭失败");
     }];
     
-    V2TIMUserFullInfo * info = [[V2TIMUserFullInfo alloc] init];
-    NSMutableDictionary * dict  = @{}.mutableCopy;
-    dict[@"nickname"] = [zkSignleTool shareTool].nickname;
-    dict[@"levelname"] = [zkSignleTool shareTool].levelname;
-    dict[@"levelcode"] = [zkSignleTool shareTool].level;
-    info.nickName = [dict mj_JSONString];
     
-    [[V2TIMManager sharedInstance] setSelfInfo:info succ:^{
-        
-    } fail:^(int code, NSString *desc) {
-        
-    }];
+    
+    
+//    V2TIMUserFullInfo * info = [[V2TIMUserFullInfo alloc] init];
+//    NSMutableDictionary * dict  = @{}.mutableCopy;
+//    dict[@"nickname"] = @"2222"; //[zkSignleTool shareTool].nickname;
+//    dict[@"levelname"] = @"2"; //[zkSignleTool shareTool].levelname;
+//    dict[@"levelcode"] = @"1"; //[zkSignleTool shareTool].level;
+//    info.nickName = [dict mj_JSONString];
+//
+//    [[V2TIMManager sharedInstance] setSelfInfo:info succ:^{
+//        NSLog(@"%@",@"2344");
+//    } fail:^(int code, NSString *desc) {
+//        NSLog(@"%@",@"44442344");
+//    }];
 }
 
 - (IBAction)clickAction:(UIButton *)sender {

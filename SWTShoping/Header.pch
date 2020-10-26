@@ -68,8 +68,8 @@
 #import "SWTXingXingView.h"
 #import "SWTXiYieVC.h"
 #import "SWTZhiBoDetailVC.h"
-#import "ImSDK.h"
-#import "TUIKit.h"
+#import <ImSDK.h>
+#import <TUIKit.h>
 
 
 #import "UMSPPPayUnifyPayPlugin.h"
@@ -89,6 +89,12 @@
 #define sstatusHeight [[UIApplication sharedApplication] statusBarFrame].size.height
 //导航栏
 #define NaviH  44
+
+
+#define TableViewBottomSpace (kDevice_Is_iPhoneX ? 34 : 0)
+
+#define NavigationSpace (kDevice_Is_iPhoneX ? 88 : 64)
+
 
 //屏幕的长宽
 #define ScreenW [UIScreen mainScreen].bounds.size.width

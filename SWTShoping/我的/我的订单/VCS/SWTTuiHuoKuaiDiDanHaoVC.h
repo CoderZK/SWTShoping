@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SWTTuiHuoKuaiDiDanHaoVC : BaseViewController
 @property(nonatomic , strong)SWTModel *model;
+
 @end
 
 NS_ASSUME_NONNULL_END

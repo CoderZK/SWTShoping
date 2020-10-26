@@ -25,6 +25,9 @@
     self.navigationItem.title = @"物流信息填写";
     self.dataArray = @[].mutableCopy;
     [self getData];
+    self.desTF.text = self.model.remark;
+    self.orderTF.text = self.model.sn;
+    
 }
 
 - (void)getData {
@@ -36,6 +39,15 @@
         if ([responseObject[@"code"] intValue]== 200) {
             
             self.dataArray = [SWTModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"][@"list"]];
+            
+            for (int i = 0; i<self.dataArray.count;i++) {
+                if ([self.dataArray[i].express isEqualToString:self.model.express]) {
+                    self.nameTF.text = self.dataArray[i].name;
+                    self.selectIndex = i;
+                    break;
+                }
+            }
+            
             
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
@@ -95,7 +107,7 @@
 }
 
 - (IBAction)action:(id)sender {
-    
+    [self.view endEditing:YES];
     NSMutableArray * arr = @[].mutableCopy;
     for (SWTModel * model  in self.dataArray) {
         [arr addObject:model.name];

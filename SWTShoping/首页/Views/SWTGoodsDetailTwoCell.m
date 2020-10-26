@@ -49,14 +49,14 @@
 }
 
 - (void)timerChange {
-    NSInteger timeMS = [LSTTimer getTimeIntervalForIdentifier:@"listTimer"];
-    NSInteger resTimeMS = self.timeInterval*1000 -timeMS;
-    NSLog(@"%zd",timeMS);
+    NSInteger timeMS = [LSTTimer getTimeIntervalForIdentifier:@"listTimerTwo"];
+    NSInteger resTimeMS = self.timeInterval  -timeMS;
+    NSLog(@"%zd======%f\n",timeMS,self.timeInterval);
     [LSTTimer formatDateForTime:resTimeMS handle:^(NSString * _Nonnull day, NSString * _Nonnull hour, NSString * _Nonnull minute, NSString * _Nonnull second, NSString * _Nonnull ms) {
         if (day.intValue + hour.intValue + minute.intValue + second.intValue == 0) {
             self.timeLB.text = @"已结束";
             [LTSCEventBus sendEvent:@"timeover" data:@""];
-            [LSTTimer removeAllTimer];
+        
         }else {
             [LTSCEventBus sendEvent:@"timerun" data:@""];
             if (day > 0) {

@@ -41,11 +41,22 @@
     loginOutBt.titleLabel.font = kFont(14);
     [[loginOutBt rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
         
-        [zkSignleTool shareTool].isLogin = NO;
-        [zkSignleTool shareTool].session_uid = nil;
-        self.tabBarController.selectedIndex = 0;
-        [self.navigationController popToRootViewControllerAnimated:YES];
-        [[V2TIMManager sharedInstance] logout:nil fail:nil];
+       [zkSignleTool shareTool].isLogin = NO;
+       [zkSignleTool shareTool].session_uid = nil;
+       self.tabBarController.selectedIndex = 0;
+       [LTSCEventBus sendEvent:@"diss" data:nil];
+       [self.navigationController popToRootViewControllerAnimated:YES];
+        
+//        [[V2TIMManager sharedInstance] logout:^{
+//            [zkSignleTool shareTool].isLogin = NO;
+//            [zkSignleTool shareTool].session_uid = nil;
+//            self.tabBarController.selectedIndex = 0;
+//            [LTSCEventBus sendEvent:@"diss" data:nil];
+//            [self.navigationController popToRootViewControllerAnimated:YES];
+//            
+//        } fail:^(int code, NSString *desc) {
+//            [SVProgressHUD showErrorWithStatus:@"退出登录失败,请稍后再试"];
+//        }];
         
         
     }];

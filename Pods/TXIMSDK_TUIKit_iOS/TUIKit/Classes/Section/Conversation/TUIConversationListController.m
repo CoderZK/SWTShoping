@@ -12,6 +12,7 @@
 #import "TUILocalStorage.h"
 #import "TIMUserProfile+DataProvider.h"
 #import "ReactiveObjC/ReactiveObjC.h"
+
 @import ImSDK;
 
 static NSString *kConversationCell_ReuseId = @"TConversationCell";
@@ -49,6 +50,7 @@ static NSString *kConversationCell_ReuseId = @"TConversationCell";
     @weakify(self)
     [RACObserve(self.viewModel, dataList) subscribeNext:^(id  _Nullable x) {
         @strongify(self)
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"messagechange" object:x];
         [self.tableView reloadData];
     }];
 }
@@ -60,7 +62,7 @@ static NSString *kConversationCell_ReuseId = @"TConversationCell";
     if (!_viewModel) {
         _viewModel = [TConversationListViewModel new];
         _viewModel.listFilter = ^BOOL(TUIConversationCellData * _Nonnull data) {
-            return (data.convType != TIM_SYSTEM);
+            return (data.convType != TIM_GROUP);
         };
     }
     return _viewModel;

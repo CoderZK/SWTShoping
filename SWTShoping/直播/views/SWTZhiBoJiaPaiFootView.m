@@ -131,7 +131,13 @@
     return self;
 }
 
-
+- (void)setPriceStr:(NSString *)PriceStr {
+    _PriceStr = PriceStr;
+    
+    self.jiaJiaLB.text =  [NSString stringWithFormat:@"￥%@",PriceStr.getPriceAllStr];
+    
+    
+}
 
 
 - (void)setModel:(SWTModel *)model {
@@ -146,7 +152,7 @@
         if (day.intValue + hour.intValue + minute.intValue + second.intValue <= 0) {
             [weakSelf.timeBt setTitle:@"已结束" forState:UIControlStateNormal];
             
-            [LSTTimer removeAllTimer];
+           
             if (self.isOrder) {
                 [self tiJiaoOrderAction];
             }

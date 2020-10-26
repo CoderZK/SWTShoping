@@ -192,7 +192,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString *userid;
 @property(nonatomic,strong)NSString *orderno;
 @property(nonatomic,strong)NSString *refundid;
-//@property(nonatomic,strong)NSString *o;
+@property(nonatomic,strong)NSString *remark;
 //@property(nonatomic,strong)NSString *o;
 //@property(nonatomic,strong)NSString *o;
 //@property(nonatomic,strong)NSString *o;

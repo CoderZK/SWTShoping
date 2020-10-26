@@ -21,6 +21,7 @@
 #import "SWTSearchFatherVC.h"
 #import "SWTShowLoginView.h"
 #import "SWTJiShiFaBuView.h"
+#import "Clear.h"
 @interface HomeVC ()<UIScrollViewDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource,XPCollectionViewWaterfallFlowLayoutDataSource,SWTHomeHeadViewDelegate,SDCycleScrollViewDelegate>
 @property(nonatomic , strong)SWTHomeHeadView *headView;
 @property(nonatomic , strong)XPCollectionViewWaterfallFlowLayout *layout;
@@ -56,6 +57,9 @@
     
     if (ISLOGIN) {
         self.showLoginV.hidden = YES;
+        self.page = 1;
+        [self getDataHotData];
+        [self getRecommendData];
     }else {
         self.showLoginV.hidden = NO;
     }
@@ -78,6 +82,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+     
+     NSString *directoryPath=[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
+     NSLog(@"%@",directoryPath);
+    
+    
+    
     
     self.bannerArr = @[];
     self.recommendArr = @[].mutableCopy;
@@ -110,8 +120,6 @@
     
     self.page = 1;
     [self getData];
-    [self getDataHotData];
-    [self getRecommendData];
     self.collectionView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         self.page = 1;
         [self getDataHotData];

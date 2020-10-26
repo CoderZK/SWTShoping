@@ -146,9 +146,9 @@
 //           vc1.type = index;
 //           return vc1;
 //    }else {
-        TUIConversationListController *vc = [[TUIConversationListController alloc] init];
-        vc.delegate = self;
-        return vc;
+//        TUIConversationListController *vc = [[TUIConversationListController alloc] init];
+//        vc.delegate = self;
+//        return vc;
 //    }
    
    
@@ -162,7 +162,21 @@
     
     TIMConversation *conv = [[TIMManager sharedInstance] getConversation:TIM_C2C receiver:conversation.convData.convId];
     TUIChatController *vc = [[TUIChatController alloc] initWithConversation:conv];
-    vc.navigationItem.title =conversation.convData.title;
+    
+     id x  = conversation.convData.title;
+    if ([[x mj_JSONObject] isKindOfClass:[NSDictionary class]]) {
+        NSDictionary * dict = (NSDictionary *)[x mj_JSONObject];
+        if ([dict.allKeys containsObject:@"nickname"]) {
+            vc.navigationItem.title = x[@"nickname"];
+        }else {
+            vc.navigationItem.title = @"";
+        }
+        
+    }else {
+        vc.navigationItem.title = conversation.convData.title;
+    }
+    
+    
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
     

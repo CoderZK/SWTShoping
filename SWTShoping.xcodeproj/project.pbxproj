@@ -786,6 +786,7 @@
 		666A5BB824FFA0BC006FB789 /* SWTShowLoginView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTShowLoginView.m; sourceTree = "<group>"; };
 		666A793C24D0226D00269DBB /* SWTChengZhangShowView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTChengZhangShowView.h; sourceTree = "<group>"; };
 		666A793D24D0226D00269DBB /* SWTChengZhangShowView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTChengZhangShowView.m; sourceTree = "<group>"; };
+		666AB91425392E5100AFA4A8 /* 滴雨轩Debug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "滴雨轩Debug.entitlements"; sourceTree = "<group>"; };
 		666AC3D025222B3500CBFB6F /* SWTJiShiFaBuView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTJiShiFaBuView.h; sourceTree = "<group>"; };
 		666AC3D125222B3500CBFB6F /* SWTJiShiFaBuView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTJiShiFaBuView.m; sourceTree = "<group>"; };
 		666AC3D325223BB400CBFB6F /* SWTZhiBoPeoPleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTZhiBoPeoPleView.h; sourceTree = "<group>"; };
@@ -1322,6 +1323,7 @@
 		337F3E5820E9FE3B00C5526A /* SWTShoping */ = {
 			isa = PBXGroup;
 			children = (
+				666AB91425392E5100AFA4A8 /* 滴雨轩Debug.entitlements */,
 				666C36512522E35400732945 /* 滴雨轩.entitlements */,
 				667087D324E5723300EDA2C5 /* 卖家端 */,
 				666D393324E1361C0023776B /* 支付SDK */,
@@ -3758,7 +3760,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "SWTShoping/滴雨轩.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "SWTShoping/滴雨轩Debug.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 5;

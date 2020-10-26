@@ -14,6 +14,8 @@
 #import "CreatGroupAvatar.h"
 #import <ImSDK/ImSDK.h>
 #import "ReactiveObjC/ReactiveObjC.h"
+#import "MJRefresh.h"
+#import "MJExtension.h"
 
 @implementation TUIConversationCell
 
@@ -71,9 +73,17 @@
 
     @weakify(self)
     [[[RACObserve(convData, title) takeUntil:self.rac_prepareForReuseSignal]
-      distinctUntilChanged] subscribeNext:^(NSString *x) {
+      distinctUntilChanged] subscribeNext:^(id  x) {
         @strongify(self)
-        self.titleLabel.text = x;
+        
+        if ([[x mj_JSONObject] isKindOfClass:[NSDictionary class]]) {
+            NSDictionary * dict = [x mj_JSONObject];
+           self.titleLabel.text = dict[@"nickname"];
+        }else {
+          self.titleLabel.text = x;
+        }
+        
+        
     }];
     [[RACObserve(convData, avatarUrl) takeUntil:self.rac_prepareForReuseSignal] subscribeNext:^(NSURL *x) {
         @strongify(self)
