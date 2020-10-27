@@ -74,7 +74,7 @@
 
 #import "UMSPPPayUnifyPayPlugin.h"
 #import "UMSPPPayPluginSettings.h"
-#import "WeiChatOtherManager.h"
+//#import "WeiChatOtherManager.h"
 #import "SelectTimeV.h"
 
 #import "SWTPayVC.h"

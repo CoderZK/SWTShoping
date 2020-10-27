@@ -108,9 +108,9 @@
     self.titleLB.text = [NSString stringWithFormat:@"恭喜 %@ 成功拍得",model.username];
     self.moneyLB.text = [NSString stringWithFormat:@"￥%@",model.price.getPriceAllStr];
     [self.imgV sd_setImageWithURL:model.img.getPicURL placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
-    [LSTTimer removeAllTimer];
+    [LSTTimer removeTimerForIdentifier:@"huode"];
     Weak(weakSelf);
-       [LSTTimer addTimerForTime:model.resttime.intValue /1000 handle:^(NSString * _Nonnull day, NSString * _Nonnull hour, NSString * _Nonnull minute, NSString * _Nonnull second, NSString * _Nonnull ms) {
+       [LSTTimer addTimerForTime:model.resttime.intValue /1000 identifier:@"huode" handle:^(NSString * _Nonnull day, NSString * _Nonnull hour, NSString * _Nonnull minute, NSString * _Nonnull second, NSString * _Nonnull ms) {
            if (day.intValue + hour.intValue + minute.intValue + second.intValue <= 0) {
                weakSelf.timeLB.text = @"已结束";
                [weakSelf dismiss];

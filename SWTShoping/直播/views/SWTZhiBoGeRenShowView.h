@@ -17,6 +17,7 @@
 @interface SWTZhiBoGeRenShowView : UIView
 - (void)show;
 - (void)dismiss;
+@property(nonatomic,assign)BOOL isHeMai;
 @property(nonatomic,strong)NSString *liveid;
 @property(nonatomic,strong)SWTModel *model;
 @property(nonatomic,assign)id<SWTZhiBoGeRenShowViewDelegate>delegate;

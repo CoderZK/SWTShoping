@@ -724,6 +724,8 @@
                 self.zhiBoFootV.model = [self.heMaiArr firstObject];
                 
                 
+            }else {
+                self.zhiBoFootV.hidden = YES;
             }
             
         }
@@ -826,7 +828,7 @@
     NSDictionary * userDict = [msg.nickName mj_JSONObject];
     NSData * data  = msg.customElem.data;
     NSDictionary * dict = [data mj_JSONObject];
-    model.nickname = [userDict.allKeys containsObject:@"nickname"] ? userDict[@"nickname"]:@"??";
+    model.nickname = [userDict.allKeys containsObject:@"nickname"] ? userDict[@"nickname"]:@"";
     model.levelcode = [userDict.allKeys containsObject:@"levelcode"] ? userDict[@"levelcode"]:@"0";
     if ([dict.allKeys containsObject:@"type"]) {
         
@@ -835,6 +837,15 @@
             if (tempType == 2 || tempType == 9) {
                 //2发布合买全部都看的见, 9 有人购买刷新浮窗
                 [self getGoodsListData];
+                
+                if (tempType == 9) {
+                    model.type = @"1";
+                    model.content = [NSString stringWithFormat:@"%@",dict[@"data"] ];
+                    [self.AVCharRoomArr addObject:model];
+                    self.avChatRoomView.dataArr = self.AVCharRoomArr;
+                }
+                
+                
             }else if (tempType == 3) {
                 //发布抽签
                 [self getChouQianData];
@@ -853,7 +864,11 @@
                 self.jingPaiFootV.PriceStr = [NSString stringWithFormat:@"%@",dict[@"data"]];
                 [self.AVCharRoomArr addObject:model];
                 self.avChatRoomView.dataArr = self.AVCharRoomArr;
-            }else if (tempType == 10) {
+            }else if (tempType == 8) {
+                //有人购买商品
+                
+                
+            } else if (tempType == 10) {
                 SWTModel * neiM = [SWTModel mj_objectWithKeyValues:[dict[@"data"] mj_JSONObject]];
                 neiM.img = self.shishiModel.img;
                 [self getShiShiGoodDataWithtype:@"1"];
@@ -1155,9 +1170,10 @@
         }
         if (model.type.intValue == 0 || model.type.intValue == 1) {
             SWTZhiBoGeRenShowView * gerenShowView  = [[SWTZhiBoGeRenShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenH, ScreenH)];
+            gerenShowView.isHeMai = weakSelf.isHeMai;
             gerenShowView.model = model;
             gerenShowView.liveid = weakSelf.dataModel.liveid;
-            gerenShowView.delegate = self;
+            gerenShowView.delegate = weakSelf;
             [gerenShowView show];
         }
     };

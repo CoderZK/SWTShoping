@@ -8,6 +8,7 @@
 
 #import "SWTPayVC.h"
 #import "SWTPaySucessVC.h"
+#import <WXApi.h>
 @interface SWTPayVC ()
 @property (weak, nonatomic) IBOutlet UIImageView *imgV1;
 @property (weak, nonatomic) IBOutlet UIImageView *imgV2;
@@ -26,6 +27,13 @@
     if (!self.isComeBaoZhengJin) {
         [self getOrderStatus];
     }
+      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(WWWWX:) name:@"WXPAY" object:nil];
+}
+
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLoad {
@@ -114,7 +122,17 @@
         self.payType = sender.tag;
     }else if (sender.tag == 103) {
         //        [self payAction];
-        [self getOrderWityType:self.payType];
+        
+        if (self.payType == 100) {
+            //微信支付
+            
+        }else {
+            //支付宝和银行卡
+           [self getOrderWityType:self.payType];
+        }
+        
+        
+        
     }
     
     
@@ -129,6 +147,7 @@
     dict[@"merOrderId"] = self.orderID;
     dict[@"totalAmount"] =  @( [[NSString stringWithFormat:@"%lf",self.priceStr.doubleValue * 100] intValue]);
     if (self.payType == 100) {
+        
         dict[@"type"] = @"wx.unifiedOrder";
     }else if (self.payType == 101) {
         dict[@"type"] = @"trade.precreate";
@@ -152,9 +171,13 @@
                 //成功
                 NSDictionary * dict2 = [dict[@"respStr"] mj_JSONObject];
                 if (self.payType == 100) {
+                    
+                    
+                    
                     if ( dict2 != nil && [dict2.allKeys containsObject:@"miniPayRequest"]) {
                         self.weixinpaydict = dict2[@"miniPayRequest"];
-                        [self payAction];
+//                        [self payAction];
+                        [self goWXpay];
                     }
                     
                 }else {
@@ -194,6 +217,57 @@
 }
 
 
+#pragma mark -微信、支付宝支付
+- (void)goWXpay {
+    PayReq * req = [[PayReq alloc]init];
+    req.partnerId = [NSString stringWithFormat:@"%@",self.weixinpaydict[@"mch_id"]];
+    req.prepayId =  [NSString stringWithFormat:@"%@",self.weixinpaydict[@"prepay_id"]];
+    req.nonceStr =  [NSString stringWithFormat:@"%@",self.weixinpaydict[@"nonce_str"]];
+    //注意此处是int 类型
+    req.timeStamp = [self.weixinpaydict[@"timestamp"] intValue];
+    req.package =  [NSString stringWithFormat:@"%@",@"Sign=WXPay"];
+    req.sign =  [NSString stringWithFormat:@"%@",self.weixinpaydict[@"sign"]];
+    
+//    req.partnerId = [NSString stringWithFormat:@"%@",@"1603650355"];
+//    req.prepayId =  [NSString stringWithFormat:@"%@",@"wx271556570794088f88fd5eea75ca1d0000"];
+//    req.nonceStr =  [NSString stringWithFormat:@"%@",@"ttbyereOTIxvNhYQ"];
+//    //注意此处是int 类型
+//    req.timeStamp = 1603785417;
+//    req.package =  [NSString stringWithFormat:@"%@",@"Sign=WXPay"];
+//    req.sign =  [NSString stringWithFormat:@"%@",@"720C2EDAD6002D39B1613C1022BF1E05"];
+    
+    //发起支付
+//    [WXApi sendReq:req];
+    
+    [WXApi sendReq:req completion:nil];
+    
+}
+
+//微信支付结果处理
+- (void)WWWWX:(NSNotification *)no {
+    
+    BaseResp * resp = no.object;
+    if (resp.errCode==WXSuccess)
+    {
+        
+        SWTPaySucessVC * vc =[[SWTPaySucessVC alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.orderID = self.orderID;
+        vc.priceStr = self.priceStr;
+        [self.navigationController pushViewController:vc animated:YES];
+        
+       
+    }
+    else if (resp.errCode==WXErrCodeUserCancel)
+    {
+        [SVProgressHUD showErrorWithStatus:@"用户取消支付"];
+    }
+    else
+    {
+        [SVProgressHUD showErrorWithStatus:@"支付失败"];
+    }
+    
+}
 
 
 - (void)payAction {

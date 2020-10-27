@@ -58,6 +58,7 @@ PODS:
   - UMCShare/Social/ReducedWeChat (6.9.8):
     - UMCCommon
     - UMCShare/Core
+  - WechatOpenSDK (1.8.7.1)
 
 DEPENDENCIES:
   - AFNetworking
@@ -81,6 +82,7 @@ DEPENDENCIES:
   - UMCPush
   - UMCShare/Social/ReducedQQ
   - UMCShare/Social/ReducedWeChat
+  - WechatOpenSDK
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -108,6 +110,7 @@ SPEC REPOS:
     - UMCCommonLog
     - UMCPush
     - UMCShare
+    - WechatOpenSDK
 
 SPEC CHECKSUMS:
   AFNetworking: 8ac6017b94ea105479f7776e5288e48ae9c59bb4
@@ -134,7 +137,8 @@ SPEC CHECKSUMS:
   UMCCommonLog: 05a2d5de21858e3d870551562cff405c1366d244
   UMCPush: 1edd856027dcf905333effb4040ace5d236a7316
   UMCShare: a250203b34a56cde25cc4c28335449b542f0255d
+  WechatOpenSDK: 6a4d1436c15b3b5fe2a0bd383f3046010186da44
 
-PODFILE CHECKSUM: 6c935b44bb6e4b609d9d71248bed3368b7211315
+PODFILE CHECKSUM: 73d854a2c9788d8aee3916b29f160e1a4ff7c698
 
 COCOAPODS: 1.7.2

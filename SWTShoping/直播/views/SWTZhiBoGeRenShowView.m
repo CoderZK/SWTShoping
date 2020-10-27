@@ -182,6 +182,24 @@
     
 }
 
+- (void)setIsHeMai:(BOOL)isHeMai {
+    _isHeMai = isHeMai;
+    
+    if (isHeMai) {
+        self.rightBt.hidden = YES;
+        [self.leftBt mas_updateConstraints:^(MASConstraintMaker *make) {
+           make.centerX.equalTo(self.wihteV).offset(0);
+        }];
+        
+    }else{
+       self.rightBt.hidden = NO;
+        [self.leftBt mas_updateConstraints:^(MASConstraintMaker *make) {
+           make.centerX.equalTo(self.wihteV).offset(-45);
+        }];
+    }
+    
+    
+}
 
 - (void)show {
     [[UIApplication sharedApplication].keyWindow addSubview:self];

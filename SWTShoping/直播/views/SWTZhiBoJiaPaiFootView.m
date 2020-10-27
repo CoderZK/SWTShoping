@@ -148,7 +148,12 @@
     self.titleLB.text = model.name;
     self.jiaJiaLB.text =  [NSString stringWithFormat:@"￥%@",model.nowprice];
     Weak(weakSelf);
-    [LSTTimer addTimerForTime:model.resttime.intValue /1000 handle:^(NSString * _Nonnull day, NSString * _Nonnull hour, NSString * _Nonnull minute, NSString * _Nonnull second, NSString * _Nonnull ms) {
+    
+    [LSTTimer removeTimerForIdentifier:@"yanshi"];
+    
+    [LSTTimer addTimerForTime:model.resttime.intValue /1000 identifier:@"yanshi" handle:^(NSString * _Nonnull day, NSString * _Nonnull hour, NSString * _Nonnull minute, NSString * _Nonnull second, NSString * _Nonnull ms) {
+        
+        
         if (day.intValue + hour.intValue + minute.intValue + second.intValue <= 0) {
             [weakSelf.timeBt setTitle:@"已结束" forState:UIControlStateNormal];
             
@@ -157,11 +162,13 @@
                 [self tiJiaoOrderAction];
             }
         }else {
+            
+            NSLog(@"===thread %@",[NSThread currentThread]);
+            
             [weakSelf.timeBt setTitle:[NSString stringWithFormat:@"%@天%@小时%@分%@秒",day,hour,minute,second] forState:UIControlStateNormal];
         }
         
     }];
-
     self.rightBt.hidden = self.isOrder;
 }
 

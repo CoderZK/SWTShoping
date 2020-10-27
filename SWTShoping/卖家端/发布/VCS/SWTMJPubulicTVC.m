@@ -124,6 +124,9 @@
             vc.hidesBottomBarWhenPushed = YES;
             vc.model = model;
             vc.isTuiLiu = YES;
+            if ([zkSignleTool shareTool].isHeMaiDianPu) {
+                vc.isHeMai = YES;
+            }
             [self.navigationController pushViewController:vc animated:YES];
             
         }else {

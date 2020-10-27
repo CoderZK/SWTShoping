@@ -180,17 +180,25 @@
 - (void)setIsHeMai:(BOOL)isHeMai {
     _isHeMai = isHeMai;
     
-    if (!isHeMai) {
-//        self.heMaibt.hidden = YES;
-        [self.heMaibt mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.width.equalTo(@0);
-             make.right.equalTo(self.shareBt.mas_left).offset(0);
-        }];
-    }else {
-        [self.gouWuBt mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.width.equalTo(@45);
-        }];
-    }
+         if (!isHeMai) {
+            //不是合买
+    //        self.heMaibt.hidden = YES;
+            [self.heMaibt mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.width.equalTo(@0);
+                 make.right.equalTo(self.shareBt.mas_left).offset(0);
+            }];
+            self.gouWuBt.hidden = NO;
+            [self.gouWuBt mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.width.equalTo(@45);
+            }];
+        }else {
+            //合买
+            self.heMaibt.hidden = YES;
+            [self.gouWuBt mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.width.equalTo(@0);
+            }];
+            
+        }
    
 }
 
