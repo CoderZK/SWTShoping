@@ -511,4 +511,8 @@
 /** 直播一口价和私加订单 */
 #define livegenerorder2_SWT URLOne@"live/generorder2"
 
+/** 直微信支付 */
+#define paywxorder_SWT URLOne@"pay/wxorder"
+
+
 #endif /* SWTURLDefineTool_h */

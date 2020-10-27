@@ -25,7 +25,9 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if (!self.isComeBaoZhengJin) {
-        [self getOrderStatus];
+        if (self.payType != 100) {
+            [self getOrderStatus];
+        }
     }
       [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(WWWWX:) name:@"WXPAY" object:nil];
 }
@@ -71,6 +73,7 @@
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"merOrderId"] = self.orderID;
+    
     [zkRequestTool networkingPOST:payOrderquery_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         
         [SVProgressHUD dismiss];
@@ -126,6 +129,8 @@
         if (self.payType == 100) {
             //微信支付
             
+            [self wxPayAction];
+            
         }else {
             //支付宝和银行卡
            [self getOrderWityType:self.payType];
@@ -137,6 +142,30 @@
     
     
     
+}
+
+- (void)wxPayAction {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"merOrderId"] = self.orderID;
+    dict[@"totalAmount"] =  @([[NSString stringWithFormat:@"%lf",self.priceStr.doubleValue * 100] intValue]);
+    [zkRequestTool networkingPOST:paywxorder_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+       
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            self.weixinpaydict = responseObject[@"data"];
+            [self goWXpay];
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+     
+        
+    }];
 }
 
 //获取支付信息
