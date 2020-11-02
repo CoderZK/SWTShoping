@@ -3765,7 +3765,7 @@
 					"$(PROJECT_DIR)/SWTShoping/支付SDK/ThirdPartyPaySDK/UMSPosPayOnly",
 					"$(PROJECT_DIR)/SWTShoping/支付SDK/ThirdPartyPaySDK/WeChat",
 				);
-				MARKETING_VERSION = 4.0;
+				MARKETING_VERSION = 6.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wink.livemall;
 				PRODUCT_NAME = "滴雨轩";
 				PROVISIONING_PROFILE = "3bdcf4b3-e396-4d7a-ab2b-739f2269ddaa";
@@ -3810,7 +3810,7 @@
 					"$(PROJECT_DIR)/SWTShoping/支付SDK/ThirdPartyPaySDK/UMSPosPayOnly",
 					"$(PROJECT_DIR)/SWTShoping/支付SDK/ThirdPartyPaySDK/WeChat",
 				);
-				MARKETING_VERSION = 4.0;
+				MARKETING_VERSION = 6.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wink.livemall;
 				PRODUCT_NAME = "滴雨轩";
 				PROVISIONING_PROFILE_SPECIFIER = shopLiveDev;

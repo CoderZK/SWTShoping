@@ -147,9 +147,16 @@
 - (void)wxPayAction {
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    dict[@"merOrderId"] = self.orderID;
+    
     dict[@"totalAmount"] =  @([[NSString stringWithFormat:@"%lf",self.priceStr.doubleValue * 100] intValue]);
-    [zkRequestTool networkingPOST:paywxorder_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+    NSString * url = paywxorder_SWT;
+    if (self.isComeBaoZhengJin) {
+        url = paywxpaymoney_SWT;
+        dict[@"merchid"] = self.merchID;
+    }else {
+       dict[@"merOrderId"] = self.orderID;
+    }
+    [zkRequestTool networkingPOST:url parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
        
         [SVProgressHUD dismiss];
         if ([responseObject[@"code"] intValue]== 200) {
@@ -279,11 +286,17 @@
     if (resp.errCode==WXSuccess)
     {
         
-        SWTPaySucessVC * vc =[[SWTPaySucessVC alloc] init];
-        vc.hidesBottomBarWhenPushed = YES;
-        vc.orderID = self.orderID;
-        vc.priceStr = self.priceStr;
-        [self.navigationController pushViewController:vc animated:YES];
+        if (self.isComeBaoZhengJin) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }else {
+            SWTPaySucessVC * vc =[[SWTPaySucessVC alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            vc.orderID = self.orderID;
+            vc.priceStr = self.priceStr;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        
+        
         
        
     }

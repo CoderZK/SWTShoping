@@ -377,8 +377,17 @@
     if (self.type == 100) {
         dict[@"type"] = @(1);
         dict[@"stepprice"] = self.jiaJiaStr;
-        dict[@"starttime"] = [NSString stringWithFormat:@"%@:00",self.timeStr];
-        dict[@"endtime"] = [NSString stringWithFormat:@"%@:00",self.endTimeStr];
+        
+        if (self.endTimeStr.length == 16) {
+            dict[@"endtime"] = [NSString stringWithFormat:@"%@:00",self.endTimeStr];;
+        }else {
+             dict[@"endtime"] = [NSString stringWithFormat:@"%@",self.endTimeStr];;
+        }
+        if (self.timeStr.length == 16) {
+            dict[@"starttime"] = [NSString stringWithFormat:@"%@:00",self.timeStr];;
+        }else {
+            dict[@"starttime"] = [NSString stringWithFormat:@"%@",self.timeStr];;
+        }
         dict[@"delaytime"] = self.yanShiTime;
     }else if (self.type == 101) {
         dict[@"type"] = @(0);

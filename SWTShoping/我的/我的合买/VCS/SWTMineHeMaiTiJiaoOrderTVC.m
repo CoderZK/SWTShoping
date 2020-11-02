@@ -51,7 +51,7 @@
     
     [self initBottomView];
     [self getData];
-    
+    self.isYuFuDingJin = NO;
     [self getDictData];
     
 }
@@ -245,12 +245,10 @@
     dict[@"num"] = @"1";
     
     SWTHeMaiTwoCell * cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
-    if (cell.swithBt.on) {
+    if (self.isYuFuDingJin) {
         dict[@"isprepay"] = @"1";
-        self.isYuFuDingJin = YES;
     }else {
         dict[@"isprepay"] = @"0";
-        self.isYuFuDingJin = NO;
     }
     
     
@@ -363,7 +361,9 @@
                 
             } else if (indexPath.row == 3) {
                 cell.leftBt.hidden =  cell.swithBt.hidden = NO;
+                cell.swithBt.on = self.isYuFuDingJin;
                 cell.rightLB.hidden = YES;
+                cell.swithBt.userInteractionEnabled = NO;
                 
                 cell.leftOneLB.text = @"预付定金";
                 cell.leftTwoLB.text = @"尾款支付, 不支持退款";
@@ -405,6 +405,11 @@
             };
             [self.navigationController pushViewController:vc animated:YES];
 
+    }
+    
+    if (indexPath.section == 1 && indexPath.row == 3) {
+        self.isYuFuDingJin = !self.isYuFuDingJin;
+        [self.tableView reloadData];
     }
   
 }

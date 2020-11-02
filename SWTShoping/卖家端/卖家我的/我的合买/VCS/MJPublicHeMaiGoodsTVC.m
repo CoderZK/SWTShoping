@@ -443,8 +443,17 @@
     }
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    dict[@"auction_end_time"] = [NSString stringWithFormat:@"%@:00",self.endTimeStr];;
-    dict[@"auction_start_time"] = [NSString stringWithFormat:@"%@:00",self.timeStr];;
+    if (self.endTimeStr.length == 16) {
+        dict[@"auction_end_time"] = [NSString stringWithFormat:@"%@:00",self.endTimeStr];;
+    }else {
+         dict[@"auction_end_time"] = [NSString stringWithFormat:@"%@",self.endTimeStr];;
+    }
+    if (self.timeStr.length == 16) {
+        dict[@"auction_start_time"] = [NSString stringWithFormat:@"%@:00",self.timeStr];;
+    }else {
+        dict[@"auction_start_time"] = [NSString stringWithFormat:@"%@",self.timeStr];;
+    }
+    
     dict[@"chipped_num"] = self.fenShuStr;
     if(self.fenShuStr.intValue == 1) {
         dict[@"chipped_price"] = @(self.allMoneyStr.floatValue * 1.05);

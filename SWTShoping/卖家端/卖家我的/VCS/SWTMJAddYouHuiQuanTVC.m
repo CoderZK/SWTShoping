@@ -107,8 +107,16 @@
     dict[@"merch_id"] = self.merch_id;
     dict[@"useprice"] = self.jiaGeStr;
     dict[@"rate"] = self.zheKouStr;
-    dict[@"start_date"] =  [NSString stringWithFormat:@"%@:00",self.startTime];
-    dict[@"end_date"] =  [NSString stringWithFormat:@"%@:00",self.endTime];
+    if (self.startTime.length == 16) {
+        dict[@"start_date"] =  [NSString stringWithFormat:@"%@:00",self.startTime];
+    }else {
+        dict[@"start_date"] =  [NSString stringWithFormat:@"%@",self.startTime];
+    }
+    if (self.startTime.length == 16) {
+        dict[@"end_date"] =  [NSString stringWithFormat:@"%@:00",self.endTime];
+    }else {
+        dict[@"end_date"] =  [NSString stringWithFormat:@"%@",self.endTime];
+    }
     dict[@"num"] = self.numberStr;
     [zkRequestTool networkingPOST:mmerchcouponAdd_coupon_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView.mj_header endRefreshing];

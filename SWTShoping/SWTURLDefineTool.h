@@ -513,6 +513,7 @@
 
 /** 直微信支付 */
 #define paywxorder_SWT URLOne@"pay/wxorder"
-
+/** 直微信支付保证金 */
+#define paywxpaymoney_SWT URLOne@"pay/wxpaymoney"
 
 #endif /* SWTURLDefineTool_h */

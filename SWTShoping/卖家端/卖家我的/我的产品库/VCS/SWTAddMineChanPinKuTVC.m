@@ -273,8 +273,17 @@
     dict[@"stock"] = self.kuCunStr;
     
     if (self.typeStr.intValue == 1) {
-        dict[@"auction_start_time"] =[NSString stringWithFormat:@"%@:00",self.timeStr];
-        dict[@"auction_end_time"] =  [NSString stringWithFormat:@"%@:00",self.endTimeStr];
+        
+        if (self.endTimeStr.length == 16) {
+            dict[@"auction_end_time"] = [NSString stringWithFormat:@"%@:00",self.endTimeStr];;
+        }else {
+             dict[@"auction_end_time"] = [NSString stringWithFormat:@"%@",self.endTimeStr];;
+        }
+        if (self.timeStr.length == 16) {
+            dict[@"auction_start_time"] = [NSString stringWithFormat:@"%@:00",self.timeStr];;
+        }else {
+            dict[@"auction_start_time"] = [NSString stringWithFormat:@"%@",self.timeStr];;
+        }
         dict[@"stepprice"] = self.jiaJiaStr;
     }
     NSMutableArray * arrOne = @[].mutableCopy;

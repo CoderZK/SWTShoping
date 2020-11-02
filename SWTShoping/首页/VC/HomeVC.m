@@ -62,6 +62,9 @@
         [self getRecommendData];
     }else {
         self.showLoginV.hidden = NO;
+        self.page = 1;
+        [self getDataHotData];
+        [self getRecommendData];
     }
 }
 

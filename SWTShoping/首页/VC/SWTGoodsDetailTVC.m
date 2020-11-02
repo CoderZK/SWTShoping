@@ -45,15 +45,15 @@
     [self getData];
     
     
-   
-
+    
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
-
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -76,22 +76,22 @@
     
     [LTSCEventBus registerEvent:@"timeover" block:^(id data) {
         if (!self.isYiKouJia && self.dataModel != nil) {
-           [self.bottomView.chujiaBt setTitle:@"已结束" forState:UIControlStateNormal];
+            [self.bottomView.chujiaBt setTitle:@"已结束" forState:UIControlStateNormal];
         }
-
+        
     }];
     
     [LTSCEventBus registerEvent:@"timerun" block:^(id data) {
-           if (!self.isYiKouJia && self.dataModel != nil) {
-              [self.bottomView.chujiaBt setTitle:@"出价" forState:UIControlStateNormal];
-           }
-
-       }];
+        if (!self.isYiKouJia && self.dataModel != nil) {
+            [self.bottomView.chujiaBt setTitle:@"出价" forState:UIControlStateNormal];
+        }
+        
+    }];
     
     
     self.page = 1;
     self.dataArray = @[].mutableCopy;
-
+    
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         self.page = 1;
         [self getData];
@@ -102,9 +102,9 @@
         
     }];
     
-
     
-
+    
+    
     
     
 }
@@ -168,6 +168,12 @@
             [self.navigationController pushViewController:vc animated:YES];
             
         }else if (x.intValue == 102) {
+            
+            if (!ISLOGIN) {
+                [self gotoLoginVC];
+                return;
+            }
+            
             if (self.isYiKouJia) {
                 SWTGouMaiShowView * gouMaiV  = [[SWTGouMaiShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
                 gouMaiV.model = self.dataModel;
@@ -176,6 +182,9 @@
                 [gouMaiV.delegateSignal subscribeNext:^(NSString * x) {
                     @strongify(self);
                     //点击购买
+                    
+                    
+                    
                     SWTTiJiaoOrderTVC * vc =[[SWTTiJiaoOrderTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
                     vc.hidesBottomBarWhenPushed = YES;
                     //                    vc.moneyStr =  [NSString stringWithFormat:@"%0.2f",x.intValue * self.dataModel.price.floatValue];
@@ -226,7 +235,7 @@
 }
 
 - (void)getData {
-
+    
     [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
     dict[@"tag"] = self.dataModel.tag;
@@ -253,17 +262,17 @@
             }else {
                 [self.bottomView.chujiaBt setTitle:@"出个价" forState:UIControlStateNormal];
                 if (self.dataModel.resttimes.length == 0 && self.dataModel != nil) {
-                   [self.bottomView.chujiaBt setTitle:@"已结束" forState:UIControlStateNormal];
+                    [self.bottomView.chujiaBt setTitle:@"已结束" forState:UIControlStateNormal];
                 }
-               
+                
                 
                 
             }
-        
+            
             [LSTTimer removeTimerForIdentifier:@"listTimerTwo"];
             
             [LSTTimer addTimerForTime:3600 identifier:@"listTimerTwo" handle:nil];
-                  //配置通知发送和计时任务绑定 没有配置 就不会有通知发送
+            //配置通知发送和计时任务绑定 没有配置 就不会有通知发送
             [LSTTimer setNotificationForName:@"ListChangeNF" identifier:@"listTimerTwo" changeNFType:LSTTimerSecondChangeNFTypeMS];
             
             [self.tableView reloadData];
@@ -433,15 +442,15 @@
                 }else {
                     //出价
                     
-//                    if ([self.bottomView.chujiaBt.titleLabel.text isEqualToString:@"已结束"]) {
-//                        [SVProgressHUD showSuccessWithStatus:@"竞拍已结束"];
-//                        return;
-//                    }
-//
-//                    [self getNewPirceAndAc];
-//                    self.chuJiaView  = [[SWTGoodsDetailChuJiaView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
-//                    [self.chuJiaView.chujiaBt addTarget:self action:@selector(chuJiaAction:) forControlEvents:UIControlEventTouchUpInside];
-//                    [self.chuJiaView show];
+                    //                    if ([self.bottomView.chujiaBt.titleLabel.text isEqualToString:@"已结束"]) {
+                    //                        [SVProgressHUD showSuccessWithStatus:@"竞拍已结束"];
+                    //                        return;
+                    //                    }
+                    //
+                    //                    [self getNewPirceAndAc];
+                    //                    self.chuJiaView  = [[SWTGoodsDetailChuJiaView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+                    //                    [self.chuJiaView.chujiaBt addTarget:self action:@selector(chuJiaAction:) forControlEvents:UIControlEventTouchUpInside];
+                    //                    [self.chuJiaView show];
                 }
                 
                 
@@ -482,22 +491,22 @@
             @weakify(self);
             [cell.delegateSignal subscribeNext:^(NSString * x) {
                 @strongify(self);
-
+                
                 SWTGoodsDetailTVC * vc =[[SWTGoodsDetailTVC alloc] initWithTableViewStyle:(UITableViewStyleGrouped)];
                 vc.hidesBottomBarWhenPushed = YES;
                 vc.isYiKouJia = YES;
                 vc.goodID = x;
                 [self.navigationController pushViewController:vc animated:YES];
-
+                
             }];
-             return cell;
+            return cell;
         }else {
             SWTGoodsDetailThreeCell  * cell  =[tableView dequeueReusableCellWithIdentifier:@"SWTGoodsDetailThreeCell" forIndexPath:indexPath];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.clipsToBounds = YES;
             return cell;
             
-           
+            
         }
     }
     
@@ -631,7 +640,7 @@
             }
             self.dataModel.resttimes = priceModel.resttimes;
             [LSTTimer removeTimerForIdentifier:@"listTimerTwo"];
-                       
+            
             [LSTTimer addTimerForTime:3600 identifier:@"listTimerTwo" handle:nil];
             //配置通知发送和计时任务绑定 没有配置 就不会有通知发送
             [LSTTimer setNotificationForName:@"ListChangeNF" identifier:@"listTimerTwo" changeNFType:LSTTimerSecondChangeNFTypeMS];

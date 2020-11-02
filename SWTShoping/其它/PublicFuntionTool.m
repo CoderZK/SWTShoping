@@ -46,7 +46,7 @@ static PublicFuntionTool * tool = nil;
     return nil;
 }
 
-- (void)presentVideoVCWithNSString:(NSString *)videoStr isBenDiPath:(BOOL)isBenDi{
+- (void)  :(NSString *)videoStr isBenDiPath:(BOOL)isBenDi{
     
     //网络视频路径
     NSString *webVideoPath = videoStr;

@@ -278,6 +278,7 @@
             self.statusLB.text = @"退款完成";
             [self.rightTwoBt setTitle:@" 退款完成 " forState:UIControlStateNormal];
             self.rightTwoBt.hidden = NO;
+            self.rightThreeBt.hidden = YES;
         }
         
     }else  {
@@ -321,6 +322,7 @@
                 [self.rightThreeBt mas_updateConstraints:^(MASConstraintMaker *make) {
                     make.right.equalTo(self.rightTwoBt.mas_left).offset(-15);
                 }];
+               
             }else if (model.status.intValue == 2) {
                 self.statusLB.text = @" 待收货 ";
                 
@@ -372,6 +374,9 @@
                 
             }else if (model.status.intValue == 6) {
                 self.statusLB.text = @" 售后 ";
+                
+                
+                
                 self.rightOneBt.hidden =  YES;
                 if (model.backstatus.intValue == -1) {
                     
@@ -384,6 +389,9 @@
                 
             }
             
+            if (model.type.intValue == 3) {
+                self.rightThreeBt.hidden = YES;
+            }
             
         }
     }
@@ -468,6 +476,7 @@
                 self.statusLB.text = @"退款完成";
                 [self.rightTwoBt setTitle:@" 退款完成 " forState:UIControlStateNormal];
                 self.rightTwoBt.hidden = NO;
+                self.rightThreeBt.hidden = YES;
             }
             
         }else {
@@ -569,7 +578,9 @@
                 
             }
             
-            
+            if (mjModel.type.intValue == 3) {
+                self.rightThreeBt.hidden = YES;
+            }
         }
         
         
