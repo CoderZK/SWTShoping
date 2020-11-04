@@ -173,14 +173,19 @@
     
     if (self.type == 2) {
         SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
-                   vc.hidesBottomBarWhenPushed = YES;
-                   vc.model = model;
-                   [self.navigationController pushViewController:vc animated:YES];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.model = model;
+        if ([model.type isEqualToString:@"share"]) {
+            vc.isHeMai = YES;
+        }
+        [self.navigationController pushViewController:vc animated:YES];
     }else {
         if ([model.showtype isEqualToString:@"live"]) {
             SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
-            vc.isHeMai = YES;
+            if ([model.type isEqualToString:@"share"]) {
+                vc.isHeMai = YES;
+            }
             vc.model = model;
             [self.navigationController pushViewController:vc animated:YES];
         }else {

@@ -52,6 +52,32 @@
     
     [self setLeftNagate];
     
+    [self getOrderPriceData];
+    
+    
+}
+
+- (void)getOrderPriceData {
+    [SVProgressHUD show];
+    NSMutableDictionary * dict = @{}.mutableCopy;
+    dict[@"merOrderId"] = self.orderID;
+    dict[@"totalAmount"] =  @([[NSString stringWithFormat:@"%lf",self.priceStr.doubleValue * 100] intValue]);
+    [zkRequestTool networkingPOST:payorderprice_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
+      
+        [SVProgressHUD dismiss];
+        if ([responseObject[@"code"] intValue]== 200) {
+            
+            self.priceStr = [NSString stringWithFormat:@"%0.2f",[[NSString stringWithFormat:@"%@",responseObject[@"data"]] doubleValue] / 100];
+            self.moneyLB.text = [NSString stringWithFormat:@"￥%0.2f",[[NSString stringWithFormat:@"%@",responseObject[@"data"]] doubleValue] / 100];
+            
+        }else {
+            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+
+        
+    }];
 }
 
 - (void)setLeftNagate {

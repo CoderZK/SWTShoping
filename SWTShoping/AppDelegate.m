@@ -210,6 +210,7 @@
     // initSDK 后 SDK 会自动连接网络，网络连接状态可以在 V2TIMSDKListener 回调里面监听。
     [[V2TIMManager sharedInstance] initSDK:TXIMAPPID config:config listener:self];
     [[V2TIMManager sharedInstance] addAdvancedMsgListener:self];
+    
 }
 
 - (void)loginIM {

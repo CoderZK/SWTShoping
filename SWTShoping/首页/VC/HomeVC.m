@@ -363,6 +363,9 @@
                 SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
                 vc.hidesBottomBarWhenPushed = YES;
                 vc.model = self.hotArr[x.intValue];
+                if ([self.hotArr[x.intValue].type isEqualToString:@"share"]) {
+                    vc.isHeMai = YES;
+                }
                 [self.navigationController pushViewController:vc animated:YES];
             }
             

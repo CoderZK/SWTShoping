@@ -163,7 +163,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (indexPath.row == 0) {
+    if (indexPath.section == 0) {
         SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
         vc.isHeMai = YES;

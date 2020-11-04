@@ -192,26 +192,26 @@
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(getNumberActionThree) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
     
-    [LSTTimer removeTimerForIdentifier:@"zhibo"];
-    Weak(weakSelf);
-    [LSTTimer addTimerForTime:model.resttimes.doubleValue /1000 identifier:@"zhibo" handle:^(NSString * _Nonnull day, NSString * _Nonnull hour, NSString * _Nonnull minute, NSString * _Nonnull second, NSString * _Nonnull ms) {
-        if (day.intValue + hour.intValue + minute.intValue + second.intValue + ms.intValue <= 0) {
-            [weakSelf.timeBt setTitle:@"已结束" forState:UIControlStateNormal];
-        }else {
-            [weakSelf.timeBt setTitle:[NSString stringWithFormat:@"%@天%@小时%@分%@秒",day,hour,minute,second] forState:UIControlStateNormal];
+//    [LSTTimer removeTimerForIdentifier:@"zhibo"];
+//    Weak(weakSelf);
+//    [LSTTimer addTimerForTime:model.resttimes.doubleValue /1000 identifier:@"zhibo" handle:^(NSString * _Nonnull day, NSString * _Nonnull hour, NSString * _Nonnull minute, NSString * _Nonnull second, NSString * _Nonnull ms) {
+//        if (day.intValue + hour.intValue + minute.intValue + second.intValue + ms.intValue <= 0) {
+//            [weakSelf.timeBt setTitle:@"已结束" forState:UIControlStateNormal];
+//        }else {
+//            [weakSelf.timeBt setTitle:[NSString stringWithFormat:@"%@天%@小时%@分%@秒",day,hour,minute,second] forState:UIControlStateNormal];
 //            [weakSelf setNeedsLayout];
 //            [weakSelf layoutIfNeeded];
-            [weakSelf.timeBt setNeedsLayout];
-            [weakSelf.timeBt layoutIfNeeded];
-            [weakSelf setNeedsLayout];
-            [weakSelf layoutIfNeeded];
+//            [weakSelf.timeBt setNeedsLayout];
+//            [weakSelf.timeBt layoutIfNeeded];
+//            [weakSelf setNeedsLayout];
+//            [weakSelf layoutIfNeeded];
 //            [weakSelf.timeBt layoutSubviews];
 //            [weakSelf layoutSubviews];
 
-        }
-
-
-    }];
+//        }
+//
+//
+//    }];
 
     self.rightBt.hidden = self.isOrder;
 }
@@ -220,7 +220,7 @@
     
     self.number++;
     Weak(weakSelf);
-    NSInteger totalSeconds = self.model.resttime.doubleValue/1000 - self.number;
+    NSInteger totalSeconds = self.model.resttimes.doubleValue/1000 - self.number;
     NSString *days = [NSString stringWithFormat:@"%ld", totalSeconds/60/60/24];
     NSString *hours =  [NSString stringWithFormat:@"%ld", totalSeconds/60/60%24];
     NSString *minute = [NSString stringWithFormat:@"%ld", (totalSeconds/60)%60];

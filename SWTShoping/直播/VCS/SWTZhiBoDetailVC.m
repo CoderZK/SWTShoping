@@ -976,7 +976,6 @@
 //有新成员进入到群里面
 - (void)onMemberEnter:(NSString *)groupID memberList:(NSArray<V2TIMGroupMemberInfo *>*)memberList {
     
-    
     self.comeInV.titleLB.text =  [NSString stringWithFormat:@"欢迎%@进入直播间",@"123"];
     [self.comeInV show];
     

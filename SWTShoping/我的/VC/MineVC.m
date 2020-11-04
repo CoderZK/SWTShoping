@@ -320,6 +320,9 @@
                     SWTZhiBoDetailVC * vc =[[SWTZhiBoDetailVC alloc] init];
                     vc.hidesBottomBarWhenPushed = YES;
                     self.userDataModel.ID = self.userDataModel.liveid;
+                    if ([self.userDataModel.type isEqualToString:@"share"]) {
+                        vc.isHeMai = YES;
+                    }
                     vc.model = self.userDataModel;
                     [self.navigationController pushViewController:vc animated:YES];
                     

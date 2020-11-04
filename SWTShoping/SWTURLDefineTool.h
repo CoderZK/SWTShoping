@@ -516,4 +516,8 @@
 /** 直微信支付保证金 */
 #define paywxpaymoney_SWT URLOne@"pay/wxpaymoney"
 
+
+/** 获取支付金额 */
+#define payorderprice_SWT URLOne@"pay/getorderprice"
+
 #endif /* SWTURLDefineTool_h */
