@@ -160,7 +160,7 @@
         //        self.heMaibt.hidden = YES;
                 [self.heMaibt mas_updateConstraints:^(MASConstraintMaker *make) {
                     make.width.equalTo(@0);
-                     make.right.equalTo(self.shareBt.mas_left).offset(0);
+                    make.right.equalTo(self.collectBt.mas_left).offset(0);
                 }];
                 self.gouWuBt.hidden = NO;
                 [self.gouWuBt mas_updateConstraints:^(MASConstraintMaker *make) {

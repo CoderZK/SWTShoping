@@ -13,6 +13,8 @@
 @property(nonatomic , strong)UILabel *titleLB,*moneyLB,*timeLB;
 @property(nonatomic , strong)UIImageView *imgV;
 @property(nonatomic , strong)UIButton *payBt;
+@property(nonatomic,strong)NSTimer *timer;
+@property(nonatomic,assign)double  number;
 @end
 
 @implementation SWTHuoDeShowView
@@ -26,7 +28,9 @@
         [self addSubview:button];
         
         
+        self.backgroundColor =[UIColor colorWithWhite:0 alpha:0.6];
         
+        NSLog(@"%@",@"67777777777");
         
         self.whiteV = [[UIView alloc] initWithFrame:CGRectMake(30, (ScreenH - 400)/2, ScreenW - 60, 400)];
         self.whiteV.backgroundColor = WhiteColor;
@@ -60,9 +64,9 @@
         [self.whiteV addSubview:lineOneV];
         
         UIView * lineTwoV  =[[UIView alloc] initWithFrame:CGRectMake(ww /2  + 15  +10, 20, ww /2 - 15 - 20, 0.5)];
-       lineTwoV.backgroundColor = lineBackColor;
-       lineTwoV.centerY = lb2.centerY;
-       [self.whiteV addSubview:lineTwoV];
+        lineTwoV.backgroundColor = lineBackColor;
+        lineTwoV.centerY = lb2.centerY;
+        [self.whiteV addSubview:lineTwoV];
         
         UILabel * moneyLb  = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(lb2.frame) + 10, ww - 20, 25)];
         
@@ -85,7 +89,7 @@
         [payBt setTitle:@"支付" forState:UIControlStateNormal];
         payBt.layer.cornerRadius = 20;
         [payBt addTarget:self action:@selector(payAction:) forControlEvents:UIControlEventTouchUpInside];
-    
+        
         payBt.clipsToBounds = YES;
         [self.whiteV addSubview:payBt];
         payBt.backgroundColor = RedColor;
@@ -108,27 +112,79 @@
     self.titleLB.text = [NSString stringWithFormat:@"恭喜 %@ 成功拍得",model.username];
     self.moneyLB.text = [NSString stringWithFormat:@"￥%@",model.price.getPriceAllStr];
     [self.imgV sd_setImageWithURL:model.img.getPicURL placeholderImage:[UIImage imageNamed:@"369"] options:SDWebImageRetryFailed];
-    [LSTTimer removeTimerForIdentifier:@"huode"];
-    Weak(weakSelf);
-       [LSTTimer addTimerForTime:model.resttime.intValue /1000 identifier:@"huode" handle:^(NSString * _Nonnull day, NSString * _Nonnull hour, NSString * _Nonnull minute, NSString * _Nonnull second, NSString * _Nonnull ms) {
-           if (day.intValue + hour.intValue + minute.intValue + second.intValue <= 0) {
-               weakSelf.timeLB.text = @"已结束";
-               [weakSelf dismiss];
-               [LSTTimer removeAllTimer];
-               
-           }else {
-               weakSelf.timeLB.text = [NSString stringWithFormat:@"剩余时间:%@",[NSString stringWithFormat:@"%@天%@小时%@分%@秒",day,hour,minute,second]];
-           }
-           
-       }];
-
+    
+    self.number = 0;
+    [self.timer invalidate];
+    self.timer = nil;
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(getNumberActionTwo) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+    
+    //    [LSTTimer removeTimerForIdentifier:@"huode"];
+    //    Weak(weakSelf);
+    //       [LSTTimer addTimerForTime:model.resttime.doubleValue /1000 identifier:@"huode" handle:^(NSString * _Nonnull day, NSString * _Nonnull hour, NSString * _Nonnull minute, NSString * _Nonnull second, NSString * _Nonnull ms) {
+    //           if (day.dou + hour.intValue + minute.intValue + second.intValue + ms.intValue <= 0) {
+    //               weakSelf.timeLB.text = @"已结束";
+    //               [weakSelf dismiss];
+    ////               [LSTTimer removeAllTimer];
+    //
+    //           }else {
+    //               weakSelf.timeLB.text = [NSString stringWithFormat:@"剩余时间:%@",[NSString stringWithFormat:@"%@天%@小时%@分%@秒",day,hour,minute,second]];
+    ////               [weakSelf setNeedsLayout];
+    ////               [weakSelf layoutIfNeeded];
+    //
+    //               [weakSelf.timeLB layoutIfNeeded];
+    //               [weakSelf.timeLB layoutSubviews];
+    ////               [weakSelf layoutSubviews];
+    //           }
+    //
+    //       }];
+    
     
     
 }
 
+- (void)setIsOeder:(BOOL)isOeder{
+    _isOeder = isOeder;
+    self.payBt.hidden = !isOeder;
+}
+
+
+- (void)getNumberActionTwo {
+    
+    self.number++;
+    Weak(weakSelf);
+    NSInteger totalSeconds = self.model.resttime.doubleValue/1000 - self.number;
+    NSString *days = [NSString stringWithFormat:@"%zd", totalSeconds/60/60/24];
+    NSString *hours =  [NSString stringWithFormat:@"%zd", totalSeconds/60/60%24];
+    NSString *minute = [NSString stringWithFormat:@"%zd", (totalSeconds/60)%60];
+    NSString *second = [NSString stringWithFormat:@"%zd", totalSeconds%60];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        if (totalSeconds <=0) {
+            [self.timer invalidate];
+            self.timer = nil;
+            weakSelf.timeLB.text = @"已结束";
+            [weakSelf dismiss];
+            
+            [weakSelf setNeedsLayout];
+            [weakSelf layoutIfNeeded];
+        }else {
+            
+            weakSelf.timeLB.text = [NSString stringWithFormat:@"%@天%@小时%@分%@秒",days,hours,minute,second];
+            [weakSelf setNeedsLayout];
+            [weakSelf layoutIfNeeded];
+        }
+        
+        
+    });
+    
+    
+    
+}
 
 - (void)payAction:(UIButton *)button {
-    [self dismiss];
+//    [self dismiss];
+    self.hidden = YES;
     if (self.delegateSignal) {
         [self.delegateSignal sendNext:self.model];
     }
@@ -144,11 +200,17 @@
 
 
 - (void)dismiss {
-    [UIView animateWithDuration:0.2 animations:^{
-//        self.whiteV.mj_y = ScreenH;
-        self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];;
-    } completion:^(BOOL finished) {
-        [self removeFromSuperview];
-    }];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:0.2 animations:^{
+            //        self.whiteV.mj_y = ScreenH;
+            self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];;
+        } completion:^(BOOL finished) {
+            [self removeFromSuperview];
+         
+        }];
+    });
+    
+    
 }
 @end

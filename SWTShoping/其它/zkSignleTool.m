@@ -142,8 +142,11 @@ static zkSignleTool * tool = nil;
 }
 
 - (void)setAvatar:(NSString *)avatar {
-    
-     [[NSUserDefaults standardUserDefaults]setObject:avatar forKey:@"avatar"];
+    if (avatar.length == 0 || [avatar isEqualToString:@"<null>"] ||[avatar isEqualToString:@"<null>"] || [avatar isEqualToString:@"null"]) {
+        [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"avatar"];
+    }else {
+        [[NSUserDefaults standardUserDefaults]setObject:avatar forKey:@"avatar"];
+    }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

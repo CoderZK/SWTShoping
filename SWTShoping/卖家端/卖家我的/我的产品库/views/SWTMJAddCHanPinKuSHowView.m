@@ -211,6 +211,7 @@
 
 
 - (void)dismiss {
+
     [UIView animateWithDuration:0.2 animations:^{
         self.whiteV.mj_y = ScreenH;
         self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];;

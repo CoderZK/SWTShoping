@@ -493,8 +493,47 @@
     
     [SVProgressHUD show];
     
+//     __block NSData *dataTwo;
+//            PHAssetResource *resource = [[PHAssetResource assetResourcesForAsset:asset] firstObject];
+//
+//
+//            if (asset.mediaType == PHAssetMediaTypeVideo) {
+//
+//                PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
+//
+//                options.version = PHImageRequestOptionsVersionCurrent;
+//                options.networkAccessAllowed = YES;
+//                options.deliveryMode = PHVideoRequestOptionsDeliveryModeAutomatic;
+//
+//                PHImageManager *manager = [PHImageManager defaultManager];
+//
+//                [manager requestAVAssetForVideo:asset options:options resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
+//
+//                    AVURLAsset *urlAsset = (AVURLAsset *)asset;
+//
+//                    NSURL *url = urlAsset.URL;
+//
+//                    dataTwo = [NSData dataWithContentsOfURL:url];
+//
+//
+//                        if (dataTwo.length <= 0) {
+//    //                        result(nil, nil);
+//                        } else {
+//                             [self updateImgsToQiNiuYunWithImageArr:nil andData:dataTwo withType:2];
+//                        }
+//
+//
+//                }];
+//
+//            }
+    
     [PublicFuntionTool getImageFromPHAsset:asset Complete:^(NSData * _Nonnull data, NSString * _Nonnull str) {
+        
         [self updateImgsToQiNiuYunWithImageArr:nil andData:data withType:2];
+       
+        
+        
+       
     }];
 }
 

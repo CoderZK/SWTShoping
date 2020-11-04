@@ -66,7 +66,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
-//    [[V2TIMManager sharedInstance] addAdvancedMsgListener:self];
+    //    [[V2TIMManager sharedInstance] addAdvancedMsgListener:self];
     
     if (self.dataModel != nil) {
         self.timer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(getNumberAction) userInfo:nil repeats:YES];
@@ -76,7 +76,6 @@
     self.isPushVC = NO;
     
 }
-
 
 - (SWTZhiBoFootView *)zhiBoFootV {
     if (_zhiBoFootV == nil) {
@@ -170,10 +169,34 @@
 }
 
 
+- (SWTHuoDeShowView *)huoDeShowView {
+    if (_huoDeShowView == nil) {
+        _huoDeShowView = [[SWTHuoDeShowView  alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
+        [self.view addSubview:_huoDeShowView];
+       _huoDeShowView.delegateSignal = [[RACSubject alloc] init];
+       @weakify(self);
+       [_huoDeShowView.delegateSignal subscribeNext:^(SWTModel * x) {
+           @strongify(self);
+           
+           SWTPayVC * vc =[[SWTPayVC alloc] init];
+           vc.hidesBottomBarWhenPushed = YES;
+           vc.orderID = x.orderno;
+           vc.priceStr = x.price;
+           vc.isComeZhiBo = YES;
+           [self.navigationController pushViewController:vc animated:YES];
+           
+           
+       }];
+       
+    }
+    return _huoDeShowView;
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.timer invalidate];
     self.timer = nil;
+    self.huoDeShowView.hidden = YES;
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     if (!self.isPushVC) {
         if (self.isTuiLiu) {
@@ -209,10 +232,10 @@
     [self addBottomV];
     [self addChuJiaBottomV];
     [self initChatRoomV];
-        Weak(weakSelf);
-        [LTSCEventBus registerEvent:@"cmessage" block:^(V2TIMMessage * data) {
-            [weakSelf resiveIMmessage:data];
-        }];
+    Weak(weakSelf);
+    [LTSCEventBus registerEvent:@"cmessage" block:^(V2TIMMessage * data) {
+        [weakSelf resiveIMmessage:data];
+    }];
     
     
     self.chuJiaBottomV.hidden = YES;
@@ -226,26 +249,13 @@
     }];
     
     
-    [self getLiveData];//获取合买商品列表
-    
-    //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-    //        self.comeInV.titleLB.text = @"欢迎134*****789进入直播间";
-    //        [self.comeInV show];
-    //    });
-    
-    
-    //    self.huoDeShowView = [[SWTHuoDeShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
-    //    [self.huoDeShowView show];
-    
-    //    SWTPeopleChuJiaVIew * chuajiaV  = [[SWTPeopleChuJiaVIew alloc] initWithFrame:CGRectMake(0, 150, 180, 70)];
-    //    [self.view addSubview:chuajiaV];
     self.zhiBoArr = @[].mutableCopy;
     self.heMaiArr = @[].mutableCopy;
     self.mineHeMaiArr = @[].mutableCopy;
     self.AVCharRoomArr = @[].mutableCopy;
     
+    [self getLiveData];//获取合买商品列表
     
-    //
     
     if (self.isHeMai) {
         [self getMineHeMaiDingZhiListWithType:0];//获取我的合买列表
@@ -948,27 +958,17 @@
 //}
 //展示谁获得了竞拍
 - (void)showJiapaiHuodezheWithModel:(SWTModel * )model {
+    
+
+    self.huoDeShowView.model = model;
+    self.huoDeShowView.hidden = NO;
     if ([[zkSignleTool shareTool].session_uid isEqualToString:model.userid]) {
-        
-        self.huoDeShowView = [[SWTHuoDeShowView alloc] initWithFrame:CGRectMake(0, 0, ScreenW, ScreenH)];
-        self.huoDeShowView.model = model;
-        [self.huoDeShowView show];
-        self.huoDeShowView.delegateSignal = [[RACSubject alloc] init];
-        @weakify(self);
-        [self.huoDeShowView.delegateSignal subscribeNext:^(SWTModel * x) {
-            @strongify(self);
-            
-            SWTPayVC * vc =[[SWTPayVC alloc] init];
-            vc.hidesBottomBarWhenPushed = YES;
-            vc.orderID = x.orderno;
-            vc.priceStr = x.price;
-            vc.isComeZhiBo = YES;
-            [self.navigationController pushViewController:vc animated:YES];
-            
-            
-        }];
-        
+        self.huoDeShowView.isOeder = YES;
+    }else {
+        self.huoDeShowView.isOeder = NO;
     }
+   
+    
     
 }
 

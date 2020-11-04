@@ -61,7 +61,7 @@
         self.headView.mj_h = 0;
         self.tableView.tableHeaderView = self.headView;
     }  else  if (self.type == 1) {
-
+        
         NSMutableArray * arrTwo = @[].mutableCopy;
         for (SWTModel * mm  in self.canPinKuArr) {
             [arrTwo addObject:mm.name];
@@ -86,7 +86,7 @@
                 [self.delegateSignal sendNext:self.chanPinKuID];
             }
         };
-    
+        
         self.headView.mj_h = 300;
         self.tableView.tableHeaderView = self.headView;
         
@@ -120,12 +120,12 @@
         LB3.font = kFont(15);
         [self.headView addSubview:LB3];
         
-          NSMutableArray * arrThree = @[].mutableCopy;
-              for (SWTModel * mm  in self.canPinFenLeiArr) {
-                  [arrThree addObject:mm.name];
-              }
-              
-              [arrThree addObject:@"全部"];
+        NSMutableArray * arrThree = @[].mutableCopy;
+        for (SWTModel * mm  in self.canPinFenLeiArr) {
+            [arrThree addObject:mm.name];
+        }
+        
+        [arrThree addObject:@"全部"];
         
         SWTShaiXuanBtView * chanpinFenLei  = [[SWTShaiXuanBtView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(LB3.frame) + 10 , ScreenW - 20 , 20)];
         [self.headView addSubview:chanpinFenLei];
@@ -255,7 +255,7 @@
 
 - (void)setDataArray:(NSArray *)dataArray {
     _dataArray = dataArray;
-//    [self.tableView reloadData];
+    //    [self.tableView reloadData];
 }
 
 - (void)setType:(NSInteger)type {
@@ -297,12 +297,14 @@
 
 
 - (void)dismiss {
-    [UIView animateWithDuration:0.2 animations:^{
-        self.whiteV.mj_y = -500;
-        self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];;
-    } completion:^(BOOL finished) {
-        [self removeFromSuperview];
-    }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:0.2 animations:^{
+            self.whiteV.mj_y = -500;
+            self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];;
+        } completion:^(BOOL finished) {
+            [self removeFromSuperview];
+        }];
+    });
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

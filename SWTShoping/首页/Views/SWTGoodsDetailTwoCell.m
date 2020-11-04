@@ -49,20 +49,24 @@
 }
 
 - (void)timerChange {
-    NSInteger timeMS = [LSTTimer getTimeIntervalForIdentifier:@"listTimerTwo"];
-    NSInteger resTimeMS = self.timeInterval  -timeMS;
+    double timeMS = [LSTTimer getTimeIntervalForIdentifier:@"listTimerTwo"];
+    double resTimeMS = self.timeInterval  -timeMS;
     NSLog(@"%zd======%f\n",timeMS,self.timeInterval);
+    Weak(weakSelf);
     [LSTTimer formatDateForTime:resTimeMS handle:^(NSString * _Nonnull day, NSString * _Nonnull hour, NSString * _Nonnull minute, NSString * _Nonnull second, NSString * _Nonnull ms) {
         if (day.intValue + hour.intValue + minute.intValue + second.intValue == 0) {
-            self.timeLB.text = @"已结束";
+            weakSelf.timeLB.text = @"已结束";
             [LTSCEventBus sendEvent:@"timeover" data:@""];
         
         }else {
             [LTSCEventBus sendEvent:@"timerun" data:@""];
             if (day > 0) {
-               self.timeLB.text = [NSString stringWithFormat:@"剩余时间: %@天%@:%@:%@",day,hour,minute,second];
+               weakSelf.timeLB.text = [NSString stringWithFormat:@"剩余时间: %@天%@:%@:%@",day,hour,minute,second];
             }else {
-               self.timeLB.text = [NSString stringWithFormat:@"剩余时间: %@:%@:%@",hour,minute,second];
+               weakSelf.timeLB.text = [NSString stringWithFormat:@"剩余时间: %@:%@:%@",hour,minute,second];
+                [weakSelf.timeLB setNeedsLayout];
+                [weakSelf.timeLB layoutIfNeeded];
+            
             }
             
         }

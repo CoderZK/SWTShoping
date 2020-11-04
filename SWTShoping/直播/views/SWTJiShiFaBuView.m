@@ -340,6 +340,7 @@
 
 - (void)didSelectLeftIndex:(NSInteger)leftIndex centerIndex:(NSInteger)centerIndex rightIndex:(NSInteger)rightIndex {
     self.yanShiTime = @[@"10",@"30"][leftIndex];
+    [self.tableView reloadData];
 }
 
 - (void)comfirmaction:(UIButton *)button {

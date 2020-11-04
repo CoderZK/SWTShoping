@@ -137,6 +137,7 @@
         if ([responseObject[@"code"] intValue]== 200) {
             
             [SVProgressHUD showSuccessWithStatus:@"上传成功"];
+            [self.navigationController popViewControllerAnimated:YES];
 
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];

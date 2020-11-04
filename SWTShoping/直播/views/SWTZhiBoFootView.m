@@ -14,6 +14,8 @@
 @property(nonatomic,strong)UILabel *titleLB,*jiaJiaLB,*numberLB,*typeOneLB,*typeTwoLB;
 @property(nonatomic,strong)UIButton *timeBt,*rightBt;
 
+@property(nonatomic,strong)NSTimer *timer;
+@property(nonatomic,assign)double  number;
 
 
 @end
@@ -182,18 +184,66 @@
     self.titleLB.text = model.name;
     self.jiaJiaLB.text =  [NSString stringWithFormat:@"￥%@",model.price];
     self.numberLB.text =  [NSString stringWithFormat:@"%@/%@",model.isbuynum,model.num];
+    
+    
+    self.number = 0;
+    [self.timer invalidate];
+    self.timer = nil;
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(getNumberActionThree) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+    
     [LSTTimer removeTimerForIdentifier:@"zhibo"];
     Weak(weakSelf);
-    [LSTTimer addTimerForTime:model.resttimes.intValue /1000 identifier:@"zhibo" handle:^(NSString * _Nonnull day, NSString * _Nonnull hour, NSString * _Nonnull minute, NSString * _Nonnull second, NSString * _Nonnull ms) {
-        if (day.intValue + hour.intValue + minute.intValue + second.intValue <= 0) {
+    [LSTTimer addTimerForTime:model.resttimes.doubleValue /1000 identifier:@"zhibo" handle:^(NSString * _Nonnull day, NSString * _Nonnull hour, NSString * _Nonnull minute, NSString * _Nonnull second, NSString * _Nonnull ms) {
+        if (day.intValue + hour.intValue + minute.intValue + second.intValue + ms.intValue <= 0) {
             [weakSelf.timeBt setTitle:@"已结束" forState:UIControlStateNormal];
         }else {
             [weakSelf.timeBt setTitle:[NSString stringWithFormat:@"%@天%@小时%@分%@秒",day,hour,minute,second] forState:UIControlStateNormal];
+//            [weakSelf setNeedsLayout];
+//            [weakSelf layoutIfNeeded];
+            [weakSelf.timeBt setNeedsLayout];
+            [weakSelf.timeBt layoutIfNeeded];
+            [weakSelf setNeedsLayout];
+            [weakSelf layoutIfNeeded];
+//            [weakSelf.timeBt layoutSubviews];
+//            [weakSelf layoutSubviews];
+
         }
-        
+
+
     }];
 
     self.rightBt.hidden = self.isOrder;
+}
+
+- (void)getNumberActionThree {
+    
+    self.number++;
+    Weak(weakSelf);
+    NSInteger totalSeconds = self.model.resttime.doubleValue/1000 - self.number;
+    NSString *days = [NSString stringWithFormat:@"%ld", totalSeconds/60/60/24];
+    NSString *hours =  [NSString stringWithFormat:@"%ld", totalSeconds/60/60%24];
+    NSString *minute = [NSString stringWithFormat:@"%ld", (totalSeconds/60)%60];
+    NSString *second = [NSString stringWithFormat:@"%ld", totalSeconds%60];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        if (totalSeconds <=0) {
+            [self.timer invalidate];
+            self.timer = nil;
+            [weakSelf.timeBt setTitle:@"已结束" forState:UIControlStateNormal];
+            [weakSelf setNeedsLayout];
+            [weakSelf layoutIfNeeded];
+        }else {
+            [weakSelf.timeBt setTitle:[NSString stringWithFormat:@"%@天%@小时%@分%@秒",days,hours,minute,second] forState:UIControlStateNormal];
+            [weakSelf setNeedsLayout];
+            [weakSelf layoutIfNeeded];
+        }
+        
+        
+    });
+    
+
+    
 }
 
 - (void)rightAction:(UIButton *)button {

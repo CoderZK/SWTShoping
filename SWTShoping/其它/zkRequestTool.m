@@ -419,7 +419,7 @@
     AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/plain", @"text/html",@"text/json",@"text/javascript", nil];
     [manager.requestSerializer setValue:@"http://iosapi.jkcsoft.com/public/index.html" forHTTPHeaderField:@"Referer"];
-    
+    manager.requestSerializer.timeoutInterval = 600.f;
     
 //    NSDictionary * dict = parameters;
 //    //获取josnzi字符串

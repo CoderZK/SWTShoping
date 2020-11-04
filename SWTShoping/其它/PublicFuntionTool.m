@@ -292,7 +292,7 @@ static PublicFuntionTool * tool = nil;
         PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
         
         options.version = PHImageRequestOptionsVersionCurrent;
-        
+        options.networkAccessAllowed = YES;
         options.deliveryMode = PHVideoRequestOptionsDeliveryModeAutomatic;
         
         PHImageManager *manager = [PHImageManager defaultManager];

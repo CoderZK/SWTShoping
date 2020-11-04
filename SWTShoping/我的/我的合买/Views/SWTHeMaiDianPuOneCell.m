@@ -43,11 +43,18 @@
     NSInteger timeMS = [LSTTimer getTimeIntervalForIdentifier:@"listTimer"];
     NSInteger resTimeMS = self.timeInterval*1000 -timeMS;
     NSLog(@"%zd",timeMS);
+    Weak(weakSelf);
     [LSTTimer formatDateForTime:resTimeMS handle:^(NSString * _Nonnull day, NSString * _Nonnull hour, NSString * _Nonnull minute, NSString * _Nonnull second, NSString * _Nonnull ms) {
         if (day.intValue + hour.intValue + minute.intValue + second.intValue == 0) {
-            [self.timeBt setTitle:@"已结束"forState:UIControlStateNormal];
+            [weakSelf.timeBt setTitle:@"已结束"forState:UIControlStateNormal];
         }else {
-            [self.timeBt setTitle:[NSString stringWithFormat:@"%@天%@:%@:%@",day,hour,minute,second] forState:UIControlStateNormal];
+            [weakSelf.timeBt setTitle:[NSString stringWithFormat:@"%@天%@:%@:%@",day,hour,minute,second] forState:UIControlStateNormal];
+//            [weakSelf.timeBt setNeedsLayout];
+            [weakSelf.timeBt setNeedsLayout];
+            [weakSelf.timeBt layoutIfNeeded];
+            [weakSelf setNeedsLayout];
+            [weakSelf layoutIfNeeded];
+//            [weakSelf.timeBt layoutSubviews];
         }
         
     }];

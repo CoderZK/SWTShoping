@@ -210,11 +210,15 @@
 }
 
 - (void)dismiss {
-    [UIView animateWithDuration:0.2 animations:^{
-        self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];;
-    } completion:^(BOOL finished) {
-        [self removeFromSuperview];
-    }];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:0.2 animations:^{
+            self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];;
+        } completion:^(BOOL finished) {
+            [self removeFromSuperview];
+        }];
+    });
+
 }
 
 @end
