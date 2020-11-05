@@ -182,6 +182,7 @@
            vc.hidesBottomBarWhenPushed = YES;
            vc.orderID = x.orderno;
            vc.priceStr = x.price;
+           
            vc.isComeZhiBo = YES;
            [self.navigationController pushViewController:vc animated:YES];
            
@@ -858,7 +859,7 @@
                 
             }else if (tempType == 3) {
                 //发布抽签
-                [self getChouQianData];
+                [self getChouQianDataWithGoodID:dict[@"data"]];
             }else if (tempType == 4) {
                 [self getShiShiGoodDataWithtype:@"2"];
             }else if (tempType == 5) {
@@ -1056,10 +1057,10 @@
 }
 
 //获取抽签结果
-- (void)getChouQianData {
-    [SVProgressHUD show];
+- (void)getChouQianDataWithGoodID:(NSString *)goodID {
+//    [SVProgressHUD show];
     NSMutableDictionary * dict = @{}.mutableCopy;
-    dict[@"goodsid"] = [self.heMaiArr firstObject].ID;
+    dict[@"goodsid"] = goodID;
     [zkRequestTool networkingPOST:merchlotsGet_lots_result_SWT parameters:dict success:^(NSURLSessionDataTask *task, id responseObject) {
         
         [SVProgressHUD dismiss];
@@ -1071,8 +1072,6 @@
             [self.AVCharRoomArr addObject:model];
             self.avChatRoomView.dataArr = self.AVCharRoomArr;
             
-        }else {
-            [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {

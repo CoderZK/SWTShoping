@@ -183,16 +183,13 @@
         self.TF.attributedPlaceholder = attrString;
     }else {
 
-        self.heMaibt.hidden = NO;
         [self.gouWuBt mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.width.equalTo(@45);
+            make.width.equalTo(@0);
         }];
         
         [self.collectBt mas_updateConstraints:^(MASConstraintMaker *make) {
              make.width.equalTo(@30);
         }];
-        
-       
         self.heMaibt.hidden = !self.isHeMai;
         
         

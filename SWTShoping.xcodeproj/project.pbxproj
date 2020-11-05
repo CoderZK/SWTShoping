@@ -445,6 +445,8 @@
 		66C8F7A124AB1E0B008C7A3A /* LTSCNoneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66C8F79B24AB1E0B008C7A3A /* LTSCNoneView.m */; };
 		66C8F7A224AB1E0B008C7A3A /* noneNet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66C8F79C24AB1E0B008C7A3A /* noneNet@2x.png */; };
 		66C8F7A324AB1E0B008C7A3A /* LTSCEventBus.m in Sources */ = {isa = PBXBuildFile; fileRef = 66C8F79F24AB1E0B008C7A3A /* LTSCEventBus.m */; };
+		66D5AFD0255405EE00E10ACD /* SWTMJTiXianTWoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 66D5AFCE255405EE00E10ACD /* SWTMJTiXianTWoVC.m */; };
+		66D5AFD1255405EE00E10ACD /* SWTMJTiXianTWoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66D5AFCF255405EE00E10ACD /* SWTMJTiXianTWoVC.xib */; };
 		AE1A7CF29DF9D6E7166E507C /* libPods-SWTShoping.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3E49E1E01514DB2F4C7786C /* libPods-SWTShoping.a */; };
 /* End PBXBuildFile section */
 
@@ -1246,6 +1248,9 @@
 		66C8F79D24AB1E0B008C7A3A /* LTSCNoneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSCNoneView.h; sourceTree = "<group>"; };
 		66C8F79E24AB1E0B008C7A3A /* LTSCEventBus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSCEventBus.h; sourceTree = "<group>"; };
 		66C8F79F24AB1E0B008C7A3A /* LTSCEventBus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSCEventBus.m; sourceTree = "<group>"; };
+		66D5AFCD255405EE00E10ACD /* SWTMJTiXianTWoVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWTMJTiXianTWoVC.h; sourceTree = "<group>"; };
+		66D5AFCE255405EE00E10ACD /* SWTMJTiXianTWoVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWTMJTiXianTWoVC.m; sourceTree = "<group>"; };
+		66D5AFCF255405EE00E10ACD /* SWTMJTiXianTWoVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SWTMJTiXianTWoVC.xib; sourceTree = "<group>"; };
 		93517C6A5478579AE5177242 /* Pods-SWTShoping.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SWTShoping.release.xcconfig"; path = "Pods/Target Support Files/Pods-SWTShoping/Pods-SWTShoping.release.xcconfig"; sourceTree = "<group>"; };
 		C0333005ECB5A67F63F21483 /* Pods-SWTShoping.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SWTShoping.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SWTShoping/Pods-SWTShoping.debug.xcconfig"; sourceTree = "<group>"; };
 		D3E49E1E01514DB2F4C7786C /* libPods-SWTShoping.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SWTShoping.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2461,6 +2466,9 @@
 				6648B4E6251B9C1300255DF1 /* SWTMJAddRenYuanVC.h */,
 				6648B4E7251B9C1300255DF1 /* SWTMJAddRenYuanVC.m */,
 				6648B4E8251B9C1300255DF1 /* SWTMJAddRenYuanVC.xib */,
+				66D5AFCD255405EE00E10ACD /* SWTMJTiXianTWoVC.h */,
+				66D5AFCE255405EE00E10ACD /* SWTMJTiXianTWoVC.m */,
+				66D5AFCF255405EE00E10ACD /* SWTMJTiXianTWoVC.xib */,
 			);
 			path = VCS;
 			sourceTree = "<group>";
@@ -3134,6 +3142,7 @@
 				667087E324E5723400EDA2C5 /* SWTMineFaBuOneCell.xib in Resources */,
 				6675B38424DD4A42002D3671 /* SWTPayVC.xib in Resources */,
 				6660683724C2D33F004ABAB6 /* SWTVideoMyFavCell.xib in Resources */,
+				66D5AFD1255405EE00E10ACD /* SWTMJTiXianTWoVC.xib in Resources */,
 				337F3E6320E9FE5300C5526A /* Assets.xcassets in Resources */,
 				66732CD424B8B57400452F21 /* SWTMinePingLunListCell.xib in Resources */,
 				666A39FD24B74B3C00318075 /* mx_pic_selected_no@2x.png in Resources */,
@@ -3417,6 +3426,7 @@
 				66689F2524B4176A00C49A2E /* SWTMineYouHuiQuanCell.m in Sources */,
 				6670E03F24BFDF5200662F5D /* SWTXiYieVC.m in Sources */,
 				6675B38324DD4A42002D3671 /* SWTPayVC.m in Sources */,
+				66D5AFD0255405EE00E10ACD /* SWTMJTiXianTWoVC.m in Sources */,
 				666F692224BCAE4200592DC4 /* SWTEditAddressTVC.m in Sources */,
 				6670823424BC3F6B00A44820 /* SWTHeMaiSubVC.m in Sources */,
 				666A39FA24B74B3C00318075 /* MXImagePreviewController.m in Sources */,
@@ -3765,7 +3775,7 @@
 					"$(PROJECT_DIR)/SWTShoping/支付SDK/ThirdPartyPaySDK/UMSPosPayOnly",
 					"$(PROJECT_DIR)/SWTShoping/支付SDK/ThirdPartyPaySDK/WeChat",
 				);
-				MARKETING_VERSION = 8.6;
+				MARKETING_VERSION = 9.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wink.livemall;
 				PRODUCT_NAME = "滴雨轩";
 				PROVISIONING_PROFILE = "3bdcf4b3-e396-4d7a-ab2b-739f2269ddaa";
@@ -3810,7 +3820,7 @@
 					"$(PROJECT_DIR)/SWTShoping/支付SDK/ThirdPartyPaySDK/UMSPosPayOnly",
 					"$(PROJECT_DIR)/SWTShoping/支付SDK/ThirdPartyPaySDK/WeChat",
 				);
-				MARKETING_VERSION = 8.6;
+				MARKETING_VERSION = 9.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wink.livemall;
 				PRODUCT_NAME = "滴雨轩";
 				PROVISIONING_PROFILE_SPECIFIER = shopLiveDev;

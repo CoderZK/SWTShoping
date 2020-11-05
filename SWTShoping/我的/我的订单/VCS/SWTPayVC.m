@@ -69,6 +69,7 @@
             
             self.priceStr = [NSString stringWithFormat:@"%0.2f",[[NSString stringWithFormat:@"%@",responseObject[@"data"]] doubleValue] / 100];
             self.moneyLB.text = [NSString stringWithFormat:@"￥%0.2f",[[NSString stringWithFormat:@"%@",responseObject[@"data"]] doubleValue] / 100];
+            [self.payBt setTitle:[NSString stringWithFormat:@"支付￥%0.2f",[[NSString stringWithFormat:@"%@",responseObject[@"data"]] doubleValue] / 100] forState:UIControlStateNormal];
             
         }else {
             [self showAlertWithKey:[NSString stringWithFormat:@"%@",responseObject[@"code"]] message:responseObject[@"msg"]];

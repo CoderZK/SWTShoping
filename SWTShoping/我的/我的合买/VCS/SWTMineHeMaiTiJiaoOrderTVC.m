@@ -89,9 +89,11 @@
     [leftBt setTitleColor:RedColor forState:UIControlStateNormal];
     leftBt.titleLabel.font = kFont(15);
     [leftBt setTitle: [NSString stringWithFormat:@"￥%@",self.model.price] forState:UIControlStateNormal];
-    self.leftBt = leftBt;
+    if (self.model.num.intValue == 1) {
+        [leftBt setTitle: [NSString stringWithFormat:@"￥%0.2f",self.model.price.doubleValue * 1.05] forState:UIControlStateNormal];
+    }
     [whiteV addSubview:leftBt];
-    [self.leftBt mas_makeConstraints:^(MASConstraintMaker *make) {
+    [leftBt mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.bottom.equalTo(whiteV);
         make.width.equalTo(@(ScreenW /2));
     }];
@@ -104,9 +106,9 @@
     [rightBt setTitle:@"提交订单" forState:UIControlStateNormal];
     [rightBt addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
     rightBt.tag = 100;
-    self.leftBt = rightBt;
+
     [whiteV addSubview:rightBt];
-    [self.leftBt mas_makeConstraints:^(MASConstraintMaker *make) {
+    [rightBt mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.top.bottom.equalTo(whiteV);
         make.width.equalTo(@(ScreenW /2));
     }];
@@ -293,7 +295,10 @@
     if (section == 0) {
         return 1;
     }
-    return 5;
+    if (self.model.num.intValue == 1) {
+        return 5;
+    }
+    return 4;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
@@ -373,7 +378,7 @@
             }else if (indexPath.row == 4) {
                 cell.leftOneLB.text = @"私人定制费";
                 cell.leftTwoLB.text = @"(贷款金额5%)";
-                cell.rightLB.text = @"";
+                cell.rightLB.text = [NSString stringWithFormat:@"%0.2f",self.model.price.doubleValue * 0.05];
                 cell.rightLB.textColor = RedLightColor;
             }
            return cell;

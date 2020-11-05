@@ -277,6 +277,7 @@
             cell.leftLB.text = self.arrOne[indexPath.row];
             cell.rightTwoLB.text  =  [NSString stringWithFormat:@"-￥%0.2f",self.zheKouMoney];
         }else {
+            
             cell.rightLB.text = self.arrTwo[indexPath.row];
             cell.rightTwoLB.text = @"";
         }

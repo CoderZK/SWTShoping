@@ -554,6 +554,7 @@
             cell.rightTF.placeholder = @"";
             cell.leftLB.text = @"包邮";
             cell.swithBt.hidden = NO;
+            cell.swithBt.userInteractionEnabled = NO;
             cell.swithBt.on = self.isBaoYou;
             cell.swithBt.userInteractionEnabled = NO;
         }else if (indexPath.row == 7) {
@@ -671,10 +672,12 @@
             self.diJiaStr = textField.text;
         }else if (indexPath.row == 1) {
             self.jiaJiaStr = textField.text;
-        }else if (indexPath.row == 6) {
+        }else if (indexPath.row == 7) {
             self.youFeiStr = textField.text;
         }
+        
     }
+    [self.tableView reloadData];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -695,13 +698,13 @@
             
         }];
     }
-    if (indexPath.section == 2 && indexPath.row == 5) {
+    if (indexPath.section == 2 && indexPath.row == 6) {
         [self.tableView endEditing:YES];
         self.isBaoYou = !self.isBaoYou;
         [self.tableView reloadData];
     }
     
-    if (indexPath.section == 2 && indexPath.row == 4) {
+    if (indexPath.section == 2 && indexPath.row == 5) {
         [self.tableView endEditing:YES];
         self.isHeMai = !self.isHeMai;
         [self.tableView reloadData];

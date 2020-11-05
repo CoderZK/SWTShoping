@@ -520,4 +520,8 @@
 /** 获取支付金额 */
 #define payorderprice_SWT URLOne@"pay/getorderprice"
 
+
+/** 提现 */
+#define merchwithdrawalapply_SWT URLOne@"merch/withdrawalapply"
+
 #endif /* SWTURLDefineTool_h */
